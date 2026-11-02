@@ -60,7 +60,16 @@
       <div class="card schedule-card">
         <div class="card-header">
           <h2>⏰ Today's Schedule</h2>
-          <button id="remindToggle" class="mini-btn">🔔 Enable Reminders</button>
+          <div class="sched-controls">
+            <span id="syncStatus" class="sync-status"></span>
+            <button id="gcalConnectBtn" class="mini-btn">📅 Connect Calendar</button>
+            <button id="gcalSyncBtn" class="mini-btn hidden">🔄 Force Sync</button>
+            <button id="remindToggle" class="mini-btn">🔔 Enable Reminders</button>
+          </div>
+          <details id="calPicker" class="hidden cal-picker">
+            <summary>Which calendars</summary>
+            <div></div>
+          </details>
         </div>
         <div id="nowBanner" class="now-banner hidden"></div>
         <div id="hourlyGrid" class="hourly-grid"></div>
@@ -407,5 +416,7 @@
 
   <script src="app.js"></script>
   <script src="astro.js"></script>
+  <script src="sync-config.js"></script>
+  <script src="google-sync.js"></script>
 </body>
 </html>

@@ -835,9 +835,13 @@ function weekTaskChips(i) {
   d.setDate(monday.getDate() + i);
   const key = d.toISOString().slice(0, 10);
   const due = tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col));
-  if (!due.length) return "";
-  return `<div class="week-tasks">${due.map(t =>
-    `<span class="week-task-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`).join("")}</div>`;
+  const gcal = (typeof gcalEventsOn === "function") ? gcalEventsOn(key) : [];
+  const chips = [
+    ...gcal.map(ev => `<span class="week-task-chip gcal">\U0001F4C5 ${ev.title}</span>`),
+    ...due.map(t => `<span class="week-task-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`)
+  ];
+  if (!chips.length) return "";
+  return `<div class="week-tasks">${chips.join("")}</div>`;
 }
 
 function renderHourly() {
@@ -845,16 +849,22 @@ function renderHourly() {
   if (!grid) return;
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
+  const today = new Date().toISOString().slice(0, 10);
   const blocksToday = todaysBlocks();
   const timed = todaysTimedTasks();
   const anytime = todaysAnytimeTasks();
+  const gcalToday = (typeof gcalEventsOn === "function") ? gcalEventsOn(today) : [];
+  const anytimeAll = [
+    ...gcalToday.filter(ev => ev.allDay).map(ev => `\U0001F4C5 ${ev.title} (all day)`),
+    ...anytime.map(t => `${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}`)
+  ];
   let htmlOut = "";
 
-  if (anytime.length) {
+  if (anytimeAll.length) {
     htmlOut += `<div class="hour-row anytime-row">
       <span class="hour-label">Anytime</span>
-      <div class="hour-content">${anytime.map(t =>
-        `<span class="hour-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`).join("")}</div>
+      <div class="hour-content">${anytimeAll.map(t =>
+        `<span class="hour-chip">${t}</span>`).join("")}</div>
     </div>`;
   }
 
@@ -866,6 +876,9 @@ function renderHourly() {
     });
     timed.filter(t => Math.floor(toMin(t.time) / 60) === h).forEach(t => {
       cellBits.push(`<span class="hour-chip task-chip">${PRI_EMOJI[t.pri] || "\U0001F3AF"} ${t.text} \u00b7 ${fmtTime(t.time)}</span>`);
+    });
+    gcalToday.filter(ev => !ev.allDay && new Date(ev.start).getHours() === h).forEach(ev => {
+      cellBits.push(`<span class="hour-chip gcal-chip">\U0001F4C5 ${ev.title} \u00b7 ${gcalRange(ev)}</span>`);
     });
     htmlOut += `<div class="hour-row ${isNow ? "now" : ""}">
       <span class="hour-label">${fmtTime(`${String(h).padStart(2, "0")}:00`).replace(":00", "")}</span>
@@ -881,9 +894,21 @@ function renderNowBanner() {
   if (!banner) return;
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
-  const current = todaysBlocks().find(b => nowMin >= toMin(b.start) && nowMin < toMin(b.start) + b.dur);
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const gcalNow = (typeof gcalEventsOn === "function")
+    ? gcalEventsOn(todayStr).find(ev => {
+        if (ev.allDay) return false;
+        const s = new Date(ev.start), e = new Date(ev.end);
+        const sMin = s.getHours() * 60 + s.getMinutes(), eMin = e.getHours() * 60 + e.getMinutes();
+        return nowMin >= sMin && nowMin < eMin;
+      })
+    : null;
+  const current = gcalNow || todaysBlocks().find(b => nowMin >= toMin(b.start) && nowMin < toMin(b.start) + b.dur);
   let htmlOut;
-  if (current) {
+  if (gcalNow) {
+    const e = new Date(gcalNow.end);
+    htmlOut = `\U0001F4C5 <strong>Right now (Google):</strong> ${gcalNow.title} \u00b7 until ${fmtTime(toHHMM(e.getHours() * 60 + e.getMinutes()))}`;
+  } else if (current) {
     htmlOut = `\u23F0 <strong>Right now:</strong> ${current.label} \u00b7 until ${fmtTime(toHHMM(toMin(current.start) + current.dur))}`;
   } else {
     const upcoming = [

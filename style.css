@@ -740,3 +740,23 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .astro-day-head { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 700; }
 .astro-day-moon { font-size: 0.75rem; color: var(--libra-rose); margin: 0.25rem 0; }
 .astro-day-note { font-size: 0.68rem; color: var(--text-muted); line-height: 1.4; }
+
+/* GOOGLE CALENDAR SYNC */
+.sched-controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.sync-status { font-size: 0.72rem; color: var(--text-muted); }
+.gcal-chip {
+  background: rgba(66, 133, 244, 0.12);
+  border: 1px solid rgba(66, 133, 244, 0.4);
+}
+.cal-picker { margin-bottom: 0.8rem; font-size: 0.85rem; }
+.cal-picker summary { cursor: pointer; color: var(--text-muted); font-size: 0.78rem; }
+.cal-picker div { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.5rem 0.2rem; }
+.cal-pick { display: flex; align-items: center; gap: 0.45rem; cursor: pointer; }
+.cal-pick input { accent-color: var(--cosmic-purple); }
+.week-task-chip.gcal {
+  background: rgba(66, 133, 244, 0.12);
+  border: 1px solid rgba(66, 133, 244, 0.4);
+}
+@media (max-width: 680px) {
+  .sched-controls { justify-content: flex-start; }
+}
