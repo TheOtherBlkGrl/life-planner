@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarissa's Cosmic Command Center ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <header class="cosmic-header">
+    <div class="brand">
+      <h1>👑 Clarissa's Cosmic Command Center</h1>
+      <p class="subtitle">Built for high-spark brains, lunar flow & effortless manifestation ✨</p>
+    </div>
+    <div class="header-widgets">
+      <div class="moon-badge" id="moonBadge">
+        <span id="moonEmoji">🌙</span>
+        <div>
+          <strong id="moonPhaseName">Calculating Moon...</strong>
+          <small id="moonAdvice">Syncing with the cosmos...</small>
+        </div>
+      </div>
+      <div class="clock-box">
+        <span id="liveClock">00:00</span>
+        <button id="testPortalBtn" class="portal-btn" title="Trigger a manifestation check-in right now">✨ 11:11 Check-In</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="today">🌟 Today</button>
+    <button class="tab-btn" data-tab="week">🗓️ Week</button>
+    <button class="tab-btn" data-tab="bills">💸 Bills</button>
+    <button class="tab-btn" data-tab="selfcare">🛁 Self Care</button>
+    <button class="tab-btn" data-tab="garden">🌱 Garden</button>
+    <button class="tab-btn" data-tab="social">👯 Social</button>
+    <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
+  </nav>
+
+  <main class="dashboard">
+
+    <section class="tab-panel active" id="panel-today">
+      <div class="anchor-grid">
+
+        <div class="card manifestation-card">
+          <div class="card-header">
+            <h2>🔮 "Already Mine" Scripting Box</h2>
+            <button id="shuffleAffirmationBtn" class="mini-btn">🎲 Spark Idea</button>
+          </div>
+          <p class="helper-text">Write what you are calling in as if it already happened:</p>
+          <textarea id="manifestationInput" placeholder="I am so grateful now that..."></textarea>
+        </div>
+
+        <div class="card leo-card">
+          <div class="card-header">
+            <h2>☀️ Leo Sun: Main Character Win</h2>
+            <span class="badge-pill">1 Spot Only</span>
+          </div>
+          <p class="helper-text">If you only do ONE thing today to feel proud and radiant, what is it?</p>
+          <div class="spotlight-input-wrap">
+            <input type="checkbox" id="leoWinCheck" />
+            <input type="text" id="leoWinText" placeholder="My #1 power move today..." />
+          </div>
+        </div>
+
+        <div class="card grounding-card">
+          <div class="card-header">
+            <h2>🐂 Taurus Rising & ⚖️ Libra Moon</h2>
+          </div>
+          <p class="helper-text">Sensory Reset (Check before diving in):</p>
+          <div class="sensory-checks">
+            <label><input type="checkbox" class="sensory-box" id="sense1" /> ☕ Warm spiced coffee or water nearby</label>
+            <label><input type="checkbox" class="sensory-box" id="sense2" /> 🌿 Jaw unclenched & shoulders dropped</label>
+            <label><input type="checkbox" class="sensory-box" id="sense3" /> 🕯️ Desk cleared of visual clutter</label>
+          </div>
+          <hr class="divider" />
+          <label class="helper-text" for="libraPeaceSelect">⚖️ Libra Moon Boundary Check:</label>
+          <select id="libraPeaceSelect" class="peace-select">
+            <option value="flowing">💖 Balanced, grounded & in my lane</option>
+            <option value="protecting">🛡️ Protecting my peace (No extra favors today!)</option>
+            <option value="overcommitted">🚨 Overcommitted — time to delegate or drop a task</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="workspace-layout">
+
+        <section class="kanban-section">
+          <form id="taskForm" class="task-creator">
+            <input type="text" id="taskInput" placeholder="Dump a task or idea out of your head..." required />
+            <select id="taskColumnSelect">
+              <option value="dump">🌪️ Brain Dump Inbox</option>
+              <option value="high">🔥 High-Spark Quests</option>
+              <option value="low">🌿 Cozy Low-Spoon Wins</option>
+              <option value="top3">🎯 Today's Rule of 3</option>
+            </select>
+            <button type="submit" class="add-btn">➕ Add to Board</button>
+          </form>
+
+          <div class="kanban-grid">
+            <div class="kanban-col">
+              <div class="col-header">
+                <h3>🌪️ Brain Dump</h3>
+                <span class="count-badge" id="count-dump">0</span>
+              </div>
+              <p class="col-desc">Zero pressure. Get it out of your head now, sort it later.</p>
+              <div class="task-list" id="col-dump"></div>
+            </div>
+
+            <div class="kanban-col">
+              <div class="col-header">
+                <h3>🔥 High-Spark Quests</h3>
+                <span class="count-badge" id="count-high">0</span>
+              </div>
+              <p class="col-desc">For when the hyperfocus kicks in and your battery is full.</p>
+              <div class="task-list" id="col-high"></div>
+            </div>
+
+            <div class="kanban-col">
+              <div class="col-header">
+                <h3>🌿 Low-Spoon Wins</h3>
+                <span class="count-badge" id="count-low">0</span>
+              </div>
+              <p class="col-desc">5-minute, zero-stress tasks for low-energy moments.</p>
+              <div class="task-list" id="col-low"></div>
+            </div>
+
+            <div class="kanban-col highlight-col">
+              <div class="col-header">
+                <h3>🎯 Today's Rule of 3</h3>
+                <span class="count-badge gold-badge" id="count-top3">0/3</span>
+              </div>
+              <p class="col-desc">Hard limit of 3 cards max! No overwhelm allowed, Queen.</p>
+              <div class="task-list" id="col-top3"></div>
+            </div>
+
+            <div class="kanban-col trophy-col">
+              <div class="col-header">
+                <h3>🎉 Trophy Room</h3>
+                <span class="count-badge" id="count-done">0</span>
+              </div>
+              <p class="col-desc">Look at everything you've already crushed!</p>
+              <div class="task-list" id="col-done"></div>
+            </div>
+
+            <div class="kanban-col graveyard-col">
+              <div class="col-header">
+                <h3>🪦 No-Shame Graveyard</h3>
+                <span class="count-badge" id="count-graveyard">0</span>
+              </div>
+              <p class="col-desc">Lost interest or changed plans? Release it guilt-free.</p>
+              <div class="task-list" id="col-graveyard"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="dopamine-sidebar card">
+          <h2>⚡ Dopamine Menu</h2>
+          <p class="helper-text">Stuck in task paralysis? Pick a 10-minute reset without falling into a scrolling trap:</p>
+
+          <div class="timer-box">
+            <div id="timerDisplay" class="timer-digits">10:00</div>
+            <div class="timer-controls">
+              <button id="startTimerBtn" class="mini-btn">▶️ Start</button>
+              <button id="resetTimerBtn" class="mini-btn">🔄 Reset</button>
+            </div>
+            <small id="activeBreakLabel">Pick a reset below 👇</small>
+          </div>
+
+          <ul class="dopamine-list">
+            <li><button class="dopa-btn" data-activity="🌿 Check on Priscilla & the houseplants">🌿 Check on the houseplants</button></li>
+            <li><button class="dopa-btn" data-activity="🐾 10-minute play session with the pups">🐾 Hang out with the pups</button></li>
+            <li><button class="dopa-btn" data-activity="🎹 Jam on a synth or blast 2 favorite songs">🎹 Jam on keys / blast a song</button></li>
+            <li><button class="dopa-btn" data-activity="☀️ Step outside for fresh air & yard patrol">☀️ Step outside for fresh air</button></li>
+            <li><button class="dopa-btn" data-activity="🐟 Watch the patio pond for a few minutes">🐟 Watch the patio pond</button></li>
+          </ul>
+        </aside>
+
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-week">
+      <div class="card">
+        <div class="card-header">
+          <h2>🗓️ The Week Ahead</h2>
+          <button id="clearWeekBtn" class="mini-btn">🧹 Clear Week</button>
+        </div>
+        <p class="helper-text">Park plans on the day they belong to. Nothing nags you here; it just waits where you'll see it.</p>
+        <div class="week-grid" id="weekGrid"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-bills">
+      <div class="card">
+        <div class="card-header">
+          <h2>💸 Bills & Money</h2>
+        </div>
+        <p class="helper-text">Add what's due, tap Paid when it's handled. Overdue bills light up red.</p>
+        <form id="billForm" class="row-form">
+          <input type="text" id="billName" placeholder="Bill name (PG&E, rent...)" required />
+          <input type="number" id="billAmount" placeholder="Amount $" step="0.01" min="0" required />
+          <input type="date" id="billDue" required />
+          <button type="submit" class="add-btn">➕ Add Bill</button>
+        </form>
+        <div id="billsSummary" class="bills-summary"></div>
+        <div id="billsList" class="line-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-selfcare">
+      <div class="card">
+        <div class="card-header">
+          <h2>🛁 Self Care Rituals</h2>
+          <button id="resetSelfcareBtn" class="mini-btn">🌅 New Day Reset</button>
+        </div>
+        <p class="helper-text">Your daily care list. It resets fresh every new day automatically, no guilt carried over.</p>
+        <div id="selfcareList" class="check-list"></div>
+        <form id="selfcareForm" class="row-form solo-form">
+          <input type="text" id="selfcareInput" placeholder="Add a ritual of your own..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-garden">
+      <div class="card">
+        <div class="card-header">
+          <h2>🌱 Garden Calendar</h2>
+        </div>
+        <p class="helper-text">Planting blocks, waterings, orders and yard dreams, all in one bed.</p>
+        <form id="gardenForm" class="row-form solo-form">
+          <input type="text" id="gardenInput" placeholder="Add a garden task or note..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <div id="gardenList" class="line-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-social">
+      <div class="card">
+        <div class="card-header">
+          <h2>👯 Social Life</h2>
+        </div>
+        <p class="helper-text">People you love and the plans brewing. Add who and when, so nobody goes quiet on you.</p>
+        <form id="socialForm" class="row-form solo-form">
+          <input type="text" id="socialInput" placeholder="Who + the plan (Dana - brunch Sunday)..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <div id="socialList" class="line-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-jobs">
+      <div class="card">
+        <div class="card-header">
+          <h2>💼 Job Hunt</h2>
+        </div>
+        <p class="helper-text">Anything private (applications, offers, salary notes) still lives in the encrypted vault on your dashboard. Keep public-facing notes and targets here.</p>
+        <form id="jobsForm" class="row-form solo-form">
+          <input type="text" id="jobsInput" placeholder="Add a target, lead or public note..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <div id="jobsList" class="line-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="cosmicToast" class="cosmic-toast hidden">
+    <div class="toast-content">
+      <span class="toast-icon">🦋</span>
+      <div>
+        <h4>11:11 Cosmic Portal Alignment!</h4>
+        <p id="toastMessage">Pause, Clare! Unclench your jaw, take a deep breath, and feel your next big win as already yours.</p>
+      </div>
+      <button id="closeToastBtn" class="close-toast">✖</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
