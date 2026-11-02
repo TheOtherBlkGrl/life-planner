@@ -1037,12 +1037,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // ---- event detail modal (click any calendar event anywhere in the planner) ----
 function gcalDetailRange(ev) {
+  // Google's live API nests times ({dateTime}/{date}); the sync cache stores flat strings
+  const st = ev.start, en = ev.end || st;
+  const sStr = typeof st === "string" ? st : (st && (st.dateTime || st.date));
+  const eStr = typeof en === "string" ? en : (en && (en.dateTime || en.date));
+  const isAllDay = ev.allDay != null ? !!ev.allDay : !!(st && st.date && !st.dateTime);
   const fmtD = d => d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
   const t = d => d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
-  const s = new Date(ev.start), e = new Date(ev.end);
-  if (ev.allDay) {
-    const endDay = ev.end ? new Date(new Date(ev.end).getTime() - 86400000) : null;
-    return endDay && endDay.toISOString().slice(0, 10) !== ev.start.slice(0, 10)
+  const s = new Date(sStr), e = new Date(eStr);
+  if (isAllDay) {
+    const endDay = new Date(new Date(eStr).getTime() - 86400000);
+    return eStr && endDay.toISOString().slice(0, 10) !== String(sStr).slice(0, 10)
       ? `${fmtD(s)} \u2013 ${fmtD(endDay)} (all day)` : `${fmtD(s)} (all day)`;
   }
   const sameDay = s.toDateString() === e.toDateString();
