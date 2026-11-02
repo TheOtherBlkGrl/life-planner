@@ -103,7 +103,12 @@ function moveTask(id, targetCol) {
     }
   }
 
-  tasks = tasks.map(t => (t.id === id ? { ...t, col: targetCol } : t));
+  tasks = tasks.map(t => {
+    if (t.id !== id) return t;
+    if (targetCol === "done") return { ...t, col: targetCol, doneAt: t.doneAt || Date.now() };
+    const { doneAt, ...rest } = t;
+    return { ...rest, col: targetCol };
+  });
   if (targetCol === "done") {
     fireConfetti();
   }
@@ -282,7 +287,12 @@ function renderBills() {
 }
 
 function toggleBillPaid(id) {
-  bills = bills.map(b => (b.id === id ? { ...b, paid: !b.paid } : b));
+  bills = bills.map(b => {
+    if (b.id !== id) return b;
+    if (!b.paid) return { ...b, paid: true, paidAt: Date.now() };
+    const { paidAt, ...rest } = b;
+    return { ...rest, paid: false };
+  });
   const bill = bills.find(b => b.id === id);
   if (bill && bill.paid) fireConfetti();
   saveBills();
@@ -494,4 +504,285 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("closeToastBtn").addEventListener("click", () => {
     document.getElementById("cosmicToast").classList.add("hidden");
   });
+});
+
+// --- 13. BLOCK SCHEDULING ---
+let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
+const CAT_COLORS = { focus: "#9d4edd", admin: "#f4b860", body: "#52b788", joy: "#e5989b" };
+const CAT_LABELS = { focus: "\U0001F52E Deep Focus", admin: "\U0001F4B8 Admin", body: "\U0001F33F Body & Care", joy: "\U0001F389 Joy" };
+const DAY_START_MIN = 5 * 60;      // 5:00 AM
+const DAY_SPAN_MIN = 19 * 60;      // through midnight
+
+function blockDateKey() {
+  return document.getElementById("blockDate").value || new Date().toISOString().slice(0, 10);
+}
+
+function toMin(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+}
+
+function toHHMM(min) {
+  return `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}`;
+}
+
+function slotIsFree(date, start, dur) {
+  return !blocks.some(b =>
+    b.date === date && start < toMin(b.start) + b.dur && start + dur > toMin(b.start));
+}
+
+function saveBlocks() {
+  localStorage.setItem("ccc_blocks", JSON.stringify(blocks));
+  renderBlocks();
+  renderWins();
+}
+
+function renderBlocks() {
+  const date = blockDateKey();
+  const list = document.getElementById("blocksList");
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = "";
+
+  const dayBlocks = blocks
+    .filter(b => b.date === date)
+    .sort((a, b) => toMin(a.start) - toMin(b.start));
+
+  dayBlocks.forEach(b => {
+    const left = ((toMin(b.start) - DAY_START_MIN) / DAY_SPAN_MIN) * 100;
+    const width = (b.dur / DAY_SPAN_MIN) * 100;
+    if (width > 0) {
+      const bar = document.createElement("div");
+      bar.className = "tl-block" + (b.done ? " tl-done" : "");
+      bar.style.left = `${Math.max(left, 0)}%`;
+      bar.style.width = `${width}%`;
+      bar.style.background = CAT_COLORS[b.cat] || "#9d4edd";
+      bar.title = `${b.start} \u00b7 ${b.label}`;
+      timeline.appendChild(bar);
+    }
+  });
+
+  list.innerHTML = dayBlocks.length
+    ? dayBlocks.map(b => `
+        <div class="line-item block-item ${b.done ? "paid" : ""}">
+          <input type="checkbox" ${b.done ? "checked" : ""} onchange="toggleBlock(${b.id})" />
+          <span class="cat-dot" style="background:${CAT_COLORS[b.cat]}"></span>
+          <span><strong>${b.start}</strong> \u00b7 ${b.label} <small>(${b.dur} min \u00b7 ${CAT_LABELS[b.cat]})</small></span>
+          <span class="due-tag">${toHHMM(toMin(b.start) + b.dur)}</span>
+          <button onclick="deleteBlock(${b.id})">\U0001F5D1\ufe0f</button>
+        </div>
+      `).join("")
+    : `<p class="helper-text">No blocks on this day yet. Break down something big, or lay out the day hour by hour.</p>`;
+}
+
+function toggleBlock(id) {
+  blocks = blocks.map(b => {
+    if (b.id !== id) return b;
+    if (!b.done) return { ...b, done: true, doneAt: Date.now() };
+    const { doneAt, ...rest } = b;
+    return { ...rest, done: false };
+  });
+  const b = blocks.find(x => x.id === id);
+  if (b && b.done) fireConfetti();
+  saveBlocks();
+}
+
+function deleteBlock(id) {
+  blocks = blocks.filter(b => b.id !== id);
+  saveBlocks();
+}
+
+function nextFreeSlot(date, durMin) {
+  const isToday = date === new Date().toISOString().slice(0, 10);
+  const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+  let start = Math.ceil((isToday ? Math.max(nowMin, DAY_START_MIN) : DAY_START_MIN) / 15) * 15;
+  for (let guard = 0; guard < 96; guard++) {
+    if (slotIsFree(date, start, durMin) && start + durMin <= 24 * 60) return start;
+    start += 15;
+  }
+  return DAY_START_MIN;
+}
+
+// --- 14. JOURNAL ---
+const JOURNAL_PROMPTS = [
+  "What drained you today, and what refilled you?",
+  "Write the win you want to be reading about a year from now.",
+  "What would future-you thank you for doing today?",
+  "Where did you protect your peace today?",
+  "What is one thing you are ready to release this moon cycle?",
+  "Describe today in three words, then explain the weirdest one.",
+  "What did your body need today? Did you give it?",
+  "Who made your day lighter? Tell them, or write it here.",
+  "What did you do today that your Leo Sun can be loud about?",
+  "What small thing are you proud of that nobody clapped for?",
+  "If today repeated for a week, would you be happy? What would you change?",
+  "What is calling in? Script it as already yours."
+];
+
+let journal = JSON.parse(localStorage.getItem("ccc_journal")) || {};
+let journalMood = "";
+let journalOffset = 0; // 0 = today, 1 = yesterday...
+
+function journalDateStr() {
+  const d = new Date();
+  d.setDate(d.getDate() - journalOffset);
+  return d.toISOString().slice(0, 10);
+}
+
+function prettyDate(dateStr) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
+function renderJournal() {
+  const dateStr = journalDateStr();
+  const entry = journal[dateStr] || { mood: "", text: "" };
+
+  document.getElementById("journalDateLabel").textContent =
+    journalOffset === 0 ? "Today" : prettyDate(dateStr);
+  document.getElementById("journalInput").value = entry.text || "";
+  journalMood = entry.mood || "";
+  document.querySelectorAll(".mood-btn").forEach(b =>
+    b.classList.toggle("active", b.dataset.mood === journalMood));
+
+  const dayOfYear = Math.floor((new Date(dateStr + "T12:00:00") - new Date(dateStr.slice(0, 4), 0, 0)) / 86400000);
+  document.getElementById("journalPrompt").textContent =
+    JOURNAL_PROMPTS[dayOfYear % JOURNAL_PROMPTS.length];
+
+  const dates = Object.keys(journal).sort().reverse();
+  const list = document.getElementById("journalList");
+  list.innerHTML = dates.length
+    ? dates.map(d => `
+        <div class="line-item journal-item">
+          <span>${journal[d].mood || "\U0001F4D3"}</span>
+          <span><strong>${prettyDate(d)}</strong> \u00b7 ${journal[d].text.slice(0, 90)}${journal[d].text.length > 90 ? "..." : ""}</span>
+          <button onclick="loadJournalEntry('${d}')">Open</button>
+        </div>
+      `).join("")
+    : `<p class="helper-text">No entries yet. Today is a great day to start.</p>`;
+}
+
+function loadJournalEntry(dateStr) {
+  const now = new Date().toISOString().slice(0, 10);
+  journalOffset = Math.round((new Date(now + "T12:00:00") - new Date(dateStr + "T12:00:00")) / 86400000);
+  renderJournal();
+}
+
+function saveJournalEntry() {
+  const dateStr = journalDateStr();
+  const text = document.getElementById("journalInput").value;
+  if (!text.trim()) return;
+  journal[dateStr] = { mood: journalMood, text, savedAt: Date.now() };
+  localStorage.setItem("ccc_journal", JSON.stringify(journal));
+  renderJournal();
+  fireConfetti();
+}
+
+// --- 15. TODAY'S WINS SCOREBOARD ---
+function renderWins() {
+  const today = new Date().toISOString().slice(0, 10);
+  const list = document.getElementById("winsList");
+  const wins = [];
+
+  blocks.filter(b => b.date === today && b.done)
+    .forEach(b => wins.push(`\U0001F9F1 Block done: ${b.label}`));
+
+  tasks.filter(t => t.col === "done" && t.doneAt &&
+      new Date(t.doneAt).toISOString().slice(0, 10) === today)
+    .forEach(t => wins.push(`\U0001F3AF Crushed: ${t.text}`));
+
+  const selfcareToday = JSON.parse(localStorage.getItem("ccc_selfcare")) || [];
+  const kept = selfcareToday.filter(i => i.done).length;
+  if (kept) wins.push(`\U0001F6C1 Self care kept: ${kept} ritual${kept > 1 ? "s" : ""}`);
+
+  bills.filter(b => b.paid && b.paidAt &&
+      new Date(b.paidAt).toISOString().slice(0, 10) === today)
+    .forEach(b => wins.push(`\U0001F4B8 Handled: ${b.name} payment`));
+
+  const countEl = document.getElementById("winsCount");
+  countEl.textContent = `${wins.length} win${wins.length === 1 ? "" : "s"}`;
+  countEl.classList.toggle("gold-badge", wins.length >= 3);
+
+  list.innerHTML = wins.length
+    ? wins.map(w => `<div class="win-row">${w}</div>`).join("")
+    : `<p class="helper-text">Nothing banked yet today. One small block is all it takes to get on the board.</p>`;
+}
+
+// --- 16. INITIALIZE (BLOCKS / JOURNAL / WINS) ---
+document.addEventListener("DOMContentLoaded", () => {
+  const blockDate = document.getElementById("blockDate");
+  blockDate.value = new Date().toISOString().slice(0, 10);
+  blockDate.addEventListener("change", renderBlocks);
+
+  document.getElementById("blockForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const dur = Number(document.getElementById("blockDur").value);
+    const date = blockDateKey();
+    const requested = toMin(document.getElementById("blockStart").value || "09:00");
+    const start = slotIsFree(date, requested, dur) ? requested : nextFreeSlot(date, dur);
+    blocks.push({
+      id: Date.now(),
+      date,
+      start: toHHMM(start),
+      dur,
+      label: document.getElementById("blockLabel").value.trim(),
+      cat: document.getElementById("blockCat").value,
+      done: false
+    });
+    document.getElementById("blockForm").reset();
+    document.getElementById("blockStart").value = toHHMM(nextFreeSlot(date, 30));
+    saveBlocks();
+  });
+
+  document.getElementById("breakdownForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const label = document.getElementById("breakdownText").value.trim();
+    const total = Number(document.getElementById("breakdownMinutes").value);
+    const chunk = Number(document.getElementById("breakdownChunk").value);
+    if (!label || !total) return;
+    const date = blockDateKey();
+    const count = Math.ceil(total / chunk);
+    let remaining = total;
+    let cursor = nextFreeSlot(date, Math.min(chunk, total));
+    for (let i = 0; i < count; i++) {
+      const dur = Math.min(chunk, remaining);
+      let start = cursor;
+      for (let guard = 0; guard < 96; guard++) {
+        if (slotIsFree(date, start, dur) && start + dur <= 24 * 60) break;
+        start += 15;
+      }
+      blocks.push({
+        id: Date.now() + i,
+        date,
+        start: toHHMM(start),
+        dur,
+        label: `${label} \u00b7 part ${i + 1}/${count}`,
+        cat: "focus",
+        done: false
+      });
+      remaining -= dur;
+      cursor = start + dur + 10; // 10-minute breather between chunks
+    }
+    document.getElementById("breakdownForm").reset();
+    saveBlocks();
+    fireConfetti();
+  });
+
+  document.getElementById("journalPrev").addEventListener("click", () => { journalOffset++; renderJournal(); });
+  document.getElementById("journalNext").addEventListener("click", () => {
+    if (journalOffset > 0) { journalOffset--; renderJournal(); }
+  });
+  document.getElementById("journalTodayBtn").addEventListener("click", () => { journalOffset = 0; renderJournal(); });
+  document.getElementById("journalSaveBtn").addEventListener("click", saveJournalEntry);
+
+  document.querySelectorAll(".mood-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      journalMood = journalMood === btn.dataset.mood ? "" : btn.dataset.mood;
+      document.querySelectorAll(".mood-btn").forEach(b =>
+        b.classList.toggle("active", b.dataset.mood === journalMood));
+    });
+  });
+
+  renderBlocks();
+  renderJournal();
+  renderWins();
 });

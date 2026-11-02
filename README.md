@@ -11,6 +11,8 @@ A cosmic-themed life planner built for high-spark brains, lunar flow & effortles
 - **🌱 Garden** — planting blocks, waterings, orders
 - **👯 Social** — people and plans so nobody goes quiet
 - **💼 Job Hunt** — public targets and leads
+- **🧱 Blocks** — block scheduling; breaks big tasks into 25/50-min win chunks
+- **📓 Journal** — daily prompt, mood, one entry a day
 
 Private data lives in the encrypted vault on the [life-dashboard](https://github.com/TheOtherBlkGrl/life-dashboard). This planner keeps only what the browser stores locally (localStorage) plus public content.
 

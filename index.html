@@ -40,11 +40,21 @@
     <button class="tab-btn" data-tab="garden">🌱 Garden</button>
     <button class="tab-btn" data-tab="social">👯 Social</button>
     <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
+    <button class="tab-btn" data-tab="blocks">🧱 Blocks</button>
+    <button class="tab-btn" data-tab="journal">📓 Journal</button>
   </nav>
 
   <main class="dashboard">
 
     <section class="tab-panel active" id="panel-today">
+      <div class="card wins-card">
+        <div class="card-header">
+          <h2>🏆 Today's Wins</h2>
+          <span class="badge-pill" id="winsCount">0 wins</span>
+        </div>
+        <p class="helper-text">Your running scoreboard: finished blocks, crushed tasks, kept rituals, handled bills. Proof, not vibes.</p>
+        <div id="winsList" class="wins-list"></div>
+      </div>
       <div class="anchor-grid">
 
         <div class="card manifestation-card">
@@ -267,6 +277,78 @@
           <button type="submit" class="add-btn">➕</button>
         </form>
         <div id="jobsList" class="line-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-blocks">
+      <div class="card">
+        <div class="card-header">
+          <h2>🧱 Block Scheduling</h2>
+          <input type="date" id="blockDate" class="date-picker" />
+        </div>
+        <p class="helper-text">Give every hour a job. A finished block is a win, and wins stack up on your Today board.</p>
+
+        <form id="breakdownForm" class="row-form breakdown-form">
+          <input type="text" id="breakdownText" placeholder="Big scary thing to break down (build the tracker deck)..." required />
+          <input type="number" id="breakdownMinutes" placeholder="Total min" min="25" step="5" required />
+          <select id="breakdownChunk">
+            <option value="25">25-min chunks</option>
+            <option value="50">50-min chunks</option>
+          </select>
+          <button type="submit" class="add-btn">⚡ Break It Down</button>
+        </form>
+
+        <form id="blockForm" class="row-form">
+          <input type="text" id="blockLabel" placeholder="What's this block for?" required />
+          <input type="time" id="blockStart" required />
+          <select id="blockDur">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+            <option value="90">90 min</option>
+            <option value="120">2 hrs</option>
+          </select>
+          <select id="blockCat">
+            <option value="focus">🔮 Deep Focus</option>
+            <option value="admin">💸 Admin</option>
+            <option value="body">🌿 Body & Care</option>
+            <option value="joy">🎉 Joy</option>
+          </select>
+          <button type="submit" class="add-btn">➕ Block</button>
+        </form>
+
+        <div class="timeline-wrap">
+          <div class="timeline" id="timeline"></div>
+          <div class="timeline-hours"><span>5a</span><span>9a</span><span>1p</span><span>5p</span><span>9p</span><span></span></div>
+        </div>
+        <div id="blocksList" class="line-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-journal">
+      <div class="card">
+        <div class="card-header">
+          <h2>📓 Journal</h2>
+          <div class="journal-nav">
+            <button id="journalPrev" class="mini-btn">◀</button>
+            <strong id="journalDateLabel">Today</strong>
+            <button id="journalNext" class="mini-btn">▶</button>
+            <button id="journalTodayBtn" class="mini-btn">Today</button>
+          </div>
+        </div>
+        <p class="helper-text">One entry a day is plenty. The prompt is optional fuel, not homework.</p>
+        <div class="card-inner-prompt">✨ <span id="journalPrompt"></span></div>
+        <div class="mood-row" id="moodRow">
+          <button class="mood-btn" data-mood="🔥">🔥 On fire</button>
+          <button class="mood-btn" data-mood="💪">💪 Steady</button>
+          <button class="mood-btn" data-mood="✨">✨ Soft</button>
+          <button class="mood-btn" data-mood="😴">😴 Low</button>
+          <button class="mood-btn" data-mood="🌧️">🌧️ Heavy</button>
+        </div>
+        <textarea id="journalInput" placeholder="Today I..."></textarea>
+        <button id="journalSaveBtn" class="add-btn journal-save">💾 Save Entry</button>
+        <div id="journalList" class="line-list journal-list"></div>
       </div>
     </section>
 
