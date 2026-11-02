@@ -775,3 +775,37 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
   .task-creator { gap: 0.45rem; }
   .task-quick-card .add-btn { padding: 0.55rem 0.9rem; }
 }
+
+/* MONTH VIEW */
+.month-nav { display: flex; align-items: center; gap: 0.4rem; }
+.month-nav span { font-weight: 700; min-width: 9.5rem; text-align: center; }
+.month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.month-dow { font-size: 0.72rem; color: var(--text-muted); text-align: center; font-weight: 700; padding: 0.2rem 0; }
+.month-cell {
+  min-height: 76px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 0.25rem;
+  overflow: hidden;
+}
+.month-cell.out { opacity: 0.35; }
+.month-cell.today { border-color: var(--leo-gold); box-shadow: 0 0 0 1px var(--leo-gold); }
+.month-day { font-size: 0.75rem; font-weight: 700; display: block; }
+.month-chips { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+.month-chip {
+  font-size: 0.62rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  padding: 1px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.month-chip.gcal { background: rgba(66, 133, 244, 0.12); border: 1px solid rgba(66, 133, 244, 0.4); }
+@media (max-width: 680px) {
+  .month-cell { min-height: 52px; }
+  .month-day { font-size: 0.65rem; }
+  .month-chip { font-size: 0.55rem; }
+  .month-nav span { min-width: 7.5rem; font-size: 0.85rem; }
+}
