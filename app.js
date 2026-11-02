@@ -854,37 +854,86 @@ function renderHourly() {
   const timed = todaysTimedTasks();
   const anytime = todaysAnytimeTasks();
   const gcalToday = (typeof gcalEventsOn === "function") ? gcalEventsOn(today) : [];
+  const DAY_START = 5 * 60, DAY_END = 24 * 60;
+  const span = DAY_END - DAY_START;
+  const pct = m => Math.max(0, Math.min(100, ((m - DAY_START) / span) * 100));
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+  // collect every timed thing on the chart
+  const items = [];
+  blocksToday.forEach(b => {
+    const s = toMin(b.start);
+    items.push({
+      s, e: Math.min(s + b.dur, DAY_END),
+      label: (b.done ? "\u2705 " : "") + b.label, sub: fmtTime(b.start),
+      cls: "g-block", style: `background:${CAT_COLORS[b.cat]}22;border-color:${CAT_COLORS[b.cat]}`
+    });
+  });
+  timed.forEach(t => {
+    const s = toMin(t.time);
+    items.push({
+      s, e: Math.min(s + 60, DAY_END),
+      label: `${PRI_EMOJI[t.pri] || "\u{1F3AF}"} ${t.text}`, sub: fmtTime(t.time),
+      cls: "g-task", style: ""
+    });
+  });
+  gcalToday.filter(ev => !ev.allDay).forEach(ev => {
+    const sd = new Date(ev.start), ed = new Date(ev.end);
+    const s = sd.getHours() * 60 + sd.getMinutes();
+    let eM = ed.getHours() * 60 + ed.getMinutes();
+    if (eM <= s) eM = DAY_END;
+    items.push({
+      s, e: Math.max(s + 15, Math.min(eM, DAY_END)),
+      label: "\u{1F4C5} " + ev.title, sub: gcalRange(ev),
+      cls: "g-gcal", style: ""
+    });
+  });
+
+  // all-day / anytime lane sits on top
   const anytimeAll = [
-    ...gcalToday.filter(ev => ev.allDay).map(ev => `📅 ${ev.title} (all day)`),
+    ...gcalToday.filter(ev => ev.allDay).map(ev => `\u{1F4C5} ${ev.title} (all day)`),
     ...anytime.map(t => `${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}`)
   ];
-  let htmlOut = "";
 
-  if (anytimeAll.length) {
-    htmlOut += `<div class="hour-row anytime-row">
-      <span class="hour-label">Anytime</span>
-      <div class="hour-content">${anytimeAll.map(t =>
-        `<span class="hour-chip">${t}</span>`).join("")}</div>
-    </div>`;
-  }
+  // greedy lane packing so overlapping items each get their own row
+  items.sort((a, b) => a.s - b.s || a.e - b.e);
+  const lanes = [];
+  items.forEach(it => {
+    let placed = false;
+    for (const lane of lanes) {
+      if (lane.every(o => o.e <= it.s + 0.01)) { lane.push(it); placed = true; break; }
+    }
+    if (!placed) lanes.push([it]);
+  });
 
+  const hourTicks = [];
   for (let h = 5; h < 24; h++) {
-    const isNow = nowMin >= h * 60 && nowMin < (h + 1) * 60;
-    const cellBits = [];
-    blocksToday.filter(b => Math.floor(toMin(b.start) / 60) === h).forEach(b => {
-      cellBits.push(`<span class="hour-chip block-chip" style="background:${CAT_COLORS[b.cat]}22;border-color:${CAT_COLORS[b.cat]}">${b.done ? "\u2705 " : ""}${b.label} \u00b7 ${fmtTime(b.start)}</span>`);
-    });
-    timed.filter(t => Math.floor(toMin(t.time) / 60) === h).forEach(t => {
-      cellBits.push(`<span class="hour-chip task-chip">${PRI_EMOJI[t.pri] || "🎯"} ${t.text} \u00b7 ${fmtTime(t.time)}</span>`);
-    });
-    gcalToday.filter(ev => !ev.allDay && new Date(ev.start).getHours() === h).forEach(ev => {
-      cellBits.push(`<span class="hour-chip gcal-chip">📅 ${ev.title} \u00b7 ${gcalRange(ev)}</span>`);
-    });
-    htmlOut += `<div class="hour-row ${isNow ? "now" : ""}">
-      <span class="hour-label">${fmtTime(`${String(h).padStart(2, "0")}:00`).replace(":00", "")}</span>
-      <div class="hour-content">${cellBits.join("")}</div>
-    </div>`;
+    hourTicks.push(`<span class="g-tick" style="left:${((h * 60 - DAY_START) / span * 100).toFixed(2)}%">${h === 12 ? "12p" : h > 12 ? (h - 12) + "p" : h + "a"}</span>`);
   }
+
+  let htmlOut = "";
+  if (anytimeAll.length) {
+    htmlOut += `<div class="gantt-anytime"><span class="g-anytime-label">All day</span><div>${anytimeAll.map(t => `<span class="hour-chip">${esc(t)}</span>`).join("")}</div></div>`;
+  }
+  htmlOut += `<div class="gantt-wrap"><div class="gantt-inner">`;
+  htmlOut += `<div class="gantt-axis">${hourTicks.join("")}</div>`;
+
+  const showNow = nowMin >= DAY_START && nowMin < DAY_END;
+  if (!items.length && !anytimeAll.length) {
+    htmlOut += `<div class="gantt-empty">No timed items today \u2014 the whole day is yours. Drop something in the quick-add above.</div>`;
+  } else {
+    while (lanes.length < 3) lanes.push([]);  // keep at least 3 rows so the chart reads as a chart
+    lanes.forEach(lane => {
+      htmlOut += `<div class="gantt-row">${lane.map(it => {
+        const w = Math.max(pct(it.e) - pct(it.s), 4);
+        return `<div class="g-bar ${it.cls}" style="left:${pct(it.s).toFixed(2)}%;width:${w.toFixed(2)}%;${it.style}" title="${esc(it.label)} \u00b7 ${esc(it.sub)}">${esc(it.label)}<small>${esc(it.sub)}</small></div>`;
+      }).join("")}</div>`;
+    });
+  }
+  if (showNow) {
+    htmlOut += `<div class="gantt-nowline" style="left:${pct(nowMin).toFixed(2)}%"><span>${fmtTime(toHHMM(nowMin))}</span></div>`;
+  }
+  htmlOut += `</div></div>`;
   grid.innerHTML = htmlOut;
   renderNowBanner();
 }

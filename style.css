@@ -809,3 +809,36 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
   .month-chip { font-size: 0.55rem; }
   .month-nav span { min-width: 7.5rem; font-size: 0.85rem; }
 }
+
+/* ---- GANTT DAY TIMELINE ---- */
+.gantt-anytime { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.4rem 0.6rem 0.5rem; }
+.g-anytime-label { color: #9a8fb8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; padding-top: 0.4rem; white-space: nowrap; }
+.gantt-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.gantt-inner { position: relative; min-width: 680px; }
+.gantt-axis { position: relative; height: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.g-tick { position: absolute; bottom: 0.12rem; transform: translateX(-50%); font-size: 0.64rem; color: #9a8fb8; }
+.gantt-row { position: relative; height: 2.05rem; border-bottom: 1px dashed rgba(255,255,255,0.07); }
+.gantt-row:last-child { border-bottom: none; }
+.g-bar {
+  position: absolute; top: 0.24rem; bottom: 0.24rem; border-radius: 0.55rem;
+  border: 1px solid rgba(255,255,255,0.28); padding: 0.14rem 0.5rem;
+  font-size: 0.72rem; line-height: 1.05; overflow: hidden; white-space: nowrap;
+  text-overflow: ellipsis; cursor: default;
+}
+.g-bar small { display: block; font-size: 0.6rem; opacity: 0.75; }
+.g-task { background: rgba(124,77,255,0.20); border-color: #9f7bff; }
+.g-gcal { background: rgba(92,107,192,0.28); border-color: #7986cb; }
+.gantt-nowline {
+  position: absolute; top: 1.55rem; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, var(--leo-gold), rgba(255,213,79,0));
+  pointer-events: none; z-index: 3;
+}
+.gantt-nowline span {
+  position: absolute; top: -0.15rem; left: 3px; transform: translateY(-100%);
+  font-size: 0.62rem; color: var(--leo-gold); font-weight: 700; white-space: nowrap;
+}
+.gantt-empty { padding: 1.4rem 0.6rem; text-align: center; color: #b9a9d9; font-size: 0.85rem; font-style: italic; }
+@media (max-width: 640px) {
+  .gantt-inner { min-width: 560px; }
+  .g-bar { font-size: 0.66rem; padding: 0.1rem 0.35rem; }
+}
