@@ -42,6 +42,7 @@
     <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
     <button class="tab-btn" data-tab="blocks">🧱 Blocks</button>
     <button class="tab-btn" data-tab="journal">📓 Journal</button>
+    <button class="tab-btn" data-tab="astro">🔮 Chart</button>
   </nav>
 
   <main class="dashboard">
@@ -371,6 +372,26 @@
       </div>
     </section>
 
+    <section class="tab-panel" id="panel-astro">
+      <div class="card">
+        <div class="card-header">
+          <h2>🔮 Your Chart: Today's Sky</h2>
+          <span class="badge-pill">Leo Sun · Taurus Rising · Libra Moon</span>
+        </div>
+        <p class="helper-text">Real planetary positions for today, checked against your natal chart, with concrete planning advice.</p>
+        <div id="skyNow"></div>
+        <h3 class="astro-sub">How to plan today</h3>
+        <div id="astroAdvice"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>🗓️ Week Ahead</h2>
+        </div>
+        <p class="helper-text">The week's weather for your chart, so you can schedule with the current instead of against it.</p>
+        <div id="astroWeek" class="astro-week"></div>
+      </div>
+    </section>
+
   </main>
 
   <div id="cosmicToast" class="cosmic-toast hidden">
@@ -385,5 +406,6 @@
   </div>
 
   <script src="app.js"></script>
+  <script src="astro.js"></script>
 </body>
 </html>

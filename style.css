@@ -689,3 +689,54 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
   .card { padding: 1rem; }
   .hour-row { grid-template-columns: 48px 1fr; }
 }
+
+/* ASTRO TAB */
+.astro-moonline {
+  background: rgba(244, 184, 96, 0.08);
+  border: 1px solid rgba(244, 184, 96, 0.3);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+.astro-skyrow { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.sky-chip {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+  color: var(--text-muted);
+}
+.astro-sub {
+  font-size: 0.95rem;
+  margin: 0.9rem 0 0.5rem;
+  color: var(--leo-gold);
+}
+.astro-advice { display: flex; flex-direction: column; gap: 0.45rem; }
+.astro-advice-line {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.86rem;
+}
+.astro-week {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.6rem;
+}
+.astro-day-card {
+  background: rgba(28, 24, 41, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 0.7rem 0.6rem;
+  text-align: center;
+}
+.astro-day-card.astro-today {
+  border: 1px solid rgba(244, 184, 96, 0.5);
+  background: linear-gradient(180deg, rgba(244, 184, 96, 0.07), rgba(28, 24, 41, 0.85));
+}
+.astro-day-head { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 700; }
+.astro-day-moon { font-size: 0.75rem; color: var(--libra-rose); margin: 0.25rem 0; }
+.astro-day-note { font-size: 0.68rem; color: var(--text-muted); line-height: 1.4; }
