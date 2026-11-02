@@ -828,6 +828,7 @@ function todaysAnytimeTasks() {
 }
 
 function weekTaskChips(i) {
+  const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   const now = new Date();
   const monday = new Date(now);
   monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
@@ -837,7 +838,7 @@ function weekTaskChips(i) {
   const due = tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col));
   const gcal = (typeof gcalEventsOn === "function") ? gcalEventsOn(key) : [];
   const chips = [
-    ...gcal.map(ev => `<span class="week-task-chip gcal">📅 ${ev.title}</span>`),
+    ...gcal.map(ev => `<span class="week-task-chip gcal gcal-detail" data-cal="${esc(ev.calId)}" data-eid="${esc(ev.id)}" data-cached="${encodeURIComponent(JSON.stringify(ev))}" title="Show details">📅 ${esc(ev.title)}</span>`),
     ...due.map(t => `<span class="week-task-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`)
   ];
   if (!chips.length) return "";
@@ -885,14 +886,16 @@ function renderHourly() {
     items.push({
       s, e: Math.max(s + 15, Math.min(eM, DAY_END)),
       label: "\u{1F4C5} " + ev.title, sub: gcalRange(ev),
-      cls: "g-gcal", style: ""
+      cls: "g-gcal gcal-detail", style: "",
+      calId: ev.calId, eid: ev.id, ev
     });
   });
 
   // all-day / anytime lane sits on top
+  const gcalChip = ev => `<span class="hour-chip gcal-detail" data-cal="${esc(ev.calId)}" data-eid="${esc(ev.id)}" data-cached="${encodeURIComponent(JSON.stringify(ev))}" title="Show details">\u{1F4C5} ${esc(ev.title)} (all day)</span>`;
   const anytimeAll = [
-    ...gcalToday.filter(ev => ev.allDay).map(ev => `\u{1F4C5} ${ev.title} (all day)`),
-    ...anytime.map(t => `${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}`)
+    ...gcalToday.filter(ev => ev.allDay).map(ev => ({ html: gcalChip(ev) })),
+    ...anytime.map(t => ({ html: esc(`${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}`) }))
   ];
 
   // greedy lane packing so overlapping items each get their own row
@@ -913,7 +916,7 @@ function renderHourly() {
 
   let htmlOut = "";
   if (anytimeAll.length) {
-    htmlOut += `<div class="gantt-anytime"><span class="g-anytime-label">All day</span><div>${anytimeAll.map(t => `<span class="hour-chip">${esc(t)}</span>`).join("")}</div></div>`;
+    htmlOut += `<div class="gantt-anytime"><span class="g-anytime-label">All day</span><div>${anytimeAll.map(t => t.html).join("")}</div></div>`;
   }
   htmlOut += `<div class="gantt-wrap"><div class="gantt-inner">`;
   htmlOut += `<div class="gantt-axis">${hourTicks.join("")}</div>`;
@@ -926,7 +929,11 @@ function renderHourly() {
     lanes.forEach(lane => {
       htmlOut += `<div class="gantt-row">${lane.map(it => {
         const w = Math.max(pct(it.e) - pct(it.s), 4);
-        return `<div class="g-bar ${it.cls}" style="left:${pct(it.s).toFixed(2)}%;width:${w.toFixed(2)}%;${it.style}" title="${esc(it.label)} \u00b7 ${esc(it.sub)}">${esc(it.label)}<small>${esc(it.sub)}</small></div>`;
+        const clickCls = it.eid ? " gcal-detail" : "";
+        const clickAttrs = it.eid
+          ? ` data-cal="${esc(it.calId)}" data-eid="${esc(it.eid)}" data-cached="${encodeURIComponent(JSON.stringify(it.ev))}"`
+          : "";
+        return `<div class="g-bar ${it.cls}${clickCls}" style="left:${pct(it.s).toFixed(2)}%;width:${w.toFixed(2)}%;${it.style}" title="${esc(it.label)} \u00b7 ${esc(it.sub)}"${clickAttrs}>${esc(it.label)}<small>${esc(it.sub)}</small></div>`;
       }).join("")}</div>`;
     });
   }
@@ -1027,4 +1034,71 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+});
+// ---- event detail modal (click any calendar event anywhere in the planner) ----
+function gcalDetailRange(ev) {
+  const fmtD = d => d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+  const t = d => d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+  const s = new Date(ev.start), e = new Date(ev.end);
+  if (ev.allDay) {
+    const endDay = ev.end ? new Date(new Date(ev.end).getTime() - 86400000) : null;
+    return endDay && endDay.toISOString().slice(0, 10) !== ev.start.slice(0, 10)
+      ? `${fmtD(s)} \u2013 ${fmtD(endDay)} (all day)` : `${fmtD(s)} (all day)`;
+  }
+  const sameDay = s.toDateString() === e.toDateString();
+  return sameDay ? `${fmtD(s)} \u00b7 ${t(s)} \u2013 ${t(e)}` : `${fmtD(s)} ${t(s)} \u2013 ${fmtD(e)} ${t(e)}`;
+}
+
+function ensureEventModal() {
+  if (document.getElementById("evDetailOverlay")) return;
+  document.body.insertAdjacentHTML("beforeend", `
+    <div id="evDetailOverlay" class="ev-overlay hidden">
+      <div class="ev-modal">
+        <button class="ev-close" aria-label="Close">\u2715</button>
+        <div id="evDetailBody"></div>
+      </div>
+    </div>`);
+  const ov = document.getElementById("evDetailOverlay");
+  ov.addEventListener("click", e => { if (e.target === ov) ov.classList.add("hidden"); });
+  ov.querySelector(".ev-close").addEventListener("click", () => ov.classList.add("hidden"));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") ov.classList.add("hidden"); });
+}
+
+async function showEventDetail(calId, eventId, cached) {
+  ensureEventModal();
+  const body = document.getElementById("evDetailBody");
+  document.getElementById("evDetailOverlay").classList.remove("hidden");
+  const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const row = (k, v) => v ? `<div class="ev-row"><span class="ev-k">${k}</span><span>${v}</span></div>` : "";
+  const paint = ev => {
+    const who = (ev.attendees || []).map(a => esc(a.email)).join(", ");
+    body.innerHTML = `
+      <h3 class="ev-title">${esc(ev.summary || "(no title)")}</h3>
+      ${row("Calendar", esc(ev._calName))}
+      ${row("When", gcalDetailRange(ev))}
+      ${row("Where", esc(ev.location))}
+      ${row("Who", who)}
+      ${ev.description ? `<div class="ev-desc">${esc(ev.description).replace(/\n/g, "<br>")}</div>` : ""}
+      ${ev.htmlLink ? `<a class="ev-link" href="${ev.htmlLink}" target="_blank" rel="noopener">Open in Google Calendar \u2197</a>` : ""}`;
+  };
+  if (cached && cached.title) paint({ ...cached, _calName: cached.calName });
+  else body.innerHTML = `<p class="ev-loading">Loading event details...</p>`;
+  try {
+    if (typeof GCAL !== "undefined" && GCAL.token && calId && eventId) {
+      const ev = await gcalApi(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events/${encodeURIComponent(eventId)}`);
+      paint({ ...ev, _calName: (cached && cached.calName) || (ev.organizer && ev.organizer.email) });
+    } else if (!cached) {
+      body.innerHTML = `<p class="ev-loading">Connect your calendar (\u{1F4C5} Connect Calendar) to see full details.</p>`;
+    }
+  } catch (e) {
+    if (!cached) body.innerHTML = `<p class="ev-loading">Couldn't load full details. Try Force Sync, then click again.</p>`;
+  }
+}
+
+document.addEventListener("click", e => {
+  const el = e.target.closest(".gcal-detail");
+  if (!el) return;
+  e.preventDefault();
+  e.stopPropagation();
+  showEventDetail(el.dataset.cal, el.dataset.eid, el.dataset.cached ? JSON.parse(decodeURIComponent(el.dataset.cached)) : null);
 });

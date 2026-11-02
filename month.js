@@ -35,7 +35,7 @@ function renderMonth() {
     const out = d.getMonth() !== m;
     const chips = [];
     gcalEventsLocal(key).slice(0, 3).forEach(ev =>
-      chips.push(`<span class="month-chip gcal" title="${ev.title.replace(/"/g, "&quot;")}">📅 ${ev.title}</span>`));
+      chips.push(`<span class="month-chip gcal gcal-detail" data-cal="${ev.calId.replace(/"/g, "&quot;")}" data-eid="${ev.id.replace(/"/g, "&quot;")}" data-cached="${encodeURIComponent(JSON.stringify(ev))}" title="Show details${ev.title.replace(/"/g, "&quot;")}">📅 ${ev.title}</span>`));
     tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col)).slice(0, 3).forEach(t =>
       chips.push(`<span class="month-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`));
     html += `<div class="month-cell${out ? " out" : ""}${key === todayKey ? " today" : ""}">
