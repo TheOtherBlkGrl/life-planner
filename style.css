@@ -834,9 +834,12 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
   pointer-events: none; z-index: 3;
 }
 .gantt-nowline span {
-  position: absolute; top: -0.15rem; left: 3px; transform: translateY(-100%);
+  position: absolute; top: 0.2rem; left: 4px;
   font-size: 0.62rem; color: var(--leo-gold); font-weight: 700; white-space: nowrap;
+  background: rgba(26,16,46,0.85); border-radius: 0.4rem; padding: 0.05rem 0.35rem;
 }
+.gantt-axis .g-tick:first-child { transform: none; }
+.gantt-axis .g-tick:last-child { transform: translateX(-100%); }
 .gantt-empty { padding: 1.4rem 0.6rem; text-align: center; color: #b9a9d9; font-size: 0.85rem; font-style: italic; }
 @media (max-width: 640px) {
   .gantt-inner { min-width: 560px; }
