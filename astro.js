@@ -169,14 +169,14 @@ const MOON_SIGN_ADVICE = {
 function moonPhaseName(ms) {
   const d = schlyterD(ms);
   const elong = rev(moonLon(d) - sunLon(d));
-  if (elong < 22.5 || elong >= 337.5) return ["\U0001F311", "New Moon"];
-  if (elong < 67.5) return ["\U0001F312", "Waxing Crescent"];
-  if (elong < 112.5) return ["\U0001F313", "First Quarter"];
-  if (elong < 157.5) return ["\U0001F314", "Waxing Gibbous"];
-  if (elong < 202.5) return ["\U0001F315", "Full Moon"];
-  if (elong < 247.5) return ["\U0001F316", "Waning Gibbous"];
-  if (elong < 292.5) return ["\U0001F317", "Last Quarter"];
-  return ["\U0001F318", "Waning Crescent"];
+  if (elong < 22.5 || elong >= 337.5) return ["🌑", "New Moon"];
+  if (elong < 67.5) return ["🌒", "Waxing Crescent"];
+  if (elong < 112.5) return ["🌓", "First Quarter"];
+  if (elong < 157.5) return ["🌔", "Waxing Gibbous"];
+  if (elong < 202.5) return ["🌕", "Full Moon"];
+  if (elong < 247.5) return ["🌖", "Waning Gibbous"];
+  if (elong < 292.5) return ["🌗", "Last Quarter"];
+  return ["🌘", "Waning Crescent"];
 }
 
 function noonLocalMs(offsetDays) {
@@ -218,7 +218,7 @@ function renderAstro() {
   if (hard.length) lines.push(`\u26A0\uFE0F ${aspectLine(hard[0]).detail.replace(/^[^:]*\u00b7 /, "")}`);
   if (soft.length) lines.push(`\u2728 ${aspectLine(soft[0]).detail.replace(/^[^:]*\u00b7 /, "")}`);
   const moonSign = SIGNS[Math.floor(sky.Moon.lon / 30) % 12];
-  lines.push(`\U0001F319 ${MOON_SIGN_ADVICE[moonSign]}`);
+  lines.push(`🌙 ${MOON_SIGN_ADVICE[moonSign]}`);
   if (hard.length >= 2) lines.push("Multiple pressure aspects: keep today's schedule loose and stack low-spoon wins in the gaps.");
   adviceBox.innerHTML = lines.map(l => `<div class="astro-advice-line">${l}</div>`).join("");
 

@@ -525,7 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- 13. BLOCK SCHEDULING ---
 let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
 const CAT_COLORS = { focus: "#9d4edd", admin: "#f4b860", body: "#52b788", joy: "#e5989b" };
-const CAT_LABELS = { focus: "\U0001F52E Deep Focus", admin: "\U0001F4B8 Admin", body: "\U0001F33F Body & Care", joy: "\U0001F389 Joy" };
+const CAT_LABELS = { focus: "🔮 Deep Focus", admin: "💸 Admin", body: "🌿 Body & Care", joy: "🎉 Joy" };
 const DAY_START_MIN = 5 * 60;      // 5:00 AM
 const DAY_SPAN_MIN = 19 * 60;      // through midnight
 
@@ -584,7 +584,7 @@ function renderBlocks() {
           <span class="cat-dot" style="background:${CAT_COLORS[b.cat]}"></span>
           <span><strong>${b.start}</strong> \u00b7 ${b.label} <small>(${b.dur} min \u00b7 ${CAT_LABELS[b.cat]})</small></span>
           <span class="due-tag">${toHHMM(toMin(b.start) + b.dur)}</span>
-          <button onclick="deleteBlock(${b.id})">\U0001F5D1\ufe0f</button>
+          <button onclick="deleteBlock(${b.id})">🗑\ufe0f</button>
         </div>
       `).join("")
     : `<p class="helper-text">No blocks on this day yet. Break down something big, or lay out the day hour by hour.</p>`;
@@ -669,7 +669,7 @@ function renderJournal() {
   list.innerHTML = dates.length
     ? dates.map(d => `
         <div class="line-item journal-item">
-          <span>${journal[d].mood || "\U0001F4D3"}</span>
+          <span>${journal[d].mood || "📓"}</span>
           <span><strong>${prettyDate(d)}</strong> \u00b7 ${journal[d].text.slice(0, 90)}${journal[d].text.length > 90 ? "..." : ""}</span>
           <button onclick="loadJournalEntry('${d}')">Open</button>
         </div>
@@ -700,19 +700,19 @@ function renderWins() {
   const wins = [];
 
   blocks.filter(b => b.date === today && b.done)
-    .forEach(b => wins.push(`\U0001F9F1 Block done: ${b.label}`));
+    .forEach(b => wins.push(`🧱 Block done: ${b.label}`));
 
   tasks.filter(t => t.col === "done" && t.doneAt &&
       new Date(t.doneAt).toISOString().slice(0, 10) === today)
-    .forEach(t => wins.push(`\U0001F3AF Crushed: ${t.text}`));
+    .forEach(t => wins.push(`🎯 Crushed: ${t.text}`));
 
   const selfcareToday = JSON.parse(localStorage.getItem("ccc_selfcare")) || [];
   const kept = selfcareToday.filter(i => i.done).length;
-  if (kept) wins.push(`\U0001F6C1 Self care kept: ${kept} ritual${kept > 1 ? "s" : ""}`);
+  if (kept) wins.push(`🛁 Self care kept: ${kept} ritual${kept > 1 ? "s" : ""}`);
 
   bills.filter(b => b.paid && b.paidAt &&
       new Date(b.paidAt).toISOString().slice(0, 10) === today)
-    .forEach(b => wins.push(`\U0001F4B8 Handled: ${b.name} payment`));
+    .forEach(b => wins.push(`💸 Handled: ${b.name} payment`));
 
   const countEl = document.getElementById("winsCount");
   countEl.textContent = `${wins.length} win${wins.length === 1 ? "" : "s"}`;
@@ -803,7 +803,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderWins();
 });
 // --- 17. HOURLY TODAY SCHEDULE + REMINDERS ---
-const PRI_EMOJI = { high: "\U0001F525", med: "\u26A1", low: "\U0001F33F" };
+const PRI_EMOJI = { high: "🔥", med: "\u26A1", low: "🌿" };
 
 function fmtTime(hhmm) {
   if (!hhmm) return "";
@@ -837,7 +837,7 @@ function weekTaskChips(i) {
   const due = tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col));
   const gcal = (typeof gcalEventsOn === "function") ? gcalEventsOn(key) : [];
   const chips = [
-    ...gcal.map(ev => `<span class="week-task-chip gcal">\U0001F4C5 ${ev.title}</span>`),
+    ...gcal.map(ev => `<span class="week-task-chip gcal">📅 ${ev.title}</span>`),
     ...due.map(t => `<span class="week-task-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`)
   ];
   if (!chips.length) return "";
@@ -855,7 +855,7 @@ function renderHourly() {
   const anytime = todaysAnytimeTasks();
   const gcalToday = (typeof gcalEventsOn === "function") ? gcalEventsOn(today) : [];
   const anytimeAll = [
-    ...gcalToday.filter(ev => ev.allDay).map(ev => `\U0001F4C5 ${ev.title} (all day)`),
+    ...gcalToday.filter(ev => ev.allDay).map(ev => `📅 ${ev.title} (all day)`),
     ...anytime.map(t => `${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}`)
   ];
   let htmlOut = "";
@@ -875,10 +875,10 @@ function renderHourly() {
       cellBits.push(`<span class="hour-chip block-chip" style="background:${CAT_COLORS[b.cat]}22;border-color:${CAT_COLORS[b.cat]}">${b.done ? "\u2705 " : ""}${b.label} \u00b7 ${fmtTime(b.start)}</span>`);
     });
     timed.filter(t => Math.floor(toMin(t.time) / 60) === h).forEach(t => {
-      cellBits.push(`<span class="hour-chip task-chip">${PRI_EMOJI[t.pri] || "\U0001F3AF"} ${t.text} \u00b7 ${fmtTime(t.time)}</span>`);
+      cellBits.push(`<span class="hour-chip task-chip">${PRI_EMOJI[t.pri] || "🎯"} ${t.text} \u00b7 ${fmtTime(t.time)}</span>`);
     });
     gcalToday.filter(ev => !ev.allDay && new Date(ev.start).getHours() === h).forEach(ev => {
-      cellBits.push(`<span class="hour-chip gcal-chip">\U0001F4C5 ${ev.title} \u00b7 ${gcalRange(ev)}</span>`);
+      cellBits.push(`<span class="hour-chip gcal-chip">📅 ${ev.title} \u00b7 ${gcalRange(ev)}</span>`);
     });
     htmlOut += `<div class="hour-row ${isNow ? "now" : ""}">
       <span class="hour-label">${fmtTime(`${String(h).padStart(2, "0")}:00`).replace(":00", "")}</span>
@@ -907,7 +907,7 @@ function renderNowBanner() {
   let htmlOut;
   if (gcalNow) {
     const e = new Date(gcalNow.end);
-    htmlOut = `\U0001F4C5 <strong>Right now (Google):</strong> ${gcalNow.title} \u00b7 until ${fmtTime(toHHMM(e.getHours() * 60 + e.getMinutes()))}`;
+    htmlOut = `📅 <strong>Right now (Google):</strong> ${gcalNow.title} \u00b7 until ${fmtTime(toHHMM(e.getHours() * 60 + e.getMinutes()))}`;
   } else if (current) {
     htmlOut = `\u23F0 <strong>Right now:</strong> ${current.label} \u00b7 until ${fmtTime(toHHMM(toMin(current.start) + current.dur))}`;
   } else {
@@ -916,8 +916,8 @@ function renderNowBanner() {
       ...todaysTimedTasks().map(t => ({ t: toMin(t.time), label: t.text, time: t.time }))
     ].filter(x => x.t > nowMin).sort((a, b) => a.t - b.t)[0];
     htmlOut = upcoming
-      ? `\U0001F552 Free right now \u00b7 next up ${fmtTime(upcoming.time)}: ${upcoming.label}`
-      : `\U0001F552 Open window \u00b7 nothing else scheduled today`;
+      ? `🕒 Free right now \u00b7 next up ${fmtTime(upcoming.time)}: ${upcoming.label}`
+      : `🕒 Open window \u00b7 nothing else scheduled today`;
   }
   banner.innerHTML = htmlOut;
   banner.classList.remove("hidden");
@@ -965,16 +965,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const remindBtn = document.getElementById("remindToggle");
   if (remindBtn) {
-    const markOn = () => { remindBtn.textContent = "\U0001F514 Reminders On"; };
+    const markOn = () => { remindBtn.textContent = "🔔 Reminders On"; };
     if (typeof Notification !== "undefined" && Notification.permission === "granted") markOn();
     remindBtn.addEventListener("click", () => {
       if (typeof Notification === "undefined") {
-        cosmicAlert("\U0001F514 No Phone Alerts", "Your browser cannot do push reminders. The on-page bell still fires while the planner is open.");
+        cosmicAlert("🔔 No Phone Alerts", "Your browser cannot do push reminders. The on-page bell still fires while the planner is open.");
         return;
       }
       Notification.requestPermission().then(p => {
-        if (p === "granted") { markOn(); cosmicAlert("\U0001F514 Reminders On", "Your phone will buzz at each block and timed task. Cosmic punctuality, unlocked."); }
-        else remindBtn.textContent = "\U0001F514 Enable Reminders";
+        if (p === "granted") { markOn(); cosmicAlert("🔔 Reminders On", "Your phone will buzz at each block and timed task. Cosmic punctuality, unlocked."); }
+        else remindBtn.textContent = "🔔 Enable Reminders";
       });
     });
   }

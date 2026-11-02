@@ -50,7 +50,7 @@ function refreshSyncStatus() {
 function connectGcal() {
   const clientId = gcalCfg();
   if (!clientId) {
-    cosmicAlert("\U0001F4C5 Calendar Sync Not Set Up Yet", "This needs a one-time Google Cloud OAuth client ID. Ask Fo: she has the walkthrough and will wire it in.");
+    cosmicAlert("📅 Calendar Sync Not Set Up Yet", "This needs a one-time Google Cloud OAuth client ID. Ask Fo: she has the walkthrough and will wire it in.");
     return;
   }
   const saved = sessionStorage.getItem("ccc_gcal_token");
@@ -66,7 +66,7 @@ function connectGcal() {
         fetchAllCalendars();
       }
     },
-    error_callback: () => cosmicAlert("\U0001F4C5 Sign-In Closed", "No worries, the calendar stays local until you connect.")
+    error_callback: () => cosmicAlert("📅 Sign-In Closed", "No worries, the calendar stays local until you connect.")
   });
   client.requestAccessToken({ prompt: "" });
 }
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
   syncBtn.addEventListener("click", fetchAllCalendars);
 
   if (!gcalCfg()) {
-    connectBtn.textContent = "\U0001F4C5 Connect Calendar (setup needed)";
+    connectBtn.textContent = "📅 Connect Calendar (setup needed)";
     return;
   }
   if (GCAL.events.length) {
