@@ -760,3 +760,18 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 @media (max-width: 680px) {
   .sched-controls { justify-content: flex-start; }
 }
+
+/* QUICK-ADD TASK CARD: pinned near the top, always reachable */
+.task-quick-card {
+  position: sticky;
+  top: 0.6rem;
+  z-index: 40;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.task-quick-card .task-creator { margin-bottom: 0; }
+@media (max-width: 680px) {
+  .task-quick-card { top: 3.4rem; }  /* clears the sticky tab bar */
+  .task-creator { gap: 0.45rem; }
+  .task-quick-card .add-btn { padding: 0.55rem 0.9rem; }
+}
