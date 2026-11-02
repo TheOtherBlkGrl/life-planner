@@ -55,6 +55,15 @@
         <p class="helper-text">Your running scoreboard: finished blocks, crushed tasks, kept rituals, handled bills. Proof, not vibes.</p>
         <div id="winsList" class="wins-list"></div>
       </div>
+
+      <div class="card schedule-card">
+        <div class="card-header">
+          <h2>⏰ Today's Schedule</h2>
+          <button id="remindToggle" class="mini-btn">🔔 Enable Reminders</button>
+        </div>
+        <div id="nowBanner" class="now-banner hidden"></div>
+        <div id="hourlyGrid" class="hourly-grid"></div>
+      </div>
       <div class="anchor-grid">
 
         <div class="card manifestation-card">
@@ -110,6 +119,16 @@
               <option value="low">🌿 Cozy Low-Spoon Wins</option>
               <option value="top3">🎯 Today's Rule of 3</option>
             </select>
+            <div class="task-meta">
+              <input type="date" id="taskDue" title="Due date (optional)" />
+              <input type="time" id="taskTime" title="Time (optional)" />
+              <select id="taskPri">
+                <option value="">Priority</option>
+                <option value="high">🔥 High</option>
+                <option value="med">⚡ Medium</option>
+                <option value="low">🌿 Low</option>
+              </select>
+            </div>
             <button type="submit" class="add-btn">➕ Add to Board</button>
           </form>
 
@@ -358,7 +377,7 @@
     <div class="toast-content">
       <span class="toast-icon">🦋</span>
       <div>
-        <h4>11:11 Cosmic Portal Alignment!</h4>
+        <h4 id="toastTitle">11:11 Cosmic Portal Alignment!</h4>
         <p id="toastMessage">Pause, Clare! Unclench your jaw, take a deep breath, and feel your next big win as already yours.</p>
       </div>
       <button id="closeToastBtn" class="close-toast">✖</button>

@@ -4,7 +4,7 @@ A cosmic-themed life planner built for high-spark brains, lunar flow & effortles
 
 ## Tabs
 
-- **🌟 Today** — manifestation scripting, Leo Sun main-character win, Taurus/Libra check-ins, brain-dump kanban, dopamine menu
+- **🌟 Today** — manifestation scripting, Leo Sun main-character win, Taurus/Libra check-ins, brain-dump kanban, dopamine menu, Today's Wins scoreboard, and an hourly schedule (5am–11pm) with a Right Now banner and start-time reminders
 - **🗓️ Week** — park plans on the day they belong to
 - **💸 Bills** — due dates, paid toggles, overdue warnings, unpaid total
 - **🛁 Self Care** — daily rituals that auto-reset each morning
@@ -12,6 +12,7 @@ A cosmic-themed life planner built for high-spark brains, lunar flow & effortles
 - **👯 Social** — people and plans so nobody goes quiet
 - **💼 Job Hunt** — public targets and leads
 - **🧱 Blocks** — block scheduling; breaks big tasks into 25/50-min win chunks
+- **✅ Tasks** — every task takes an optional due date, time and priority; due dates show on cards, the week grid and the hourly Today sheet
 - **📓 Journal** — daily prompt, mood, one entry a day
 
 Private data lives in the encrypted vault on the [life-dashboard](https://github.com/TheOtherBlkGrl/life-dashboard). This planner keeps only what the browser stores locally (localStorage) plus public content.

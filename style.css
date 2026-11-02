@@ -570,3 +570,122 @@ input[type="date"] { color-scheme: dark; }
 }
 .journal-save { display: block; margin-top: 0.7rem; padding: 0.6rem 1.25rem; }
 .journal-item span:first-child { font-size: 1.1rem; }
+
+/* TASK META + BADGES */
+.task-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+  grid-column: 1 / -1;
+}
+.badge-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
+.task-badge {
+  font-size: 0.68rem;
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--text-muted);
+  border-radius: 99px;
+  padding: 0.12rem 0.5rem;
+}
+.overdue-badge { background: rgba(229, 99, 111, 0.18); color: var(--danger); font-weight: 700; }
+.pri-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.pri-high { background: var(--leo-gold); }
+.pri-med { background: var(--cosmic-purple); }
+.pri-low { background: var(--taurus-emerald); }
+
+input[type="time"] {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  border-radius: 10px;
+  padding: 0.7rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color-scheme: dark;
+}
+input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
+
+/* HOURLY SCHEDULE */
+.schedule-card { border-top: 3px solid var(--cosmic-purple); margin-bottom: 1.75rem; }
+.now-banner {
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.25), rgba(108, 43, 217, 0.15));
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.88rem;
+  margin-bottom: 0.8rem;
+}
+.hourly-grid { display: flex; flex-direction: column; }
+.hour-row {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 0.55rem;
+  padding: 0.3rem 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
+  align-items: start;
+  min-height: 34px;
+}
+.hour-row:last-child { border-bottom: none; }
+.hour-row.now {
+  background: rgba(244, 184, 96, 0.08);
+  border-left: 3px solid var(--leo-gold);
+  border-radius: 8px;
+}
+.hour-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding-top: 0.25rem;
+}
+.hour-row.now .hour-label { color: var(--leo-gold); font-weight: 700; }
+.hour-content { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.hour-chip {
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 0.3rem 0.55rem;
+}
+.week-tasks { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+.week-task-chip {
+  font-size: 0.72rem;
+  background: rgba(157, 78, 221, 0.12);
+  border: 1px solid rgba(157, 78, 221, 0.35);
+  color: var(--text-main);
+  border-radius: 99px;
+  padding: 0.25rem 0.6rem;
+}
+
+/* MOBILE PASS */
+@media (max-width: 680px) {
+  body { padding: 0.75rem; }
+  .brand h1 { font-size: 1.3rem; }
+  .subtitle { font-size: 0.78rem; }
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(17, 15, 26, 0.95);
+    backdrop-filter: blur(6px);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    padding: 0.4rem 0.75rem 0.5rem;
+  }
+  .tab-btn { white-space: nowrap; flex-shrink: 0; padding: 0.6rem 1rem; }
+  .kanban-grid { grid-template-columns: 1fr; }
+  .kanban-col { min-height: auto; }
+  .task-actions button, .line-item button, .check-item button, .mini-btn, .dopa-btn { min-height: 40px; }
+  .add-btn { min-height: 44px; }
+  textarea, input[type="text"], input[type="number"], input[type="date"], input[type="time"], select {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  .cosmic-toast { bottom: 0.75rem; right: 0.75rem; left: 0.75rem; max-width: none; }
+  .week-grid { grid-template-columns: 1fr 1fr; }
+  .timeline { height: 38px; }
+  .card { padding: 1rem; }
+  .hour-row { grid-template-columns: 48px 1fr; }
+}

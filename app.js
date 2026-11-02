@@ -137,8 +137,13 @@ function renderKanban() {
         `<option value="${c}" ${c === task.col ? "selected" : ""}>${COL_LABELS[c]}</option>`
       ).join("");
 
+      const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < new Date().toISOString().slice(0, 10);
+      const badges = [];
+      if (task.pri) badges.push(`<span class="pri-dot pri-${task.pri}" title="Priority"></span>`);
+      if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
+      else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
       card.innerHTML = `
-        <span>${task.text}</span>
+        <span>${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
         <div class="task-actions">
           <select class="move-select" onchange="moveTask(${task.id}, this.value)">${options}</select>
           <button onclick="deleteTask(${task.id})">🗑️</button>
@@ -222,6 +227,7 @@ function renderWeek() {
           <div class="week-item"><span>${t}</span><button onclick="removeWeekItem(${i}, ${j})">✖</button></div>
         `).join("")}
       </div>
+      ${weekTaskChips(i)}
       <form class="week-form" data-day="${i}">
         <input placeholder="Add..." />
         <button type="submit" class="mini-btn">➕</button>
@@ -446,8 +452,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    tasks.push({ id: Date.now(), text: input.value.trim(), col: targetCol });
+    tasks.push({
+      id: Date.now(),
+      text: input.value.trim(),
+      col: targetCol,
+      due: document.getElementById("taskDue").value || "",
+      time: document.getElementById("taskTime").value || "",
+      pri: document.getElementById("taskPri").value || ""
+    });
     input.value = "";
+    document.getElementById("taskDue").value = "";
+    document.getElementById("taskTime").value = "";
+    document.getElementById("taskPri").value = "";
     saveTasks();
   });
 
@@ -785,4 +801,156 @@ document.addEventListener("DOMContentLoaded", () => {
   renderBlocks();
   renderJournal();
   renderWins();
+});
+// --- 17. HOURLY TODAY SCHEDULE + REMINDERS ---
+const PRI_EMOJI = { high: "\U0001F525", med: "\u26A1", low: "\U0001F33F" };
+
+function fmtTime(hhmm) {
+  if (!hhmm) return "";
+  const [h, m] = hhmm.split(":").map(Number);
+  const h12 = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`;
+}
+
+function todaysBlocks() {
+  const today = new Date().toISOString().slice(0, 10);
+  return blocks.filter(b => b.date === today);
+}
+
+function todaysTimedTasks() {
+  const today = new Date().toISOString().slice(0, 10);
+  return tasks.filter(t => t.due === today && t.time && !["done", "graveyard"].includes(t.col));
+}
+
+function todaysAnytimeTasks() {
+  const today = new Date().toISOString().slice(0, 10);
+  return tasks.filter(t => t.due === today && !t.time && !["done", "graveyard"].includes(t.col));
+}
+
+function weekTaskChips(i) {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const d = new Date(monday);
+  d.setDate(monday.getDate() + i);
+  const key = d.toISOString().slice(0, 10);
+  const due = tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col));
+  if (!due.length) return "";
+  return `<div class="week-tasks">${due.map(t =>
+    `<span class="week-task-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`).join("")}</div>`;
+}
+
+function renderHourly() {
+  const grid = document.getElementById("hourlyGrid");
+  if (!grid) return;
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const blocksToday = todaysBlocks();
+  const timed = todaysTimedTasks();
+  const anytime = todaysAnytimeTasks();
+  let htmlOut = "";
+
+  if (anytime.length) {
+    htmlOut += `<div class="hour-row anytime-row">
+      <span class="hour-label">Anytime</span>
+      <div class="hour-content">${anytime.map(t =>
+        `<span class="hour-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`).join("")}</div>
+    </div>`;
+  }
+
+  for (let h = 5; h < 24; h++) {
+    const isNow = nowMin >= h * 60 && nowMin < (h + 1) * 60;
+    const cellBits = [];
+    blocksToday.filter(b => Math.floor(toMin(b.start) / 60) === h).forEach(b => {
+      cellBits.push(`<span class="hour-chip block-chip" style="background:${CAT_COLORS[b.cat]}22;border-color:${CAT_COLORS[b.cat]}">${b.done ? "\u2705 " : ""}${b.label} \u00b7 ${fmtTime(b.start)}</span>`);
+    });
+    timed.filter(t => Math.floor(toMin(t.time) / 60) === h).forEach(t => {
+      cellBits.push(`<span class="hour-chip task-chip">${PRI_EMOJI[t.pri] || "\U0001F3AF"} ${t.text} \u00b7 ${fmtTime(t.time)}</span>`);
+    });
+    htmlOut += `<div class="hour-row ${isNow ? "now" : ""}">
+      <span class="hour-label">${fmtTime(`${String(h).padStart(2, "0")}:00`).replace(":00", "")}</span>
+      <div class="hour-content">${cellBits.join("")}</div>
+    </div>`;
+  }
+  grid.innerHTML = htmlOut;
+  renderNowBanner();
+}
+
+function renderNowBanner() {
+  const banner = document.getElementById("nowBanner");
+  if (!banner) return;
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const current = todaysBlocks().find(b => nowMin >= toMin(b.start) && nowMin < toMin(b.start) + b.dur);
+  let htmlOut;
+  if (current) {
+    htmlOut = `\u23F0 <strong>Right now:</strong> ${current.label} \u00b7 until ${fmtTime(toHHMM(toMin(current.start) + current.dur))}`;
+  } else {
+    const upcoming = [
+      ...todaysBlocks().map(b => ({ t: toMin(b.start), label: b.label, time: b.start })),
+      ...todaysTimedTasks().map(t => ({ t: toMin(t.time), label: t.text, time: t.time }))
+    ].filter(x => x.t > nowMin).sort((a, b) => a.t - b.t)[0];
+    htmlOut = upcoming
+      ? `\U0001F552 Free right now \u00b7 next up ${fmtTime(upcoming.time)}: ${upcoming.label}`
+      : `\U0001F552 Open window \u00b7 nothing else scheduled today`;
+  }
+  banner.innerHTML = htmlOut;
+  banner.classList.remove("hidden");
+}
+
+// reminders fire as an on-page toast (and a phone notification, once enabled)
+let remindedToday = JSON.parse(localStorage.getItem("ccc_reminded")) || { date: "", ids: [] };
+
+function cosmicAlert(title, msg) {
+  const toast = document.getElementById("cosmicToast");
+  document.getElementById("toastTitle").textContent = title;
+  document.getElementById("toastMessage").textContent = msg;
+  toast.classList.remove("hidden");
+  fireConfetti();
+}
+
+function checkReminders() {
+  const today = new Date().toISOString().slice(0, 10);
+  const nowHHMM = `${String(new Date().getHours()).padStart(2, "0")}:${String(new Date().getMinutes()).padStart(2, "0")}`;
+  if (remindedToday.date !== today) remindedToday = { date: today, ids: [] };
+
+  const due = [
+    ...todaysBlocks().map(b => ({ id: `b${b.id}`, time: b.start, label: b.label })),
+    ...todaysTimedTasks().map(t => ({ id: `t${t.id}`, time: t.time, label: t.text }))
+  ];
+
+  due.forEach(item => {
+    if (item.time === nowHHMM && !remindedToday.ids.includes(item.id)) {
+      remindedToday.ids.push(item.id);
+      localStorage.setItem("ccc_reminded", JSON.stringify(remindedToday));
+      cosmicAlert("\u23F0 Time to start!", `${item.label} \u00b7 you planned this for ${fmtTime(item.time)}. Go get it, Queen!`);
+      if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+        new Notification("Cosmic Command Center", { body: `Time to start: ${item.label}` });
+      }
+    }
+  });
+}
+
+// --- 18. INITIALIZE (SCHEDULE / REMINDERS) ---
+document.addEventListener("DOMContentLoaded", () => {
+  renderHourly();
+  setInterval(renderHourly, 60000);
+  setInterval(checkReminders, 30000);
+  checkReminders();
+
+  const remindBtn = document.getElementById("remindToggle");
+  if (remindBtn) {
+    const markOn = () => { remindBtn.textContent = "\U0001F514 Reminders On"; };
+    if (typeof Notification !== "undefined" && Notification.permission === "granted") markOn();
+    remindBtn.addEventListener("click", () => {
+      if (typeof Notification === "undefined") {
+        cosmicAlert("\U0001F514 No Phone Alerts", "Your browser cannot do push reminders. The on-page bell still fires while the planner is open.");
+        return;
+      }
+      Notification.requestPermission().then(p => {
+        if (p === "granted") { markOn(); cosmicAlert("\U0001F514 Reminders On", "Your phone will buzz at each block and timed task. Cosmic punctuality, unlocked."); }
+        else remindBtn.textContent = "\U0001F514 Enable Reminders";
+      });
+    });
+  }
 });
