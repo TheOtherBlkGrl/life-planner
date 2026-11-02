@@ -881,3 +881,14 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 @media (max-width: 640px) {
   .ev-modal { padding: 1.1rem 1rem 1.3rem; max-height: 85vh; }
 }
+.ev-note {
+  margin-top: 0.9rem; padding: 0.6rem 0.8rem; background: rgba(255, 213, 79, 0.1);
+  border: 1px solid rgba(255, 213, 79, 0.3); border-radius: 0.6rem;
+  font-size: 0.8rem; line-height: 1.4; color: #ffe9a8;
+}
+.ev-reconnect {
+  background: rgba(255, 213, 79, 0.18); border: 1px solid rgba(255, 213, 79, 0.5);
+  color: #ffd54f; border-radius: 0.5rem; padding: 0.15rem 0.55rem; font-size: 0.78rem;
+  cursor: pointer; margin: 0 0.15rem;
+}
+.ev-reconnect:hover { background: rgba(255, 213, 79, 0.3); }

@@ -1073,7 +1073,7 @@ async function showEventDetail(calId, eventId, cached) {
   const paint = ev => {
     const who = (ev.attendees || []).map(a => esc(a.email)).join(", ");
     body.innerHTML = `
-      <h3 class="ev-title">${esc(ev.summary || "(no title)")}</h3>
+      <h3 class="ev-title">${esc(ev.summary || ev.title || "(no title)")}</h3>
       ${row("Calendar", esc(ev._calName))}
       ${row("When", gcalDetailRange(ev))}
       ${row("Where", esc(ev.location))}
@@ -1081,24 +1081,51 @@ async function showEventDetail(calId, eventId, cached) {
       ${ev.description ? `<div class="ev-desc">${esc(ev.description).replace(/\n/g, "<br>")}</div>` : ""}
       ${ev.htmlLink ? `<a class="ev-link" href="${ev.htmlLink}" target="_blank" rel="noopener">Open in Google Calendar \u2197</a>` : ""}`;
   };
+  const note = html => body.insertAdjacentHTML("beforeend", `<div class="ev-note">${html}</div>`);
+  const reconBtn = `<button class="ev-reconnect" data-reconnect>Connect calendar</button>`;
+
   if (cached && cached.title) paint({ ...cached, _calName: cached.calName });
   else body.innerHTML = `<p class="ev-loading">Loading event details...</p>`;
-  try {
-    if (typeof GCAL !== "undefined" && GCAL.token && calId && eventId) {
-      const ev = await gcalApi(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events/${encodeURIComponent(eventId)}`);
+
+  const hasToken = typeof GCAL !== "undefined" && !!GCAL.token;
+  if (hasToken && calId && eventId) {
+    try {
+      // recurring instances carry a _YYYYMMDD suffix; the base event holds the details
+      const baseId = String(eventId).replace(/_\d{8}$/, "");
+      const ev = await gcalApi(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events/${encodeURIComponent(baseId)}`);
       paint({ ...ev, _calName: (cached && cached.calName) || (ev.organizer && ev.organizer.email) });
-    } else if (!cached) {
-      body.innerHTML = `<p class="ev-loading">Connect your calendar (\u{1F4C5} Connect Calendar) to see full details.</p>`;
+    } catch (e) {
+      note(`${cached ? "That\u2019s the basics from your last sync." : "Couldn\u2019t load details."} Your calendar session may have expired. ${reconBtn}, then tap the event again.`);
     }
-  } catch (e) {
-    if (!cached) body.innerHTML = `<p class="ev-loading">Couldn't load full details. Try Force Sync, then click again.</p>`;
+  } else if (!hasToken) {
+    note(`${cached ? "Showing basics from your last sync. " : ""}${reconBtn} for the full record, then tap the event again.`);
+  } else {
+    note("Couldn\u2019t identify this event. Try Force Sync, then tap it again.");
   }
 }
 
+let lastDetail = null;
 document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-reconnect]");
+  if (btn) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof connectGcal !== "function") return;
+    connectGcal();
+    const started = Date.now();
+    const poll = setInterval(() => {
+      if (typeof GCAL !== "undefined" && GCAL.token) {
+        clearInterval(poll);
+        if (lastDetail) showEventDetail(lastDetail.cal, lastDetail.eid, lastDetail.cached);
+      } else if (Date.now() - started > 20000) clearInterval(poll);
+    }, 500);
+    return;
+  }
   const el = e.target.closest(".gcal-detail");
   if (!el) return;
   e.preventDefault();
   e.stopPropagation();
-  showEventDetail(el.dataset.cal, el.dataset.eid, el.dataset.cached ? JSON.parse(decodeURIComponent(el.dataset.cached)) : null);
+  const parsed = el.dataset.cached ? JSON.parse(decodeURIComponent(el.dataset.cached)) : null;
+  lastDetail = { cal: el.dataset.cal, eid: el.dataset.eid, cached: parsed };
+  showEventDetail(el.dataset.cal, el.dataset.eid, parsed);
 });
