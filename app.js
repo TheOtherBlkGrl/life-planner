@@ -63,6 +63,147 @@ function updateClock() {
   }
 }
 
+function openEditModal(title, fields, onSave) {
+  let ov = document.getElementById("cccModal");
+  if (ov) ov.remove();
+  ov = document.createElement("div");
+  ov.id = "cccModal";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(10,6,18,.72);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;";
+  const fHtml = fields.map(f => {
+    const lbl = `<label style="font-size:.78rem;opacity:.75;margin-bottom:.25rem;display:block;">${f.label}</label>`;
+    if (f.type === "select") {
+      const opts = f.options.map(o => `<option value="${o.v}" ${o.v === f.value ? "selected" : ""}>${o.t}</option>`).join("");
+      return `<div>${lbl}<select id="mf_${f.id}" style="width:100%;background:#110f1a;border:1px solid rgba(255,255,255,.14);border-radius:10px;color:#f8f7ff;padding:.55rem .6rem;box-sizing:border-box;">${opts}</select></div>`;
+    }
+    return `<div>${lbl}<input type="${f.type || "text"}" id="mf_${f.id}" value="${esc(f.value == null ? "" : String(f.value))}" style="width:100%;background:#110f1a;border:1px solid rgba(255,255,255,.14);border-radius:10px;color:#f8f7ff;padding:.55rem .6rem;box-sizing:border-box;"></div>`;
+  }).join("");
+  ov.innerHTML = `<div style="background:#1c1829;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.25rem;max-width:420px;width:100%;color:#f8f7ff;box-shadow:0 12px 48px rgba(0,0,0,.6);">
+    <h3 style="margin:0 0 1rem;font-size:1.02rem;color:#f4b860;">${esc(title)}</h3>
+    <div style="display:flex;flex-direction:column;gap:.65rem;">${fHtml}</div>
+    <div style="display:flex;gap:.6rem;margin-top:1.1rem;">
+      <button id="cccModalSave" style="flex:1;background:#9d4edd;color:#fff;border:none;border-radius:999px;padding:.6rem;cursor:pointer;font-weight:600;">Save</button>
+      <button id="cccModalCancel" style="background:transparent;color:#f8f7ff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.6rem 1rem;cursor:pointer;">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+  ov.querySelector("#cccModalCancel").addEventListener("click", () => ov.remove());
+  ov.querySelector("#cccModalSave").addEventListener("click", () => {
+    const vals = {};
+    fields.forEach(f => { vals[f.id] = document.getElementById("mf_" + f.id).value; });
+    ov.remove();
+    onSave(vals);
+  });
+}
+
+function flashMsg(text) {
+  let t = document.getElementById("cccFlash");
+  if (!t) {
+    t = document.createElement("div");
+    t.id = "cccFlash";
+    t.style.cssText = "position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:#241734;border:1px solid rgba(255,255,255,.18);color:#f8f7ff;padding:.55rem 1rem;border-radius:999px;z-index:10000;box-shadow:0 6px 24px rgba(0,0,0,.45);font-size:.85rem;opacity:0;transition:opacity .2s;";
+    document.body.appendChild(t);
+  }
+  t.textContent = text;
+  requestAnimationFrame(() => { t.style.opacity = "1"; });
+  clearTimeout(flashMsg._t);
+  flashMsg._t = setTimeout(() => { t.style.opacity = "0"; }, 1900);
+}
+
+function evStartParts(ev) {
+  const st = ev.start;
+  const sStr = typeof st === "string" ? st : (st && (st.dateTime || st.date));
+  const isAllDay = ev.allDay != null ? !!ev.allDay : !!(st && st.date && !st.dateTime);
+  const d = new Date(sStr);
+  if (!sStr || isNaN(d.getTime())) return { date: "", time: "" };
+  const pad = n => String(n).padStart(2, "0");
+  if (isAllDay) return { date: String(sStr).slice(0, 10), time: "" };
+  return { date: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`, time: `${pad(d.getHours())}:${pad(d.getMinutes())}` };
+}
+
+function copyEventAsTask(ev) {
+  const p = evStartParts(ev);
+  tasks.push({ id: Date.now() + 1, text: ev.summary || ev.title || "(no title)", col: "dump", due: p.date, time: p.time, pri: "", repeat: "" });
+  saveTasks();
+  flashMsg(p.time ? "Copied to Brain Dump with its time ✨" : "Copied to Brain Dump ✨");
+}
+
+function top3Full() { return tasks.filter(x => x.col === "top3").length >= 3; }
+
+function editTask(id) {
+  const t = tasks.find(x => x.id === id); if (!t) return;
+  openEditModal("Edit task", [
+    { id: "text", label: "What is it?", value: t.text },
+    { id: "col", label: "Section", type: "select", value: t.col, options: MOVE_COLS.map(c => ({ v: c, t: ALL_COL_LABELS[c] })) },
+    { id: "due", label: "Due date", type: "date", value: t.due },
+    { id: "time", label: "Time", type: "time", value: t.time },
+    { id: "pri", label: "Priority", type: "select", value: t.pri, options: [{ v: "", t: "No priority" }, { v: "high", t: "🔥 High" }, { v: "med", t: "⚡ Medium" }, { v: "low", t: "🌿 Low" }] },
+    { id: "repeat", label: "Repeat", type: "select", value: t.repeat, options: [{ v: "", t: "No repeat" }, { v: "daily", t: "🔁 Daily" }, { v: "weekdays", t: "🔁 Weekdays" }, { v: "weekly", t: "🔁 Weekly" }, { v: "monthly", t: "🔁 Monthly" }] }
+  ], v => {
+    if (!v.text.trim()) { flashMsg("Task text can't be empty"); return; }
+    if (v.col === "top3" && t.col !== "top3" && top3Full()) { flashMsg("Rule of 3 is full. Move one out first."); return; }
+    Object.assign(t, { text: v.text.trim(), col: v.col, due: v.due, time: v.due ? v.time : "", pri: v.pri, repeat: v.repeat });
+    saveTasks();
+    flashMsg("Task updated ✨");
+  });
+}
+
+function copyTask(id) {
+  const t = tasks.find(x => x.id === id); if (!t) return;
+  let col = t.col;
+  if (col === "top3" && top3Full()) col = "dump";
+  tasks.push({ ...t, id: Date.now() + 1, doneAt: undefined, col });
+  saveTasks();
+  flashMsg(col === t.col ? "Copy added ✨" : "Copy went to Brain Dump (Rule of 3 is full)");
+}
+
+function editBlock(id) {
+  const b = blocks.find(x => x.id === id); if (!b) return;
+  openEditModal("Edit block", [
+    { id: "label", label: "Label", value: b.label },
+    { id: "cat", label: "Category", type: "select", value: b.cat, options: Object.keys(CAT_COLORS).map(c => ({ v: c, t: CAT_LABELS[c] })) },
+    { id: "start", label: "Start time", type: "time", value: b.start },
+    { id: "dur", label: "Duration (minutes)", type: "number", value: b.dur }
+  ], v => {
+    Object.assign(b, { label: v.label.trim() || b.label, cat: v.cat, start: v.start || b.start, dur: Math.max(5, Math.round(Number(v.dur) || b.dur)) });
+    saveBlocks();
+    flashMsg("Block updated ✨");
+  });
+}
+
+function copyBlock(id) {
+  const b = blocks.find(x => x.id === id); if (!b) return;
+  let start = toMin(b.start) + b.dur;
+  for (let g = 0; g < 96 && !(slotIsFree(b.date, start, b.dur) && start + b.dur <= 24 * 60); g++) start += 15;
+  if (start + b.dur > 24 * 60) { flashMsg("No free slot after it that day"); return; }
+  blocks.push({ ...b, id: Date.now() + 1, start: toHHMM(start), done: false, doneAt: undefined });
+  saveBlocks();
+  flashMsg(`Copy placed at ${toHHMM(start)}`);
+}
+
+function editBill(id) {
+  const b = bills.find(x => x.id === id); if (!b) return;
+  openEditModal("Edit bill", [
+    { id: "name", label: "Bill name", value: b.name },
+    { id: "amount", label: "Amount ($)", type: "number", value: b.amount },
+    { id: "due", label: "Due date", type: "date", value: b.due },
+    { id: "repeat", label: "Repeat", type: "select", value: b.repeat || "", options: [{ v: "", t: "No repeat" }, { v: "weekly", t: "🔁 Weekly" }, { v: "monthly", t: "🔁 Monthly" }, { v: "quarterly", t: "🔁 Quarterly" }, { v: "yearly", t: "🔁 Yearly" }] }
+  ], v => {
+    if (!v.name.trim()) { flashMsg("Bill name can't be empty"); return; }
+    Object.assign(b, { name: v.name.trim(), amount: Number(v.amount) || b.amount, due: v.due || b.due, repeat: v.repeat });
+    saveBills();
+    flashMsg("Bill updated ✨");
+  });
+}
+
+function copyBill(id) {
+  const b = bills.find(x => x.id === id); if (!b) return;
+  const due = b.repeat ? (nextRepeatDue(b.due, b.repeat) || b.due) : b.due;
+  bills.push({ id: Date.now() + 1, name: b.name, amount: b.amount, due, paid: false, repeat: b.repeat || "" });
+  saveBills();
+  flashMsg(due !== b.due ? `Copy added, due ${due}` : "Copy added ✨");
+}
+
 function showCosmicToast() {
   const toast = document.getElementById("cosmicToast");
   const msg = portalReminders[Math.floor(Math.random() * portalReminders.length)];
@@ -194,7 +335,7 @@ function renderKanban() {
         <span>${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
         <div class="task-actions">
           <select class="move-select" onchange="moveTask(${task.id}, this.value)">${options}</select>
-          <button onclick="deleteTask(${task.id})">🗑️</button>
+          <button onclick="editTask(${task.id})" title="Edit">✏️</button><button onclick="copyTask(${task.id})" title="Copy">⧉</button><button onclick="deleteTask(${task.id})">🗑️</button>
         </div>
       `;
       container.appendChild(card);
@@ -227,7 +368,7 @@ function renderTabTasks() {
         <span>${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
         <div class="task-actions">
           <select class="move-select" onchange="moveTask(${task.id}, this.value)">${options}</select>
-          <button onclick="deleteTask(${task.id})">🗑️</button>
+          <button onclick="editTask(${task.id})" title="Edit">✏️</button><button onclick="copyTask(${task.id})" title="Copy">⧉</button><button onclick="deleteTask(${task.id})">🗑️</button>
         </div>
       `;
       box.appendChild(card);
@@ -378,7 +519,7 @@ function renderBills() {
       <input type="checkbox" ${b.paid ? "checked" : ""} onchange="toggleBillPaid(${b.id})" />
       <span>${b.name} · $${Number(b.amount).toFixed(2)}</span>
       <span class="due-tag">due ${b.due}${!b.paid && b.due < today ? " ⚠️" : ""}</span>${b.repeat ? `<span class="task-badge repeat-badge" title="Repeats ${b.repeat}">🔁 ${b.repeat}</span>` : ""}
-      <button onclick="deleteBill(${b.id})">🗑️</button>
+      <button onclick="editBill(${b.id})" title="Edit">✏️</button><button onclick="copyBill(${b.id})" title="Copy">⧉</button><button onclick="deleteBill(${b.id})">🗑️</button>
     `;
     list.appendChild(row);
   });
@@ -418,6 +559,21 @@ function deleteBill(id) {
 function wireSimpleList(formId, inputId, listId, storageKey) {
   const load = () => JSON.parse(localStorage.getItem(storageKey)) || [];
   const save = items => { localStorage.setItem(storageKey, JSON.stringify(items)); render(); };
+  window["__edit_" + listId] = i => {
+    const items = load();
+    openEditModal("Edit item", [{ id: "text", label: "Text", value: items[i] }], v => {
+      if (!v.text.trim()) { flashMsg("Can't be empty"); return; }
+      items[i] = v.text.trim();
+      save(items);
+      flashMsg("Updated ✨");
+    });
+  };
+  window["__copy_" + listId] = i => {
+    const items = load();
+    items.splice(i + 1, 0, items[i] + " (copy)");
+    save(items);
+    flashMsg("Copy added ✨");
+  };
 
   function render() {
     const items = load();
@@ -425,7 +581,7 @@ function wireSimpleList(formId, inputId, listId, storageKey) {
     container.innerHTML = items.length
       ? items.map((t, i) => `
           <div class="line-item"><span>${t}</span><span class="due-tag"></span>
-            <button onclick="window.__del_${listId}(${i})">🗑️</button></div>
+            <button onclick="window.__edit_${listId}(${i})" title="Edit">✏️</button><button onclick="window.__copy_${listId}(${i})" title="Copy">⧉</button><button onclick="window.__del_${listId}(${i})">🗑️</button></div>
         `).join("")
       : `<p class="helper-text">Nothing here yet.</p>`;
   }
@@ -477,7 +633,7 @@ function renderSelfcare() {
     <div class="check-item">
       <input type="checkbox" ${item.done ? "checked" : ""} onchange="toggleSelfcare(${i})" />
       <span class="${item.done ? "done-label" : ""}">${item.text}</span>
-      <button onclick="removeSelfcare(${i})" style="margin-left:auto">🗑️</button>
+      <button onclick="editSelfcare(${i})" title="Edit">✏️</button><button onclick="copySelfcare(${i})" title="Copy">⧉</button><button onclick="removeSelfcare(${i})" style="margin-left:auto">🗑️</button>
     </div>
   `).join("");
 }
@@ -491,6 +647,23 @@ function toggleSelfcare(i) {
 function removeSelfcare(i) {
   selfcare = selfcare.filter((_, idx) => idx !== i);
   saveSelfcare();
+}
+
+function editSelfcare(i) {
+  const item = selfcare[i]; if (!item) return;
+  openEditModal("Edit ritual", [{ id: "text", label: "Ritual", value: item.text }], v => {
+    if (!v.text.trim()) { flashMsg("Ritual can't be empty"); return; }
+    selfcare[i] = { ...item, text: v.text.trim() };
+    saveSelfcare();
+    flashMsg("Ritual updated ✨");
+  });
+}
+
+function copySelfcare(i) {
+  const item = selfcare[i]; if (!item) return;
+  selfcare.splice(i + 1, 0, { text: item.text + " (copy)", done: false });
+  saveSelfcare();
+  flashMsg("Copy added ✨");
 }
 
 // --- 12. INITIALIZE EVENT LISTENERS ---
@@ -726,7 +899,7 @@ function renderBlocks() {
           <span class="cat-dot" style="background:${CAT_COLORS[b.cat]}"></span>
           <span><strong>${b.start}</strong> \u00b7 ${b.label} <small>(${b.dur} min \u00b7 ${CAT_LABELS[b.cat]})</small></span>
           <span class="due-tag">${toHHMM(toMin(b.start) + b.dur)}</span>
-          <button onclick="deleteBlock(${b.id})">🗑\ufe0f</button>
+          <button onclick="editBlock(${b.id})" title="Edit">✏️</button><button onclick="copyBlock(${b.id})" title="Copy">⧉</button><button onclick="deleteBlock(${b.id})">🗑\ufe0f</button>
         </div>
       `).join("")
     : `<p class="helper-text">No blocks on this day yet. Break down something big, or lay out the day hour by hour.</p>`;
@@ -1447,9 +1620,11 @@ async function showEventDetail(calId, eventId, cached) {
       ${row("Who", who)}
       <div class="ev-row"><span class="ev-k">Category</span><select id="evCatSelect" class="ev-cat-select">${catOptions(sel)}</select></div>
       ${ev.description ? `<div class="ev-desc">${esc(ev.description).replace(/\n/g, "<br>")}</div>` : ""}
-      ${ev.htmlLink ? `<a class="ev-link" href="${ev.htmlLink}" target="_blank" rel="noopener">Open in Google Calendar \u2197</a>` : ""}`;
+      ${ev.htmlLink ? `<a class="ev-link" href="${ev.htmlLink}" target="_blank" rel="noopener">Open in Google Calendar \u2197</a><button id="evCopyBtn" class="ev-link" style="background:rgba(157,78,221,.16);border:1px solid rgba(157,78,221,.4);border-radius:8px;padding:.4rem .8rem;margin-top:.6rem;display:inline-block;cursor:pointer;color:#f8f7ff;">⧉ Copy as task</button>` : ""}`;
     const sel_el = body.querySelector("#evCatSelect");
     if (sel_el) sel_el.addEventListener("change", e2 => setEvCat(calId, ev.id || eventId, e2.target.value));
+    const copy_el = body.querySelector("#evCopyBtn");
+    if (copy_el) copy_el.addEventListener("click", () => copyEventAsTask(ev));
   };
   const note = html => body.insertAdjacentHTML("beforeend", `<div class="ev-note">${html}</div>`);
   const reconBtn = `<button class="ev-reconnect" data-reconnect>Connect calendar</button>`;
