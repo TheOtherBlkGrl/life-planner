@@ -1,3 +1,7 @@
+function localDateStr(d = new Date()) {
+  // the LOCAL calendar date (YYYY-MM-DD); toISOString() is UTC and rolls over at 4/5pm Pacific
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
 // --- 1. AFFIRMATION & SCRIPTING SPARKS ---
 const affirmations = [
   "I am so grateful now that my leadership, logistics brilliance, and creativity open effortless doors for me every single week. ✨",
@@ -137,7 +141,7 @@ function renderKanban() {
         `<option value="${c}" ${c === task.col ? "selected" : ""}>${COL_LABELS[c]}</option>`
       ).join("");
 
-      const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < new Date().toISOString().slice(0, 10);
+      const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < localDateStr();
       const badges = [];
       if (task.pri) badges.push(`<span class="pri-dot pri-${task.pri}" title="Priority"></span>`);
       if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
@@ -265,7 +269,7 @@ function renderBills() {
   const summary = document.getElementById("billsSummary");
   list.innerHTML = "";
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   const sorted = [...bills].sort((a, b) => (a.paid - b.paid) || (a.due < b.due ? -1 : 1));
   const unpaid = sorted.filter(b => !b.paid);
   const overdue = unpaid.filter(b => b.due < today);
@@ -348,7 +352,7 @@ const SELFCARE_DEFAULTS = [
 ];
 
 let selfcare = JSON.parse(localStorage.getItem("ccc_selfcare")) || null;
-const todayStr = new Date().toISOString().slice(0, 10);
+const todayStr = localDateStr();
 
 if (!selfcare) {
   selfcare = SELFCARE_DEFAULTS.map(t => ({ text: t, done: false }));
@@ -530,7 +534,7 @@ const DAY_START_MIN = 5 * 60;      // 5:00 AM
 const DAY_SPAN_MIN = 19 * 60;      // through midnight
 
 function blockDateKey() {
-  return document.getElementById("blockDate").value || new Date().toISOString().slice(0, 10);
+  return document.getElementById("blockDate").value || localDateStr();
 }
 
 function toMin(hhmm) {
@@ -608,7 +612,7 @@ function deleteBlock(id) {
 }
 
 function nextFreeSlot(date, durMin) {
-  const isToday = date === new Date().toISOString().slice(0, 10);
+  const isToday = date === localDateStr();
   const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
   let start = Math.ceil((isToday ? Math.max(nowMin, DAY_START_MIN) : DAY_START_MIN) / 15) * 15;
   for (let guard = 0; guard < 96; guard++) {
@@ -641,7 +645,7 @@ let journalOffset = 0; // 0 = today, 1 = yesterday...
 function journalDateStr() {
   const d = new Date();
   d.setDate(d.getDate() - journalOffset);
-  return d.toISOString().slice(0, 10);
+  return localDateStr(d);
 }
 
 function prettyDate(dateStr) {
@@ -678,7 +682,7 @@ function renderJournal() {
 }
 
 function loadJournalEntry(dateStr) {
-  const now = new Date().toISOString().slice(0, 10);
+  const now = localDateStr();
   journalOffset = Math.round((new Date(now + "T12:00:00") - new Date(dateStr + "T12:00:00")) / 86400000);
   renderJournal();
 }
@@ -695,7 +699,7 @@ function saveJournalEntry() {
 
 // --- 15. TODAY'S WINS SCOREBOARD ---
 function renderWins() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   const list = document.getElementById("winsList");
   const wins = [];
 
@@ -703,7 +707,7 @@ function renderWins() {
     .forEach(b => wins.push(`🧱 Block done: ${b.label}`));
 
   tasks.filter(t => t.col === "done" && t.doneAt &&
-      new Date(t.doneAt).toISOString().slice(0, 10) === today)
+      localDateStr(new Date(t.doneAt)) === today)
     .forEach(t => wins.push(`🎯 Crushed: ${t.text}`));
 
   const selfcareToday = JSON.parse(localStorage.getItem("ccc_selfcare")) || [];
@@ -711,7 +715,7 @@ function renderWins() {
   if (kept) wins.push(`🛁 Self care kept: ${kept} ritual${kept > 1 ? "s" : ""}`);
 
   bills.filter(b => b.paid && b.paidAt &&
-      new Date(b.paidAt).toISOString().slice(0, 10) === today)
+      localDateStr(new Date(b.paidAt)) === today)
     .forEach(b => wins.push(`💸 Handled: ${b.name} payment`));
 
   const countEl = document.getElementById("winsCount");
@@ -726,7 +730,7 @@ function renderWins() {
 // --- 16. INITIALIZE (BLOCKS / JOURNAL / WINS) ---
 document.addEventListener("DOMContentLoaded", () => {
   const blockDate = document.getElementById("blockDate");
-  blockDate.value = new Date().toISOString().slice(0, 10);
+  blockDate.value = localDateStr();
   blockDate.addEventListener("change", renderBlocks);
 
   document.getElementById("blockForm").addEventListener("submit", e => {
@@ -813,17 +817,17 @@ function fmtTime(hhmm) {
 }
 
 function todaysBlocks() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   return blocks.filter(b => b.date === today);
 }
 
 function todaysTimedTasks() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   return tasks.filter(t => t.due === today && t.time && !["done", "graveyard"].includes(t.col));
 }
 
 function todaysAnytimeTasks() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   return tasks.filter(t => t.due === today && !t.time && !["done", "graveyard"].includes(t.col));
 }
 
@@ -834,7 +838,7 @@ function weekTaskChips(i) {
   monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
   const d = new Date(monday);
   d.setDate(monday.getDate() + i);
-  const key = d.toISOString().slice(0, 10);
+  const key = localDateStr(d);
   const due = tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col));
   const gcal = (typeof gcalEventsOn === "function") ? gcalEventsOn(key) : [];
   const chips = [
@@ -850,7 +854,7 @@ function renderHourly() {
   if (!grid) return;
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   const blocksToday = todaysBlocks();
   const timed = todaysTimedTasks();
   const anytime = todaysAnytimeTasks();
@@ -950,7 +954,7 @@ function renderNowBanner() {
   if (!banner) return;
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
-  const todayStr = new Date().toISOString().slice(0, 10);
+  const todayStr = localDateStr();
   const gcalNow = (typeof gcalEventsOn === "function")
     ? gcalEventsOn(todayStr).find(ev => {
         if (ev.allDay) return false;
@@ -991,7 +995,7 @@ function cosmicAlert(title, msg) {
 }
 
 function checkReminders() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateStr();
   const nowHHMM = `${String(new Date().getHours()).padStart(2, "0")}:${String(new Date().getMinutes()).padStart(2, "0")}`;
   if (remindedToday.date !== today) remindedToday = { date: today, ids: [] };
 
