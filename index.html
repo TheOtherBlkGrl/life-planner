@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102aj" />
+  <link rel="stylesheet" href="style.css?v=20261102ak" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -251,10 +251,17 @@
           <h2>💸 Bills & Money</h2>
         </div>
         <p class="helper-text">Add what's due, tap Paid when it's handled. Overdue bills light up red.</p>
-        <form id="billForm" class="row-form">
+        <form id="billForm" class="row-form bills-form">
           <input type="text" id="billName" placeholder="Bill name (PG&E, rent...)" required />
           <input type="number" id="billAmount" placeholder="Amount $" step="0.01" min="0" required />
           <input type="date" id="billDue" required />
+          <select id="billRepeat" title="Repeat (optional)">
+            <option value="">Repeat</option>
+            <option value="weekly">🔁 Weekly</option>
+            <option value="monthly">🔁 Monthly</option>
+            <option value="quarterly">🔁 Quarterly</option>
+            <option value="yearly">🔁 Yearly</option>
+          </select>
           <button type="submit" class="add-btn">➕ Add Bill</button>
         </form>
         <div id="billsSummary" class="bills-summary"></div>
@@ -553,11 +560,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102aj"></script>
-  <script src="astro.js?v=20261102aj"></script>
+  <script src="app.js?v=20261102ak"></script>
+  <script src="astro.js?v=20261102ak"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102aj"></script>
-  <script src="google-sync.js?v=20261102aj"></script>
-  <script src="month.js?v=20261102aj"></script>
+  <script src="sync-config.js?v=20261102ak"></script>
+  <script src="google-sync.js?v=20261102ak"></script>
+  <script src="month.js?v=20261102ak"></script>
 </body>
 </html>

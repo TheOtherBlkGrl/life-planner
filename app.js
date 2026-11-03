@@ -108,6 +108,8 @@ function nextRepeatDue(due, repeat) {
     else if (repeat === "weekly") d.setDate(d.getDate() + 7);
     else if (repeat === "weekdays") { do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6); }
     else if (repeat === "monthly") { const day = d.getDate(); d.setMonth(d.getMonth() + 1); if (d.getDate() < day) d.setDate(0); }
+    else if (repeat === "quarterly") { const day = d.getDate(); d.setMonth(d.getMonth() + 3); if (d.getDate() < day) d.setDate(0); }
+    else if (repeat === "yearly") { const day = d.getDate(); d.setFullYear(d.getFullYear() + 1); if (d.getDate() < day) d.setDate(0); }
   };
   step();
   while (d.getTime() <= Date.now()) step();  // skip past dates so the copy lands ahead
@@ -331,7 +333,7 @@ function renderBills() {
     row.innerHTML = `
       <input type="checkbox" ${b.paid ? "checked" : ""} onchange="toggleBillPaid(${b.id})" />
       <span>${b.name} · $${Number(b.amount).toFixed(2)}</span>
-      <span class="due-tag">due ${b.due}${!b.paid && b.due < today ? " ⚠️" : ""}</span>
+      <span class="due-tag">due ${b.due}${!b.paid && b.due < today ? " ⚠️" : ""}</span>${b.repeat ? `<span class="task-badge repeat-badge" title="Repeats ${b.repeat}">🔁 ${b.repeat}</span>` : ""}
       <button onclick="deleteBill(${b.id})">🗑️</button>
     `;
     list.appendChild(row);
@@ -339,6 +341,7 @@ function renderBills() {
 }
 
 function toggleBillPaid(id) {
+  const before = bills.find(b => b.id === id);
   bills = bills.map(b => {
     if (b.id !== id) return b;
     if (!b.paid) return { ...b, paid: true, paidAt: Date.now() };
@@ -346,7 +349,19 @@ function toggleBillPaid(id) {
     return { ...rest, paid: false };
   });
   const bill = bills.find(b => b.id === id);
-  if (bill && bill.paid) fireConfetti();
+  if (bill && bill.paid) {
+    fireConfetti();
+    if (before && before.repeat && !before.paid) {
+      bills.push({
+        id: Date.now() + 1,
+        name: before.name,
+        amount: before.amount,
+        due: nextRepeatDue(before.due, before.repeat),
+        paid: false,
+        repeat: before.repeat
+      });
+    }
+  }
   saveBills();
 }
 
@@ -537,7 +552,8 @@ document.addEventListener("DOMContentLoaded", () => {
       name: document.getElementById("billName").value.trim(),
       amount: Number(document.getElementById("billAmount").value),
       due: document.getElementById("billDue").value,
-      paid: false
+      paid: false,
+      repeat: document.getElementById("billRepeat").value || ""
     });
     document.getElementById("billForm").reset();
     saveBills();

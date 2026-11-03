@@ -955,3 +955,5 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .horo-aspect.hard { color: var(--libra-rose); }
 .horo-aspect.soft { color: var(--taurus-emerald); }
 .horo-aspect.conj { color: var(--cosmic-purple); }
+.row-form.bills-form { grid-template-columns: 2fr 1fr 1fr 1fr auto; }
+@media (max-width: 680px) { .row-form.bills-form { grid-template-columns: 1fr; } }
