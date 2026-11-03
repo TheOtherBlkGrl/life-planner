@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102o" />
+  <link rel="stylesheet" href="style.css?v=20261102p" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -34,6 +34,7 @@
 
   <nav class="tab-nav" id="tabNav">
     <button class="tab-btn active" data-tab="today">🌟 Today</button>
+    <button class="tab-btn" data-tab="tasks">📋 Tasks</button>
     <button class="tab-btn" data-tab="week">🗓️ Week</button>
     <button class="tab-btn" data-tab="month">📆 Month</button>
     <button class="tab-btn" data-tab="bills">💸 Bills</button>
@@ -50,7 +51,10 @@
   <main class="dashboard">
 
     <section class="tab-panel active" id="panel-today">
-      <div class="card task-quick-card">
+      </section>
+
+    <section class="tab-panel" id="panel-tasks">
+<div class="card task-quick-card">
       <form id="taskForm" class="task-creator">
         <input type="text" id="taskInput" placeholder="Dump a task or idea out of your head..." required />
         <select id="taskColumnSelect">
@@ -202,7 +206,8 @@
               <div class="task-list" id="col-graveyard"></div>
             </div>
           </div>
-        </section>
+    </section>
+
 
         
       </div>
@@ -519,11 +524,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102o"></script>
-  <script src="astro.js?v=20261102o"></script>
+  <script src="app.js?v=20261102p"></script>
+  <script src="astro.js?v=20261102p"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102o"></script>
-  <script src="google-sync.js?v=20261102o"></script>
-  <script src="month.js?v=20261102o"></script>
+  <script src="sync-config.js?v=20261102p"></script>
+  <script src="google-sync.js?v=20261102p"></script>
+  <script src="month.js?v=20261102p"></script>
 </body>
 </html>
