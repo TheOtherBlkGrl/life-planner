@@ -1,5 +1,5 @@
 :root {
-  --bg-deep: #f2e8d6;
+  --bg-deep: #ecdfc6;
   --bg-card: #fbf5e9;
   --bg-card-hover: #fffdf7;
   --leo-gold: #c08a28;
@@ -15,7 +15,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: radial-gradient(circle at top right, #eadfc6, var(--bg-deep) 60%);
+  background: radial-gradient(circle at top right, #e7d8ba, var(--bg-deep) 60%);
   color: var(--text-main);
   font-family: 'Plus Jakarta Sans', sans-serif;
   min-height: 100vh;
