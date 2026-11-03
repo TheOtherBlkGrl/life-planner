@@ -974,3 +974,16 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .ccc-day-chip:hover { border-color: var(--cosmic-purple, #9d4edd); }
 .ccc-day-chip.on { background: var(--cosmic-purple, #9d4edd); border-color: var(--cosmic-purple, #9d4edd); color: #fff; }
 .ccc-day-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+/* --- job leads from Fo --- */
+.job-lead{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.75rem .85rem;margin-bottom:.6rem;background:rgba(157,78,221,.08)}
+.job-lead .lead-title{font-weight:600;color:#f4b860;text-decoration:none;font-size:.95rem}
+.job-lead .lead-title:hover{text-decoration:underline}
+.job-lead .lead-sub{font-size:.8rem;opacity:.85;margin-top:.25rem}
+.job-lead .lead-fit{font-size:.8rem;opacity:.72;margin-top:.3rem}
+.lead-actions{display:flex;gap:.5rem;margin-top:.55rem;flex-wrap:wrap}
+.lead-btn{border:none;border-radius:999px;padding:.4rem .85rem;cursor:pointer;font-weight:600;font-size:.8rem;color:#081c15}
+.lead-apply{background:#52b788}
+.lead-reject{background:transparent;border:1px solid rgba(229,99,111,.55);color:#e5636f}
+.job-lead.reviewed{opacity:.55;padding:.45rem .85rem}
+.chip{display:inline-block;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:.05rem .5rem;font-size:.72rem;margin-right:.3rem;vertical-align:middle}

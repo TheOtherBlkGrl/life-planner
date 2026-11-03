@@ -468,6 +468,7 @@ function switchTab(name) {
   if (name === "week" && typeof renderWeek === "function") renderWeek();
   if (name === "tasks" && typeof renderKanban === "function") renderKanban();
   if (name === "today" && typeof renderWins === "function") renderWins();
+  if (name === "jobs" && typeof loadJobLeads === "function") loadJobLeads();
 }
 
 // --- 8. WEEK PANEL ---
@@ -1811,3 +1812,70 @@ if (typeof saveTasks === "function") { const _st = saveTasks; saveTasks = functi
 setInterval(() => { if (focusSess && focusSess.running) updateFocusClock(); }, 1000);
 refreshFocusPicker();
 renderFocusSess();
+
+// --- 25. JOB LEADS FROM FO (screened twice daily, review here) ---
+const JOB_LEADS_DECISION_KEY = "ccc_job_leads_decisions";
+let jobLeadsData = null;
+function jobLeadDecisions() {
+  try { return JSON.parse(localStorage.getItem(JOB_LEADS_DECISION_KEY)) || {}; } catch (e) { return {}; }
+}
+function setJobLeadDecision(id, d) {
+  const m = jobLeadDecisions();
+  m[id] = { d, at: Date.now() };
+  localStorage.setItem(JOB_LEADS_DECISION_KEY, JSON.stringify(m));
+  renderJobLeads();
+}
+function jlApply(id) {
+  const l = ((jobLeadsData && jobLeadsData.leads) || []).find(x => x.id === id);
+  if (l && l.url) window.open(l.url, "_blank", "noopener");
+  setJobLeadDecision(id, "apply");
+}
+function jlReject(id) { setJobLeadDecision(id, "reject"); }
+function chip(cls, txt) { return ` <span class="chip ${cls}">${txt}</span>`; }
+function renderJobLeads() {
+  const listEl = document.getElementById("jobLeadsList");
+  const doneEl = document.getElementById("jobLeadsDone");
+  const metaEl = document.getElementById("jobLeadsMeta");
+  if (!listEl) return;
+  if (!jobLeadsData || !Array.isArray(jobLeadsData.leads)) {
+    listEl.innerHTML = '<p class="helper-text">No leads loaded yet. Sweeps run 5:30am and 3pm daily.</p>';
+    if (doneEl) doneEl.innerHTML = "";
+    return;
+  }
+  const decided = jobLeadDecisions();
+  const open = jobLeadsData.leads.filter(l => !decided[l.id]);
+  const done = jobLeadsData.leads.filter(l => decided[l.id]).slice().reverse();
+  const when = jobLeadsData.updatedLocal || jobLeadsData.updated || "";
+  if (metaEl) metaEl.textContent = (when ? "Updated " + when + " \u00b7 " : "") +
+    (open.length ? open.length + " waiting for your call \u00b7 sweeps 5:30am & 3pm" : "Nothing waiting \u00b7 next sweep 5:30am & 3pm daily");
+  listEl.innerHTML = open.length ? open.map(l => {
+    const bits = [];
+    if (l.pay) bits.push(chip("", "\uD83D\uDCB0 " + esc(l.pay)));
+    if (l.lane === "ea") bits.push(chip("", "\uD83E\uDD1D EA lane"));
+    if (l.posted) bits.push(chip("", "posted " + esc(l.posted)));
+    return `<div class="job-lead">
+      <a class="lead-title" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a>
+      <div class="lead-sub">${esc(l.company)} \u00b7 ${esc(l.location)}${bits.join("")}</div>
+      <div class="lead-fit">${esc(l.fit)}</div>
+      <div class="lead-actions">
+        <button class="lead-btn lead-apply" onclick="jlApply('${l.id}')">\u2705 Apply</button>
+        <button class="lead-btn lead-reject" onclick="jlReject('${l.id}')">\uD83D\uDC4B Not for me</button>
+      </div>
+    </div>`;
+  }).join("") : '<p class="helper-text">Nothing waiting. New leads land here at the next sweep.</p>';
+  if (doneEl) doneEl.innerHTML = done.length ? done.map(l =>
+    `<div class="job-lead reviewed">${decided[l.id].d === "apply" ? "\u2705 Applied" : "\uD83D\uDC4B Passed"} \u00b7 ${esc(l.title)} \u2014 ${esc(l.company)}</div>`
+  ).join("") : "";
+}
+async function loadJobLeads() {
+  try {
+    const r = await fetch("job-leads.json?cb=" + Date.now());
+    if (r.ok) {
+      jobLeadsData = await r.json();
+      localStorage.setItem("ccc_job_leads_cache", JSON.stringify(jobLeadsData));
+    }
+  } catch (e) {}
+  if (!jobLeadsData) { try { jobLeadsData = JSON.parse(localStorage.getItem("ccc_job_leads_cache")); } catch (e) {} }
+  renderJobLeads();
+}
+window.addEventListener("load", loadJobLeads);
