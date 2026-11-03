@@ -152,6 +152,7 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.25rem;
+  margin-top: 1.5rem;
   margin-bottom: 1.75rem;
 }
 
@@ -163,7 +164,6 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   margin-bottom: 1.5rem;
 }
-#panel-today .card { margin-bottom: 0; }
 
 .manifestation-card { border-top: 3px solid var(--cosmic-purple); }
 .leo-card { border-top: 3px solid var(--leo-gold); }
