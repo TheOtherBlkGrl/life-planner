@@ -1,0 +1,19 @@
+{
+  "updatedLocal": "Nov 2, 2026, 9:20 PM PT",
+  "last24h": {
+    "visits": 1,
+    "uniqueVisitors": 1,
+    "pageViews": 2,
+    "topSource": "direct traffic",
+    "resumeOpens": { "total": 0 },
+    "printClicks": 0
+  },
+  "sinceLaunch": {
+    "startDate": "Oct 16",
+    "visits": 150,
+    "pageViews": 310,
+    "resumeOpens": 30,
+    "topSource": "direct",
+    "note": "Last-30-days window; site launched Oct 16 so this equals since-launch. Resume opens: /Clarissa-Ward-Resume.html 20, /resume-dispatch.html 10. Print clicks 30d: 0."
+  }
+}
