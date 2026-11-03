@@ -425,6 +425,9 @@ function switchTab(name) {
     b.classList.toggle("active", b.dataset.tab === name));
   document.querySelectorAll(".tab-panel").forEach(p =>
     p.classList.toggle("active", p.id === `panel-${name}`));
+  // these views read live data, so re-render them when they open
+  if (name === "week" && typeof renderWeek === "function") renderWeek();
+  if (name === "tasks" && typeof renderKanban === "function") renderKanban();
 }
 
 // --- 8. WEEK PANEL ---
