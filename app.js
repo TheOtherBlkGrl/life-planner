@@ -1826,12 +1826,32 @@ function setJobLeadDecision(id, d) {
   localStorage.setItem(JOB_LEADS_DECISION_KEY, JSON.stringify(m));
   renderJobLeads();
 }
+const BRIDGE_URL = "https://planner-apply-bridge.f29f354fcc68928eef80.workers.dev/api/decisions";
+function bridgeDec(id, decision, l) {
+  try {
+    fetch(BRIDGE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      body: JSON.stringify({
+        id: id, decision: decision,
+        title: l && l.title || "", company: l && l.company || "",
+        url: l && l.url || "", lane: l && l.lane || "", pay: l && l.pay || ""
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
 function jlApply(id) {
   const l = ((jobLeadsData && jobLeadsData.leads) || []).find(x => x.id === id);
   if (l && l.url) window.open(l.url, "_blank", "noopener");
   setJobLeadDecision(id, "apply");
+  bridgeDec(id, "apply", l);
 }
-function jlReject(id) { setJobLeadDecision(id, "reject"); }
+function jlReject(id) {
+  const l = ((jobLeadsData && jobLeadsData.leads) || []).find(x => x.id === id);
+  setJobLeadDecision(id, "reject");
+  bridgeDec(id, "reject", l);
+}
 function chip(cls, txt) { return ` <span class="chip ${cls}">${txt}</span>`; }
 function renderJobLeads() {
   const listEl = document.getElementById("jobLeadsList");
