@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102m" />
+  <link rel="stylesheet" href="style.css?v=20261102n" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -204,28 +204,7 @@
           </div>
         </section>
 
-        <aside class="dopamine-sidebar card">
-          <h2>⚡ Dopamine Menu</h2>
-          <p class="helper-text">Stuck in task paralysis? Pick a 10-minute reset without falling into a scrolling trap:</p>
-
-          <div class="timer-box">
-            <div id="timerDisplay" class="timer-digits">10:00</div>
-            <div class="timer-controls">
-              <button id="startTimerBtn" class="mini-btn">▶️ Start</button>
-              <button id="resetTimerBtn" class="mini-btn">🔄 Reset</button>
-            </div>
-            <small id="activeBreakLabel">Pick a reset below 👇</small>
-          </div>
-
-          <ul class="dopamine-list">
-            <li><button class="dopa-btn" data-activity="🌿 Check on Priscilla & the houseplants">🌿 Check on the houseplants</button></li>
-            <li><button class="dopa-btn" data-activity="🐾 10-minute play session with the pups">🐾 Hang out with the pups</button></li>
-            <li><button class="dopa-btn" data-activity="🎹 Jam on a synth or blast 2 favorite songs">🎹 Jam on keys / blast a song</button></li>
-            <li><button class="dopa-btn" data-activity="☀️ Step outside for fresh air & yard patrol">☀️ Step outside for fresh air</button></li>
-            <li><button class="dopa-btn" data-activity="🐟 Watch the patio pond for a few minutes">🐟 Watch the patio pond</button></li>
-          </ul>
-        </aside>
-
+        
       </div>
     </section>
 
@@ -386,6 +365,55 @@
     </section>
 
     <section class="tab-panel" id="panel-blocks">
+      <div class="blocks-top-row">
+        <aside class="focus-sidebar card">
+          <h2>🕸️ Focus Session</h2>
+          <p class="helper-text">Pull a task over, estimate how long it'll take, and the clock tracks the work.</p>
+          <div id="focusPickerBox" class="focus-picker">
+            <select id="focusTaskSelect"></select>
+            <input type="text" id="focusCustomInput" placeholder="...or name it yourself" />
+            <button id="focusPullBtn" class="add-btn">➕ Start</button>
+          </div>
+          <div id="focusActiveBox" class="hidden">
+            <div class="focus-task-label" id="focusLabel"></div>
+            <div class="focus-clock" id="focusClock">00:00</div>
+            <div class="focus-est-row">
+              <span>Estimate</span>
+              <input type="number" id="focusEst" min="1" step="5" /> min
+              <span id="focusOver" class="focus-over hidden"></span>
+            </div>
+            <div class="focus-bar-wrap"><div id="focusBar"></div></div>
+            <div class="focus-controls">
+              <button id="focusToggleBtn" class="mini-btn">▶️ Start</button>
+              <button id="focusFinishBtn" class="mini-btn">✅ Done</button>
+              <button id="focusDiscardBtn" class="mini-btn">🗑️</button>
+            </div>
+            <small id="focusNote"></small>
+          </div>
+        </aside>
+<aside class="dopamine-sidebar card">
+          <h2>⚡ Dopamine Menu</h2>
+          <p class="helper-text">Stuck in task paralysis? Pick a 10-minute reset without falling into a scrolling trap:</p>
+
+          <div class="timer-box">
+            <div id="timerDisplay" class="timer-digits">10:00</div>
+            <div class="timer-controls">
+              <button id="startTimerBtn" class="mini-btn">▶️ Start</button>
+              <button id="resetTimerBtn" class="mini-btn">🔄 Reset</button>
+            </div>
+            <small id="activeBreakLabel">Pick a reset below 👇</small>
+          </div>
+
+          <ul class="dopamine-list">
+            <li><button class="dopa-btn" data-activity="🌿 Check on Priscilla & the houseplants">🌿 Check on the houseplants</button></li>
+            <li><button class="dopa-btn" data-activity="🐾 10-minute play session with the pups">🐾 Hang out with the pups</button></li>
+            <li><button class="dopa-btn" data-activity="🎹 Jam on a synth or blast 2 favorite songs">🎹 Jam on keys / blast a song</button></li>
+            <li><button class="dopa-btn" data-activity="☀️ Step outside for fresh air & yard patrol">☀️ Step outside for fresh air</button></li>
+            <li><button class="dopa-btn" data-activity="🐟 Watch the patio pond for a few minutes">🐟 Watch the patio pond</button></li>
+          </ul>
+        </aside>
+      </div>
+
       <div class="card">
         <div class="card-header">
           <h2>🧱 Block Scheduling</h2>
@@ -490,11 +518,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102m"></script>
-  <script src="astro.js?v=20261102m"></script>
+  <script src="app.js?v=20261102n"></script>
+  <script src="astro.js?v=20261102n"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102m"></script>
-  <script src="google-sync.js?v=20261102m"></script>
-  <script src="month.js?v=20261102m"></script>
+  <script src="sync-config.js?v=20261102n"></script>
+  <script src="google-sync.js?v=20261102n"></script>
+  <script src="month.js?v=20261102n"></script>
 </body>
 </html>

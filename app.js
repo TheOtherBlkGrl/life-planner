@@ -170,6 +170,12 @@ function updateTimerDisplay() {
 
 function startBreakTimer() {
   if (timerInterval) return;
+  // hitting the dopamine timer pauses the focus clock: the break is sanctioned, no guilt
+  if (focusSess && focusSess.running) {
+    pauseFocusSess(true);
+    const note = document.getElementById("focusNote");
+    if (note) note.textContent = "\u{1F9F8} Break logged \u2014 clock paused, momentum protected.";
+  }
   timerInterval = setInterval(() => {
     if (secondsLeft > 0) {
       secondsLeft--;
@@ -179,6 +185,11 @@ function startBreakTimer() {
       timerInterval = null;
       fireConfetti();
       document.getElementById("activeBreakLabel").textContent = "✨ Brain reset complete!";
+      if (focusSess && focusSess.autoPaused) {
+        resumeFocusSess();
+        const note = document.getElementById("focusNote");
+        if (note) note.textContent = "\u26A1 Break over \u2014 clock's back on. Keep going.";
+      }
     }
   }, 1000);
 }
@@ -652,6 +663,110 @@ function nextFreeSlot(date, durMin) {
     start += 15;
   }
   return DAY_START_MIN;
+}
+
+// --- FOCUS SESSION (task-driven Blocks page) ---
+let focusSess = JSON.parse(localStorage.getItem("ccc_focus")) || null;
+let focusLast = JSON.parse(localStorage.getItem("ccc_focus_last")) || null;
+
+function focusElapsedMs() {
+  if (!focusSess) return 0;
+  return focusSess.elapsed + (focusSess.running ? Date.now() - focusSess.startedAt : 0);
+}
+function fmtClock(ms) {
+  const s = Math.floor(ms / 1000);
+  return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+}
+function saveFocusSess() {
+  localStorage.setItem("ccc_focus", JSON.stringify(focusSess));
+  renderFocusSess();
+}
+function refreshFocusPicker() {
+  const sel = document.getElementById("focusTaskSelect");
+  if (!sel) return;
+  const open = tasks.filter(t => !["done", "graveyard"].includes(t.col));
+  sel.innerHTML = `<option value="">\u2014 pull a task over \u2014</option>` +
+    open.map(t => `<option value="${t.id}">${esc(t.text)}</option>`).join("");
+}
+function renderFocusSess() {
+  const picker = document.getElementById("focusPickerBox");
+  const active = document.getElementById("focusActiveBox");
+  const note = document.getElementById("focusNote");
+  if (!picker || !active) return;
+  if (!focusSess) {
+    picker.classList.remove("hidden");
+    active.classList.add("hidden");
+    if (note && focusLast) note.textContent = `Last session: ${focusLast.label} \u2014 ${fmtClock(focusLast.ms)} \u2713`;
+    return;
+  }
+  picker.classList.add("hidden");
+  active.classList.remove("hidden");
+  document.getElementById("focusLabel").textContent = focusSess.label;
+  document.getElementById("focusEst").value = focusSess.estMin;
+  document.getElementById("focusToggleBtn").textContent = focusSess.running ? "\u23F8 Pause" : "\u25B6 Start";
+  updateFocusClock();
+  if (note && focusSess.autoPaused) note.textContent = "\u{1F9F8} Break logged \u2014 clock paused, momentum protected.";
+}
+function updateFocusClock() {
+  if (!focusSess) return;
+  const ms = focusElapsedMs();
+  document.getElementById("focusClock").textContent = fmtClock(ms);
+  const estMs = focusSess.estMin * 60000;
+  const bar = document.getElementById("focusBar");
+  const over = document.getElementById("focusOver");
+  if (estMs > 0) {
+    bar.style.width = `${Math.min(100, (ms / estMs) * 100)}%`;
+    if (ms > estMs) {
+      over.classList.remove("hidden");
+      over.textContent = `+${fmtClock(ms - estMs)} over`;
+    } else {
+      over.classList.add("hidden");
+    }
+  }
+}
+function startFocusSess() {
+  const sel = document.getElementById("focusTaskSelect");
+  const custom = document.getElementById("focusCustomInput").value.trim();
+  let label = custom;
+  let taskId = null;
+  if (sel && sel.value) {
+    const t = tasks.find(x => x.id === Number(sel.value));
+    if (t) { label = t.text; taskId = t.id; }
+  }
+  if (!label) return;
+  focusSess = { taskId, label, estMin: 25, elapsed: 0, running: false, startedAt: 0, autoPaused: false };
+  document.getElementById("focusCustomInput").value = "";
+  saveFocusSess();
+  resumeFocusSess();
+}
+function pauseFocusSess(auto) {
+  if (!focusSess || !focusSess.running) return;
+  focusSess.elapsed = focusElapsedMs();
+  focusSess.running = false;
+  focusSess.autoPaused = !!auto;
+  saveFocusSess();
+}
+function resumeFocusSess() {
+  if (!focusSess) return;
+  focusSess.running = true;
+  focusSess.startedAt = Date.now();
+  focusSess.autoPaused = false;
+  saveFocusSess();
+}
+function finishFocusSess() {
+  if (!focusSess) return;
+  const ms = focusElapsedMs();
+  if (ms > 5000) {
+    fireConfetti();
+    focusLast = { label: focusSess.label, ms };
+    localStorage.setItem("ccc_focus_last", JSON.stringify(focusLast));
+  }
+  focusSess = null;
+  saveFocusSess();
+}
+function discardFocusSess() {
+  focusSess = null;
+  saveFocusSess();
 }
 
 // --- 14. JOURNAL ---
@@ -1199,3 +1314,22 @@ document.addEventListener("click", e => {
   lastDetail = { cal: el.dataset.cal, eid: el.dataset.eid, cached: parsed };
   showEventDetail(el.dataset.cal, el.dataset.eid, parsed);
 });
+
+// Focus Session wiring
+document.addEventListener("click", e => {
+  if (e.target.closest("#focusPullBtn")) startFocusSess();
+  else if (e.target.closest("#focusToggleBtn")) {
+    if (focusSess) (focusSess.running ? pauseFocusSess(false) : resumeFocusSess());
+  } else if (e.target.closest("#focusFinishBtn")) finishFocusSess();
+  else if (e.target.closest("#focusDiscardBtn")) discardFocusSess();
+});
+document.addEventListener("change", e => {
+  if (e.target.id === "focusEst" && focusSess) {
+    focusSess.estMin = Math.max(1, Number(e.target.value) || 25);
+    saveFocusSess();
+  }
+});
+if (typeof saveTasks === "function") { const _st = saveTasks; saveTasks = function (...a) { const r = _st.apply(this, a); refreshFocusPicker(); return r; }; }
+setInterval(() => { if (focusSess && focusSess.running) updateFocusClock(); }, 1000);
+refreshFocusPicker();
+renderFocusSess();

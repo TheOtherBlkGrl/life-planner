@@ -901,3 +901,26 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
   border-radius: 0.5rem; padding: 0.2rem 0.45rem; font-size: 0.8rem; cursor: pointer;
 }
 .ev-cat-select option { background: #241542; color: #efe9ff; }
+/* ---- focus session (blocks page) ---- */
+.blocks-top-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 0.9rem; margin-bottom: 0.9rem; }
+@media (max-width: 760px) { .blocks-top-row { grid-template-columns: 1fr; } }
+.focus-picker { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.6rem; }
+.focus-picker select, .focus-picker input[type="text"] {
+  width: 100%; background: rgba(159, 123, 255, 0.12); color: #efe9ff;
+  border: 1px solid rgba(159, 123, 255, 0.35); border-radius: 0.6rem; padding: 0.45rem 0.6rem; font-size: 0.85rem;
+}
+.focus-task-label { font-weight: 600; font-size: 0.95rem; margin: 0.5rem 0 0.2rem; }
+.focus-clock {
+  font-size: 2.6rem; font-weight: 700; letter-spacing: 0.06em; line-height: 1.1;
+  color: #efe9ff; font-variant-numeric: tabular-nums; margin: 0.2rem 0 0.4rem;
+}
+.focus-est-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; margin-bottom: 0.4rem; }
+.focus-est-row input {
+  width: 4.2rem; background: rgba(159, 123, 255, 0.12); color: #efe9ff;
+  border: 1px solid rgba(159, 123, 255, 0.35); border-radius: 0.5rem; padding: 0.25rem 0.4rem;
+}
+.focus-over { color: #ff8fa3; font-weight: 600; }
+.focus-bar-wrap { height: 0.45rem; background: rgba(159, 123, 255, 0.15); border-radius: 999px; overflow: hidden; margin-bottom: 0.55rem; }
+.focus-bar-wrap > div { height: 100%; width: 0%; background: linear-gradient(90deg, #9d4edd, #48cae4); border-radius: 999px; transition: width 0.4s ease; }
+.focus-controls { display: flex; gap: 0.45rem; margin-top: 0.2rem; }
+.focus-sidebar small { display: block; margin-top: 0.5rem; opacity: 0.8; min-height: 1em; }
