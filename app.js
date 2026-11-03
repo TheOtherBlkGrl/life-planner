@@ -71,6 +71,10 @@ function openEditModal(title, fields, onSave) {
   ov.style.cssText = "position:fixed;inset:0;background:rgba(10,6,18,.72);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;";
   const fHtml = fields.map(f => {
     const lbl = `<label style="font-size:.78rem;opacity:.75;margin-bottom:.25rem;display:block;">${f.label}</label>`;
+    if (f.type === "days") {
+      const picked = Array.isArray(f.value) ? f.value : [];
+      return `<div id="mf_${f.id}">${lbl}<div class="ccc-day-row">${CUSTOM_DAY_ORDER.map(d => `<button type="button" class="ccc-day-chip${picked.includes(d) ? " on" : ""}" data-day="${d}">${DAY_SHORT[d]}</button>`).join("")}</div></div>`;
+    }
     if (f.type === "select") {
       const opts = f.options.map(o => `<option value="${o.v}" ${o.v === f.value ? "selected" : ""}>${o.t}</option>`).join("");
       return `<div>${lbl}<select id="mf_${f.id}" style="width:100%;background:#110f1a;border:1px solid rgba(255,255,255,.14);border-radius:10px;color:#f8f7ff;padding:.55rem .6rem;box-sizing:border-box;">${opts}</select></div>`;
@@ -86,11 +90,27 @@ function openEditModal(title, fields, onSave) {
     </div>
   </div>`;
   document.body.appendChild(ov);
+  const _daysF = fields.find(f => f.type === "days");
+  if (_daysF) {
+    wireDayChips(ov.querySelector("#mf_" + _daysF.id));
+    const _sel = _daysF.showWhen ? ov.querySelector("#mf_" + _daysF.showWhen) : null;
+    if (_sel) {
+      const _sync = () => { ov.querySelector("#mf_" + _daysF.id).style.display = _sel.value === "custom" ? "block" : "none"; };
+      _sel.addEventListener("change", _sync);
+      _sync();
+    }
+  }
   ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
   ov.querySelector("#cccModalCancel").addEventListener("click", () => ov.remove());
   ov.querySelector("#cccModalSave").addEventListener("click", () => {
     const vals = {};
     fields.forEach(f => { vals[f.id] = document.getElementById("mf_" + f.id).value; });
+    const _daysF = fields.find(f => f.type === "days");
+    if (_daysF) {
+      const _sel = document.getElementById("mf_" + _daysF.showWhen);
+      vals[_daysF.id] = (_sel && _sel.value === "custom") ? readDayChips(ov.querySelector("#mf_" + _daysF.id)) : [];
+      if (_sel && _sel.value === "custom" && !vals[_daysF.id].length) { flashMsg("Custom repeat: pick at least one day"); return; }
+    }
     ov.remove();
     onSave(vals);
   });
@@ -138,11 +158,12 @@ function editTask(id) {
     { id: "due", label: "Due date", type: "date", value: t.due },
     { id: "time", label: "Time", type: "time", value: t.time },
     { id: "pri", label: "Priority", type: "select", value: t.pri, options: [{ v: "", t: "No priority" }, { v: "high", t: "🔥 High" }, { v: "med", t: "⚡ Medium" }, { v: "low", t: "🌿 Low" }] },
-    { id: "repeat", label: "Repeat", type: "select", value: t.repeat, options: [{ v: "", t: "No repeat" }, { v: "daily", t: "🔁 Daily" }, { v: "weekdays", t: "🔁 Weekdays" }, { v: "weekly", t: "🔁 Weekly" }, { v: "monthly", t: "🔁 Monthly" }] }
+    { id: "repeat", label: "Repeat", type: "select", value: t.repeat, options: [{ v: "", t: "No repeat" }, { v: "daily", t: "🔁 Daily" }, { v: "weekdays", t: "🔁 Weekdays" }, { v: "weekly", t: "🔁 Weekly" }, { v: "monthly", t: "🔁 Monthly" }, { v: "custom", t: "🗓️ Custom" }] },
+    { id: "days", label: "Days", type: "days", showWhen: "repeat", value: t.days }
   ], v => {
     if (!v.text.trim()) { flashMsg("Task text can't be empty"); return; }
     if (v.col === "top3" && t.col !== "top3" && top3Full()) { flashMsg("Rule of 3 is full. Move one out first."); return; }
-    Object.assign(t, { text: v.text.trim(), col: v.col, due: v.due, time: v.due ? v.time : "", pri: v.pri, repeat: v.repeat });
+    Object.assign(t, { text: v.text.trim(), col: v.col, due: v.due, time: v.due ? v.time : "", pri: v.pri, repeat: v.repeat, days: v.days || [] });
     saveTasks();
     flashMsg("Task updated ✨");
   });
@@ -251,7 +272,22 @@ function saveTasks() {
   renderTabTasks();
 }
 
-function nextRepeatDue(due, repeat) {
+const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const CUSTOM_DAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
+function repeatLabel(t) {
+  if (t && t.repeat === "custom" && Array.isArray(t.days) && t.days.length) {
+    return CUSTOM_DAY_ORDER.filter(d => t.days.includes(d)).map(d => DAY_SHORT[d]).join(" / ");
+  }
+  return t ? t.repeat : "";
+}
+function readDayChips(container) {
+  return Array.from(container.querySelectorAll(".ccc-day-chip.on")).map(b => Number(b.dataset.day));
+}
+function wireDayChips(container) {
+  container.querySelectorAll(".ccc-day-chip").forEach(b => b.addEventListener("click", () => b.classList.toggle("on")));
+}
+
+function nextRepeatDue(due, repeat, days) {
   if (!due) return "";
   const d = new Date(due + "T12:00:00");
   const step = () => {
@@ -261,6 +297,7 @@ function nextRepeatDue(due, repeat) {
     else if (repeat === "monthly") { const day = d.getDate(); d.setMonth(d.getMonth() + 1); if (d.getDate() < day) d.setDate(0); }
     else if (repeat === "quarterly") { const day = d.getDate(); d.setMonth(d.getMonth() + 3); if (d.getDate() < day) d.setDate(0); }
     else if (repeat === "yearly") { const day = d.getDate(); d.setFullYear(d.getFullYear() + 1); if (d.getDate() < day) d.setDate(0); }
+    else if (repeat === "custom") { let g2 = 0; do { d.setDate(d.getDate() + 1); g2++; } while (g2 < 400 && !(Array.isArray(days) && days.includes(d.getDay()))); }
   };
   step();
   while (d.getTime() <= Date.now()) step();  // skip past dates so the copy lands ahead
@@ -293,10 +330,11 @@ function moveTask(id, targetCol) {
         id: Date.now() + 1,
         text: before.text,
         col: respawnCol,
-        due: nextRepeatDue(before.due, before.repeat),
+        due: nextRepeatDue(before.due, before.repeat, before.days),
         time: before.time || "",
         pri: before.pri || "",
-        repeat: before.repeat
+        repeat: before.repeat,
+        days: before.days || []
       });
     }
   }
@@ -328,7 +366,7 @@ function renderKanban() {
       const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < localDateStr();
       const badges = [];
       if (task.pri) badges.push(`<span class="pri-dot pri-${task.pri}" title="Priority"></span>`);
-      if (task.repeat) badges.push(`<span class="task-badge repeat-badge" title="Repeats ${task.repeat}">🔁 ${task.repeat}</span>`);
+      if (task.repeat) badges.push(`<span class="task-badge repeat-badge" title="Repeats ${repeatLabel(task)}">🔁 ${repeatLabel(task)}</span>`);
       if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
       else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
       card.innerHTML = `
@@ -361,7 +399,7 @@ function renderTabTasks() {
       const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < localDateStr();
       const badges = [];
       if (task.pri) badges.push(`<span class="pri-dot pri-${task.pri}" title="Priority"></span>`);
-      if (task.repeat) badges.push(`<span class="task-badge repeat-badge" title="Repeats ${task.repeat}">🔁 ${task.repeat}</span>`);
+      if (task.repeat) badges.push(`<span class="task-badge repeat-badge" title="Repeats ${repeatLabel(task)}">🔁 ${repeatLabel(task)}</span>`);
       if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
       else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
       card.innerHTML = `
@@ -729,6 +767,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById("taskInput");
     const colSelect = document.getElementById("taskColumnSelect");
     const targetCol = colSelect.value;
+    const repVal = document.getElementById("taskRepeat").value;
+    let repDays = [];
+    if (repVal === "custom") {
+      repDays = readDayChips(document.getElementById("taskCustomDays"));
+      if (!repDays.length) { flashMsg("Custom repeat: pick at least one day"); return; }
+    }
 
     if (targetCol === "top3" && tasks.filter(t => t.col === "top3").length >= 3) {
       showCosmicToast();
@@ -742,13 +786,16 @@ document.addEventListener("DOMContentLoaded", () => {
       due: document.getElementById("taskDue").value || "",
       time: document.getElementById("taskTime").value || "",
       pri: document.getElementById("taskPri").value || "",
-      repeat: document.getElementById("taskRepeat").value || ""
+      repeat: repVal || "",
+      days: repDays
     });
     input.value = "";
     document.getElementById("taskDue").value = "";
     document.getElementById("taskTime").value = "";
     document.getElementById("taskPri").value = "";
     document.getElementById("taskRepeat").value = "";
+    document.querySelectorAll("#taskCustomDays .ccc-day-chip.on").forEach(b => b.classList.remove("on"));
+    document.getElementById("taskCustomDays").style.display = "none";
     saveTasks();
   });
 
@@ -1248,11 +1295,12 @@ function expandTaskOccurrences(task, startStr, endStr) {
   let guard = 0;
   while (d <= end && guard < 500) {
     const ds = localDateStr(d);
-    const ok = task.repeat !== "weekdays" || (d.getDay() >= 1 && d.getDay() <= 5);
+    const ok = task.repeat === "weekdays" ? (d.getDay() >= 1 && d.getDay() <= 5) : task.repeat === "custom" ? (Array.isArray(task.days) && task.days.includes(d.getDay())) : true;
     if (ok && ds >= startStr) out.push({ ...task, due: ds, _occ: true });
     if (task.repeat === "daily") d.setDate(d.getDate() + 1);
     else if (task.repeat === "weekdays") d.setDate(d.getDate() + 1);
     else if (task.repeat === "weekly") d.setDate(d.getDate() + 7);
+    else if (task.repeat === "custom") d.setDate(d.getDate() + 1);
     else if (task.repeat === "monthly") {
       d.setDate(1); d.setMonth(d.getMonth() + 1);
       const dim = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
@@ -1288,7 +1336,7 @@ function showTaskDetail(id) {
     ${row("Section", ALL_COL_LABELS[t.col] || t.col)}
     ${row("Status", status)}
     ${t.due ? row("Due", fmt(t.due) + (t.time ? " · " + fmtTime(t.time) : "")) : ""}
-    ${t.repeat ? row("Repeats", "🔁 " + t.repeat) : ""}
+    ${t.repeat ? row("Repeats", "🔁 " + repeatLabel(t)) : ""}
     ${t.pri ? row("Priority", t.pri) : ""}
     <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
       ${isOpen ? `<button id="tdDone" style="background:#52b788;border:none;border-radius:999px;padding:.55rem .9rem;cursor:pointer;color:#081c15;font-weight:600;">✅ Mark done</button>` : ""}
