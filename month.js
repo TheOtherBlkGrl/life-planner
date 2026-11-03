@@ -16,6 +16,8 @@ function gcalEventsLocal(key) {
 function renderMonth() {
   const grid = document.getElementById("monthGrid");
   if (!grid) return;
+  let monthBills = [];
+  try { monthBills = JSON.parse(localStorage.getItem("ccc_bills")) || []; } catch (e) {}
   const base = new Date();
   base.setDate(1);
   base.setMonth(base.getMonth() + monthOffset);
@@ -34,6 +36,8 @@ function renderMonth() {
     const key = localKey(d);
     const out = d.getMonth() !== m;
     const chips = [];
+    monthBills.filter(b => b.due === key && !b.paid).slice(0, 3).forEach(b =>
+      chips.push(`<span class="month-chip bill" onclick="switchTab('bills')" style="cursor:pointer;" title="Bill due $${b.amount} \u2014 tap to open Bills">${b.due < todayKey ? "\u26A0\uFE0F " : ""}\uD83D\uDCB8 ${b.name.replace(/"/g, "&quot;")}</span>`));
     gcalEventsLocal(key).slice(0, 3).forEach(ev =>
       chips.push(`<span class="month-chip gcal gcal-detail" data-cal="${ev.calId.replace(/"/g, "&quot;")}" data-eid="${ev.id.replace(/"/g, "&quot;")}" data-cached="${encodeURIComponent(JSON.stringify(ev))}" title="Show details${ev.title.replace(/"/g, "&quot;")}">📅 ${ev.title}</span>`));
     tasksOn(key).slice(0, 3).forEach(t =>

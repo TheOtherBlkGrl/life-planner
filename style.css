@@ -1070,3 +1070,6 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 /* layman gloss + sky legend (specifics first, plain terms under) */
 .horo-plain { display: block; font-size: 0.76rem; color: var(--text-muted); margin-top: 3px; line-height: 1.45; }
 .astro-legend { margin-top: 0.7rem; font-size: 0.74rem; color: var(--text-muted); line-height: 1.55; }
+
+/* bill chips on the month grid */
+.month-chip.bill { background: rgba(244, 184, 96, 0.14); border: 1px solid rgba(244, 184, 96, 0.45); font-weight: 600; }
