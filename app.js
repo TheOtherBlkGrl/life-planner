@@ -76,7 +76,7 @@ function fireConfetti() {
       particleCount: 70,
       spread: 65,
       origin: { y: 0.6 },
-      colors: ["#e9bd57", "#a6c28b", "#edb7a6", "#b689d9"]
+      colors: ["#c08a28", "#7fa05f", "#cc8672", "#8e5cb8"]
     });
   }
 }
@@ -541,19 +541,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- 13. BLOCK SCHEDULING ---
 let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
-const CAT_COLORS = { focus: "#b689d9", admin: "#e9bd57", body: "#a6c28b", joy: "#edb7a6" };
+const CAT_COLORS = { focus: "#8e5cb8", admin: "#c08a28", body: "#7fa05f", joy: "#cc8672" };
 
 // calendar-event categories (tag any Google event from its detail popup)
 const EV_CAT_META = {
-  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#a3cdbb" },
-  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#92c07c" },
-  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#eaa794" },
-  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#cc6b78" },
-  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#e29e77" },
-  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#b689d9" },
-  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#e9bd57" },
-  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#a6c28b" },
-  joy:      { label: "Joy",       emoji: "\u2728",    color: "#edb7a6" }
+  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#629d84" },
+  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#6f9c4e" },
+  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#c47a64" },
+  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#a85061" },
+  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#c26f3f" },
+  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#8e5cb8" },
+  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#c08a28" },
+  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#7fa05f" },
+  joy:      { label: "Joy",       emoji: "\u2728",    color: "#cc8672" }
 };
 let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
 const evCatKey = (calId, id) => `${calId}|${id}`;
@@ -618,7 +618,7 @@ function renderBlocks() {
       bar.className = "tl-block" + (b.done ? " tl-done" : "");
       bar.style.left = `${Math.max(left, 0)}%`;
       bar.style.width = `${width}%`;
-      bar.style.background = CAT_COLORS[b.cat] || "#b689d9";
+      bar.style.background = CAT_COLORS[b.cat] || "#8e5cb8";
       bar.title = `${b.start} \u00b7 ${b.label}`;
       timeline.appendChild(bar);
     }
