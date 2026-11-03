@@ -322,7 +322,7 @@ function strengthWord(o) { return o < 1 ? "razor-tight" : (o < 2.5 ? "solid" : "
 function transitDetail(h, off, prevState) {
   const lib = TRANSIT_READ[h.planet] || TRANSIT_READ.Sun;
   const pool = lib[h.cls] || lib.soft;
-  const pick = pool[(new Date(noonLocalMs(off)).getDate() + off) % pool.length];
+  const pick = pool[(new Date(noonLocalMs(off)).getDate() + new Date(noonLocalMs(off)).getMonth()) % pool.length];
   const k = hitKey(h);
   let orbTxt;
   if (off > 0 && prevState && prevState.orbs && prevState.orbs[k] != null) {
@@ -341,7 +341,7 @@ function horoReadingFor(ms, off, prevState) {
   const date = new Date(ms);
   const dateKey = date.getDate() + date.getMonth();
   const elem = HORO_ELEM[moonSign];
-  const elemLine = HORO_ELEM_LINE[elem][(dateKey + off) % HORO_ELEM_LINE[elem].length];
+  const elemLine = HORO_ELEM_LINE[elem][dateKey % HORO_ELEM_LINE[elem].length];
   const open = (prevState && prevState.sign === moonSign)
     ? `Moon holds in ${moonSign}: ${elemLine}.`
     : `Moon slides through ${moonSign}: ${elemLine}.`;
@@ -364,7 +364,7 @@ function horoReadingFor(ms, off, prevState) {
       shown.push(hitKey(h));
     }
     const closers = picked.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
-    parts.push(closers[(dateKey + off) % closers.length]);
+    parts.push(closers[dateKey % closers.length]);
   }
   const state = { sign: moonSign, shown, orbs: {} };
   hits.forEach(h => { state.orbs[hitKey(h)] = h.orb; });
