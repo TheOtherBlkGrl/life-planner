@@ -427,7 +427,7 @@ function deepDiveHtml() {
     </div>`;
   const body = `
     <div class="horo-section"><span class="horo-section-title">\u{1F30C} The Sky Today</span>
-      <p>${pe} <strong>${pn}</strong>, Moon in ${signStr(sky.Moon.lon)}: ${elemLine} ${hits.length ? hits.length + " transit" + (hits.length === 1 ? "" : "s") + " sit within orb of your natal chart, checked against your natal " + signStr(NATAL.Sun) + " Sun, " + signStr(NATAL.Moon) + " Moon and " + signStr(NATAL.Asc) + " Rising." : "No planet is within orb of your chart today: the day is mostly yours to steer."}</p>
+      <p>${pe} <strong>${pn}</strong>, Moon in ${signStr(sky.Moon.lon)}: ${elemLine}. ${hits.length ? hits.length + " transit" + (hits.length === 1 ? "" : "s") + " sit within orb of your natal chart, checked against your natal " + signStr(NATAL.Sun) + " Sun, " + signStr(NATAL.Moon) + " Moon and " + signStr(NATAL.Asc) + " Rising." : "No planet is within orb of your chart today: the day is mostly yours to steer."}</p>
     </div>
     ${sec("leo-sec", "\u2600\uFE0F Leo Sun \u00b7 confidence & being seen", groups.Sun, "Nothing is aspecting your Leo Sun today: it runs on its own light. Use the quiet to set the tone rather than react to one.")}
     ${sec("libra-sec", "\u2696\uFE0F Libra Moon \u00b7 mood & comfort", groups.Moon, "No transit touches your Libra Moon today. " + MOON_SIGN_ADVICE[moonSign])}

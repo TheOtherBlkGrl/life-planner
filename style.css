@@ -1064,3 +1064,5 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .horo-power-label{font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--leo-gold,#f4b860);display:block}
 .horo-power-move{font-size:1.02rem;font-weight:700;margin:.25rem 0 .35rem}
 .horo-power-meta{font-size:.78rem;color:var(--text-muted,#b8a9d9);border-top:1px solid var(--border-subtle);padding-top:.4rem}
+
+.horo-body.hidden{display:none !important}
