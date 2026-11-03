@@ -1841,9 +1841,23 @@ function bridgeDec(id, decision, l) {
     }).catch(function(){});
   } catch (e) {}
 }
+let leadExpanded = new Set();
+function jlDetails(id) {
+  if (leadExpanded.has(id)) leadExpanded.delete(id); else leadExpanded.add(id);
+  renderJobLeads();
+}
+function leadDetailsPanel(l) {
+  const d = l.details || {};
+  const rows = [];
+  rows.push('<div class="ld-row"><span class="ld-k">Pay</span>' + esc(d.salary || l.pay || "Not posted") + '</div>');
+  if (d.loc) rows.push('<div class="ld-row"><span class="ld-k">Location</span>' + esc(d.loc) + '</div>');
+  if (l.posted) rows.push('<div class="ld-row"><span class="ld-k">Posted</span>' + esc(l.posted) + '</div>');
+  return '<div class="lead-details">' + rows.join("") +
+    '<div class="ld-sum">' + esc(d.summary || l.fit || "") + '</div>' +
+    '<a class="ld-link" href="' + esc(l.url) + '" target="_blank" rel="noopener">Open full posting &nearr;</a></div>';
+}
 function jlApply(id) {
   const l = ((jobLeadsData && jobLeadsData.leads) || []).find(x => x.id === id);
-  if (l && l.url) window.open(l.url, "_blank", "noopener");
   setJobLeadDecision(id, "apply");
   bridgeDec(id, "apply", l);
 }
@@ -1881,7 +1895,9 @@ function renderJobLeads() {
       <div class="lead-actions">
         <button class="lead-btn lead-apply" onclick="jlApply('${l.id}')">\u2705 Apply</button>
         <button class="lead-btn lead-reject" onclick="jlReject('${l.id}')">\uD83D\uDC4B Not for me</button>
+        <button class="lead-btn lead-more" onclick="jlDetails('${l.id}')">${leadExpanded.has(l.id) ? "\u25B4 Hide details" : "\u25BE See details"}</button>
       </div>
+      ${leadExpanded.has(l.id) ? leadDetailsPanel(l) : ""}
     </div>`;
   }).join("") : '<p class="helper-text">Nothing waiting. New leads land here at the next sweep.</p>';
   if (doneEl) doneEl.innerHTML = done.length ? done.map(l =>

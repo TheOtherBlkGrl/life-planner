@@ -992,3 +992,12 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .site-report-row{display:flex;gap:.75rem;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:.88rem;align-items:baseline}
 .site-report-row:last-child{border-bottom:none}
 .site-report-row .k{width:150px;flex:none;opacity:.65;font-size:.78rem}
+
+.lead-btn.lead-more{background:transparent;border:1px solid rgba(157,77,221,.5);color:#c9a6f0}
+.lead-btn.lead-more:hover{background:rgba(157,77,221,.15)}
+.lead-details{margin-top:.55rem;padding:.6rem .75rem;border:1px solid rgba(157,77,221,.35);border-radius:10px;background:rgba(17,15,26,.55);font-size:.8rem;line-height:1.5}
+.lead-details .ld-row{margin-bottom:.3rem}
+.lead-details .ld-k{color:#f4b860;font-weight:600;margin-right:.4rem}
+.lead-details .ld-sum{margin:.35rem 0 .45rem;opacity:.9}
+.lead-details .ld-link{color:#9d4edd;font-weight:600;text-decoration:none}
+.lead-details .ld-link:hover{text-decoration:underline}
