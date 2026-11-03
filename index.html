@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102p" />
+  <link rel="stylesheet" href="style.css?v=20261102q" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -51,33 +51,7 @@
   <main class="dashboard">
 
     <section class="tab-panel active" id="panel-today">
-      </section>
-
-    <section class="tab-panel" id="panel-tasks">
-<div class="card task-quick-card">
-      <form id="taskForm" class="task-creator">
-        <input type="text" id="taskInput" placeholder="Dump a task or idea out of your head..." required />
-        <select id="taskColumnSelect">
-          <option value="dump">🌪️ Brain Dump Inbox</option>
-          <option value="high">🔥 High-Spark Quests</option>
-          <option value="low">🌿 Cozy Low-Spoon Wins</option>
-          <option value="top3">🎯 Today's Rule of 3</option>
-        </select>
-        <div class="task-meta">
-          <input type="date" id="taskDue" title="Due date (optional)" />
-          <input type="time" id="taskTime" title="Time (optional)" />
-          <select id="taskPri">
-            <option value="">Priority</option>
-            <option value="high">🔥 High</option>
-            <option value="med">⚡ Medium</option>
-            <option value="low">🌿 Low</option>
-          </select>
-        </div>
-        <button type="submit" class="add-btn">➕ Add to Board</button>
-      </form>
-      </div>
-
-      <div class="card wins-card">
+<div class="card wins-card">
         <div class="card-header">
           <h2>🏆 Today's Wins</h2>
           <span class="badge-pill" id="winsCount">0 wins</span>
@@ -147,6 +121,32 @@
 
       </div>
 
+          </section>
+
+    <section class="tab-panel" id="panel-tasks">
+<div class="card task-quick-card">
+      <form id="taskForm" class="task-creator">
+        <input type="text" id="taskInput" placeholder="Dump a task or idea out of your head..." required />
+        <select id="taskColumnSelect">
+          <option value="dump">🌪️ Brain Dump Inbox</option>
+          <option value="high">🔥 High-Spark Quests</option>
+          <option value="low">🌿 Cozy Low-Spoon Wins</option>
+          <option value="top3">🎯 Today's Rule of 3</option>
+        </select>
+        <div class="task-meta">
+          <input type="date" id="taskDue" title="Due date (optional)" />
+          <input type="time" id="taskTime" title="Time (optional)" />
+          <select id="taskPri">
+            <option value="">Priority</option>
+            <option value="high">🔥 High</option>
+            <option value="med">⚡ Medium</option>
+            <option value="low">🌿 Low</option>
+          </select>
+        </div>
+        <button type="submit" class="add-btn">➕ Add to Board</button>
+      </form>
+      </div>
+
       <div class="workspace-layout">
 
         <section class="kanban-section">
@@ -206,10 +206,7 @@
               <div class="task-list" id="col-graveyard"></div>
             </div>
           </div>
-    </section>
-
-
-        
+                </section>
       </div>
     </section>
 
@@ -524,11 +521,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102p"></script>
-  <script src="astro.js?v=20261102p"></script>
+  <script src="app.js?v=20261102q"></script>
+  <script src="astro.js?v=20261102q"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102p"></script>
-  <script src="google-sync.js?v=20261102p"></script>
-  <script src="month.js?v=20261102p"></script>
+  <script src="sync-config.js?v=20261102q"></script>
+  <script src="google-sync.js?v=20261102q"></script>
+  <script src="month.js?v=20261102q"></script>
 </body>
 </html>
