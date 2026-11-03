@@ -270,6 +270,7 @@ function saveTasks() {
   localStorage.setItem("clarissa_tasks", JSON.stringify(tasks));
   renderKanban();
   renderTabTasks();
+  renderWins();
 }
 
 const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -466,6 +467,7 @@ function switchTab(name) {
   // these views read live data, so re-render them when they open
   if (name === "week" && typeof renderWeek === "function") renderWeek();
   if (name === "tasks" && typeof renderKanban === "function") renderKanban();
+  if (name === "today" && typeof renderWins === "function") renderWins();
 }
 
 // --- 8. WEEK PANEL ---
