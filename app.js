@@ -1,3 +1,5 @@
+const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
 function localDateStr(d = new Date()) {
   // the LOCAL calendar date (YYYY-MM-DD); toISOString() is UTC and rolls over at 4/5pm Pacific
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
