@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102ak" />
+  <link rel="stylesheet" href="style.css?v=20261102al" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -285,6 +285,7 @@
         </div>
         <p class="helper-text">Your daily care list. It resets fresh every new day automatically, no guilt carried over.</p>
         <div id="selfcareList" class="check-list"></div>
+        <div id="taskCol-selfcare" class="line-list tab-task-list" style="display:none"></div>
         <form id="selfcareForm" class="row-form solo-form">
           <input type="text" id="selfcareInput" placeholder="Add a ritual of your own..." required />
           <button type="submit" class="add-btn">➕</button>
@@ -310,6 +311,7 @@
           <button type="submit" class="add-btn">➕</button>
         </form>
         <div id="gardenList" class="line-list"></div>
+        <div id="taskCol-garden" class="line-list tab-task-list" style="display:none"></div>
       </div>
           <div class="card cal-events-card">
         <div class="card-header">
@@ -331,6 +333,7 @@
           <button type="submit" class="add-btn">➕</button>
         </form>
         <div id="socialList" class="line-list"></div>
+        <div id="taskCol-social" class="line-list tab-task-list" style="display:none"></div>
       </div>
                 <div class="card">
         <div class="card-header">
@@ -338,6 +341,7 @@
         </div>
         <p class="helper-text">Date nights, little things, us stuff.</p>
         <div id="marriageList" class="line-list"></div>
+        <div id="taskCol-marriage" class="line-list tab-task-list" style="display:none"></div>
         <form id="marriageForm" class="row-form solo-form">
           <input type="text" id="marriageInput" placeholder="Add something for the two of you..." required />
           <button type="submit" class="add-btn">➕</button>
@@ -361,6 +365,7 @@
         </div>
         <p class="helper-text">Anything work-related that isn't the job hunt.</p>
         <div id="workList" class="line-list"></div>
+        <div id="taskCol-work" class="line-list tab-task-list" style="display:none"></div>
         <form id="workForm" class="row-form solo-form">
           <input type="text" id="workInput" placeholder="Add a work item..." required />
           <button type="submit" class="add-btn">➕</button>
@@ -386,6 +391,7 @@
           <button type="submit" class="add-btn">➕</button>
         </form>
         <div id="jobsList" class="line-list"></div>
+        <div id="taskCol-jobs" class="line-list tab-task-list" style="display:none"></div>
       </div>
           <div class="card cal-events-card">
         <div class="card-header">
@@ -560,11 +566,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102ak"></script>
-  <script src="astro.js?v=20261102ak"></script>
+  <script src="app.js?v=20261102al"></script>
+  <script src="astro.js?v=20261102al"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102ak"></script>
-  <script src="google-sync.js?v=20261102ak"></script>
-  <script src="month.js?v=20261102ak"></script>
+  <script src="sync-config.js?v=20261102al"></script>
+  <script src="google-sync.js?v=20261102al"></script>
+  <script src="month.js?v=20261102al"></script>
 </body>
 </html>

@@ -95,9 +95,19 @@ const COL_LABELS = {
   top3: "🎯 Rule of 3", done: "🏆 Trophy", graveyard: "🪦 Graveyard"
 };
 
+// extra task destinations: each tab's own category list
+const TAB_TASK_COLS = ["selfcare", "garden", "social", "marriage", "work", "jobs"];
+const TAB_COL_LABELS = {
+  selfcare: "🛁 Self Care", garden: "🌱 Garden", social: "👯 Social",
+  marriage: "💍 Marriage", work: "🧰 Work", jobs: "💼 Job Hunt"
+};
+const MOVE_COLS = [...TASK_COLS, ...TAB_TASK_COLS];
+const ALL_COL_LABELS = { ...COL_LABELS, ...TAB_COL_LABELS };
+
 function saveTasks() {
   localStorage.setItem("clarissa_tasks", JSON.stringify(tasks));
   renderKanban();
+  renderTabTasks();
 }
 
 function nextRepeatDue(due, repeat) {
@@ -117,6 +127,7 @@ function nextRepeatDue(due, repeat) {
 }
 
 function moveTask(id, targetCol) {
+  if (!targetCol || !MOVE_COLS.includes(targetCol)) return;
   const before = tasks.find(t => t.id === id);
   if (targetCol === "top3") {
     const currentTop3 = tasks.filter(t => t.col === "top3").length;
@@ -169,8 +180,8 @@ function renderKanban() {
       const card = document.createElement("div");
       card.className = "task-card";
 
-      const options = TASK_COLS.map(c =>
-        `<option value="${c}" ${c === task.col ? "selected" : ""}>${COL_LABELS[c]}</option>`
+      const options = MOVE_COLS.map(c =>
+        `<option value="${c}" ${c === task.col ? "selected" : ""}>${ALL_COL_LABELS[c]}</option>`
       ).join("");
 
       const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < localDateStr();
@@ -187,6 +198,39 @@ function renderKanban() {
         </div>
       `;
       container.appendChild(card);
+    });
+  });
+}
+
+// tasks filed into a tab's category list render on that tab
+function renderTabTasks() {
+  TAB_TASK_COLS.forEach(col => {
+    const box = document.getElementById("taskCol-" + col);
+    if (!box) return;
+    box.innerHTML = "";
+    const rows = tasks.filter(t => t.col === col);
+    if (!rows.length) { box.style.display = "none"; return; }
+    box.style.display = "";
+    rows.forEach(task => {
+      const card = document.createElement("div");
+      card.className = "task-card";
+      const options = MOVE_COLS.map(c =>
+        `<option value="${c}" ${c === task.col ? "selected" : ""}>${ALL_COL_LABELS[c]}</option>`
+      ).join("");
+      const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < localDateStr();
+      const badges = [];
+      if (task.pri) badges.push(`<span class="pri-dot pri-${task.pri}" title="Priority"></span>`);
+      if (task.repeat) badges.push(`<span class="task-badge repeat-badge" title="Repeats ${task.repeat}">🔁 ${task.repeat}</span>`);
+      if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
+      else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
+      card.innerHTML = `
+        <span>${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
+        <div class="task-actions">
+          <select class="move-select" onchange="moveTask(${task.id}, this.value)">${options}</select>
+          <button onclick="deleteTask(${task.id})">🗑️</button>
+        </div>
+      `;
+      box.appendChild(card);
     });
   });
 }
