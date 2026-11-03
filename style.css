@@ -1073,3 +1073,7 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 
 /* bill chips on the month grid */
 .month-chip.bill { background: rgba(244, 184, 96, 0.14); border: 1px solid rgba(244, 184, 96, 0.45); font-weight: 600; }
+
+/* layman-first astrology: tech details demoted, section summary emphasized */
+.astro-tech { display: block; font-size: 0.72rem; opacity: 0.62; margin-top: 2px; }
+.astro-summary { display: block; font-weight: 600; margin-bottom: 5px; }

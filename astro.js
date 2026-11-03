@@ -216,10 +216,8 @@ function renderAstro() {
   const soft = hits.filter(h => h.cls === "soft");
 
   const lines = [];
-  if (hard.length) lines.push(`\u26A0\uFE0F ${aspectLine(hard[0]).detail.replace(/^[^:]*\u00b7 /, "")}`);
-  lines.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(hard[0])}</span>`);
-  if (soft.length) lines.push(`\u2728 ${aspectLine(soft[0]).detail.replace(/^[^:]*\u00b7 /, "")}`);
-  lines.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(soft[0])}</span>`);
+  if (hard.length) lines.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(hard[0])}</span><span class="astro-tech">\u26A0\uFE0F ${aspectLine(hard[0]).detail.replace(/^[^:]*\u00b7 /, "")}</span>`);
+  if (soft.length) lines.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(soft[0])}</span><span class="astro-tech">\u2728 ${aspectLine(soft[0]).detail.replace(/^[^:]*\u00b7 /, "")}</span>`);
   const moonSign = SIGNS[Math.floor(sky.Moon.lon / 30) % 12];
   lines.push(`🌙 ${MOON_SIGN_ADVICE[moonSign]}`);
   if (hard.length >= 2) lines.push("Multiple pressure aspects: keep today's schedule loose and stack low-spoon wins in the gaps.");
@@ -387,7 +385,7 @@ function horoReadingFor(ms, off, prevState) {
     }
     for (const h of picked) {
       const line = aspectLine(h);
-      parts.push(`<span class="horo-aspect ${h.cls}">${line.head}</span><br>${transitDetail(h, off, prevState)}<br><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span>`);
+      parts.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${line.head}</span> \u00b7 ${transitDetail(h, off, prevState)}</span>`);
       shown.push(hitKey(h));
     }
     const closers = picked.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
@@ -450,7 +448,7 @@ function deepDiveHtml() {
   const sec = (cls, title, arr, fallback) => `
     <div class="horo-section ${cls}">
       <span class="horo-section-title">${title}</span>
-      ${arr.length ? arr.map(h => `<p><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span><br>${transitDetail(h, 0, null)}<br><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span></p>`).join("") : `<p>${fallback}</p>`}
+      ${arr.length ? `<p class="astro-summary">\u{1F9ED} In a nutshell: ${arr.map(h => plainGloss(h)).join(" ")}</p>` + arr.map(h => `<p><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span> \u00b7 ${transitDetail(h, 0, null)}</span></p>`).join("") : `<p>${fallback}</p>`}
     </div>`;
   const body = `
     <div class="horo-section"><span class="horo-section-title">\u{1F30C} The Sky Today</span>
