@@ -546,7 +546,13 @@ const EV_CAT_META = {
 };
 let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
 const evCatKey = (calId, id) => `${calId}|${id}`;
-function evCat(ev) { return evCats[evCatKey(ev.calId, ev.id)] || ""; }
+function evCat(ev) {
+  const stored = evCats[evCatKey(ev.calId, ev.id)];
+  if (stored) return stored;
+  // Tony's calendar (armyjkr@gmail.com) defaults to the Marriage category
+  if (String(ev.calId || "").includes("armyjkr@gmail.com")) return "marriage";
+  return "";
+}
 function setEvCat(calId, id, cat) {
   if (cat) evCats[evCatKey(calId, id)] = cat; else delete evCats[evCatKey(calId, id)];
   localStorage.setItem("ccc_ev_cats", JSON.stringify(evCats));
