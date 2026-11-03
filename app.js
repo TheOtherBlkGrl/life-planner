@@ -1096,6 +1096,77 @@ function renderHourly() {
   htmlOut += `</div></div>`;
   grid.innerHTML = htmlOut;
   renderNowBanner();
+  renderBlockThumbs();
+}
+
+function renderBlockThumbs() {
+  const strip = document.getElementById("blockThumbs");
+  if (!strip) return;
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const today = localDateStr();
+  const gcalToday = (typeof gcalEventsOn === "function") ? gcalEventsOn(today) : [];
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const DAY_END = 24 * 60;
+  const thumbs = [];
+  todaysBlocks().forEach(b => {
+    const s = toMin(b.start);
+    const e = Math.min(s + b.dur, DAY_END);
+    const lab = (CAT_LABELS[b.cat] || "").split(" ");
+    thumbs.push({
+      s, e,
+      emoji: lab[0] || "\u{1F3AF}",
+      word: lab.slice(1).join(" "),
+      title: (b.done ? "\u2705 " : "") + b.label,
+      time: fmtTime(b.start) + " \u2013 " + fmtTime(toHHMM(e)),
+      col: CAT_COLORS[b.cat] || "var(--cosmic-purple)"
+    });
+  });
+  todaysTimedTasks().forEach(t => {
+    const s = toMin(t.time);
+    const e = Math.min(s + 60, DAY_END);
+    thumbs.push({
+      s, e,
+      emoji: PRI_EMOJI[t.pri] || "\u{1F3AF}",
+      word: "Task",
+      title: t.text,
+      time: fmtTime(t.time) + " \u2013 " + fmtTime(toHHMM(e)),
+      col: "var(--cosmic-purple)"
+    });
+  });
+  gcalToday.filter(ev => !ev.allDay).forEach(ev => {
+    const sd = new Date(ev.start), ed = new Date(ev.end);
+    const s = sd.getHours() * 60 + sd.getMinutes();
+    let eM = ed.getHours() * 60 + ed.getMinutes();
+    if (eM <= s) eM = DAY_END;
+    const cat = evCat(ev);
+    const meta = cat ? EV_CAT_META[cat] : null;
+    thumbs.push({
+      s, e: Math.max(s + 15, Math.min(eM, DAY_END)),
+      emoji: meta ? meta.emoji : "\u{1F4C5}",
+      word: meta ? meta.label : "Calendar",
+      title: ev.title,
+      time: gcalRange(ev),
+      col: (meta ? meta.color : "") || "var(--cosmic-purple)",
+      gcal: ev
+    });
+  });
+  thumbs.sort((a, b) => a.s - b.s || a.e - b.e);
+  if (!thumbs.length) { strip.classList.add("hidden"); strip.innerHTML = ""; return; }
+  strip.innerHTML = thumbs.map(t => {
+    const isNow = nowMin >= t.s && nowMin < t.e;
+    const cls = "blk-thumb" + (t.gcal ? " gcal-detail" : "") + (isNow ? " blk-now" : "");
+    const data = t.gcal ? ` data-cal="${esc(t.gcal.calId)}" data-eid="${esc(t.gcal.id)}" data-cached="${encodeURIComponent(JSON.stringify(t.gcal))}" title="Show details"` : "";
+    const pct = Math.round(((nowMin - t.s) / Math.max(t.e - t.s, 1)) * 100);
+    return `<div class="${cls}"${data} style="border-left:4px solid ${t.col}">
+      <div class="bt-top"><span class="bt-emoji">${t.emoji}</span>${isNow ? `<span class="bt-now">now</span>` : ""}</div>
+      <div class="bt-title">${esc(t.title)}</div>
+      <div class="bt-time">${esc(t.time)}</div>
+      ${t.word ? `<div class="bt-word">${esc(t.word)}</div>` : ""}
+      ${isNow ? `<div class="bt-progress"><i style="width:${Math.max(2, Math.min(100, pct))}%"></i></div>` : ""}
+    </div>`;
+  }).join("");
+  strip.classList.remove("hidden");
 }
 
 function renderNowBanner() {
