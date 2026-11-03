@@ -1104,29 +1104,43 @@ function renderNowBanner() {
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
   const todayStr = localDateStr();
-  const gcalNow = (typeof gcalEventsOn === "function")
-    ? gcalEventsOn(todayStr).find(ev => {
-        if (ev.allDay) return false;
-        const s = new Date(ev.start), e = new Date(ev.end);
-        const sMin = s.getHours() * 60 + s.getMinutes(), eMin = e.getHours() * 60 + e.getMinutes();
-        return nowMin >= sMin && nowMin < eMin;
-      })
-    : null;
-  const current = gcalNow || todaysBlocks().find(b => nowMin >= toMin(b.start) && nowMin < toMin(b.start) + b.dur);
+  const gcalToday = (typeof gcalEventsOn === "function") ? gcalEventsOn(todayStr) : [];
+  const srcEmoji = ev => { const c = (typeof evCat === "function") ? evCat(ev) : ""; return c ? EV_CAT_META[c].emoji : "\u{1F4C5}"; };
+  const cands = [];
+  gcalToday.filter(ev => !ev.allDay).forEach(ev => {
+    const s2 = new Date(ev.start), e2 = new Date(ev.end);
+    const st = s2.getHours() * 60 + s2.getMinutes();
+    cands.push({ t: st, e: Math.max(e2.getHours() * 60 + e2.getMinutes(), st + 15), label: `${srcEmoji(ev)} ${ev.title}` });
+  });
+  todaysBlocks().forEach(b => cands.push({ t: toMin(b.start), e: toMin(b.start) + b.dur, label: `\u{1F9F1} ${b.label}` }));
+  todaysTimedTasks().forEach(t => cands.push({ t: toMin(t.time), e: toMin(t.time) + 60, label: `${PRI_EMOJI[t.pri] || "\u{1F3AF}"} ${t.text}` }));
+  cands.sort((a, b) => a.t - b.t);
+  const current = cands.find(c => nowMin >= c.t && nowMin < c.e);
+  const next = cands.find(c => c.t > nowMin);
   let htmlOut;
-  if (gcalNow) {
-    const e = new Date(gcalNow.end);
-    htmlOut = `📅 <strong>Right now (Google):</strong> ${gcalNow.title} \u00b7 until ${fmtTime(toHHMM(e.getHours() * 60 + e.getMinutes()))}`;
+  if (current && next) {
+    htmlOut = `\u23F1 <strong>Right now:</strong> ${esc(current.label)} \u00b7 until ${fmtTime(toHHMM(current.e))} \u2192 next up ${fmtTime(toHHMM(next.t))}: ${esc(next.label)}`;
   } else if (current) {
-    htmlOut = `\u23F0 <strong>Right now:</strong> ${current.label} \u00b7 until ${fmtTime(toHHMM(toMin(current.start) + current.dur))}`;
+    htmlOut = `\u23F1 <strong>Right now:</strong> ${esc(current.label)} \u00b7 until ${fmtTime(toHHMM(current.e))}`;
+  } else if (next) {
+    htmlOut = `\u23F3 <strong>Up next</strong> ${fmtTime(toHHMM(next.t))}: ${esc(next.label)}`;
   } else {
-    const upcoming = [
-      ...todaysBlocks().map(b => ({ t: toMin(b.start), label: b.label, time: b.start })),
-      ...todaysTimedTasks().map(t => ({ t: toMin(t.time), label: t.text, time: t.time }))
-    ].filter(x => x.t > nowMin).sort((a, b) => a.t - b.t)[0];
-    htmlOut = upcoming
-      ? `🕒 Free right now \u00b7 next up ${fmtTime(upcoming.time)}: ${upcoming.label}`
-      : `🕒 Open window \u00b7 nothing else scheduled today`;
+    let ahead = null;
+    if (typeof gcalEventsOn === "function") {
+      for (let d = 1; d <= 14 && !ahead; d++) {
+        const dt = new Date(); dt.setDate(dt.getDate() + d);
+        const evs = gcalEventsOn(localDateStr(dt)).slice().sort((a, b) => new Date(a.start) - new Date(b.start));
+        if (evs.length) ahead = evs[0];
+      }
+    }
+    if (ahead) {
+      const sd = new Date(ahead.start);
+      const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][sd.getDay()];
+      const tpart = ahead.allDay ? "all day" : fmtTime(toHHMM(sd.getHours() * 60 + sd.getMinutes()));
+      htmlOut = `\u{1F5D3} Open now \u00b7 next on the calendar ${wd} ${tpart}: ${srcEmoji(ahead)} ${esc(ahead.title)}`;
+    } else {
+      htmlOut = `\u23F3 Open window \u00b7 nothing on the schedule for the next two weeks`;
+    }
   }
   banner.innerHTML = htmlOut;
   banner.classList.remove("hidden");
