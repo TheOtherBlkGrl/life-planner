@@ -1847,7 +1847,13 @@ function openBriefModal() {
   title.textContent = "📰 " + (briefData.headline || "Daily Brief");
   const parts = [];
   (briefData.sections || []).forEach(s => {
-    parts.push('<h4 class="brief-h">' + esc(s.h) + '</h4><p class="brief-p">' + esc(s.body) + '</p>');
+    let seg = '<h4 class="brief-h">' + esc(s.h) + '</h4>';
+    if (s.lead) seg += '<p class="brief-lead">' + esc(s.lead) + '</p>';
+    if (Array.isArray(s.items) && s.items.length) {
+      seg += '<ul class="brief-ul">' + s.items.map(it => '<li>' + esc(it) + '</li>').join("") + '</ul>';
+    }
+    if (s.body) seg += '<p class="brief-p">' + esc(s.body) + '</p>';
+    parts.push(seg);
   });
   body.innerHTML = parts.join("") +
     '<p class="brief-stamp">' + esc(briefData.updatedLocal || "") + '</p>';

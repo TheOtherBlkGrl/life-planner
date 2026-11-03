@@ -1,38 +1,80 @@
 {
- "updatedLocal": "Nov 3, 2026, 5:30 AM PT",
- "headline": "Tuesday, November 3 \u2014 Granite prep day, and the sky is set up for it.",
- "sections": [
-  {
-   "h": "Weather",
-   "body": "Light rain most likely midday through this afternoon (45%, gusty south wind to 18 mph), high 60, low 50, then clearing after 7pm for a dry, clear night. Sun rises 6:35, sets 5:06. The week: Wednesday mostly sunny 66/50, Thursday sunny 69/49, Friday sunny 69/48, then dry. The feed cut off Saturday onward; nothing stormy showing before then. That sunny Wednesday is good news for the Watsonville drive."
-  },
-  {
-   "h": "Your sky",
-   "body": "Waning half-moon in Virgo: detail moon, receipts moon, exactly the right energy for prep work. Mercury retrograde is squaring your Leo Sun (1.7\u00b0), the classic reread-everything transit: double-check the directions to 580 W Beach St, confirm the interview time, and say your answers out loud once before you lock them. Venus retrograde sits right on your Libra Moon (1.1\u00b0) with Pluto sextile it too: honest rapport lands easily under pressure, so the panel conversation is yours to warm up, not endure. Saturn trines your Sun (3.0\u00b0): steady discipline quietly pays. One catch, Mars square your Ascendant (1.4\u00b0): budget your patience, especially if anything runs long today."
-  },
-  {
-   "h": "Leads to review",
-   "body": "Six new, all on the Job Hunt tab, pay not posted on any so far: Waymo Sr. Supply & Demand Manager (Mountain View), Waymo Training Delivery Manager, Fleet Maintenance & Validation (SF, also Tempe), Lyft Global Supply Manager (SF), Uber Freight Senior Manager, Logistics Analytics & Optimization (SF), Kodiak Director of Supply Chain (Mountain View), and Waymo Senior TPM, Fleet (MV/SF). I pulled Waymo, Lyft, Instacart, Flexport, Samsara, Nuro, Kodiak, Figma, Stripe, Motive and Uber Freight boards live; the Lightspeed jobs page and NFX wouldn't render for me this morning, so I'll hit those in the 3pm sweep. Nothing new on the EA lane."
-  },
-  {
-   "h": "Local news",
-   "body": "The 75-year-old woman last seen in Antioch Sunday night was found safe; the Silver Alert was deactivated. An Antioch man got nine years in the 2025 Lone Tree Way fistfight death. And it's Election Day: polls are open across California."
-  },
-  {
-   "h": "Interview watch",
-   "body": "No interview requests. Three quiet confirmations instead: Databricks (Sr. Executive Assistant) and Exa both received your applications Monday, and Sierra confirmed your EA, Legal & Partnerships application Sunday and says review runs a couple of weeks."
-  },
-  {
-   "h": "Ease into the day",
-   "body": "Easy win: skim those six leads on the Job Hunt tab while your coffee is hot. Then: Granite prep 12:30-1:15, including the paving-vs-dirt percentages question you wanted to ask them; the Parchment paper-diploma mailing address still needs your confirmation; and the five LinkedIn connection-note drafts are waiting on your approval. The 3pm sweep fires as usual."
-  },
-  {
-   "h": "Family day ahead",
-   "body": "Election Day on your shared calendar, that's the only thing on it. Tony's and Family calendars are quiet."
-  },
-  {
-   "h": "Sneak preview",
-   "body": "Tomorrow, Granite round 3 at 3:00 PM in Watsonville, with drive holds both ways at about 2h18 each way. Prep block today is the whole game. Go get it."
-  }
- ]
+  "updatedLocal": "Nov 3, 2026, 5:30 AM PT",
+  "headline": "Tuesday, November 3 — Granite prep day, and the sky is set up for it.",
+  "sections": [
+    {
+      "h": "Weather",
+      "items": [
+        "Light rain most likely midday through this afternoon: 45% chance, gusty south wind to 18 mph",
+        "High 60, low 50, then clearing after 7pm for a dry, clear night",
+        "Sun up 6:35, down 5:06",
+        "The week: Wed mostly sunny 66/50, Thu sunny 69/49, Fri sunny 69/48, then dry",
+        "That sunny Wednesday is good news for the Watsonville drive"
+      ]
+    },
+    {
+      "h": "Your sky",
+      "items": [
+        "Waning half-moon in Virgo: detail moon, receipts moon, exactly the right energy for prep work",
+        "Mercury retrograde squares your Leo Sun (1.7°), the classic reread-everything transit: double-check the directions to 580 W Beach St, confirm the interview time, and say your answers out loud once before you lock them",
+        "Venus retrograde sits right on your Libra Moon (1.1°), with Pluto sextile it too: honest rapport lands easily under pressure, so the panel conversation is yours to warm up, not endure",
+        "Saturn trines your Sun (3.0°): steady discipline quietly pays",
+        "One catch: Mars square your Ascendant (1.4°), so budget your patience if anything runs long today"
+      ]
+    },
+    {
+      "h": "Leads to review",
+      "lead": "Six new, all on the Job Hunt tab, pay not posted on any so far:",
+      "items": [
+        "Waymo Sr. Supply & Demand Manager (Mountain View)",
+        "Waymo Training Delivery Manager, Fleet Maintenance & Validation (SF, also Tempe)",
+        "Lyft Global Supply Manager (SF)",
+        "Uber Freight Senior Manager, Logistics Analytics & Optimization (SF)",
+        "Kodiak Director of Supply Chain (Mountain View)",
+        "Waymo Senior TPM, Fleet (MV/SF)"
+      ],
+      "body": "Boards pulled live: Waymo, Lyft, Instacart, Flexport, Samsara, Nuro, Kodiak, Figma, Stripe, Motive and Uber Freight. The Lightspeed jobs page and NFX wouldn't render this morning, so they land in the 3pm sweep. Nothing new on the EA lane."
+    },
+    {
+      "h": "Local news",
+      "items": [
+        "The 75-year-old woman last seen in Antioch Sunday night was found safe; the Silver Alert was deactivated",
+        "An Antioch man got nine years in the 2025 Lone Tree Way fistfight death",
+        "Election Day: polls are open across California"
+      ]
+    },
+    {
+      "h": "Interview watch",
+      "items": [
+        "No interview requests",
+        "Databricks (Sr. Executive Assistant) and Exa both received your applications Monday",
+        "Sierra confirmed your EA, Legal & Partnerships application Sunday and says review runs a couple of weeks"
+      ]
+    },
+    {
+      "h": "Ease into the day",
+      "items": [
+        "Easy win: skim those six leads on the Job Hunt tab while your coffee is hot",
+        "Granite prep 12:30–1:15, including the paving-vs-dirt percentages question you wanted to ask them",
+        "The Parchment paper-diploma mailing address still needs your confirmation",
+        "Five LinkedIn connection-note drafts are waiting on your approval",
+        "The 3pm sweep fires as usual"
+      ]
+    },
+    {
+      "h": "Family day ahead",
+      "items": [
+        "Election Day on your shared calendar, that's the only thing on it",
+        "Tony's and Family calendars are quiet"
+      ]
+    },
+    {
+      "h": "Sneak preview",
+      "items": [
+        "Tomorrow: Granite round 3 at 3:00 PM in Watsonville",
+        "Drive holds both ways, about 2h18 each way",
+        "Prep block today is the whole game. Go get it."
+      ]
+    }
+  ]
 }
