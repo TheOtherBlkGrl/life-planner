@@ -76,7 +76,7 @@ function fireConfetti() {
       particleCount: 70,
       spread: 65,
       origin: { y: 0.6 },
-      colors: ["#d9a441", "#7f9e6a", "#d99a8a", "#9a5bb8"]
+      colors: ["#e9bd57", "#a6c28b", "#edb7a6", "#b689d9"]
     });
   }
 }
@@ -541,19 +541,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- 13. BLOCK SCHEDULING ---
 let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
-const CAT_COLORS = { focus: "#9a5bb8", admin: "#d9a441", body: "#7f9e6a", joy: "#d99a8a" };
+const CAT_COLORS = { focus: "#b689d9", admin: "#e9bd57", body: "#a6c28b", joy: "#edb7a6" };
 
 // calendar-event categories (tag any Google event from its detail popup)
 const EV_CAT_META = {
-  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#7fa896" },
-  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#6d9c5f" },
-  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#d98d80" },
-  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#a63d4e" },
-  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#c97a55" },
-  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#9a5bb8" },
-  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#d9a441" },
-  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#7f9e6a" },
-  joy:      { label: "Joy",       emoji: "\u2728",    color: "#d99a8a" }
+  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#a3cdbb" },
+  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#92c07c" },
+  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#eaa794" },
+  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#cc6b78" },
+  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#e29e77" },
+  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#b689d9" },
+  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#e9bd57" },
+  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#a6c28b" },
+  joy:      { label: "Joy",       emoji: "\u2728",    color: "#edb7a6" }
 };
 let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
 const evCatKey = (calId, id) => `${calId}|${id}`;
@@ -618,7 +618,7 @@ function renderBlocks() {
       bar.className = "tl-block" + (b.done ? " tl-done" : "");
       bar.style.left = `${Math.max(left, 0)}%`;
       bar.style.width = `${width}%`;
-      bar.style.background = CAT_COLORS[b.cat] || "#9a5bb8";
+      bar.style.background = CAT_COLORS[b.cat] || "#b689d9";
       bar.title = `${b.start} \u00b7 ${b.label}`;
       timeline.appendChild(bar);
     }
@@ -1086,7 +1086,7 @@ function renderHourly() {
         const clickAttrs = it.eid
           ? ` data-cal="${esc(it.calId)}" data-eid="${esc(it.eid)}" data-cached="${encodeURIComponent(JSON.stringify(it.ev))}"`
           : "";
-        return `<div class="g-bar ${it.cls}${clickCls}" style="left:${pct(it.s).toFixed(2)}%;width:${w.toFixed(2)}%;${it.style}" title="${esc(it.label)} \u00b7 ${esc(it.sub)}"${clickAttrs}>${esc(it.label)}<small>${esc(it.sub)}</small></div>`;
+        return `<div class="g-bar ${it.cls}${clickCls}" style="left:${pct(it.s).toFixed(2)}%;width:${w.toFixed(2)}%;${it.style}" title="${esc(it.label)} \u00b7 ${esc(it.sub)}"${clickAttrs}><span class="g-bar-title">${esc(it.label)}</span><span class="g-bar-time">${esc(it.sub)}</span></div>`;
       }).join("")}</div>`;
     });
   }
