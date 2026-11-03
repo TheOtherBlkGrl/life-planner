@@ -209,7 +209,7 @@ function renderAstro() {
   skyBox.innerHTML = `
     <div class="astro-moonline">${phaseEmoji} <strong>${phaseName}</strong> \u00b7 Moon in ${signStr(sky.Moon.lon)}</div>
     <div class="astro-skyrow">${Object.keys(sky).map(p =>
-      `<span class="sky-chip">${gly(PLANET_GLYPH[p])} ${p} ${sky[p].retro ? gly("\u211E") : ""} in ${signStr(sky[p].lon)}</span>`).join("")}</div>`;
+      `<span class="sky-chip">${gly(PLANET_GLYPH[p])} ${p} ${sky[p].retro ? gly("\u211E") : ""} in ${signStr(sky[p].lon)}</span>`).join("")}</div><div class="astro-legend">How to read the angles: \u260C conjunction \u2014 fusion, both energies act as one. \u2736 sextile \u2014 a friendly opening; support shows if you act. \u25B3 trine \u2014 easy flow, easy to miss. \u25A1 square \u2014 friction that forces a decision. \u260D opposition \u2014 a tug-of-war; balance is the work. \u211E retrograde \u2014 the planet\'s energy turns inward: review, redo, repair.</div>`;
 
   const hits = findAspects(now);
   const hard = hits.filter(h => h.cls === "hard");
@@ -217,7 +217,9 @@ function renderAstro() {
 
   const lines = [];
   if (hard.length) lines.push(`\u26A0\uFE0F ${aspectLine(hard[0]).detail.replace(/^[^:]*\u00b7 /, "")}`);
+  lines.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(hard[0])}</span>`);
   if (soft.length) lines.push(`\u2728 ${aspectLine(soft[0]).detail.replace(/^[^:]*\u00b7 /, "")}`);
+  lines.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(soft[0])}</span>`);
   const moonSign = SIGNS[Math.floor(sky.Moon.lon / 30) % 12];
   lines.push(`🌙 ${MOON_SIGN_ADVICE[moonSign]}`);
   if (hard.length >= 2) lines.push("Multiple pressure aspects: keep today's schedule loose and stack low-spoon wins in the gaps.");
@@ -315,6 +317,31 @@ const TRANSIT_READ = {
 };
 const HARD_CLOSERS = ["Take the friction as information, not a stop sign.", "Friction is data today: note it, route around it, keep moving.", "Build in buffer: the snags are in the sky's schedule, not yours."];
 const EASY_CLOSERS = ["Easy sky. Cash in on it.", "The sky's cooperative: spend it on the thing you keep postponing.", "Low-resistance day: clear the task that's been staring at you."];
+// --- LAYMAN LAYER: every read gives specifics, then the plain-English translation ---
+const PLANET_PLAIN = {
+  Sun: "the Sun is spotlight and confidence: how seen you feel",
+  Moon: "the Moon is mood and comfort: your inner weather",
+  Mercury: "Mercury is words and timing: messages, planning, all things logistics",
+  Venus: "Venus is money and connection: charm, worth, what you say yes to",
+  Mars: "Mars is fuel and friction: drive, stamina, and a short fuse",
+  Jupiter: "Jupiter is growth and luck: where things expand",
+  Saturn: "Saturn is structure and limits: the reality-check planet",
+  Uranus: "Uranus is plot twists: surprises, tech hiccups, sudden change",
+  Neptune: "Neptune is fog and inspiration: dreams, intuition, fine print",
+  Pluto: "Pluto is deep power: transformation, control, follow-through"
+};
+const ASPECT_PLAIN = {
+  conj: "a fusion: both energies pour into one and get louder together",
+  conjunction: "a fusion: both energies pour into one and get louder together",
+  sextile: "a friendly opening: support is available, but you have to act on it",
+  square: "friction: two needs grind against each other until you make a call",
+  trine: "easy flow: things come naturally, almost too naturally to notice",
+  opposition: "a tug-of-war: something pulls from the opposite corner, and balance is the work"
+};
+function plainGloss(h) {
+  return `In plain terms: ${PLANET_PLAIN[h.planet] || h.planet + " energy"}, making a ${h.aspect} with ${NATAL_LABEL[h.natal]}. A ${h.aspect} is ${ASPECT_PLAIN[h.aspect] || "an angle between planets"}.`;
+}
+
 
 function hitKey(h) { return h.planet + "|" + h.aspect + "|" + h.natal; }
 function strengthWord(o) { return o < 1 ? "razor-tight" : (o < 2.5 ? "solid" : "loose, background"); }
@@ -360,7 +387,7 @@ function horoReadingFor(ms, off, prevState) {
     }
     for (const h of picked) {
       const line = aspectLine(h);
-      parts.push(`<span class="horo-aspect ${h.cls}">${line.head}</span><br>${transitDetail(h, off, prevState)}`);
+      parts.push(`<span class="horo-aspect ${h.cls}">${line.head}</span><br>${transitDetail(h, off, prevState)}<br><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span>`);
       shown.push(hitKey(h));
     }
     const closers = picked.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
@@ -419,11 +446,11 @@ function deepDiveHtml() {
   const summary = `
     <span class="horo-power-label">\u{1F3AF} Today's Power Move</span>
     <div class="horo-power-move">${powerMove}</div>
-    <div class="horo-power-meta">${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign} \u00b7 ${hits.length ? hits.length + " live transit" + (hits.length === 1 ? "" : "s") + " on your chart, tightest orb " + hits[0].orb.toFixed(1) + "\u00B0" : "no transits within orb right now"}</div>`;
+    <div class="horo-power-meta">${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign} \u00b7 ${hits.length ? hits.length + " live transit" + (hits.length === 1 ? "" : "s") + " on your chart, tightest: " + hits[0].planet + " " + hits[0].aspect + " " + NATAL_LABEL[hits[0].natal].replace("your ", "") + " at " + hits[0].orb.toFixed(1) + "\u00B0 orb" : "no transits within orb right now"}</div>`;
   const sec = (cls, title, arr, fallback) => `
     <div class="horo-section ${cls}">
       <span class="horo-section-title">${title}</span>
-      ${arr.length ? arr.map(h => `<p><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span><br>${transitDetail(h, 0, null)}</p>`).join("") : `<p>${fallback}</p>`}
+      ${arr.length ? arr.map(h => `<p><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span><br>${transitDetail(h, 0, null)}<br><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span></p>`).join("") : `<p>${fallback}</p>`}
     </div>`;
   const body = `
     <div class="horo-section"><span class="horo-section-title">\u{1F30C} The Sky Today</span>
