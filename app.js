@@ -78,7 +78,7 @@ function fireConfetti() {
       particleCount: 70,
       spread: 65,
       origin: { y: 0.6 },
-      colors: ["#b36a1d", "#5d6b3f", "#b4652e", "#2e5a54"]
+      colors: ["#B26612", "#6B6A2E", "#BD6B3A", "#1D3F3E"]
     });
   }
 }
@@ -543,21 +543,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- 13. BLOCK SCHEDULING ---
 let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
-const CAT_COLORS = { focus: "#2e5a54", admin: "#b36a1d", body: "#5d6b3f", joy: "#d99a34" };
+const CAT_COLORS = { focus: "#1D3F3E", admin: "#B26612", body: "#6B6A2E", joy: "#D4963A" };
 
 // calendar-event categories (tag any Google event from its detail popup)
 const EV_CAT_META = {
-  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#cfa74a" },
-  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#75762e" },
-  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#b4652e" },
-  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#b04a28" },
-  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#22424a" },
-  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#2e5a54" },
-  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#b36a1d" },
-  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#5d6b3f" },
-  joy:      { label: "Joy",       emoji: "\u2728",    color: "#d99a34" },
-  bills:    { label: "Bills",     emoji: "\u{1F4B8}", color: "#b36a1d" },
-  jobs:     { label: "Job Hunt",  emoji: "\u{1F4BC}", color: "#2e5a54" }
+  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#DCC294" },
+  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#535224" },
+  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#BD6B3A" },
+  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#9C4122" },
+  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#1E325C" },
+  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#1D3F3E" },
+  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#B26612" },
+  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#6B6A2E" },
+  joy:      { label: "Joy",       emoji: "\u2728",    color: "#D4963A" },
+  bills:    { label: "Bills",     emoji: "\u{1F4B8}", color: "#B26612" },
+  jobs:     { label: "Job Hunt",  emoji: "\u{1F4BC}", color: "#1D3F3E" }
 };
 let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
 const evCatKey = (calId, id) => `${calId}|${id}`;
@@ -622,7 +622,7 @@ function renderBlocks() {
       bar.className = "tl-block" + (b.done ? " tl-done" : "");
       bar.style.left = `${Math.max(left, 0)}%`;
       bar.style.width = `${width}%`;
-      bar.style.background = CAT_COLORS[b.cat] || "#2e5a54";
+      bar.style.background = CAT_COLORS[b.cat] || "#1D3F3E";
       bar.title = `${b.start} \u00b7 ${b.label}`;
       timeline.appendChild(bar);
     }
