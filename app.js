@@ -78,7 +78,7 @@ function fireConfetti() {
       particleCount: 70,
       spread: 65,
       origin: { y: 0.6 },
-      colors: ["#c08a28", "#7fa05f", "#cc8672", "#8e5cb8"]
+      colors: ["#b35c1f", "#3d6b4f", "#c05a4a", "#8e5cb8"]
     });
   }
 }
@@ -543,19 +543,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- 13. BLOCK SCHEDULING ---
 let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
-const CAT_COLORS = { focus: "#8e5cb8", admin: "#c08a28", body: "#7fa05f", joy: "#cc8672" };
+const CAT_COLORS = { focus: "#7d47a8", admin: "#b35c1f", body: "#3d6b4f", joy: "#d97b2f" };
 
 // calendar-event categories (tag any Google event from its detail popup)
 const EV_CAT_META = {
-  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#629d84" },
-  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#6f9c4e" },
-  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#c47a64" },
-  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#a85061" },
-  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#c26f3f" },
-  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#8e5cb8" },
-  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#c08a28" },
-  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#7fa05f" },
-  joy:      { label: "Joy",       emoji: "\u2728",    color: "#cc8672" }
+  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#8a5fc0" },
+  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#2f5d43" },
+  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#c05a4a" },
+  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#b04038" },
+  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#2e4a78" },
+  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#7d47a8" },
+  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#b35c1f" },
+  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#3d6b4f" },
+  joy:      { label: "Joy",       emoji: "\u2728",    color: "#d97b2f" }
 };
 let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
 const evCatKey = (calId, id) => `${calId}|${id}`;
