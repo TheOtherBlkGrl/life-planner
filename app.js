@@ -555,7 +555,9 @@ const EV_CAT_META = {
   focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#7d47a8" },
   admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#b35c1f" },
   body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#3d6b4f" },
-  joy:      { label: "Joy",       emoji: "\u2728",    color: "#d97b2f" }
+  joy:      { label: "Joy",       emoji: "\u2728",    color: "#d97b2f" },
+  bills:    { label: "Bills",     emoji: "\u{1F4B8}", color: "#b35c1f" },
+  jobs:     { label: "Job Hunt",  emoji: "\u{1F4BC}", color: "#7d47a8" }
 };
 let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
 const evCatKey = (calId, id) => `${calId}|${id}`;
@@ -1310,7 +1312,7 @@ function ensureEventModal() {
 }
 
 function renderCalEventPanels() {
-  ["selfcare", "garden", "social", "marriage", "work"].forEach(cat => {
+  ["selfcare", "garden", "social", "marriage", "work", "bills", "jobs"].forEach(cat => {
     const box = document.getElementById(`calEvents-${cat}`);
     if (!box) return;
     const meta = EV_CAT_META[cat];
@@ -1336,8 +1338,13 @@ async function showEventDetail(calId, eventId, cached) {
   document.getElementById("evDetailOverlay").classList.remove("hidden");
   const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const row = (k, v) => v ? `<div class="ev-row"><span class="ev-k">${k}</span><span>${v}</span></div>` : "";
+  const EV_CAT_ORDER = ["bills", "selfcare", "garden", "social", "work", "jobs", "marriage"];
   const catOptions = sel => `<option value="">\u2014 none \u2014</option>` +
-    Object.entries(EV_CAT_META).map(([k, m]) => `<option value="${k}" ${k === sel ? "selected" : ""}>${m.emoji} ${m.label}</option>`).join("");
+    EV_CAT_ORDER.map(k => {
+      const m = EV_CAT_META[k];
+      const lab = k === "marriage" ? `${m.emoji} ${m.label} (Tony\u2019s calendar)` : `${m.emoji} ${m.label}`;
+      return `<option value="${k}" ${k === sel ? "selected" : ""}>${lab}</option>`;
+    }).join("");
   const paint = ev => {
     const who = (ev.attendees || []).map(a => esc(a.email)).join(", ");
     const sel = evCat({ calId, id: ev.id || eventId });
