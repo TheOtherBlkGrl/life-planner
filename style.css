@@ -574,10 +574,12 @@ input[type="date"] { color-scheme: dark; }
 /* TASK META + BADGES */
 .task-meta {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.6rem;
   grid-column: 1 / -1;
 }
+@media (max-width: 680px) { .task-meta { grid-template-columns: 1fr 1fr; } }
+.repeat-badge { color: var(--cosmic-purple); background: rgba(157, 78, 221, 0.14); }
 .badge-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
 .task-badge {
   font-size: 0.68rem;
@@ -822,12 +824,12 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .g-bar {
   position: absolute; top: 0.3rem; bottom: 0.3rem; border-radius: 0.65rem;
   border: 1px solid rgba(255,255,255,0.28); padding: 0 0.6rem;
-  display: flex; align-items: center; gap: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem; justify-content: center;
   font-size: 0.76rem; line-height: 1; overflow: hidden; white-space: nowrap;
   cursor: default; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
-.g-bar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1 1 auto; font-weight: 600; }
-.g-bar-time { flex: 0 0 auto; font-size: 0.63rem; font-weight: 500; opacity: 0.85; }
+.g-bar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 0 1 auto; font-weight: 600; }
+.g-bar-time { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 0 1 auto; font-size: 0.63rem; font-weight: 500; opacity: 0.85; }
 .g-task { background: rgba(124,77,255,0.20); border-color: #9f7bff; }
 .g-gcal { background: rgba(92,107,192,0.28); border-color: #7986cb; }
 .gantt-nowline {
@@ -942,3 +944,14 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .bt-word { font-size: 0.6rem; color: var(--text-muted); margin-top: 0.1rem; }
 .bt-progress { height: 3px; background: rgba(255, 255, 255, 0.18); border-radius: 2px; margin-top: 0.35rem; overflow: hidden; }
 .bt-progress i { display: block; height: 100%; background: var(--leo-gold); border-radius: 2px; }
+
+/* ---- 3-day horoscope ---- */
+.horo3day { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+.horo-card { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1rem 1.1rem; }
+.horo-card.horo-today { border-color: var(--leo-gold); box-shadow: 0 0 0 1px rgba(244, 184, 96, 0.25); }
+.horo-head { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--leo-gold); margin-bottom: 0.5rem; }
+.horo-body { font-size: 0.88rem; line-height: 1.55; }
+.horo-aspect { font-weight: 600; }
+.horo-aspect.hard { color: var(--libra-rose); }
+.horo-aspect.soft { color: var(--taurus-emerald); }
+.horo-aspect.conj { color: var(--cosmic-purple); }

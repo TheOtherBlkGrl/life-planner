@@ -100,7 +100,22 @@ function saveTasks() {
   renderKanban();
 }
 
+function nextRepeatDue(due, repeat) {
+  if (!due) return "";
+  const d = new Date(due + "T12:00:00");
+  const step = () => {
+    if (repeat === "daily") d.setDate(d.getDate() + 1);
+    else if (repeat === "weekly") d.setDate(d.getDate() + 7);
+    else if (repeat === "weekdays") { do { d.setDate(d.getDate() + 1); } while (d.getDay() === 0 || d.getDay() === 6); }
+    else if (repeat === "monthly") { const day = d.getDate(); d.setMonth(d.getMonth() + 1); if (d.getDate() < day) d.setDate(0); }
+  };
+  step();
+  while (d.getTime() <= Date.now()) step();  // skip past dates so the copy lands ahead
+  return localDateStr(d);
+}
+
 function moveTask(id, targetCol) {
+  const before = tasks.find(t => t.id === id);
   if (targetCol === "top3") {
     const currentTop3 = tasks.filter(t => t.col === "top3").length;
     if (currentTop3 >= 3) {
@@ -117,6 +132,19 @@ function moveTask(id, targetCol) {
   });
   if (targetCol === "done") {
     fireConfetti();
+    if (before && before.repeat) {
+      const top3Count = tasks.filter(t => t.col === "top3").length;
+      const respawnCol = (before.col === "top3" && top3Count >= 3) ? "dump" : before.col;
+      tasks.push({
+        id: Date.now() + 1,
+        text: before.text,
+        col: respawnCol,
+        due: nextRepeatDue(before.due, before.repeat),
+        time: before.time || "",
+        pri: before.pri || "",
+        repeat: before.repeat
+      });
+    }
   }
   saveTasks();
 }
@@ -146,6 +174,7 @@ function renderKanban() {
       const isOverdue = task.due && !["done", "graveyard"].includes(task.col) && task.due < localDateStr();
       const badges = [];
       if (task.pri) badges.push(`<span class="pri-dot pri-${task.pri}" title="Priority"></span>`);
+      if (task.repeat) badges.push(`<span class="task-badge repeat-badge" title="Repeats ${task.repeat}">🔁 ${task.repeat}</span>`);
       if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
       else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
       card.innerHTML = `
@@ -477,12 +506,14 @@ document.addEventListener("DOMContentLoaded", () => {
       col: targetCol,
       due: document.getElementById("taskDue").value || "",
       time: document.getElementById("taskTime").value || "",
-      pri: document.getElementById("taskPri").value || ""
+      pri: document.getElementById("taskPri").value || "",
+      repeat: document.getElementById("taskRepeat").value || ""
     });
     input.value = "";
     document.getElementById("taskDue").value = "";
     document.getElementById("taskTime").value = "";
     document.getElementById("taskPri").value = "";
+    document.getElementById("taskRepeat").value = "";
     saveTasks();
   });
 

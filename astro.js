@@ -247,7 +247,68 @@ function renderAstro() {
   weekBox.innerHTML = cards.join("");
 }
 
+// --- 3-DAY HOROSCOPE: yesterday / today / tomorrow, rolls over at local midnight ---
+const HORO_ELEM = { Aries: "fire", Leo: "fire", Sagittarius: "fire", Taurus: "earth", Virgo: "earth", Capricorn: "earth", Gemini: "air", Libra: "air", Aquarius: "air", Cancer: "water", Scorpio: "water", Pisces: "water" };
+const HORO_ELEM_LINE = {
+  fire: "a fire kind of day: momentum favors moving first",
+  earth: "an earth kind of day: steady hands win",
+  air: "an air kind of day: talk, ideas and errands move fast",
+  water: "a water kind of day: lead with feel, back it with facts"
+};
+
+function horoReadingFor(ms) {
+  const sky = allPositions(ms);
+  const [pe, pn] = moonPhaseName(ms);
+  const moonSign = SIGNS[Math.floor(sky.Moon.lon / 30) % 12];
+  const elemLine = HORO_ELEM_LINE[HORO_ELEM[moonSign]];
+  const parts = [`${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign}, making it ${elemLine}.`];
+  const hits = findAspects(ms);
+  if (!hits.length) {
+    parts.push("No strong transits touch your chart today, so the day is mostly yours to steer.");
+  } else {
+    for (const h of hits.slice(0, 2)) {
+      const line = aspectLine(h);
+      parts.push(`<span class="horo-aspect ${h.cls}">${line.head}</span><br>${line.detail}`);
+    }
+    if (hits.slice(0, 2).some(h => h.cls === "hard")) {
+      parts.push("Take the friction as information, not a stop sign.");
+    } else {
+      parts.push("Easy sky. Cash in on it.");
+    }
+  }
+  return parts.join(" ");
+}
+
+function localDayKey() {
+  const d = new Date();
+  return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+}
+
+function renderHoroscopes() {
+  const box = document.getElementById("horo3day");
+  if (!box) return;
+  window._horoDayKey = localDayKey();
+  const defs = [
+    { off: -1, label: "Yesterday", cls: "" },
+    { off: 0, label: "Today", cls: " horo-today" },
+    { off: 1, label: "Tomorrow", cls: "" }
+  ];
+  box.innerHTML = defs.map(({ off, label, cls }) => {
+    const ms = noonLocalMs(off);
+    const date = new Date(ms);
+    return `
+      <div class="horo-card${cls}">
+        <div class="horo-head">${label} \u00b7 ${date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</div>
+        <div class="horo-body">${horoReadingFor(ms)}</div>
+      </div>`;
+  }).join("");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderAstro();
+  renderHoroscopes();
+  setInterval(() => {
+    if (localDayKey() !== window._horoDayKey) { renderAstro(); renderHoroscopes(); }
+  }, 60 * 1000);
   setInterval(renderAstro, 10 * 60 * 1000);
 });

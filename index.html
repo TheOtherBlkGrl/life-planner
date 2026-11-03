@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102ah" />
+  <link rel="stylesheet" href="style.css?v=20261102aj" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -142,6 +142,13 @@
             <option value="high">🔥 High</option>
             <option value="med">⚡ Medium</option>
             <option value="low">🌿 Low</option>
+          </select>
+          <select id="taskRepeat" title="Repeat (optional)">
+            <option value="">Repeat</option>
+            <option value="daily">🔁 Daily</option>
+            <option value="weekdays">🔁 Weekdays</option>
+            <option value="weekly">🔁 Weekly</option>
+            <option value="monthly">🔁 Monthly</option>
           </select>
         </div>
         <button type="submit" class="add-btn">➕ Add to Board</button>
@@ -508,6 +515,14 @@
     <section class="tab-panel" id="panel-astro">
       <div class="card">
         <div class="card-header">
+          <h2>✨ Your 3-Day Horoscope</h2>
+          <span class="badge-pill">Yesterday · Today · Tomorrow</span>
+        </div>
+        <p class="helper-text">Fresh transits for each of the three days, re-read from the sky. Rolls itself over at 12:00am every night.</p>
+        <div id="horo3day" class="horo3day"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
           <h2>🔮 Your Chart: Today's Sky</h2>
           <span class="badge-pill">Leo Sun · Taurus Rising · Libra Moon</span>
         </div>
@@ -538,11 +553,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102ah"></script>
-  <script src="astro.js?v=20261102ah"></script>
+  <script src="app.js?v=20261102aj"></script>
+  <script src="astro.js?v=20261102aj"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102ah"></script>
-  <script src="google-sync.js?v=20261102ah"></script>
-  <script src="month.js?v=20261102ah"></script>
+  <script src="sync-config.js?v=20261102aj"></script>
+  <script src="google-sync.js?v=20261102aj"></script>
+  <script src="month.js?v=20261102aj"></script>
 </body>
 </html>
