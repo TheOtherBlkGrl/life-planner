@@ -332,7 +332,7 @@ function renderKanban() {
       if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
       else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
       card.innerHTML = `
-        <span>${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
+        <span onclick="showTaskDetail(${task.id})" style="cursor:pointer;" title="Show details">${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
         <div class="task-actions">
           <select class="move-select" onchange="moveTask(${task.id}, this.value)">${options}</select>
           <button onclick="editTask(${task.id})" title="Edit">✏️</button><button onclick="copyTask(${task.id})" title="Copy">⧉</button><button onclick="deleteTask(${task.id})">🗑️</button>
@@ -365,7 +365,7 @@ function renderTabTasks() {
       if (task.time) badges.push(`<span class="task-badge">⏰ ${fmtTime(task.time)}</span>`);
       else if (task.due) badges.push(`<span class="task-badge ${isOverdue ? "overdue-badge" : ""}">📅 ${isOverdue ? "overdue ⚠️" : task.due.slice(5)}</span>`);
       card.innerHTML = `
-        <span>${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
+        <span onclick="showTaskDetail(${task.id})" style="cursor:pointer;" title="Show details">${task.text}${badges.length ? `<span class="badge-row">${badges.join("")}</span>` : ""}</span>
         <div class="task-actions">
           <select class="move-select" onchange="moveTask(${task.id}, this.value)">${options}</select>
           <button onclick="editTask(${task.id})" title="Edit">✏️</button><button onclick="copyTask(${task.id})" title="Copy">⧉</button><button onclick="deleteTask(${task.id})">🗑️</button>
@@ -1236,14 +1236,79 @@ function todaysBlocks() {
   return blocks.filter(b => b.date === today);
 }
 
+function expandTaskOccurrences(task, startStr, endStr) {
+  const out = [];
+  if (!task || !task.repeat || !task.due) return out;
+  const dom = Number(task.due.slice(8, 10));
+  let d = new Date(task.due + "T00:00:00");
+  const end = new Date(endStr + "T23:59:59");
+  let guard = 0;
+  while (d <= end && guard < 500) {
+    const ds = localDateStr(d);
+    const ok = task.repeat !== "weekdays" || (d.getDay() >= 1 && d.getDay() <= 5);
+    if (ok && ds >= startStr) out.push({ ...task, due: ds, _occ: true });
+    if (task.repeat === "daily") d.setDate(d.getDate() + 1);
+    else if (task.repeat === "weekdays") d.setDate(d.getDate() + 1);
+    else if (task.repeat === "weekly") d.setDate(d.getDate() + 7);
+    else if (task.repeat === "monthly") {
+      d.setDate(1); d.setMonth(d.getMonth() + 1);
+      const dim = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+      d.setDate(Math.min(dom, dim));
+    }
+    guard++;
+  }
+  return out;
+}
+
+// every task landing on a given day: plain tasks due that day + expanded repeats
+function tasksOn(key) {
+  const active = tasks.filter(t => !["done", "graveyard"].includes(t.col));
+  const plain = active.filter(t => !t.repeat && t.due === key);
+  const reps = [];
+  active.filter(t => t.repeat && t.due).forEach(t => reps.push(...expandTaskOccurrences(t, key, key)));
+  return [...plain, ...reps];
+}
+
+function showTaskDetail(id) {
+  const t = tasks.find(x => x.id === id); if (!t) return;
+  let ov = document.getElementById("cccTaskModal");
+  if (ov) ov.remove();
+  ov = document.createElement("div");
+  ov.id = "cccTaskModal";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(10,6,18,.72);backdrop-filter:blur(4px);z-index:9998;display:flex;align-items:center;justify-content:center;padding:1rem;";
+  const fmt = s => { try { return new Date(s + "T00:00:00").toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }); } catch (e) { return s; } };
+  const row = (k, v) => `<div style="display:flex;gap:.75rem;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.08);"><span style="width:86px;flex:none;font-size:.8rem;opacity:.65;">${k}</span><span>${v}</span></div>`;
+  const isOpen = !["done", "graveyard"].includes(t.col);
+  const status = t.col === "done" ? "🏆 Done" : (t.col === "graveyard" ? "🪦 Released" : "Open");
+  ov.innerHTML = `<div style="background:#1c1829;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.25rem;max-width:420px;width:100%;color:#f8f7ff;box-shadow:0 12px 48px rgba(0,0,0,.6);">
+    <h3 style="margin:0 0 .8rem;font-size:1.02rem;color:#f4b860;">${esc(t.text)}</h3>
+    ${row("Section", ALL_COL_LABELS[t.col] || t.col)}
+    ${row("Status", status)}
+    ${t.due ? row("Due", fmt(t.due) + (t.time ? " · " + fmtTime(t.time) : "")) : ""}
+    ${t.repeat ? row("Repeats", "🔁 " + t.repeat) : ""}
+    ${t.pri ? row("Priority", t.pri) : ""}
+    <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+      ${isOpen ? `<button id="tdDone" style="background:#52b788;border:none;border-radius:999px;padding:.55rem .9rem;cursor:pointer;color:#081c15;font-weight:600;">✅ Mark done</button>` : ""}
+      <button id="tdEdit" style="background:#9d4edd;border:none;border-radius:999px;padding:.55rem .9rem;cursor:pointer;color:#fff;font-weight:600;">✏️ Edit</button>
+      <button id="tdCopy" style="background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.55rem .9rem;cursor:pointer;color:#f8f7ff;">⧉ Copy</button>
+      <button id="tdDel" style="background:transparent;border:1px solid rgba(229,99,111,.55);border-radius:999px;padding:.55rem .9rem;cursor:pointer;color:#e5636f;">🗑️ Delete</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+  const doneBtn = ov.querySelector("#tdDone");
+  if (doneBtn) doneBtn.addEventListener("click", () => { ov.remove(); moveTask(t.id, "done"); });
+  ov.querySelector("#tdEdit").addEventListener("click", () => { ov.remove(); editTask(t.id); });
+  ov.querySelector("#tdCopy").addEventListener("click", () => { ov.remove(); copyTask(t.id); });
+  ov.querySelector("#tdDel").addEventListener("click", () => { ov.remove(); deleteTask(t.id); });
+}
+
 function todaysTimedTasks() {
-  const today = localDateStr();
-  return tasks.filter(t => t.due === today && t.time && !["done", "graveyard"].includes(t.col));
+  return tasksOn(localDateStr()).filter(t => t.time);
 }
 
 function todaysAnytimeTasks() {
-  const today = localDateStr();
-  return tasks.filter(t => t.due === today && !t.time && !["done", "graveyard"].includes(t.col));
+  return tasksOn(localDateStr()).filter(t => !t.time);
 }
 
 function weekTaskChips(i) {
@@ -1254,11 +1319,11 @@ function weekTaskChips(i) {
   const d = new Date(monday);
   d.setDate(monday.getDate() + i);
   const key = localDateStr(d);
-  const due = tasks.filter(t => t.due === key && !["done", "graveyard"].includes(t.col));
+  const due = tasksOn(key);
   const gcal = (typeof gcalEventsOn === "function") ? gcalEventsOn(key) : [];
   const chips = [
     ...gcal.map(ev => `<span class="week-task-chip gcal gcal-detail" data-cal="${esc(ev.calId)}" data-eid="${esc(ev.id)}" data-cached="${encodeURIComponent(JSON.stringify(ev))}" title="Show details">📅 ${esc(ev.title)}</span>`),
-    ...due.map(t => `<span class="week-task-chip">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`)
+    ...due.map(t => `<span class="week-task-chip" onclick="showTaskDetail(${t.id})" style="cursor:pointer;" title="Show details">${t.pri ? PRI_EMOJI[t.pri] + " " : ""}${t.text}</span>`)
   ];
   if (!chips.length) return "";
   return `<div class="week-tasks">${chips.join("")}</div>`;
