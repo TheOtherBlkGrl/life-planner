@@ -470,6 +470,7 @@ function switchTab(name) {
   if (name === "today" && typeof renderWins === "function") renderWins();
   if (name === "jobs" && typeof loadJobLeads === "function") loadJobLeads();
   if (name === "jobs" && typeof loadSiteReport === "function") loadSiteReport();
+  if (name === "vault" && typeof loadVaultHub === "function") loadVaultHub();
 }
 
 // --- 8. WEEK PANEL ---

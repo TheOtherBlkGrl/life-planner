@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarissa's Cosmic Command Center ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Cormorant+Garamond:wght@600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261103ak" />
+  <link rel="stylesheet" href="v2.css?v=20261103ak" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <header class="cosmic-header">
+    <div class="brand">
+      <h1>👑 Clarissa's Cosmic Command Center</h1>
+      <p class="subtitle">Built for high-spark brains, lunar flow & effortless manifestation ✨</p>
+    </div>
+    <div class="header-widgets">
+      <div class="aura-tuner" id="auraTuner" title="Pick a mood for the room">
+        <button class="aura-btn" data-aura="empress-jewel">💎 Empress</button>
+        <button class="aura-btn" data-aura="gilded-salon">🏛️ Salon</button>
+        <button class="aura-btn" data-aura="night-garden">🌿 Garden</button>
+        <button class="aura-btn" data-aura="ocean-twilight">🌊 Twilight</button>
+        <button class="aura-btn" data-aura="velvet-parchment">📜 Parchment</button>
+        <button class="aura-btn" data-aura="custom">🎨 Mixer</button>
+        <button class="aura-btn" data-aura="">↺ Reset</button>
+      </div>
+      <div class="mixer hidden" id="auraMixer">
+        <label>Deep <input type="color" id="mixDeep" value="#1b1530"></label>
+        <label>Card <input type="color" id="mixCard" value="#10182b"></label>
+        <label>Gold <input type="color" id="mixGold" value="#ebb860"></label>
+        <button class="mini-btn" id="mixApply">Apply</button>
+      </div>
+      <button class="schumann-pill" id="schumannBtn" title="Two soft tones, 7.83 Hz apart">2705 Schumann 7.83Hz</button>
+      <button class="portal-btn" id="portalBtn" title="Portal moment">✨ 11:11</button>
+<div class="moon-badge" id="moonBadge">
+        <span id="moonEmoji">🌙</span>
+        <div>
+          <strong id="moonPhaseName">Calculating Moon...</strong>
+          <small id="moonAdvice">Syncing with the cosmos...</small>
+        </div>
+      </div>
+      <div class="clock-box">
+        <span id="liveClock">00:00</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="today">🌟 Today</button>
+    <button class="tab-btn" data-tab="tasks">📋 Tasks</button>
+    <button class="tab-btn" data-tab="week">🗓️ Week</button>
+    <button class="tab-btn" data-tab="month">📆 Month</button>
+    <button class="tab-btn" data-tab="bills">💸 Bills</button>
+    <button class="tab-btn" data-tab="selfcare">🛁 Self Care</button>
+    <button class="tab-btn" data-tab="garden">🌱 Garden</button>
+    <button class="tab-btn" data-tab="social">👯 Social</button>
+    <button class="tab-btn" data-tab="work">🧰 Work</button>
+    <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
+    <button class="tab-btn" data-tab="blocks">🧱 Blocks</button>
+    <button class="tab-btn" data-tab="journal">📓 Journal</button>
+    <button class="tab-btn" data-tab="astro">🔮 Chart</button>
+    <button class="tab-btn" data-tab="vault">🗝️ Vault &amp; Hub</button>
+  </nav>
+
+  <main class="dashboard">
+
+    <section class="tab-panel active" id="panel-today">
+<div class="today-duo">
+        <div class="card wins-tile">
+          <div class="card-header">
+            <h2>🏆 Today's Wins</h2>
+            <span class="badge-pill" id="winsCount">0 wins</span>
+          </div>
+          <div id="winsList" class="wins-list compact"></div>
+        </div>
+        <div class="card brief-tile">
+          <div class="card-header">
+            <h2>📰 Daily Brief</h2>
+          </div>
+          <p id="briefMeta" class="brief-meta">Loading…</p>
+          <button id="openBriefBtn" class="mini-btn brief-open">Read the brief</button>
+        </div>
+      </div>
+
+      <div class="card today-horo-featured">
+        <div class="card-header">
+          <div>
+            <h2>🔮 Today's Deep-Dive Natal Reading</h2>
+            <p class="helper-text" style="margin:0.2rem 0 0;">Computed live from your natal Leo Sun, Taurus Rising and Libra Moon against today's actual sky. No filler.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button type="button" class="mini-btn" onclick="toggleTodayDeepDive(this)">▶ Expand full reading</button>
+            <button type="button" class="mini-btn" onclick="if (typeof switchTab === 'function') switchTab('astro')">Full 3-day sky →</button>
+          </div>
+        </div>
+        <div id="todayHoroSummary" class="horo-power-box"></div>
+        <div id="todayHoroBody" class="horo-body hidden"></div>
+      </div>
+
+      <div class="card schedule-card">
+        <div class="card-header">
+          <h2>⏰ Today's Schedule</h2>
+          <div class="sched-controls">
+            <span id="syncStatus" class="sync-status"></span>
+            <button id="gcalConnectBtn" class="mini-btn">📅 Connect Calendar</button>
+            <button id="gcalSyncBtn" class="mini-btn hidden">🔄 Force Sync</button>
+            <button id="remindToggle" class="mini-btn">🔔 Enable Reminders</button>
+          </div>
+          <details id="calPicker" class="hidden cal-picker">
+            <summary>Which calendars</summary>
+            <div></div>
+          </details>
+        </div>
+        <div id="nowBanner" class="now-banner hidden"></div>
+        <div id="blockThumbs" class="thumb-strip hidden"></div>
+        <div id="hourlyGrid" class="hourly-grid"></div>
+      </div>
+      <div class="anchor-grid">
+
+        <div class="card manifestation-card">
+          <div class="card-header">
+            <h2>🔮 "Already Mine" Scripting Box</h2>
+            <button id="shuffleAffirmationBtn" class="mini-btn">🎲 Spark Idea</button>
+          </div>
+          <p class="helper-text">Write what you are calling in as if it already happened:</p>
+          <textarea id="manifestationInput" placeholder="I am so grateful now that..."></textarea>
+        </div>
+
+        <div class="card leo-card">
+          <div class="card-header">
+            <h2>☀️ Leo Sun: Main Character Win</h2>
+            <span class="badge-pill">1 Spot Only</span>
+          </div>
+          <p class="helper-text">If you only do ONE thing today to feel proud and radiant, what is it?</p>
+          <div class="spotlight-input-wrap">
+            <input type="checkbox" id="leoWinCheck" />
+            <input type="text" id="leoWinText" placeholder="My #1 power move today..." />
+          </div>
+        </div>
+
+        <div class="card grounding-card">
+          <div class="card-header">
+            <h2>🐂 Taurus Rising & ⚖️ Libra Moon</h2>
+          </div>
+          <p class="helper-text">Sensory Reset (Check before diving in):</p>
+          <div class="sensory-checks">
+            <label><input type="checkbox" class="sensory-box" id="sense1" /> ☕ Warm spiced coffee or water nearby</label>
+            <label><input type="checkbox" class="sensory-box" id="sense2" /> 🌿 Jaw unclenched & shoulders dropped</label>
+            <label><input type="checkbox" class="sensory-box" id="sense3" /> 🕯️ Desk cleared of visual clutter</label>
+          </div>
+          <hr class="divider" />
+          <label class="helper-text" for="libraPeaceSelect">⚖️ Libra Moon Boundary Check:</label>
+          <select id="libraPeaceSelect" class="peace-select">
+            <option value="flowing">💖 Balanced, grounded & in my lane</option>
+            <option value="protecting">🛡️ Protecting my peace (No extra favors today!)</option>
+            <option value="overcommitted">🚨 Overcommitted — time to delegate or drop a task</option>
+          </select>
+        </div>
+
+      </div>
+
+          </section>
+
+    <section class="tab-panel" id="panel-tasks">
+<div class="card task-quick-card">
+      <form id="taskForm" class="task-creator">
+        <input type="text" id="taskInput" placeholder="Dump a task or idea out of your head..." required />
+        <select id="taskColumnSelect">
+          <option value="dump">🌪️ Brain Dump Inbox</option>
+          <option value="high">🔥 High-Spark Quests</option>
+          <option value="low">🌿 Cozy Low-Spoon Wins</option>
+          <option value="top3">🎯 Today's Rule of 3</option>
+          <option value="selfcare">🛁 Self Care</option>
+          <option value="garden">🌱 Garden</option>
+          <option value="social">👯 Social</option>
+          <option value="marriage">💍 Marriage</option>
+          <option value="work">🧰 Work</option>
+          <option value="jobs">💼 Job Hunt</option>
+        </select>
+        <div class="task-meta">
+          <input type="date" id="taskDue" title="Due date (optional)" />
+          <input type="time" id="taskTime" title="Time (optional)" />
+          <select id="taskPri">
+            <option value="">Priority</option>
+            <option value="high">🔥 High</option>
+            <option value="med">⚡ Medium</option>
+            <option value="low">🌿 Low</option>
+          </select>
+          <select id="taskRepeat" title="Repeat (optional)" onchange="const pc=document.getElementById('taskCustomDays'); if(pc) pc.style.display = this.value==='custom' ? 'flex' : 'none';">
+            <option value="">Repeat</option>
+            <option value="daily">🔁 Daily</option>
+            <option value="weekdays">🔁 Weekdays</option>
+            <option value="weekly">🔁 Weekly</option>
+            <option value="monthly">🔁 Monthly</option>
+            <option value="custom">🗓️ Custom</option>
+          </select>
+        </div>
+        <div id="taskCustomDays" style="display:none;gap:.4rem;align-items:center;flex-wrap:wrap;margin-top:.35rem;">
+          <span style="font-size:.78rem;opacity:.7;">On:</span>
+          <button type="button" class="ccc-day-chip" data-day="1">M</button>
+          <button type="button" class="ccc-day-chip" data-day="2">T</button>
+          <button type="button" class="ccc-day-chip" data-day="3">W</button>
+          <button type="button" class="ccc-day-chip" data-day="4">T</button>
+          <button type="button" class="ccc-day-chip" data-day="5">F</button>
+          <button type="button" class="ccc-day-chip" data-day="6">S</button>
+          <button type="button" class="ccc-day-chip" data-day="0">S</button>
+        </div>
+        <button type="submit" class="add-btn">➕ Add to Board</button>
+      </form>
+      </div>
+
+      <div class="workspace-layout">
+
+        <section class="kanban-section">
+
+          <div class="kanban-grid">
+            <div class="kanban-col">
+              <div class="col-header">
+                <h3>🌪️ Brain Dump</h3>
+                <span class="count-badge" id="count-dump">0</span>
+              </div>
+              <p class="col-desc">Zero pressure. Get it out of your head now, sort it later.</p>
+              <div class="task-list" id="col-dump"></div>
+            </div>
+
+            <div class="kanban-col">
+              <div class="col-header">
+                <h3>🔥 High-Spark Quests</h3>
+                <span class="count-badge" id="count-high">0</span>
+              </div>
+              <p class="col-desc">For when the hyperfocus kicks in and your battery is full.</p>
+              <div class="task-list" id="col-high"></div>
+            </div>
+
+            <div class="kanban-col">
+              <div class="col-header">
+                <h3>🌿 Low-Spoon Wins</h3>
+                <span class="count-badge" id="count-low">0</span>
+              </div>
+              <p class="col-desc">5-minute, zero-stress tasks for low-energy moments.</p>
+              <div class="task-list" id="col-low"></div>
+            </div>
+
+            <div class="kanban-col highlight-col">
+              <div class="col-header">
+                <h3>🎯 Today's Rule of 3</h3>
+                <span class="count-badge gold-badge" id="count-top3">0/3</span>
+              </div>
+              <p class="col-desc">Hard limit of 3 cards max! No overwhelm allowed, Queen.</p>
+              <div class="task-list" id="col-top3"></div>
+            </div>
+
+            <div class="kanban-col trophy-col">
+              <div class="col-header">
+                <h3>🎉 Trophy Room</h3>
+                <span class="count-badge" id="count-done">0</span>
+              </div>
+              <p class="col-desc">Look at everything you've already crushed!</p>
+              <div class="task-list" id="col-done"></div>
+            </div>
+
+            <div class="kanban-col graveyard-col">
+              <div class="col-header">
+                <h3>🪦 No-Shame Graveyard</h3>
+                <span class="count-badge" id="count-graveyard">0</span>
+              </div>
+              <p class="col-desc">Lost interest or changed plans? Release it guilt-free.</p>
+              <div class="task-list" id="col-graveyard"></div>
+            </div>
+          </div>
+                </section>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-week">
+      <div class="card">
+        <div class="card-header">
+          <h2>🗓️ The Week Ahead</h2>
+          <button id="clearWeekBtn" class="mini-btn">🧹 Clear Week</button>
+        </div>
+        <p class="helper-text">Park plans on the day they belong to. Nothing nags you here; it just waits where you'll see it.</p>
+        <div class="week-grid" id="weekGrid"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-month">
+      <div class="card">
+        <div class="card-header">
+          <h2>📆 Month View</h2>
+          <div class="month-nav">
+            <button id="monthPrev" class="mini-btn">◀</button>
+            <span id="monthTitle"></span>
+            <button id="monthNext" class="mini-btn">▶</button>
+            <button id="monthToday" class="mini-btn">Today</button>
+          </div>
+        </div>
+        <div id="monthGrid" class="month-grid"></div>
+        <p class="helper-text">Your Sunday-to-Saturday month: tasks due and calendar events per day. Blue chips are from Google Calendar.</p>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-bills">
+      <div class="card">
+        <div class="card-header">
+          <h2>💸 Bills & Money</h2>
+        </div>
+        <p class="helper-text">Add what's due, tap Paid when it's handled. Overdue bills light up red.</p>
+        <form id="billForm" class="row-form bills-form">
+          <input type="text" id="billName" placeholder="Bill name (PG&E, rent...)" required />
+          <input type="number" id="billAmount" placeholder="Amount $" step="0.01" min="0" required />
+          <input type="date" id="billDue" required />
+          <select id="billRepeat" title="Repeat (optional)">
+            <option value="">Repeat</option>
+            <option value="weekly">🔁 Weekly</option>
+            <option value="monthly">🔁 Monthly</option>
+            <option value="quarterly">🔁 Quarterly</option>
+            <option value="yearly">🔁 Yearly</option>
+          </select>
+          <button type="submit" class="add-btn">➕ Add Bill</button>
+        </form>
+        <div id="billsSummary" class="bills-summary"></div>
+        <div id="billsList" class="line-list"></div>
+      </div>
+          <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as bills show up here.</p>
+        <div id="calEvents-bills" class="cal-events-list"></div>
+      </div>
+    </section>
+</section>
+
+    <section class="tab-panel" id="panel-selfcare">
+      <div class="card">
+        <div class="card-header">
+          <h2>🛁 Self Care Rituals</h2>
+          <button id="resetSelfcareBtn" class="mini-btn">🌅 New Day Reset</button>
+        </div>
+        <p class="helper-text">Your daily care list. It resets fresh every new day automatically, no guilt carried over.</p>
+        <div id="selfcareList" class="check-list"></div>
+        <div id="taskCol-selfcare" class="line-list tab-task-list" style="display:none"></div>
+        <form id="selfcareForm" class="row-form solo-form">
+          <input type="text" id="selfcareInput" placeholder="Add a ritual of your own..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+      </div>
+          <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as selfcare show up here.</p>
+        <div id="calEvents-selfcare" class="cal-events-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-garden">
+      <div class="card">
+        <div class="card-header">
+          <h2>🌱 Garden Calendar</h2>
+        </div>
+        <p class="helper-text">Planting blocks, waterings, orders and yard dreams, all in one bed.</p>
+        <form id="gardenForm" class="row-form solo-form">
+          <input type="text" id="gardenInput" placeholder="Add a garden task or note..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <div id="gardenList" class="line-list"></div>
+        <div id="taskCol-garden" class="line-list tab-task-list" style="display:none"></div>
+      </div>
+          <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as garden show up here.</p>
+        <div id="calEvents-garden" class="cal-events-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-social">
+      <div class="card">
+        <div class="card-header">
+          <h2>👯 Social Life</h2>
+        </div>
+        <p class="helper-text">People you love and the plans brewing. Add who and when, so nobody goes quiet on you.</p>
+        <form id="socialForm" class="row-form solo-form">
+          <input type="text" id="socialInput" placeholder="Who + the plan (Dana - brunch Sunday)..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <div id="socialList" class="line-list"></div>
+        <div id="taskCol-social" class="line-list tab-task-list" style="display:none"></div>
+      </div>
+                <div class="card">
+        <div class="card-header">
+          <h2>💍 Marriage</h2>
+        </div>
+        <p class="helper-text">Date nights, little things, us stuff.</p>
+        <div id="marriageList" class="line-list"></div>
+        <div id="taskCol-marriage" class="line-list tab-task-list" style="display:none"></div>
+        <form id="marriageForm" class="row-form solo-form">
+          <input type="text" id="marriageInput" placeholder="Add something for the two of you..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <p class="helper-text" style="margin-top: 0.8rem;">Calendar events you tag as 💍 Marriage show up below.</p>
+        <div id="calEvents-marriage" class="cal-events-list"></div>
+      </div>
+    <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as social show up here.</p>
+        <div id="calEvents-social" class="cal-events-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-work">
+      <div class="card">
+        <div class="card-header">
+          <h2>🧰 Work</h2>
+        </div>
+        <p class="helper-text">Anything work-related that isn't the job hunt.</p>
+        <div id="workList" class="line-list"></div>
+        <div id="taskCol-work" class="line-list tab-task-list" style="display:none"></div>
+        <form id="workForm" class="row-form solo-form">
+          <input type="text" id="workInput" placeholder="Add a work item..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+      </div>
+      <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as work show up here.</p>
+        <div id="calEvents-work" class="cal-events-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-jobs">
+      <div class="card">
+        <div class="card-header">
+          <h2>💼 Job Hunt</h2>
+        </div>
+        <p class="helper-text">Anything private (applications, offers, salary notes) still lives in the encrypted vault on your dashboard. Keep public-facing notes and targets here.</p>
+        <form id="jobsForm" class="row-form solo-form">
+          <input type="text" id="jobsInput" placeholder="Add a target, lead or public note..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <div id="jobsList" class="line-list"></div>
+        <div id="taskCol-jobs" class="line-list tab-task-list" style="display:none"></div>
+      </div>
+          <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as job hunt show up here.</p>
+        <div id="calEvents-jobs" class="cal-events-list"></div>
+      </div>
+          <div class="card">
+        <div class="card-header">
+          <h2>🛰️ Fresh leads from Fo</h2>
+        </div>
+        <p class="helper-text" id="jobLeadsMeta">Screened from job boards against your filters. Sweeps run 5:30am and 3pm daily.</p>
+        <div id="jobLeadsList" class="line-list"></div>
+        <div id="jobLeadsDone" class="line-list"></div>
+      </div>
+          <div class="card">
+        <div class="card-header">
+          <h2>📊 Site visit report</h2>
+        </div>
+        <p class="helper-text" id="siteReportMeta">Traffic on clarissadward.com. Updated at each sweep.</p>
+        <div id="siteReportBody" class="line-list"></div>
+      </div>
+    </section>
+</section>
+
+    <section class="tab-panel" id="panel-blocks">
+      
+
+      <div class="card">
+        <div class="card-header">
+          <h2>🧱 Block Scheduling</h2>
+          <input type="date" id="blockDate" class="date-picker" />
+        </div>
+        <p class="helper-text">Give every hour a job. A finished block is a win, and wins stack up on your Today board.</p>
+
+        <form id="breakdownForm" class="row-form breakdown-form">
+          <input type="text" id="breakdownText" placeholder="Big scary thing to break down (build the tracker deck)..." required />
+          <input type="number" id="breakdownMinutes" placeholder="Total min" min="25" step="5" required />
+          <select id="breakdownChunk">
+            <option value="25">25-min chunks</option>
+            <option value="50">50-min chunks</option>
+          </select>
+          <button type="submit" class="add-btn">⚡ Break It Down</button>
+        </form>
+
+        <form id="blockForm" class="row-form">
+          <input type="text" id="blockLabel" placeholder="What's this block for?" required />
+          <input type="time" id="blockStart" required />
+          <select id="blockDur">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+            <option value="90">90 min</option>
+            <option value="120">2 hrs</option>
+          </select>
+          <select id="blockCat">
+            <option value="focus">🔮 Deep Focus</option>
+            <option value="admin">💸 Admin</option>
+            <option value="body">🌿 Body & Care</option>
+            <option value="joy">🎉 Joy</option>
+          </select>
+          <button type="submit" class="add-btn">➕ Block</button>
+        </form>
+
+        <div class="timeline-wrap">
+          <div class="timeline" id="timeline"></div>
+          <div class="timeline-hours"><span>5a</span><span>9a</span><span>1p</span><span>5p</span><span>9p</span><span></span></div>
+        </div>
+        <div id="blocksList" class="line-list"></div>
+      </div>
+    <div class="blocks-top-row">
+        <aside class="focus-sidebar card">
+          <h2>🕸️ Focus Session</h2>
+          <p class="helper-text">Pull a task over, estimate how long it'll take, and the clock tracks the work.</p>
+          <div id="focusPickerBox" class="focus-picker">
+            <select id="focusTaskSelect"></select>
+            <input type="text" id="focusCustomInput" placeholder="...or name it yourself" />
+            <button id="focusPullBtn" class="add-btn">➕ Start</button>
+          </div>
+          <div id="focusActiveBox" class="hidden">
+            <div class="focus-task-label" id="focusLabel"></div>
+            <div class="focus-clock" id="focusClock">00:00</div>
+            <div class="focus-est-row">
+              <span>Estimate</span>
+              <input type="number" id="focusEst" min="1" step="5" /> min
+              <span id="focusOver" class="focus-over hidden"></span>
+            </div>
+            <div class="focus-bar-wrap"><div id="focusBar"></div></div>
+            <div class="focus-controls">
+              <button id="focusToggleBtn" class="mini-btn">▶️ Start</button>
+              <button id="focusFinishBtn" class="mini-btn">✅ Done</button>
+              <button id="focusDiscardBtn" class="mini-btn">🗑️</button>
+            </div>
+            <small id="focusNote"></small>
+          </div>
+        </aside>
+<aside class="dopamine-sidebar card">
+          <h2>⚡ Dopamine Menu</h2>
+          <p class="helper-text">Stuck in task paralysis? Pick a 10-minute reset without falling into a scrolling trap:</p>
+
+          <div class="timer-box">
+            <div id="timerDisplay" class="timer-digits">10:00</div>
+            <div class="timer-controls">
+              <button id="startTimerBtn" class="mini-btn">▶️ Start</button>
+              <button id="resetTimerBtn" class="mini-btn">🔄 Reset</button>
+            </div>
+            <small id="activeBreakLabel">Pick a reset below 👇</small>
+          </div>
+
+          <ul class="dopamine-list">
+            <li><button class="dopa-btn" data-activity="🌿 Check on Priscilla & the houseplants">🌿 Check on the houseplants</button></li>
+            <li><button class="dopa-btn" data-activity="🐾 10-minute play session with the pups">🐾 Hang out with the pups</button></li>
+            <li><button class="dopa-btn" data-activity="🎹 Jam on a synth or blast 2 favorite songs">🎹 Jam on keys / blast a song</button></li>
+            <li><button class="dopa-btn" data-activity="☀️ Step outside for fresh air & yard patrol">☀️ Step outside for fresh air</button></li>
+            <li><button class="dopa-btn" data-activity="🐟 Watch the patio pond for a few minutes">🐟 Watch the patio pond</button></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-journal">
+      <div class="card">
+        <div class="card-header">
+          <h2>📓 Journal</h2>
+          <div class="journal-nav">
+            <button id="journalPrev" class="mini-btn">◀</button>
+            <strong id="journalDateLabel">Today</strong>
+            <button id="journalNext" class="mini-btn">▶</button>
+            <button id="journalTodayBtn" class="mini-btn">Today</button>
+          </div>
+        </div>
+        <p class="helper-text">One entry a day is plenty. The prompt is optional fuel, not homework.</p>
+        <div class="card-inner-prompt">✨ <span id="journalPrompt"></span></div>
+        <div class="mood-row" id="moodRow">
+          <button class="mood-btn" data-mood="🔥">🔥 On fire</button>
+          <button class="mood-btn" data-mood="💪">💪 Steady</button>
+          <button class="mood-btn" data-mood="✨">✨ Soft</button>
+          <button class="mood-btn" data-mood="😴">😴 Low</button>
+          <button class="mood-btn" data-mood="🌧️">🌧️ Heavy</button>
+        </div>
+        <textarea id="journalInput" placeholder="Today I..."></textarea>
+        <button id="journalSaveBtn" class="add-btn journal-save">💾 Save Entry</button>
+        <div id="journalList" class="line-list journal-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-astro">
+      <div class="card">
+        <div class="card-header">
+          <h2>✨ Your 3-Day Horoscope</h2>
+          <span class="badge-pill">Yesterday · Today · Tomorrow</span>
+        </div>
+        <p class="helper-text">Fresh transits for each of the three days, re-read from the sky. Rolls itself over at 12:00am every night.</p>
+        <div id="horo3day" class="horo3day"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>🔮 Your Chart: Today's Sky</h2>
+          <span class="badge-pill">Leo Sun · Taurus Rising · Libra Moon</span>
+        </div>
+        <p class="helper-text">Real planetary positions for today, checked against your natal chart, with concrete planning advice.</p>
+        <div id="skyNow"></div>
+        <h3 class="astro-sub">How to plan today</h3>
+        <div id="astroAdvice"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>🗓️ Week Ahead</h2>
+        </div>
+        <p class="helper-text">The week's weather for your chart, so you can schedule with the current instead of against it.</p>
+        <div id="astroWeek" class="astro-week"></div>
+      </div>
+    </section>
+
+
+    <section class="tab-panel" id="panel-vault">
+      <div class="card">
+        <div class="card-header">
+          <h2>🗝️ Vault Hub</h2>
+          <span class="badge-pill" id="vaultUpdated">live counts</span>
+        </div>
+        <p class="helper-text">Real numbers from your planner data — nothing invented, and no pin lock standing in front of it.</p>
+        <div class="hub-grid">
+          <div class="hub-card"><h3>Pipeline</h3><div class="hub-num" id="hubLeads">—</div><div class="hub-sub" id="hubLeadsSub">leads awaiting your call</div></div>
+          <div class="hub-card"><h3>Tasks in play</h3><div class="hub-num" id="hubTasks">—</div><div class="hub-sub">kanban + tab lists</div></div>
+          <div class="hub-card"><h3>Bills tracked</h3><div class="hub-num" id="hubBills">—</div><div class="hub-sub">due dates &amp; paid flags</div></div>
+          <div class="hub-card"><h3>Focus blocks</h3><div class="hub-num" id="hubBlocks">—</div><div class="hub-sub">time-block plans</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>💼 Job pipeline</h2>
+          <span class="badge-pill" id="vaultPipelineMeta"></span>
+        </div>
+        <p class="helper-text">Your screened leads and your Apply / Not-for-me calls, newest first. Click a row to expand it.</p>
+        <div class="job-table-wrap"><table class="job-table" id="vaultJobTable"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>📈 Site telemetry</h2>
+          <span class="badge-pill">clarissadward.com</span>
+        </div>
+        <p class="helper-text">Real traffic numbers, same source as the Job Hunt tab card.</p>
+        <div id="vaultSiteBody" class="site-report-body"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>🗄️ Data vault</h2>
+        </div>
+        <p class="helper-text">Your planner lives in this browser. Download a full JSON backup anytime, or restore one on a new device.</p>
+        <div class="data-tools">
+          <button class="add-btn" id="vaultBackupBtn">⬇ Download backup</button>
+          <label class="add-btn ghost-btn">⬆ Restore backup<input type="file" id="vaultRestoreInput" accept="application/json" style="display:none"></label>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="cosmicToast" class="cosmic-toast hidden">
+    <div class="toast-content">
+      <span class="toast-icon">🦋</span>
+      <div>
+        <h4 id="toastTitle">11:11 Cosmic Portal Alignment!</h4>
+        <p id="toastMessage">Pause, Clare! Unclench your jaw, take a deep breath, and feel your next big win as already yours.</p>
+      </div>
+      <button id="closeToastBtn" class="close-toast">✖</button>
+    </div>
+  </div>
+
+  <script src="app.js?v=20261103ak"></script>
+  <script src="astro.js?v=20261103ak"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="sync-config.js?v=20261103ak"></script>
+  <script src="google-sync.js?v=20261103ak"></script>
+  <script src="month.js?v=20261103ak"></script>
+  <script src="v2.js?v=20261103ak"></script>
+  <div class="ev-overlay hidden" id="briefOverlay">
+    <div class="ev-modal brief-modal">
+      <button class="ev-close" id="briefCloseBtn">✕</button>
+      <h3 class="ev-title" id="briefTitle"></h3>
+      <div id="briefBody" class="brief-body"></div>
+    </div>
+  </div>
+</body>
+</html>
