@@ -469,6 +469,7 @@ function switchTab(name) {
   if (name === "tasks" && typeof renderKanban === "function") renderKanban();
   if (name === "today" && typeof renderWins === "function") renderWins();
   if (name === "jobs" && typeof loadJobLeads === "function") loadJobLeads();
+  if (name === "jobs" && typeof loadSiteReport === "function") loadSiteReport();
 }
 
 // --- 8. WEEK PANEL ---
@@ -1879,3 +1880,37 @@ async function loadJobLeads() {
   renderJobLeads();
 }
 window.addEventListener("load", loadJobLeads);
+
+// --- 26. SITE VISIT REPORT (clarissadward.com traffic, written at each sweep) ---
+let siteReportData = null;
+function renderSiteReport() {
+  const body = document.getElementById("siteReportBody");
+  const meta = document.getElementById("siteReportMeta");
+  if (!body) return;
+  const d = siteReportData;
+  if (!d || !d.last24h) {
+    body.innerHTML = '<p class="helper-text">First report lands at the next sweep (5:30am & 3pm).</p>';
+    return;
+  }
+  if (meta) meta.textContent = "Traffic on clarissadward.com \u00b7 updated " + (d.updatedLocal || d.updated || "");
+  const L = d.last24h || {}, S = d.sinceLaunch || {}, ro = L.resumeOpens || {};
+  const row = (k, v) => `<div class="site-report-row"><span class="k">${k}</span><span>${v}</span></div>`;
+  let html = "";
+  html += row("Last 24 hours", `${L.visits != null ? L.visits : "\u2014"} visits \u00b7 ${L.uniqueVisitors != null ? L.uniqueVisitors : "\u2014"} unique${L.topSource ? " \u00b7 mostly " + esc(L.topSource) : ""}`);
+  if (ro.total != null || ro.detail) html += row("Resume opens", `${ro.total != null ? ro.total : 0}${ro.detail ? " \u00b7 " + esc(ro.detail) : ""}`);
+  html += row("Save-as-PDF clicks", `${L.printClicks != null ? L.printClicks : 0}`);
+  if (S.visits != null) html += row("Since launch" + (S.startDate ? " (" + esc(S.startDate) + ")" : ""), `${S.visits} visits \u00b7 ${S.pageViews != null ? S.pageViews : "\u2014"} page views`);
+  body.innerHTML = html;
+}
+async function loadSiteReport() {
+  try {
+    const r = await fetch("site-report.json?cb=" + Date.now());
+    if (r.ok) {
+      siteReportData = await r.json();
+      localStorage.setItem("ccc_site_report_cache", JSON.stringify(siteReportData));
+    }
+  } catch (e) {}
+  if (!siteReportData) { try { siteReportData = JSON.parse(localStorage.getItem("ccc_site_report_cache")); } catch (e) {} }
+  renderSiteReport();
+}
+window.addEventListener("load", loadSiteReport);

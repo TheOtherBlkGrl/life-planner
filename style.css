@@ -987,3 +987,8 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .lead-reject{background:transparent;border:1px solid rgba(229,99,111,.55);color:#e5636f}
 .job-lead.reviewed{opacity:.55;padding:.45rem .85rem}
 .chip{display:inline-block;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:.05rem .5rem;font-size:.72rem;margin-right:.3rem;vertical-align:middle}
+
+/* --- site visit report --- */
+.site-report-row{display:flex;gap:.75rem;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:.88rem;align-items:baseline}
+.site-report-row:last-child{border-bottom:none}
+.site-report-row .k{width:150px;flex:none;opacity:.65;font-size:.78rem}
