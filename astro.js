@@ -327,7 +327,7 @@ function transitDetail(h, off, prevState) {
   let orbTxt;
   if (off > 0 && prevState && prevState.orbs && prevState.orbs[k] != null) {
     const was = prevState.orbs[k];
-    orbTxt = `Still in range from yesterday: ${h.orb.toFixed(1)}\u00B0 now, ${was.toFixed(1)}\u00B0 before, ${h.orb <= was ? "tightening" : "widening"}. `;
+    orbTxt = `Still in range: ${h.orb.toFixed(1)}\u00B0 now, ${was.toFixed(1)}\u00B0 earlier, ${h.orb <= was ? "tightening" : "widening"}. `;
   } else {
     orbTxt = `orb ${h.orb.toFixed(1)}\u00B0, ${strengthWord(h.orb)} \u2014 `;
   }
