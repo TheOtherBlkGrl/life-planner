@@ -1633,7 +1633,7 @@ function checkReminders() {
       localStorage.setItem("ccc_reminded", JSON.stringify(remindedToday));
       cosmicAlert("\u23F0 Time to start!", `${item.label} \u00b7 you planned this for ${fmtTime(item.time)}. Go get it, Queen!`);
       if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-        new Notification("Cosmic Command Center", { body: `Time to start: ${item.label}` });
+        new Notification("Command", { body: `Time to start: ${item.label}` });
       }
     }
   });
