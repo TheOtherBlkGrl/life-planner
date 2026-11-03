@@ -159,7 +159,7 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
 
 textarea, input[type="text"], input[type="number"], input[type="date"], select {
   width: 100%;
-  background: rgba(120, 95, 65, 0.22);
+  background: rgba(120, 95, 65, 0.10);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
   border-radius: 10px;
@@ -168,8 +168,9 @@ textarea, input[type="text"], input[type="number"], input[type="date"], select {
   font-size: 0.92rem;
 }
 textarea { min-height: 92px; resize: vertical; }
+::placeholder { color: #8a7458; opacity: 1; }
 textarea:focus, input:focus, select:focus { outline: 2px solid var(--leo-gold); }
-input[type="date"] { color-scheme: dark; }
+input[type="date"] { color-scheme: light; }
 
 .spotlight-input-wrap {
   display: flex;
@@ -196,7 +197,7 @@ input[type="date"] { color-scheme: dark; }
 
 .badge-pill {
   background: rgba(192, 138, 40, 0.2);
-  color: var(--leo-gold);
+  color: #8a631c;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   font-size: 0.75rem;
@@ -281,7 +282,7 @@ input[type="date"] { color-scheme: dark; }
   font-size: 0.75rem;
   font-weight: 700;
 }
-.gold-badge { background: var(--leo-gold); color: #f2e8d6; }
+.gold-badge { background: var(--leo-gold); color: #3d2e1e; }
 
 .task-list { display: flex; flex-direction: column; gap: 0.6rem; }
 
@@ -364,7 +365,7 @@ input[type="date"] { color-scheme: dark; }
 .week-item button:hover { color: white; }
 .week-form { display: flex; gap: 0.4rem; }
 .week-form input {
-  background: rgba(120, 95, 65, 0.22);
+  background: rgba(120, 95, 65, 0.10);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
   border-radius: 8px;
@@ -594,7 +595,7 @@ input[type="date"] { color-scheme: dark; }
 
 input[type="time"] {
   width: 100%;
-  background: rgba(120, 95, 65, 0.22);
+  background: rgba(120, 95, 65, 0.10);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
   border-radius: 10px;
@@ -715,7 +716,7 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 }
 .astro-advice { display: flex; flex-direction: column; gap: 0.45rem; }
 .astro-advice-line {
-  background: rgba(120, 95, 65, 0.22);
+  background: rgba(120, 95, 65, 0.10);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   padding: 0.55rem 0.75rem;
@@ -842,7 +843,7 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 }
 .gantt-axis .g-tick:first-child { transform: none; }
 .gantt-axis .g-tick:last-child { transform: translateX(-100%); }
-.gantt-empty { padding: 1.4rem 0.6rem; text-align: center; color: #90809b; font-size: 0.85rem; font-style: italic; }
+.gantt-empty { padding: 1.4rem 0.6rem; text-align: center; color: #6b5a45; font-size: 0.85rem; font-style: italic; }
 @media (max-width: 640px) {
   .gantt-inner { min-width: 560px; }
   .g-bar { font-size: 0.66rem; padding: 0.1rem 0.35rem; }
