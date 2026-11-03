@@ -1,5 +1,5 @@
 :root {
-  --bg-deep: #ad7f4e;
+  --bg-deep: #a6763f;
   --bg-card: #fbf5e9;
   --bg-card-hover: #fffdf7;
   --leo-gold: #c08a28;
@@ -15,7 +15,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: radial-gradient(circle at top right, #c99b6b, var(--bg-deep) 60%);
+  background: radial-gradient(circle at top right, #bd8e5a, var(--bg-deep) 60%);
   color: var(--text-main);
   font-family: 'Plus Jakarta Sans', sans-serif;
   min-height: 100vh;
@@ -38,12 +38,13 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
 
 .brand h1 {
   font-size: 1.75rem;
-  background: linear-gradient(90deg, var(--leo-gold), var(--libra-rose));
+  background: linear-gradient(90deg, #fff3dd, #f6d9a0);
+  text-shadow: 0 1px 2px rgba(61, 46, 30, 0.35);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.subtitle { color: var(--text-muted); font-size: 0.9rem; }
+.subtitle { color: #f2e4c8; font-size: 0.9rem; }
 
 .header-widgets { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 
