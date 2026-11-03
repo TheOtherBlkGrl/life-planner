@@ -1001,3 +1001,22 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .lead-details .ld-sum{margin:.35rem 0 .45rem;opacity:.9}
 .lead-details .ld-link{color:#9d4edd;font-weight:600;text-decoration:none}
 .lead-details .ld-link:hover{text-decoration:underline}
+
+/* --- today duo: compact wins tile + daily brief tile --- */
+.today-duo{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.75rem}
+.wins-tile{border-top:3px solid var(--leo-gold);margin-bottom:0}
+.wins-tile .card-header h2{font-size:.95rem}
+.wins-tile .badge-pill{font-size:.72rem}
+.wins-list.compact{gap:.22rem}
+.wins-list.compact .win-row{font-size:.78rem;padding:.18rem 0}
+.brief-tile{border-top:3px solid var(--cosmic-purple,#9d4edd);margin-bottom:0;display:flex;flex-direction:column}
+.brief-tile .card-header h2{font-size:.95rem}
+.brief-meta{font-size:.75rem;opacity:.75;line-height:1.45;margin:.35rem 0 .6rem;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.brief-open{align-self:flex-start}
+.brief-modal{max-width:40rem}
+.brief-body .brief-h{color:#f4b860;font-size:.9rem;margin:.9rem 0 .3rem}
+.brief-body .brief-h:first-child{margin-top:0}
+.brief-body .brief-p{font-size:.85rem;line-height:1.55;margin:0 0 .4rem;white-space:pre-wrap}
+.brief-stamp{margin-top:1rem;font-size:.72rem;opacity:.55;text-align:right}
+@media (max-width:640px){.today-duo{grid-template-columns:1fr}}

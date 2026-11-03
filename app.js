@@ -853,10 +853,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Toast controls
-  document.getElementById("testPortalBtn").addEventListener("click", showCosmicToast);
   document.getElementById("closeToastBtn").addEventListener("click", () => {
     document.getElementById("cosmicToast").classList.add("hidden");
   });
+  if (typeof loadBrief === "function") loadBrief();
 });
 
 // --- 13. BLOCK SCHEDULING ---
@@ -1813,6 +1813,46 @@ if (typeof saveTasks === "function") { const _st = saveTasks; saveTasks = functi
 setInterval(() => { if (focusSess && focusSess.running) updateFocusClock(); }, 1000);
 refreshFocusPicker();
 renderFocusSess();
+
+
+// --- 26. DAILY BRIEF TILE (reads daily-brief.json, popup viewer) ---
+let briefData = null;
+async function loadBrief() {
+  const metaEl = document.getElementById("briefMeta");
+  const btnEl = document.getElementById("openBriefBtn");
+  if (!metaEl || !btnEl) return;
+  try {
+    const r = await fetch("daily-brief.json?cb=" + Date.now());
+    if (r.ok) briefData = await r.json();
+  } catch (e) {}
+  if (briefData) {
+    metaEl.textContent = (briefData.updatedLocal ? "From " + briefData.updatedLocal : "") +
+      (briefData.headline ? " \u00b7 " + briefData.headline : "");
+  } else {
+    metaEl.textContent = "No brief loaded yet \u00b7 lands each morning at 5:30am";
+  }
+  btnEl.addEventListener("click", openBriefModal);
+  document.getElementById("briefCloseBtn").addEventListener("click", () => {
+    document.getElementById("briefOverlay").classList.add("hidden");
+  });
+  document.getElementById("briefOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "briefOverlay") e.currentTarget.classList.add("hidden");
+  });
+}
+function openBriefModal() {
+  const overlay = document.getElementById("briefOverlay");
+  const body = document.getElementById("briefBody");
+  const title = document.getElementById("briefTitle");
+  if (!briefData) { body.innerHTML = '<p class="ev-loading">No brief loaded yet. It lands each morning at 5:30am.</p>'; title.textContent = "Daily Brief"; overlay.classList.remove("hidden"); return; }
+  title.textContent = "📰 " + (briefData.headline || "Daily Brief");
+  const parts = [];
+  (briefData.sections || []).forEach(s => {
+    parts.push('<h4 class="brief-h">' + esc(s.h) + '</h4><p class="brief-p">' + esc(s.body) + '</p>');
+  });
+  body.innerHTML = parts.join("") +
+    '<p class="brief-stamp">' + esc(briefData.updatedLocal || "") + '</p>';
+  overlay.classList.remove("hidden");
+}
 
 // --- 25. JOB LEADS FROM FO (screened twice daily, review here) ---
 const JOB_LEADS_DECISION_KEY = "ccc_job_leads_decisions";

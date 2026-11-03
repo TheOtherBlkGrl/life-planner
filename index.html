@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261103ab" />
+  <link rel="stylesheet" href="style.css?v=20261103ac" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -27,7 +27,6 @@
       </div>
       <div class="clock-box">
         <span id="liveClock">00:00</span>
-        <button id="testPortalBtn" class="portal-btn" title="Trigger a manifestation check-in right now">✨ 11:11 Check-In</button>
       </div>
     </div>
   </header>
@@ -51,13 +50,21 @@
   <main class="dashboard">
 
     <section class="tab-panel active" id="panel-today">
-<div class="card wins-card">
-        <div class="card-header">
-          <h2>🏆 Today's Wins</h2>
-          <span class="badge-pill" id="winsCount">0 wins</span>
+<div class="today-duo">
+        <div class="card wins-tile">
+          <div class="card-header">
+            <h2>🏆 Today's Wins</h2>
+            <span class="badge-pill" id="winsCount">0 wins</span>
+          </div>
+          <div id="winsList" class="wins-list compact"></div>
         </div>
-        <p class="helper-text">Your running scoreboard: finished blocks, crushed tasks, kept rituals, handled bills. Proof, not vibes.</p>
-        <div id="winsList" class="wins-list"></div>
+        <div class="card brief-tile">
+          <div class="card-header">
+            <h2>📰 Daily Brief</h2>
+          </div>
+          <p id="briefMeta" class="brief-meta">Loading…</p>
+          <button id="openBriefBtn" class="mini-btn brief-open">Read the brief</button>
+        </div>
       </div>
 
       <div class="card schedule-card">
@@ -598,11 +605,18 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261103ab"></script>
-  <script src="astro.js?v=20261103ab"></script>
+  <script src="app.js?v=20261103ac"></script>
+  <script src="astro.js?v=20261103ac"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261103ab"></script>
-  <script src="google-sync.js?v=20261103ab"></script>
-  <script src="month.js?v=20261103ab"></script>
+  <script src="sync-config.js?v=20261103ac"></script>
+  <script src="google-sync.js?v=20261103ac"></script>
+  <script src="month.js?v=20261103ac"></script>
+  <div class="ev-overlay hidden" id="briefOverlay">
+    <div class="ev-modal brief-modal">
+      <button class="ev-close" id="briefCloseBtn">✕</button>
+      <h3 class="ev-title" id="briefTitle"></h3>
+      <div id="briefBody" class="brief-body"></div>
+    </div>
+  </div>
 </body>
 </html>
