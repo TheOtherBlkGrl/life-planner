@@ -2,6 +2,7 @@
 const SIGNS = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
 const SIGN_GLYPH = ["\u2648","\u2649","\u264A","\u264B","\u264C","\u264D","\u264E","\u264F","\u2650","\u2651","\u2652","\u2653"];
 const PLANET_GLYPH = { Sun: "\u2609", Moon: "\u263D", Mercury: "\u263F", Venus: "\u2640", Mars: "\u2642", Jupiter: "\u2643", Saturn: "\u2644", Uranus: "\u2645", Neptune: "\u2646", Pluto: "\u2647" };
+const gly = (ch) => `<span class="aglyph">${ch}</span>`;
 
 // Schlyter day number: d = ms/86400000 - 10956.0
 function schlyterD(ms) { return ms / 86400000 - 10956.0; }
@@ -90,7 +91,7 @@ function allPositions(ms) {
 
 function signStr(lon) {
   const idx = Math.floor(lon / 30) % 12;
-  return `${SIGN_GLYPH[idx]} ${SIGNS[idx]} ${Math.floor(lon % 30)}\u00B0`;
+  return `${gly(SIGN_GLYPH[idx])} ${SIGNS[idx]} ${Math.floor(lon % 30)}\u00B0`;
 }
 
 // --- HER NATAL CHART: born Aug 1, 1987 (12:00 UT anchor; Sun/Moon verified) ---
@@ -186,11 +187,11 @@ function noonLocalMs(offsetDays) {
 }
 
 function aspectLine(h) {
-  const ret = h.retro ? " \u211E" : "";
+  const ret = h.retro ? gly(" \u211E") : "";
   const key = PLANET_ADVICE[h.planet] ? h.planet : "Sun";
   const advice = PLANET_ADVICE[key][h.cls];
   return {
-    head: `${PLANET_GLYPH[h.planet]} ${h.planet}${ret} ${ASPECT_GLYPH[h.aspect]} ${h.aspect} ${NATAL_LABEL[h.natal]}`,
+    head: `${gly(PLANET_GLYPH[h.planet])} ${h.planet}${ret} ${gly(ASPECT_GLYPH[h.aspect])} ${h.aspect} ${NATAL_LABEL[h.natal]}`,
     detail: `orb ${h.orb.toFixed(1)}\u00B0 \u00b7 ${advice}`
   };
 }
@@ -208,7 +209,7 @@ function renderAstro() {
   skyBox.innerHTML = `
     <div class="astro-moonline">${phaseEmoji} <strong>${phaseName}</strong> \u00b7 Moon in ${signStr(sky.Moon.lon)}</div>
     <div class="astro-skyrow">${Object.keys(sky).map(p =>
-      `<span class="sky-chip">${PLANET_GLYPH[p]} ${p} ${sky[p].retro ? "\u211E" : ""} in ${signStr(sky[p].lon)}</span>`).join("")}</div>`;
+      `<span class="sky-chip">${gly(PLANET_GLYPH[p])} ${p} ${sky[p].retro ? gly("\u211E") : ""} in ${signStr(sky[p].lon)}</span>`).join("")}</div>`;
 
   const hits = findAspects(now);
   const hard = hits.filter(h => h.cls === "hard");
@@ -231,7 +232,7 @@ function renderAstro() {
     const [pe, pn] = moonPhaseName(ms);
     const mSign = SIGNS[Math.floor(s.Moon.lon / 30) % 12];
     const notable = dayHits.slice(0, 2).map(h =>
-      `${PLANET_GLYPH[h.planet]}${h.retro ? "\u211E" : ""} ${ASPECT_GLYPH[h.aspect]} ${NATAL_LABEL[h.natal].replace("your ", "")}`);
+      `${gly(PLANET_GLYPH[h.planet])}${h.retro ? gly("\u211E") : ""} ${gly(ASPECT_GLYPH[h.aspect])} ${NATAL_LABEL[h.natal].replace("your ", "")}`);
     const preps = [];
     if (notable.length) preps.push(notable.join(", "));
     const dayHard = dayHits.filter(h => h.cls === "hard").length;
@@ -250,33 +251,124 @@ function renderAstro() {
 // --- 3-DAY HOROSCOPE: yesterday / today / tomorrow, rolls over at local midnight ---
 const HORO_ELEM = { Aries: "fire", Leo: "fire", Sagittarius: "fire", Taurus: "earth", Virgo: "earth", Capricorn: "earth", Gemini: "air", Libra: "air", Aquarius: "air", Cancer: "water", Scorpio: "water", Pisces: "water" };
 const HORO_ELEM_LINE = {
-  fire: "a fire kind of day: momentum favors moving first",
-  earth: "an earth kind of day: steady hands win",
-  air: "an air kind of day: talk, ideas and errands move fast",
-  water: "a water kind of day: lead with feel, back it with facts"
+  fire: ["a fire kind of day: momentum favors moving first", "a fire kind of day: lead with the energy, guard the fuse"],
+  earth: ["an earth kind of day: steady hands win", "an earth kind of day: slow, thorough work pays"],
+  air: ["an air kind of day: talk, ideas and errands move fast", "an air kind of day: trade messages, make the calls"],
+  water: ["a water kind of day: lead with feel, back it with facts", "a water kind of day: softer edges, sharper instincts"]
 };
+const NATAL_TAIL = {
+  Sun: "It sits on your Leo Sun, so it colors confidence and how seen you feel.",
+  Moon: "It touches your Libra Moon, so it lands in mood, comfort and company more than in events.",
+  Asc: "It hits your Taurus Rising, so it shows up in your body, your pace and first impressions."
+};
+const TRANSIT_READ = {
+  Sun: {
+    conj: [{ land: "Spotlight day: your name carries extra weight in the room.", move: "Volunteer for the intro, the demo, the first word." }, { land: "A main-character stretch: people hand you the floor without being asked.", move: "Put your name on the visible thing and let it be seen." }],
+    soft: [{ land: "Charisma runs high and people take you at your word.", move: "Use it on the ask you've been circling." }, { land: "Warmth plus credibility, a rare combo.", move: "Make the call, send the pitch, ask directly." }],
+    hard: [{ land: "Ego meets a reality check, often through other people's needs.", move: "Separate what you want from what's expected before you commit." }, { land: "Someone tests your standing today, likely in small ways.", move: "Hold your ground without performing for anyone." }]
+  },
+  Moon: {
+    conj: [{ land: "Feelings are loud and useful: they're pointing at something real.", move: "Name the feeling in one line, then act on what it says." }, { land: "The inner weather matches the outer day.", move: "Do the work that needs heart, not just hands." }],
+    soft: [{ land: "Emotional flow: honest conversation comes easier than usual.", move: "Have the talk you've been putting off; it'll land kindly." }, { land: "Comfort and connection pull the same direction today.", move: "Book the one-on-one; feed yourself properly." }],
+    hard: [{ land: "Mood pressure: small things hit bigger than they should.", move: "Keep a reset handy (walk, water, music) and decide nothing heavy hungry." }, { land: "The need for harmony meets a day that isn't cooperating.", move: "Lower the bar on output, raise it on self-care." }]
+  },
+  Mercury: {
+    conj: [{ land: "Razor-sharp mind: words land exactly as you mean them.", move: "Write, plan or negotiate the thing that matters most." }, { land: "Your voice is precise today: people hear the whole sentence.", move: "Say the thing plainly; no hedging needed." }],
+    soft: [{ land: "Conversations open doors.", move: "Reach out to the person you've been meaning to." }, { land: "Ideas connect faster than you can type them.", move: "Capture them now; sort them later." }],
+    hard: [{ land: "Comms friction: messages misread, times slip, tone bites.", move: "Reread before sending and confirm times twice." }, { land: "Crossed wires are the default setting today.", move: "Assume good intent; ask one clarifying question before reacting." }]
+  },
+  Venus: {
+    conj: [{ land: "Magnetism high: people warm to you, and money decisions feel charmed.", move: "Make the money move or the graceful ask while it's flowing." }, { land: "You're easy to root for today.", move: "Ask for the thing you'd normally talk yourself out of." }],
+    soft: [{ land: "Pleasure and pay mix: charm works in your favor.", move: "Negotiate the rate, then order the good coffee." }, { land: "Beauty and money both respond to small effort today.", move: "Tidy the space, send the thank-you, treat yourself small." }],
+    hard: [{ land: "Money and relationship tension: the swipe finger itches.", move: "Check the bill list before any impulse buy." }, { land: "A 'no' you care about might sting more than it should.", move: "Sleep on the purchase and the reply; both keep." }]
+  },
+  Mars: {
+    conj: [{ land: "Engine full: drive and stamina arrive together.", move: "Attack the hardest block first, while the tank's full." }, { land: "Initiative comes easy and others follow it.", move: "Set the pace early; the day will match it." }],
+    soft: [{ land: "Momentum without burnout: the thing you've circled feels startable.", move: "Start it; momentum will carry the middle." }, { land: "Steady power: effort converts to progress at a good rate.", move: "Pick the long task and let the clock run." }],
+    hard: [{ land: "Friction high: patience is a finite resource today.", move: "Budget it, and burn the extra with your body, not your words." }, { land: "Sparky edges: small delays feel like insults.", move: "Count to three before the reply; move your body at lunch." }]
+  },
+  Jupiter: {
+    conj: [{ land: "Doors swing open: bigger rooms, bigger yes.", move: "Say yes to the stretch, then double-check the details." }, { land: "Generosity flows your way and through you.", move: "Accept the help; offer some back." }],
+    soft: [{ land: "Luck compounds quietly today.", move: "Apply for the stretch role, ask for the extra ten percent." }, { land: "The optimistic read is the accurate one today.", move: "Take the meeting, send the application." }],
+    hard: [{ land: "Overpromise risk: enthusiasm writes checks.", move: "Verify details before committing to anything big." }, { land: "More means more, and that can tip into too much.", move: "Cap the commitments at three and mean it." }]
+  },
+  Saturn: {
+    conj: [{ land: "Structure day: systems over sprints.", move: "Build the checklist that will carry the whole week." }, { land: "Authority sits well on you today; people defer.", move: "Make the call you're best qualified to make." }],
+    soft: [{ land: "Discipline pays quietly.", move: "Lock in one routine you'll thank yourself for." }, { land: "Slow and exact beats fast and loose today.", move: "Do it once, do it right." }],
+    hard: [{ land: "Reality check: slow is smooth, smooth is fast.", move: "Do the boring admin first; it unsticks everything else." }, { land: "A limit shows itself, and it's informational, not personal.", move: "Work inside it today; renegotiate it tomorrow." }]
+  },
+  Uranus: {
+    conj: [{ land: "Plot-twist potential: the schedule wants slack.", move: "Leave a gap in the plan and let it breathe." }, { land: "Originality spikes: your angle is the unusual one.", move: "Say the out-there idea out loud." }],
+    soft: [{ land: "Breakthrough weather: the weird idea is the good one.", move: "Voice it before you talk yourself out of it." }, { land: "Small surprises break your way.", move: "Let one plan change and see what it opens." }],
+    hard: [{ land: "Disruption energy: the plan will bend.", move: "Don't panic-pivot; bend it back on your terms." }, { land: "Tech and timing hiccup without warning.", move: "Back up the work; pad the schedule by twenty minutes." }]
+  },
+  Neptune: {
+    conj: [{ land: "Dream fuel: the vision is clearer than usual.", move: "Script it in the manifestation box while it's vivid." }, { land: "Compassion runs high; so does susceptibility.", move: "Help where it's real; verify where it's vague." }],
+    soft: [{ land: "Intuition runs high and it's not wrong.", move: "Trust the first instinct; rest well tonight." }, { land: "Music, art and meaning land deeper today.", move: "Make space for the good kind of drifting." }],
+    hard: [{ land: "Fog warning: fine print hides.", move: "Read it, and sleep on any big decision." }, { land: "Energy dips without an obvious cause.", move: "Protect the calendar's white space; no guilt." }]
+  },
+  Pluto: {
+    conj: [{ land: "Depth mode: transformation is on the table.", move: "Name the change you actually want and say it out loud." }, { land: "Intense focus: you can see to the bottom of a thing today.", move: "Pick one hard problem and go all the way down." }],
+    soft: [{ land: "Quiet power: your follow-through intimidates exactly the right people.", move: "Speak plainly and early; let the work talk." }, { land: "Deep leverage: small moves shift big things today.", move: "Make the one call that moves the whole board." }],
+    hard: [{ land: "Power-struggle energy: someone wants a tug-of-war.", move: "Don't wrestle what you can walk away from." }, { land: "Control feels scarce and the urge is to grip.", move: "Grip the one thing that's actually yours: your next move." }]
+  }
+};
+const HARD_CLOSERS = ["Take the friction as information, not a stop sign.", "Friction is data today: note it, route around it, keep moving.", "Build in buffer: the snags are in the sky's schedule, not yours."];
+const EASY_CLOSERS = ["Easy sky. Cash in on it.", "The sky's cooperative: spend it on the thing you keep postponing.", "Low-resistance day: clear the task that's been staring at you."];
 
-function horoReadingFor(ms) {
+function hitKey(h) { return h.planet + "|" + h.aspect + "|" + h.natal; }
+function strengthWord(o) { return o < 1 ? "razor-tight" : (o < 2.5 ? "solid" : "loose, background"); }
+
+function transitDetail(h, off, prevState) {
+  const lib = TRANSIT_READ[h.planet] || TRANSIT_READ.Sun;
+  const pool = lib[h.cls] || lib.soft;
+  const pick = pool[(new Date(noonLocalMs(off)).getDate() + off) % pool.length];
+  const k = hitKey(h);
+  let orbTxt;
+  if (off > 0 && prevState && prevState.orbs && prevState.orbs[k] != null) {
+    const was = prevState.orbs[k];
+    orbTxt = `Still in range from yesterday: ${h.orb.toFixed(1)}\u00B0 now, ${was.toFixed(1)}\u00B0 before, ${h.orb <= was ? "tightening" : "widening"}. `;
+  } else {
+    orbTxt = `orb ${h.orb.toFixed(1)}\u00B0, ${strengthWord(h.orb)} \u2014 `;
+  }
+  return `${orbTxt}${pick.land} ${NATAL_TAIL[h.natal]} ${pick.move}`;
+}
+
+function horoReadingFor(ms, off, prevState) {
   const sky = allPositions(ms);
   const [pe, pn] = moonPhaseName(ms);
   const moonSign = SIGNS[Math.floor(sky.Moon.lon / 30) % 12];
-  const elemLine = HORO_ELEM_LINE[HORO_ELEM[moonSign]];
-  const parts = [`${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign}, making it ${elemLine}.`];
+  const date = new Date(ms);
+  const dateKey = date.getDate() + date.getMonth();
+  const elem = HORO_ELEM[moonSign];
+  const elemLine = HORO_ELEM_LINE[elem][(dateKey + off) % HORO_ELEM_LINE[elem].length];
+  const open = (prevState && prevState.sign === moonSign)
+    ? `Moon holds in ${moonSign}: ${elemLine}.`
+    : `Moon slides through ${moonSign}: ${elemLine}.`;
+  const parts = [`${pe} <strong>${pn}</strong> \u00b7 ${open}`];
   const hits = findAspects(ms);
+  const shown = [];
   if (!hits.length) {
-    parts.push("No strong transits touch your chart today, so the day is mostly yours to steer.");
+    parts.push("No strong transits touch your chart, so the day is mostly yours to steer.");
   } else {
-    for (const h of hits.slice(0, 2)) {
+    let picked = hits.slice(0, 2);
+    if (off > 0 && prevState && prevState.shown) {
+      if (picked.every(h => prevState.shown.includes(hitKey(h))) && hits.length > 2) {
+        const extra = hits.slice(2).find(h => !prevState.shown.includes(hitKey(h)));
+        if (extra) picked = [picked[0], extra];
+      }
+    }
+    for (const h of picked) {
       const line = aspectLine(h);
-      parts.push(`<span class="horo-aspect ${h.cls}">${line.head}</span><br>${line.detail}`);
+      parts.push(`<span class="horo-aspect ${h.cls}">${line.head}</span><br>${transitDetail(h, off, prevState)}`);
+      shown.push(hitKey(h));
     }
-    if (hits.slice(0, 2).some(h => h.cls === "hard")) {
-      parts.push("Take the friction as information, not a stop sign.");
-    } else {
-      parts.push("Easy sky. Cash in on it.");
-    }
+    const closers = picked.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
+    parts.push(closers[(dateKey + off) % closers.length]);
   }
-  return parts.join(" ");
+  const state = { sign: moonSign, shown, orbs: {} };
+  hits.forEach(h => { state.orbs[hitKey(h)] = h.orb; });
+  return { html: parts.join(" "), state };
 }
 
 function localDayKey() {
@@ -293,13 +385,16 @@ function renderHoroscopes() {
     { off: 0, label: "Today", cls: " horo-today" },
     { off: 1, label: "Tomorrow", cls: "" }
   ];
+  let prevState = null;
   box.innerHTML = defs.map(({ off, label, cls }) => {
     const ms = noonLocalMs(off);
     const date = new Date(ms);
+    const read = horoReadingFor(ms, off, prevState);
+    prevState = read.state;
     return `
       <div class="horo-card${cls}">
         <div class="horo-head">${label} \u00b7 ${date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</div>
-        <div class="horo-body">${horoReadingFor(ms)}</div>
+        <div class="horo-body">${read.html}</div>
       </div>`;
   }).join("");
 }

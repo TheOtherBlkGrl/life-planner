@@ -1020,3 +1020,6 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .brief-body .brief-p{font-size:.85rem;line-height:1.55;margin:0 0 .4rem;white-space:pre-wrap}
 .brief-stamp{margin-top:1rem;font-size:.72rem;opacity:.55;text-align:right}
 @media (max-width:640px){.today-duo{grid-template-columns:1fr}}
+
+/* astro glyphs: dedicated symbol font so planets/aspects never render as boxes */
+.aglyph{font-family:"Noto Sans Symbols 2","Segoe UI Symbol","Apple Symbols","Noto Sans",sans-serif;font-size:1.05em}
