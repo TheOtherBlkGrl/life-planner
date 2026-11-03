@@ -403,6 +403,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSelfcare();
 
   wireSimpleList("gardenForm", "gardenInput", "gardenList", "ccc_garden");
+  wireSimpleList("marriageForm", "marriageInput", "marriageList", "ccc_marriage");
+  wireSimpleList("workForm", "workInput", "workList", "ccc_work");
   wireSimpleList("socialForm", "socialInput", "socialList", "ccc_social");
   wireSimpleList("jobsForm", "jobsInput", "jobsList", "ccc_jobs");
 
@@ -529,6 +531,30 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- 13. BLOCK SCHEDULING ---
 let blocks = JSON.parse(localStorage.getItem("ccc_blocks")) || [];
 const CAT_COLORS = { focus: "#9d4edd", admin: "#f4b860", body: "#52b788", joy: "#e5989b" };
+
+// calendar-event categories (tag any Google event from its detail popup)
+const EV_CAT_META = {
+  selfcare: { label: "Self Care", emoji: "\u{1F6C1}", color: "#4cc9f0" },
+  garden:   { label: "Garden",    emoji: "\u{1F331}", color: "#74c69d" },
+  social:   { label: "Social",    emoji: "\u{1F46F}", color: "#ff8fa3" },
+  marriage: { label: "Marriage",  emoji: "\u{1F48D}", color: "#c9184a" },
+  work:     { label: "Work",      emoji: "\u{1F9F0}", color: "#e07a5f" },
+  focus:    { label: "Focus",     emoji: "\u{1F3AF}", color: "#9d4edd" },
+  admin:    { label: "Admin",     emoji: "\u{1F4C2}", color: "#f4b860" },
+  body:     { label: "Body",      emoji: "\u{1F4AA}", color: "#52b788" },
+  joy:      { label: "Joy",       emoji: "\u2728",    color: "#e5989b" }
+};
+let evCats = JSON.parse(localStorage.getItem("ccc_ev_cats")) || {};
+const evCatKey = (calId, id) => `${calId}|${id}`;
+function evCat(ev) { return evCats[evCatKey(ev.calId, ev.id)] || ""; }
+function setEvCat(calId, id, cat) {
+  if (cat) evCats[evCatKey(calId, id)] = cat; else delete evCats[evCatKey(calId, id)];
+  localStorage.setItem("ccc_ev_cats", JSON.stringify(evCats));
+  renderHourly();
+  renderWeek();
+  if (typeof renderMonth === "function") renderMonth();
+  if (typeof renderCalEventPanels === "function") renderCalEventPanels();
+}
 const CAT_LABELS = { focus: "🔮 Deep Focus", admin: "💸 Admin", body: "🌿 Body & Care", joy: "🎉 Joy" };
 const DAY_START_MIN = 5 * 60;      // 5:00 AM
 const DAY_SPAN_MIN = 19 * 60;      // through midnight
@@ -887,10 +913,12 @@ function renderHourly() {
     const s = sd.getHours() * 60 + sd.getMinutes();
     let eM = ed.getHours() * 60 + ed.getMinutes();
     if (eM <= s) eM = DAY_END;
+    const cat = evCat(ev);
+    const catCol = cat ? EV_CAT_META[cat].color : "";
     items.push({
       s, e: Math.max(s + 15, Math.min(eM, DAY_END)),
-      label: "\u{1F4C5} " + ev.title, sub: gcalRange(ev),
-      cls: "g-gcal gcal-detail", style: "",
+      label: `${cat ? EV_CAT_META[cat].emoji : "\u{1F4C5}"} ${ev.title}`, sub: gcalRange(ev),
+      cls: "g-gcal gcal-detail", style: cat ? `background:${catCol}22;border-color:${catCol}` : "",
       calId: ev.calId, eid: ev.id, ev
     });
   });
@@ -1073,22 +1101,49 @@ function ensureEventModal() {
   document.addEventListener("keydown", e => { if (e.key === "Escape") ov.classList.add("hidden"); });
 }
 
+function renderCalEventPanels() {
+  ["selfcare", "garden", "social", "marriage", "work"].forEach(cat => {
+    const box = document.getElementById(`calEvents-${cat}`);
+    if (!box) return;
+    const meta = EV_CAT_META[cat];
+    const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const today = localDateStr();
+    const list = (typeof GCAL !== "undefined" ? GCAL.events : [])
+      .filter(ev => evCat(ev) === cat && ev.start.slice(0, 10) >= today)
+      .sort((a, b) => new Date(a.start) - new Date(b.start))
+      .slice(0, 8);
+    box.innerHTML = list.length ? list.map(ev => {
+      const when = ev.allDay
+        ? new Date(ev.start).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
+        : `${new Date(ev.start).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })} \u00b7 ${gcalRange(ev)}`;
+      return `<span class="hour-chip gcal-detail" data-cal="${esc(ev.calId)}" data-eid="${esc(ev.id)}" data-cached="${encodeURIComponent(JSON.stringify(ev))}" title="Show details">${meta.emoji} ${esc(ev.title)}<small>${esc(when)}</small></span>`;
+    }).join("") : `<span class="helper-text">Nothing tagged ${meta.label.toLowerCase()} yet. Open any \u{1F4C5} event and give it this category.</span>`;
+  });
+}
+window.addEventListener("load", renderCalEventPanels);
+
 async function showEventDetail(calId, eventId, cached) {
   ensureEventModal();
   const body = document.getElementById("evDetailBody");
   document.getElementById("evDetailOverlay").classList.remove("hidden");
   const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const row = (k, v) => v ? `<div class="ev-row"><span class="ev-k">${k}</span><span>${v}</span></div>` : "";
+  const catOptions = sel => `<option value="">\u2014 none \u2014</option>` +
+    Object.entries(EV_CAT_META).map(([k, m]) => `<option value="${k}" ${k === sel ? "selected" : ""}>${m.emoji} ${m.label}</option>`).join("");
   const paint = ev => {
     const who = (ev.attendees || []).map(a => esc(a.email)).join(", ");
+    const sel = evCat({ calId, id: ev.id || eventId });
     body.innerHTML = `
       <h3 class="ev-title">${esc(ev.summary || ev.title || "(no title)")}</h3>
       ${row("Calendar", esc(ev._calName))}
       ${row("When", gcalDetailRange(ev))}
       ${row("Where", esc(ev.location))}
       ${row("Who", who)}
+      <div class="ev-row"><span class="ev-k">Category</span><select id="evCatSelect" class="ev-cat-select">${catOptions(sel)}</select></div>
       ${ev.description ? `<div class="ev-desc">${esc(ev.description).replace(/\n/g, "<br>")}</div>` : ""}
       ${ev.htmlLink ? `<a class="ev-link" href="${ev.htmlLink}" target="_blank" rel="noopener">Open in Google Calendar \u2197</a>` : ""}`;
+    const sel_el = body.querySelector("#evCatSelect");
+    if (sel_el) sel_el.addEventListener("change", e2 => setEvCat(calId, ev.id || eventId, e2.target.value));
   };
   const note = html => body.insertAdjacentHTML("beforeend", `<div class="ev-note">${html}</div>`);
   const reconBtn = `<button class="ev-reconnect" data-reconnect>Connect calendar</button>`;

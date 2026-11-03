@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261102k" />
+  <link rel="stylesheet" href="style.css?v=20261102l" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -40,6 +40,7 @@
     <button class="tab-btn" data-tab="selfcare">🛁 Self Care</button>
     <button class="tab-btn" data-tab="garden">🌱 Garden</button>
     <button class="tab-btn" data-tab="social">👯 Social</button>
+    <button class="tab-btn" data-tab="work">🧰 Work</button>
     <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
     <button class="tab-btn" data-tab="blocks">🧱 Blocks</button>
     <button class="tab-btn" data-tab="journal">📓 Journal</button>
@@ -285,6 +286,13 @@
           <button type="submit" class="add-btn">➕</button>
         </form>
       </div>
+          <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as selfcare show up here.</p>
+        <div id="calEvents-selfcare" class="cal-events-list"></div>
+      </div>
     </section>
 
     <section class="tab-panel" id="panel-garden">
@@ -299,6 +307,13 @@
         </form>
         <div id="gardenList" class="line-list"></div>
       </div>
+          <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as garden show up here.</p>
+        <div id="calEvents-garden" class="cal-events-list"></div>
+      </div>
     </section>
 
     <section class="tab-panel" id="panel-social">
@@ -312,6 +327,47 @@
           <button type="submit" class="add-btn">➕</button>
         </form>
         <div id="socialList" class="line-list"></div>
+      </div>
+                <div class="card">
+        <div class="card-header">
+          <h2>💍 Marriage</h2>
+        </div>
+        <p class="helper-text">Date nights, little things, us stuff.</p>
+        <div id="marriageList" class="line-list"></div>
+        <form id="marriageForm" class="row-form solo-form">
+          <input type="text" id="marriageInput" placeholder="Add something for the two of you..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+        <p class="helper-text" style="margin-top: 0.8rem;">Calendar events you tag as 💍 Marriage show up below.</p>
+        <div id="calEvents-marriage" class="cal-events-list"></div>
+      </div>
+    <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as social show up here.</p>
+        <div id="calEvents-social" class="cal-events-list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-work">
+      <div class="card">
+        <div class="card-header">
+          <h2>🧰 Work</h2>
+        </div>
+        <p class="helper-text">Anything work-related that isn't the job hunt.</p>
+        <div id="workList" class="line-list"></div>
+        <form id="workForm" class="row-form solo-form">
+          <input type="text" id="workInput" placeholder="Add a work item..." required />
+          <button type="submit" class="add-btn">➕</button>
+        </form>
+      </div>
+      <div class="card cal-events-card">
+        <div class="card-header">
+          <h2>📅 From your calendar</h2>
+        </div>
+        <p class="helper-text">Calendar events you tag as work show up here.</p>
+        <div id="calEvents-work" class="cal-events-list"></div>
       </div>
     </section>
 
@@ -434,11 +490,11 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261102k"></script>
-  <script src="astro.js?v=20261102k"></script>
+  <script src="app.js?v=20261102l"></script>
+  <script src="astro.js?v=20261102l"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261102k"></script>
-  <script src="google-sync.js?v=20261102k"></script>
-  <script src="month.js?v=20261102k"></script>
+  <script src="sync-config.js?v=20261102l"></script>
+  <script src="google-sync.js?v=20261102l"></script>
+  <script src="month.js?v=20261102l"></script>
 </body>
 </html>

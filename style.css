@@ -892,3 +892,12 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
   cursor: pointer; margin: 0 0.15rem;
 }
 .ev-reconnect:hover { background: rgba(255, 213, 79, 0.3); }
+/* ---- calendar-event categories ---- */
+.cal-events-list { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.cal-events-list .hour-chip { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
+.cal-events-list .hour-chip small { font-size: 0.64rem; opacity: 0.75; }
+.ev-cat-select {
+  background: rgba(159, 123, 255, 0.15); color: #efe9ff; border: 1px solid rgba(159, 123, 255, 0.4);
+  border-radius: 0.5rem; padding: 0.2rem 0.45rem; font-size: 0.8rem; cursor: pointer;
+}
+.ev-cat-select option { background: #241542; color: #efe9ff; }

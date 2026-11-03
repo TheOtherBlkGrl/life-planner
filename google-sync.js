@@ -136,6 +136,7 @@ async function fetchAllCalendars() {
     refreshSyncStatus();
     renderHourly();
     renderWeek();
+    if (typeof renderCalEventPanels === "function") renderCalEventPanels();
     if (typeof renderBlocks === "function") renderBlocks();
   } catch (e) {
     if (e.message !== "unauthorized") setSyncStatus("sync failed, try Force Sync");
