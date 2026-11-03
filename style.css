@@ -1049,3 +1049,18 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .brief-body .brief-ul li{position:relative;padding-left:1.15rem;font-size:.87rem;line-height:1.6}
 .brief-body .brief-ul li::before{content:"\2726";position:absolute;left:0;top:.05em;color:#f4b860;font-size:.72em}
 .brief-body .brief-p{font-size:.87rem;line-height:1.6;margin:0 0 .4rem;white-space:pre-wrap}
+
+/* --- Today tab: featured deep-dive natal reading (real transits) --- */
+.today-horo-featured{border-top:3px solid var(--cosmic-purple,#9d4edd)}
+.horo-body{font-size:.88rem;line-height:1.65;display:flex;flex-direction:column;gap:.85rem;margin-top:.85rem}
+.horo-section{background:rgba(0,0,0,.22);border:1px solid var(--border-subtle);border-left:3px solid var(--cosmic-purple,#9d4edd);border-radius:2px;padding:.75rem .9rem}
+.horo-section p{margin:0 0 .5rem}
+.horo-section p:last-child{margin-bottom:0}
+.horo-section-title{font-family:'Space Grotesk',sans-serif;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--leo-gold,#f4b860);margin-bottom:.4rem;display:block}
+.horo-section.leo-sec{border-left-color:var(--leo-gold,#f4b860)}
+.horo-section.libra-sec{border-left-color:var(--libra-rose,#e5989b)}
+.horo-section.taurus-sec{border-left-color:var(--taurus-emerald,#52b788)}
+.horo-power-box{background:rgba(244,184,96,.10);border:1px solid rgba(244,184,96,.5);border-left:3px solid var(--leo-gold,#f4b860);border-radius:2px;padding:.7rem .9rem;font-size:.85rem;line-height:1.55;margin-top:.4rem}
+.horo-power-label{font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--leo-gold,#f4b860);display:block}
+.horo-power-move{font-size:1.02rem;font-weight:700;margin:.25rem 0 .35rem}
+.horo-power-meta{font-size:.78rem;color:var(--text-muted,#b8a9d9);border-top:1px solid var(--border-subtle);padding-top:.4rem}

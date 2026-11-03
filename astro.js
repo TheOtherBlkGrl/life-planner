@@ -399,11 +399,60 @@ function renderHoroscopes() {
   }).join("");
 }
 
+// --- TODAY'S DEEP-DIVE NATAL READING (Today tab; every line from live transits) ---
+function deepDiveHtml() {
+  const ms = noonLocalMs(0);
+  const sky = allPositions(ms);
+  const [pe, pn] = moonPhaseName(ms);
+  const moonSign = SIGNS[Math.floor(sky.Moon.lon / 30) % 12];
+  const hits = findAspects(ms);
+  const groups = { Sun: [], Moon: [], Asc: [] };
+  hits.forEach(h => { if (groups[h.natal]) groups[h.natal].push(h); });
+  const dateKey = new Date(ms).getDate() + new Date(ms).getMonth();
+  const elemLine = HORO_ELEM_LINE[HORO_ELEM[moonSign]][dateKey % HORO_ELEM_LINE[HORO_ELEM[moonSign]].length];
+  const closers = hits.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
+  const closer = closers[dateKey % closers.length];
+  const top = hits[0];
+  const powerMove = top
+    ? (TRANSIT_READ[top.planet] || TRANSIT_READ.Sun)[top.cls][0].move
+    : "A quiet sky: the day is yours to steer. Pick the thing that matters most and give it a clean hour.";
+  const summary = `
+    <span class="horo-power-label">\u{1F3AF} Today's Power Move</span>
+    <div class="horo-power-move">${powerMove}</div>
+    <div class="horo-power-meta">${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign} \u00b7 ${hits.length ? hits.length + " live transit" + (hits.length === 1 ? "" : "s") + " on your chart, tightest orb " + hits[0].orb.toFixed(1) + "\u00B0" : "no transits within orb right now"}</div>`;
+  const sec = (cls, title, arr, fallback) => `
+    <div class="horo-section ${cls}">
+      <span class="horo-section-title">${title}</span>
+      ${arr.length ? arr.map(h => `<p><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span><br>${transitDetail(h, 0, null)}</p>`).join("") : `<p>${fallback}</p>`}
+    </div>`;
+  const body = `
+    <div class="horo-section"><span class="horo-section-title">\u{1F30C} The Sky Today</span>
+      <p>${pe} <strong>${pn}</strong>, Moon in ${signStr(sky.Moon.lon)}: ${elemLine} ${hits.length ? hits.length + " transit" + (hits.length === 1 ? "" : "s") + " sit within orb of your natal chart, checked against your natal " + signStr(NATAL.Sun) + " Sun, " + signStr(NATAL.Moon) + " Moon and " + signStr(NATAL.Asc) + " Rising." : "No planet is within orb of your chart today: the day is mostly yours to steer."}</p>
+    </div>
+    ${sec("leo-sec", "\u2600\uFE0F Leo Sun \u00b7 confidence & being seen", groups.Sun, "Nothing is aspecting your Leo Sun today: it runs on its own light. Use the quiet to set the tone rather than react to one.")}
+    ${sec("libra-sec", "\u2696\uFE0F Libra Moon \u00b7 mood & comfort", groups.Moon, "No transit touches your Libra Moon today. " + MOON_SIGN_ADVICE[moonSign])}
+    ${sec("taurus-sec", "\uD83D\uDC02 Taurus Rising \u00b7 body & pace", groups.Asc, "Nothing hits your Taurus Rising today: your body and pace set their own tempo. Feed it well and it carries the day.")}
+    <div class="horo-power-box">${closer}</div>`;
+  return { summary, body };
+}
+function renderTodayDeepDive() {
+  const sum = document.getElementById("todayHoroSummary");
+  const body = document.getElementById("todayHoroBody");
+  if (!sum || !body) return;
+  const d = deepDiveHtml();
+  sum.innerHTML = d.summary;
+  body.innerHTML = d.body;
+}
+function toggleTodayDeepDive(btn) {
+  const isHidden = document.getElementById("todayHoroBody").classList.toggle("hidden");
+  btn.textContent = isHidden ? "\u25B6 Expand full reading" : "\u25BC Collapse full reading";
+}
 document.addEventListener("DOMContentLoaded", () => {
   renderAstro();
   renderHoroscopes();
+  renderTodayDeepDive();
   setInterval(() => {
-    if (localDayKey() !== window._horoDayKey) { renderAstro(); renderHoroscopes(); }
+    if (localDayKey() !== window._horoDayKey) { renderAstro(); renderHoroscopes(); renderTodayDeepDive(); }
   }, 60 * 1000);
   setInterval(renderAstro, 10 * 60 * 1000);
 });

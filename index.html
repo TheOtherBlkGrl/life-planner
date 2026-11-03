@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261103ah" />
+  <link rel="stylesheet" href="style.css?v=20261103ai" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -65,6 +65,21 @@
           <p id="briefMeta" class="brief-meta">Loading…</p>
           <button id="openBriefBtn" class="mini-btn brief-open">Read the brief</button>
         </div>
+      </div>
+
+      <div class="card today-horo-featured">
+        <div class="card-header">
+          <div>
+            <h2>🔮 Today's Deep-Dive Natal Reading</h2>
+            <p class="helper-text" style="margin:0.2rem 0 0;">Computed live from your natal Leo Sun, Taurus Rising and Libra Moon against today's actual sky. No filler.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button type="button" class="mini-btn" onclick="toggleTodayDeepDive(this)">▶ Expand full reading</button>
+            <button type="button" class="mini-btn" onclick="if (typeof switchTab === 'function') switchTab('astro')">Full 3-day sky →</button>
+          </div>
+        </div>
+        <div id="todayHoroSummary" class="horo-power-box"></div>
+        <div id="todayHoroBody" class="horo-body hidden"></div>
       </div>
 
       <div class="card schedule-card">
@@ -605,12 +620,12 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261103ah"></script>
-  <script src="astro.js?v=20261103ah"></script>
+  <script src="app.js?v=20261103ai"></script>
+  <script src="astro.js?v=20261103ai"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261103ah"></script>
-  <script src="google-sync.js?v=20261103ah"></script>
-  <script src="month.js?v=20261103ah"></script>
+  <script src="sync-config.js?v=20261103ai"></script>
+  <script src="google-sync.js?v=20261103ai"></script>
+  <script src="month.js?v=20261103ai"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
       <button class="ev-close" id="briefCloseBtn">✕</button>
