@@ -1,8 +1,47 @@
 {
   "updated": "2026-11-03T05:05:00Z",
-  "updatedLocal": "Nov 2, 9:05 PM PT",
+  "updatedLocal": "Nov 2, 2026, 9:20 PM PT",
   "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
   "leads": [
+    {
+      "id": "20261102-sierra-ea-office-of-co-founders",
+      "title": "Executive Assistant, Office of the Co-Founders",
+      "company": "Sierra",
+      "location": "San Francisco, CA",
+      "pay": "$130K-$140K + equity (posted)",
+      "lane": "EA",
+      "fit": "EA to two co-founders at a top AI startup; hourly role with overtime eligibility, so likely strong comp for hours worked",
+      "url": "https://jobs.ashbyhq.com/sierra/e963514d-8b85-4747-9620-cf9a66ce9b4c",
+      "source": "Ashby",
+      "posted": "recent",
+      "addedAt": "2026-11-02T21:20:00-08:00"
+    },
+    {
+      "id": "20261102-sierra-ea-legal-partnerships",
+      "title": "Executive Assistant, Legal & Partnerships",
+      "company": "Sierra",
+      "location": "San Francisco, CA",
+      "pay": "$130K-$170K + equity (posted)",
+      "lane": "EA",
+      "fit": "EA lane, contracts and partner-facing support; wide band, posted range clears the $90K floor comfortably",
+      "url": "https://jobs.ashbyhq.com/sierra/2329f770-dd47-494f-80c8-0c8a11877bea",
+      "source": "Ashby",
+      "posted": "recent",
+      "addedAt": "2026-11-02T21:20:00-08:00"
+    },
+    {
+      "id": "20261102-waymo-fleet-health-specialist",
+      "title": "Fleet Health Specialist",
+      "company": "Waymo",
+      "location": "San Francisco, CA",
+      "pay": "$62-$76/hr (posted)",
+      "lane": "logistics",
+      "fit": "Fleet monitoring and maintenance ops for the robotaxi fleet; closest match to her fleet/dispatch background, watch for a technical background ask in the full posting",
+      "url": "https://careers.withwaymo.com/jobs?gh_jid=8250120",
+      "source": "Greenhouse",
+      "posted": "recent",
+      "addedAt": "2026-11-02T21:20:00-08:00"
+    },
     {
       "id": "20261102-waymo-network-operations-manager",
       "title": "Network Operations Manager",
