@@ -1,8 +1,25 @@
 {
   "updated": "2026-11-03T23:20:00Z",
-  "updatedLocal": "Nov 3, 2026, 3:20 PM PT",
+  "updatedLocal": "Nov 4, 2026, 5:40 AM PT",
   "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
   "leads": [
+    {
+      "id": "20261104-waymo-product-ops-manager-ops-compliance",
+      "date": "2026-11-04",
+      "company": "Waymo",
+      "title": "Product Operations Manager, Ops Compliance & Regulatory Infrastructure",
+      "location": "Mountain View, CA or San Francisco, CA",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Ops governance + regulatory infrastructure for AV fleet ops; direct match for SOP/compliance-heavy dispatch background",
+      "url": "https://careers.withwaymo.com/jobs?gh_jid=8315881",
+      "source": "greenhouse waymo",
+      "posted": "2026-11-04",
+      "addedAt": "2026-11-04T05:40:00-08:00",
+      "summary": "Owns operational compliance and regulatory infrastructure for Waymo's fleet operations program, coordinating cross-functional ops teams and building the processes that keep driverless operations audit-ready.",
+      "salary": "Not posted",
+      "loc": "Mountain View, CA or San Francisco, CA"
+    },
     {
       "id": "20261103-goodfire-ea-coo",
       "title": "Executive Assistant",
@@ -127,7 +144,10 @@
         "summary": "Manages Samsara's Operations Program Manager (OPM) team through new product introduction, orchestrating cross-functional launches from development through mass production and sustained volume; drives decisions on cost, quality and time to market. Remote US with up to 20% travel.",
         "salary": "$125,545-$211,000",
         "loc": "Remote - US"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Remote - US",
+      "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing \u2014 and we are excited to help digitally transfo"
     },
     {
       "id": "20261103-waymo-market-operations-lead-sf",
@@ -145,7 +165,10 @@
         "summary": "Owns the end-to-end performance of Waymo's San Francisco Bay Area ride-hail commercial operations: the ground-side leader who balances on-the-road service reliability with the rider experience, coordinating cross-functional teams for safe, reliable autonomous rides. Hybrid, reporting to the Head of Market Operations - West.",
         "salary": "$190,000-$234,000",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, CA USA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261103-waymo-sr-supply-demand-manager",
@@ -163,7 +186,10 @@
         "summary": "Owns Waymo's global supply and demand balance for autonomous vehicles and sensor suites: aligning commercial rollout targets, fleet maintenance and manufacturing/logistics capacity across markets. Hybrid Mountain View; reports to the Head of Vehicle Supply Planning & Materials Ops.",
         "salary": "Not posted",
         "loc": "Mountain View, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Mountain View, CA, USA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261103-waymo-sr-tpm-fleet",
@@ -181,7 +207,10 @@
         "summary": "Leads cross-functional fleet management programs across product, ops, systems engineering and design, owning end-to-end execution of Waymo's fleet roadmap where no playbook exists yet. Hybrid, Mountain View or San Francisco.",
         "salary": "Not posted",
         "loc": "Mountain View / San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Mountain View, CA, USA; San Francisco, CA, USA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261103-waymo-training-delivery-manager",
@@ -199,7 +228,10 @@
         "summary": "Designs the train-the-trainer curriculum for fleet maintenance technicians and workshop management, building the program with Waymo's training team. Hybrid San Francisco or Tempe, AZ.",
         "salary": "Not posted",
         "loc": "San Francisco, CA / Tempe, AZ"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, CA, USA; Tempe, AZ, USA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261103-lyft-global-supply-manager",
@@ -217,7 +249,10 @@
         "summary": "Indirect procurement at Lyft: sourcing strategy, supplier relationships and complex contract negotiation for safety, people and contingent-workforce spend, with heavy Excel cost modeling. San Francisco.",
         "salary": "Not posted",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "New York, NY",
+      "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Lyft is seeking an experienced<strong> Indirect Global Supply Manager</strong> to join our Global Su"
     },
     {
       "id": "20261103-kodiak-director-supply-chain",
@@ -253,7 +288,10 @@
         "summary": "Leads a team of technical analysts optimizing Uber Freight's freight networks: advanced modeling, KPIs and automation across commercial strategy and operations. Hybrid San Francisco.",
         "salary": "Not posted",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Chicago, IL 60607, United States",
+      "summary": "<div class=\"ewa-rteLine\"><strong>Schedule: Full Time</strong></div> <div class=\"ewa-rteLine\"><strong>Job Type: Hybrid</strong></div> <div class=\"ewa-rteLine\"><strong>Salary Type: Salary</strong></div> <div class=\"ewa-rteLine\"><str"
     },
     {
       "id": "20261102-sierra-ea-office-of-co-founders",
@@ -307,7 +345,10 @@
         "summary": "Tracks fleet health and availability metrics, drives root-cause fixes with engineering and suppliers, and travels to regions for fleet inspections. Asking 3+ years in automotive service or fleet management with a related degree. San Francisco.",
         "salary": "$62-$76/hr (about $129K-$158K annualized)",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, CA, US",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261102-waymo-network-operations-manager",
@@ -325,7 +366,10 @@
         "summary": "Manages Waymo's IT network operations team under the WINS infrastructure group: major-incident ownership, ITIL governance and vendor-run deployments of firewalls, switches and UPS. Mountain View. IT infrastructure, not logistics.",
         "salary": "Not posted",
         "loc": "Mountain View, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Mountain View CA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261102-waymo-av-compliance-lead",
@@ -343,7 +387,10 @@
         "summary": "Builds Waymo's vehicle and operator compliance program for global scaling: regulator relationships, permitting and registration, vendor management and executive KPI dashboards. Expects 12-15 years of program management and teams of 10+. Hybrid Mountain View.",
         "salary": "Not posted",
         "loc": "Mountain View, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Mountain View, CA, USA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261102-waymo-head-of-logistics",
@@ -361,7 +408,10 @@
         "summary": "Stands up Waymo's entire logistics organization: global transport networks moving AVs and components, team building from scratch, cost reduction, reverse logistics and trade compliance. Expects 10+ years of logistics leadership. Mountain View.",
         "salary": "Not posted",
         "loc": "Mountain View, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Mountain View, CA, USA",
+      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
     },
     {
       "id": "20261102-lyft-procurement-coe-manager",
@@ -379,7 +429,10 @@
         "summary": "Runs Lyft's procurement center of excellence: supplier relationship programs, sourcing workflows rebuilt with AI and automation, and cross-functional cost work. 3-5+ years procurement with Oracle or Zip experience. San Francisco.",
         "salary": "$98,000-$122,500",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, CA",
+      "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Lyft is seeking an experienced Procurement Center of Excellence Manager to join our Global Supply Ch"
     },
     {
       "id": "20261102-flexport-bizops-office-of-ceo",
@@ -397,7 +450,10 @@
         "summary": "BizOps in the Office of the CEO: owns Flexport's biggest open questions end to end, builds the financial models, and runs the operating cadence for a freight mode or region. 4-6 years in banking, consulting or high-growth ops. San Francisco.",
         "salary": "Not posted",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, California, United States",
+      "summary": "That\u2019s why it\u2019s our mission to make global commerce so easy there will be more of it."
     },
     {
       "id": "20261102-flexport-head-data-center-logistics",
@@ -415,7 +471,10 @@
         "summary": "Owns the commercial motion for Flexport's data center logistics practice, moving AI compute racks ($1M+, 4,000 lb, lithium battery dangerous goods) with white-glove project management. A sales-leadership profile, not an ops one.",
         "salary": "OTE $500K+ (50/50 base + uncapped bonus)",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, California, United States",
+      "summary": "That\u2019s why it\u2019s our mission to make global commerce so easy there will be more of it."
     },
     {
       "id": "20261102-instacart-chief-of-staff-grocery",
@@ -433,7 +492,10 @@
         "summary": "Chief of staff to the GM of a ~200-person online grocery org: runs the operating rhythm, sharpens decision frameworks and handles communications. Individual contributor, no direct reports. US remote.",
         "salary": "Not posted",
         "loc": "US - Remote"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Canada - Remote (ON, AB, BC, or NS Only)",
+      "summary": "Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community."
     },
     {
       "id": "20261102-nuro-chief-of-staff-driver",
@@ -451,7 +513,10 @@
         "summary": "Chief of staff to the VP of the Nuro Driver autonomy platform: strategic program leadership, cross-org unblocking across engineering and safety, and partner execution. Mountain View.",
         "salary": "Not posted",
         "loc": "Mountain View, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "Mountain View, California (HQ)",
+      "summary": "<p><strong>Who We Are&nbsp;</strong></p> <p>Nuro believes self-driving vehicles are the most immediate and profound opportunity for AI to drive positive change in the physical world."
     },
     {
       "id": "20261102-figma-ea-growth-marketing",
@@ -469,7 +534,10 @@
         "summary": "EA to the VP of Growth Marketing: heavy calendar and inbox management, travel, expense and PO approvals, and offsite planning with the CMO's EA. 7+ years EA experience; SF office 2 days a week.",
         "salary": "Not posted",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, CA",
+      "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
     },
     {
       "id": "20261102-figma-ea-people",
@@ -487,7 +555,10 @@
         "summary": "EA to People-team VPs: calendars, tasks, expense and PO sign-off, and process optimization across the People org. 6+ years senior admin support; SF office 2 days a week.",
         "salary": "Not posted",
         "loc": "San Francisco, CA"
-      }
+      },
+      "salary": "Not posted",
+      "loc": "San Francisco, CA",
+      "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
     },
     {
       "id": "20261102-pinterest-chief-of-staff-gm-ads",
