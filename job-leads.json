@@ -1,8 +1,44 @@
 {
-  "updated": "2026-11-04T15:15:00-08:00",
-  "updatedLocal": "Nov 4, 2026, 3:15 PM PT",
+  "updated": "2026-11-04T15:20:00-08:00",
+  "updatedLocal": "Nov 4, 2026, 3:20 PM PT",
   "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
   "leads": [
+    {
+      "id": "20261104-stripe-strategy-operations-risk",
+      "title": "Strategy & Operations, Risk",
+      "company": "Stripe",
+      "location": "US-SF, US-SEA",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Risk-org strategy & ops role (SF/Seattle); bizops-adjacent, pay not posted",
+      "url": "https://stripe.com/jobs/search?gh_jid=8199596",
+      "source": "greenhouse:stripe",
+      "posted": "2026-09-14",
+      "addedAt": "2026-11-04T15:20:00-08:00",
+      "details": {
+        "summary": "Risk is central to Stripe’s ability to grow safely: the team protects Stripe and our users while enabling durable, responsible growth. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
+        "salary": "Not posted",
+        "loc": "US-SF, US-SEA"
+      }
+    },
+    {
+      "id": "20261104-olema-executive-assistant-supporting-chief-financial-officer",
+      "title": "Executive Assistant, supporting Chief Financial Officer",
+      "company": "Olema Oncology",
+      "location": "San Francisco, California",
+      "pay": "$120,000 - $150,000",
+      "lane": "ea",
+      "fit": "EA to the CFO at Olema Oncology, SF; $120-150k posted",
+      "url": "https://job-boards.greenhouse.io/olema/jobs/6147547004",
+      "source": "greenhouse:olema",
+      "posted": "2026-08-24",
+      "addedAt": "2026-11-04T15:20:00-08:00",
+      "details": {
+        "summary": "You will manage communications and coordinate activities with internal and key external parties, including investors and board members. Olema Oncology is a clinical-stage biopharmaceutical company committed to transforming the standard of care and improving outcomes for patients living with breast cancer and beyond.",
+        "salary": "$120,000 - $150,000",
+        "loc": "San Francisco, California"
+      }
+    },
     {
       "id": "20261104-waymo-lead-program-manager-new-platform-validation-operations",
       "title": "Lead Program Manager - New Platform Validation Operations",
