@@ -1,8 +1,152 @@
 {
-  "updated": "2026-11-03T23:20:00Z",
-  "updatedLocal": "Nov 4, 2026, 5:40 AM PT",
+  "updated": "2026-11-04T15:15:00-08:00",
+  "updatedLocal": "Nov 4, 2026, 3:15 PM PT",
   "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
   "leads": [
+    {
+      "id": "20261104-waymo-lead-program-manager-new-platform-validation-operations",
+      "title": "Lead Program Manager - New Platform Validation Operations",
+      "company": "Waymo",
+      "location": "Mountain View, California, USA; San Francisco, California, USA;",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Leads program ops for validating Waymo's new hardware platform; ops program management across SF/MV",
+      "url": "https://careers.withwaymo.com/jobs?gh_jid=8047527",
+      "source": "greenhouse:waymo",
+      "posted": "2026-07-09",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "In this hybrid role, you will report to a Head of Validation Operations You will: Lead NPI Platform Program Execution: Drive end-to-end program structuring for onboarding new platform variants into validation fleets, managing the critical path from arrival and upfit to testing and fleet deployment. Waymo is an autonomous driving technolog",
+        "salary": "Not posted",
+        "loc": "Mountain View, California, USA; San Francisco, California, USA;"
+      }
+    },
+    {
+      "id": "20261104-waymo-new-platform-enablement-manager-hw-ops-design-excellence",
+      "title": "New Platform Enablement Manager (HW/Ops Design Excellence)",
+      "company": "Waymo",
+      "location": "San Francisco, CA, US",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Owns ops design excellence + enablement for new platform hardware rollout in SF",
+      "url": "https://careers.withwaymo.com/jobs?gh_jid=8039334",
+      "source": "greenhouse:waymo",
+      "posted": "2026-09-21",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "You will: Bring up and enable deployment of new and upcoming Waymo platforms across program phases from prototype requirement state to deployment Work with engineering and cross functional stakeholders on fast feedback, issue discovery and resolution Manage and drive operations for new sensor suite and base vehicle to ensure maturity and ",
+        "salary": "Not posted",
+        "loc": "San Francisco, CA, US"
+      }
+    },
+    {
+      "id": "20261104-waymo-manager-resilience-risk",
+      "title": "Manager, Resilience Risk",
+      "company": "Waymo",
+      "location": "Mountain View, CA, USA; San Francisco, CA, USA",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Leads business-continuity/resilience risk program (MV/SF); risk ops leadership",
+      "url": "https://careers.withwaymo.com/jobs?gh_jid=8143380",
+      "source": "greenhouse:waymo",
+      "posted": "2026-08-20",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "In this hybrid role you will report into our Head of Enterprise Resilience. Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
+        "salary": "Not posted",
+        "loc": "Mountain View, CA, USA; San Francisco, CA, USA"
+      }
+    },
+    {
+      "id": "20261104-lyft-av-program-manager",
+      "title": "AV Program Manager",
+      "company": "Lyft",
+      "location": "San Francisco, CA",
+      "pay": "$108,000 - $135,000",
+      "lane": "logistics",
+      "fit": "Program manager for Lyft's autonomous vehicle operations rollout, SF",
+      "url": "https://app.careerpuck.com/job-board/lyft/job/8839156002?gh_jid=8839156002",
+      "source": "greenhouse:lyft",
+      "posted": "2026-09-25",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "You will maintain the program timeline, coordinate cross-functional workstreams spanning infrastructure, people, fleet operations, treasury, legal, and finance, and help ensure that requirements are tracked, dependencies are surfaced, and deployment milestones are met. Flexdrive, Lyft's wholly-owned fleet management subsidiary, is undergo",
+        "salary": "$108,000 - $135,000",
+        "loc": "San Francisco, CA"
+      }
+    },
+    {
+      "id": "20261104-samsara-sr-manager-procure-to-pay",
+      "title": "Sr. Manager, Procure to Pay",
+      "company": "Samsara",
+      "location": "Remote - US",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Leads procure-to-pay operations, fully remote US; procurement ops management",
+      "url": "https://www.samsara.com/company/careers/roles/8351204?gh_jid=8351204",
+      "source": "greenhouse:samsara",
+      "posted": "2026-11-03",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "You will set the governance model and service standards, partner with executive stakeholders, and build a team that delivers consistently. Who we are Samsara (NYSE: IOT) is the pioneer of the Connected Operations™ Cloud, which is a platform that enables organizations that depend on physical operations to harness Internet of Things (IoT) d",
+        "salary": "Not posted",
+        "loc": "Remote - US"
+      }
+    },
+    {
+      "id": "20261104-figma-senior-order-management-analyst",
+      "title": "Senior Order Management Analyst",
+      "company": "Figma",
+      "location": "San Francisco, CA • New York, NY • United States",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Order management/fulfillment ops analyst (SF/NY); pay not posted",
+      "url": "https://boards.greenhouse.io/figma/jobs/6217137004?gh_jid=6217137004",
+      "source": "greenhouse:figma",
+      "posted": "2026-10-14",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "As Figma grows, we're building the order-to-cash process for what comes next, and this role is a builder's seat: you'll take on our most complex orders while helping shape how orders get processed, reviewed, and automated as we scale. Figma is growing our team of passionate creatives and builders on a mission to make design accessible to ",
+        "salary": "Not posted",
+        "loc": "San Francisco, CA • New York, NY • United States"
+      }
+    },
+    {
+      "id": "20261104-stripe-procurement-contracts-manager",
+      "title": "Procurement Contracts Manager",
+      "company": "Stripe",
+      "location": "Seattle, San Francisco, New York, Chicago",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Manages procurement contracts for Stripe (SF/Seattle/NY/Chicago); pay not posted",
+      "url": "https://stripe.com/jobs/search?gh_jid=8329743",
+      "source": "greenhouse:stripe",
+      "posted": "2026-10-29",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "Who we are About Stripe Stripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
+        "salary": "Not posted",
+        "loc": "Seattle, San Francisco, New York, Chicago"
+      }
+    },
+    {
+      "id": "20261104-stripe-administrative-business-partner-coverage",
+      "title": "Administrative Business Partner, Coverage",
+      "company": "Stripe",
+      "location": "Remote - US",
+      "pay": "Not posted",
+      "lane": "ea",
+      "fit": "EA-style admin business partner, remote US; pay not posted",
+      "url": "https://stripe.com/jobs/search?gh_jid=8328118",
+      "source": "greenhouse:stripe",
+      "posted": "2026-10-30",
+      "addedAt": "2026-11-04T15:15:00-08:00",
+      "details": {
+        "summary": "You will be required to support multiple leaders on a temporary basis. Who we are About Stripe Stripe is a financial infrastructure platform for businesses.",
+        "salary": "Not posted",
+        "loc": "Remote - US"
+      }
+    },
     {
       "id": "20261104-waymo-product-ops-manager-ops-compliance",
       "date": "2026-11-04",
@@ -147,7 +291,7 @@
       },
       "salary": "Not posted",
       "loc": "Remote - US",
-      "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing \u2014 and we are excited to help digitally transfo"
+      "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
     },
     {
       "id": "20261103-waymo-market-operations-lead-sf",
@@ -453,7 +597,7 @@
       },
       "salary": "Not posted",
       "loc": "San Francisco, California, United States",
-      "summary": "That\u2019s why it\u2019s our mission to make global commerce so easy there will be more of it."
+      "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
     },
     {
       "id": "20261102-flexport-head-data-center-logistics",
@@ -474,7 +618,7 @@
       },
       "salary": "Not posted",
       "loc": "San Francisco, California, United States",
-      "summary": "That\u2019s why it\u2019s our mission to make global commerce so easy there will be more of it."
+      "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
     },
     {
       "id": "20261102-instacart-chief-of-staff-grocery",
