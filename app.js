@@ -2044,7 +2044,10 @@ try { rouletteDeck = JSON.parse(localStorage.getItem(ROULETTE_STORE)) || []; } c
 let rouletteSpinning = false;
 
 function roulettePool() {
-  return tasks.filter(t => ROULETTE_OPEN_COLS.includes(t.col) && t.text && t.text.trim());
+  const today = localDateStr();
+  return tasks.filter(t =>
+    ROULETTE_OPEN_COLS.includes(t.col) && t.text && t.text.trim() &&
+    (!t.due || t.due <= today)); // undated is fair game; today or overdue only, never early
 }
 function shuffleRoulette(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
