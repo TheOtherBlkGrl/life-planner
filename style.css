@@ -1084,3 +1084,11 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 /* layman-first astrology: tech details demoted, section summary emphasized */
 .astro-tech { display: block; font-size: 0.72rem; opacity: 0.62; margin-top: 2px; }
 .astro-summary { display: block; font-weight: 600; margin-bottom: 5px; }
+
+/* --- task roulette --- */
+.roulette-out {
+  margin-top: 0.4rem; font-size: 1.15rem; font-weight: 700; color: var(--leo-gold, #f4b860);
+  min-height: 1.6rem; line-height: 1.35;
+}
+.roulette-done { margin-top: 0.5rem; }
+.roulette-card .mini-btn:disabled { opacity: 0.55; cursor: wait; }

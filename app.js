@@ -2035,3 +2035,67 @@ async function loadSiteReport() {
   renderSiteReport();
 }
 window.addEventListener("load", loadSiteReport);
+
+// --- TASK ROULETTE (Today tab: spins your real open tasks, deck deals no repeats) ---
+const ROULETTE_OPEN_COLS = ["dump", "high", "low", ...TAB_TASK_COLS];
+const ROULETTE_STORE = "clarissa_roulette_deck";
+let rouletteDeck = [];
+try { rouletteDeck = JSON.parse(localStorage.getItem(ROULETTE_STORE)) || []; } catch (e) { rouletteDeck = []; }
+let rouletteSpinning = false;
+
+function roulettePool() {
+  return tasks.filter(t => ROULETTE_OPEN_COLS.includes(t.col) && t.text && t.text.trim());
+}
+function shuffleRoulette(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function nextRouletteTask() {
+  const pool = roulettePool();
+  const byId = new Map(pool.map(t => [t.id, t]));
+  rouletteDeck = rouletteDeck.filter(id => byId.has(id));
+  if (!rouletteDeck.length) rouletteDeck = shuffleRoulette(pool.map(t => t.id));
+  if (!rouletteDeck.length) return null;
+  const id = rouletteDeck.shift();
+  localStorage.setItem(ROULETTE_STORE, JSON.stringify(rouletteDeck));
+  return byId.get(id);
+}
+function spinRoulette() {
+  if (rouletteSpinning) return;
+  const out = document.getElementById("rouletteOut");
+  const btn = document.getElementById("rouletteBtn");
+  const pool = roulettePool();
+  if (!out) return;
+  if (!pool.length) { out.textContent = "Nothing open to spin \u2014 add a task first."; return; }
+  rouletteSpinning = true;
+  if (btn) btn.disabled = true;
+  const chosen = nextRouletteTask();
+  let ticks = 0;
+  const iv = setInterval(() => {
+    out.textContent = pool[Math.floor(Math.random() * pool.length)].text;
+    if (++ticks >= 8) {
+      clearInterval(iv);
+      rouletteSpinning = false;
+      if (btn) btn.disabled = false;
+      showRoulettePick(chosen);
+    }
+  }, 110);
+}
+function showRoulettePick(t) {
+  const out = document.getElementById("rouletteOut");
+  const doneBtn = document.getElementById("rouletteDoneBtn");
+  if (!out) return;
+  if (!t) { out.textContent = "Nothing open to spin \u2014 add a task first."; return; }
+  out.innerHTML = `\u{1F525} ${esc(t.text)}`;
+  if (doneBtn) { doneBtn.dataset.id = t.id; doneBtn.classList.remove("hidden"); }
+}
+function rouletteDone() {
+  const doneBtn = document.getElementById("rouletteDoneBtn");
+  const out = document.getElementById("rouletteOut");
+  if (doneBtn && doneBtn.dataset.id) moveTask(Number(doneBtn.dataset.id), "done");
+  if (doneBtn) doneBtn.classList.add("hidden");
+  if (out) out.textContent = "Waiting for a spin\u2026";
+}

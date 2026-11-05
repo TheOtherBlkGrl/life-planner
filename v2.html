@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Cormorant+Garamond:wght@600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261105a" />
-  <link rel="stylesheet" href="v2.css?v=20261105a" />
+  <link rel="stylesheet" href="style.css?v=20261105b" />
+  <link rel="stylesheet" href="v2.css?v=20261105b" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -119,6 +119,16 @@
         <div id="blockThumbs" class="thumb-strip hidden"></div>
         <div id="hourlyGrid" class="hourly-grid"></div>
       </div>
+      <div class="card roulette-card">
+        <div class="card-header">
+          <h2>\U0001F3B2 Task Roulette</h2>
+          <button id="rouletteBtn" class="mini-btn" onclick="spinRoulette()">Tell me what to do</button>
+        </div>
+        <p class="helper-text">Can\u2019t pick? Spin. It deals from everything open except your Rule of 3, and won\u2019t repeat a task until every card has come up.</p>
+        <div id="rouletteOut" class="roulette-out">Waiting for a spin\u2026</div>
+        <button id="rouletteDoneBtn" class="mini-btn roulette-done hidden" onclick="rouletteDone()">\u2705 Did it!</button>
+      </div>
+
       <div class="anchor-grid">
 
         <div class="card manifestation-card">
@@ -682,13 +692,13 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261105a"></script>
-  <script src="astro.js?v=20261105a"></script>
+  <script src="app.js?v=20261105b"></script>
+  <script src="astro.js?v=20261105b"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261105a"></script>
-  <script src="google-sync.js?v=20261105a"></script>
-  <script src="month.js?v=20261105a"></script>
-  <script src="v2.js?v=20261105a"></script>
+  <script src="sync-config.js?v=20261105b"></script>
+  <script src="google-sync.js?v=20261105b"></script>
+  <script src="month.js?v=20261105b"></script>
+  <script src="v2.js?v=20261105b"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
       <button class="ev-close" id="briefCloseBtn">✕</button>
