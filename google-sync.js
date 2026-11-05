@@ -74,10 +74,14 @@ function connectGcal() {
 // --- calendar list + picker ---
 async function fetchCalendarList() {
   const data = await gcalApi("https://www.googleapis.com/calendar/v3/users/me/calendarList?minAccessRole=reader");
-  GCAL.calendars = data.items.map(c => ({ id: c.id, summary: c.summary || c.id, primary: !!c.primary, selected: !!c.primary }));
-  // keep previous selections
+  // keep previous selections; anything NEW defaults ON (auto-include calendars shared with her)
+  // except Google's own system calendars (holidays, birthdays, weather), which stay off
   const prevSel = JSON.parse(localStorage.getItem("ccc_gcal_sel")) || null;
-  if (prevSel) GCAL.calendars.forEach(c => { if (c.id in prevSel) c.selected = prevSel[c.id]; });
+  GCAL.calendars = data.items.map(c => {
+    const known = prevSel && (c.id in prevSel);
+    const def = known ? prevSel[c.id] : !c.id.includes("group.v.calendar.google.com");
+    return { id: c.id, summary: c.summary || c.id, primary: !!c.primary, selected: def };
+  });
   localStorage.setItem("ccc_gcal_cals", JSON.stringify(GCAL.calendars));
   localStorage.setItem("ccc_gcal_sel", JSON.stringify(Object.fromEntries(GCAL.calendars.map(c => [c.id, c.selected]))));
   renderCalPicker();
