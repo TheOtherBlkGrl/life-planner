@@ -1,8 +1,62 @@
 {
-  "updated": "2026-11-04T15:20:00-08:00",
-  "updatedLocal": "Nov 5, 2026, 5:40 AM PT",
+  "updated": "2026-11-05T15:10:00-08:00",
+  "updatedLocal": "Nov 5, 2026, 3:10 PM PT",
   "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
   "leads": [
+    {
+      "id": "20261105-waymo-administrative-business-partner",
+      "title": "Administrative Business Partner",
+      "company": "Waymo",
+      "location": "Mountain View, CA (hybrid)",
+      "pay": "Not posted",
+      "lane": "ea",
+      "fit": "Exec-team admin/business partner role at Waymo HQ; pay not posted, flag",
+      "url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs/7849334?gh_src=api",
+      "source": "greenhouse:waymo",
+      "posted": "2026-03-09",
+      "details": {
+        "summary": "Hybrid role reporting into Waymo's Executive Team Leadership; business partner supporting executives. Posting still open since March.",
+        "salary": "Not posted",
+        "loc": "Mountain View, CA, USA"
+      },
+      "addedAt": "2026-11-05T15:10:00-08:00"
+    },
+    {
+      "id": "20261105-waymo-training-delivery-manager-fleet-maintenance-validation-ttt",
+      "title": "Training Delivery Manager, Fleet Maintenance & Validation (TTT)",
+      "company": "Waymo",
+      "location": "San Francisco, CA / Tempe, AZ (hybrid)",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Builds and delivers technician and workshop training curriculum for the AV fleet; ops/training systems fit",
+      "url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs/7885934",
+      "source": "greenhouse:waymo",
+      "posted": "2026-07-29",
+      "details": {
+        "summary": "Designs a multi-modality technician and workshop management curriculum and assists in asset creation with Waymo's training team, covering fleet maintenance and validation training delivery.",
+        "salary": "Not posted",
+        "loc": "San Francisco, CA, USA; Tempe, AZ, USA"
+      },
+      "addedAt": "2026-11-05T15:10:00-08:00"
+    },
+    {
+      "id": "20261105-samsara-senior-supply-planning-manager-us",
+      "title": "Senior Supply Planning Manager, US",
+      "company": "Samsara",
+      "location": "Remote - US",
+      "pay": "Not posted",
+      "lane": "logistics",
+      "fit": "Owns 12-month production/shipment/capacity planning with demand planning and global ops engineering; remote US",
+      "url": "https://boards-api.greenhouse.io/v1/boards/samsara/jobs/8385569",
+      "source": "greenhouse:samsara",
+      "posted": "2026-11-05",
+      "details": {
+        "summary": "Develops and maintains rolling 12-month production, shipment, and capacity plans, working with Demand Planning, Global Ops Engineering, and supply stakeholders. Posted today (Nov 5).",
+        "salary": "Not posted",
+        "loc": "Remote - US"
+      },
+      "addedAt": "2026-11-05T15:10:00-08:00"
+    },
     {
       "id": "20261105-waymo-mapping-ops-senior-program-manager-real-time-disruptio",
       "date": "2026-11-05",
