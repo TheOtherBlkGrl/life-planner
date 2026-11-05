@@ -1145,7 +1145,7 @@ function renderJournal() {
         <div class="line-item journal-item">
           <span>${journal[d].mood || "📓"}</span>
           <span><strong>${prettyDate(d)}</strong> \u00b7 ${journal[d].text.slice(0, 90)}${journal[d].text.length > 90 ? "..." : ""}</span>
-          <button onclick="loadJournalEntry('${d}')">Open</button>
+          <button onclick="openJournalEntry('${d}')">Open</button>
         </div>
       `).join("")
     : `<p class="helper-text">No entries yet. Today is a great day to start.</p>`;
@@ -1155,6 +1155,44 @@ function loadJournalEntry(dateStr) {
   const now = localDateStr();
   journalOffset = Math.round((new Date(now + "T12:00:00") - new Date(dateStr + "T12:00:00")) / 86400000);
   renderJournal();
+}
+
+// journal entry popup (Open on a previous entry)
+function ensureJournalModal() {
+  if (document.getElementById("journalEntryOverlay")) return;
+  document.body.insertAdjacentHTML("beforeend", `
+    <div id="journalEntryOverlay" class="ev-overlay hidden">
+      <div class="ev-modal">
+        <button class="ev-close" aria-label="Close">\u2715</button>
+        <div id="journalEntryBody"></div>
+      </div>
+    </div>`);
+  const ov = document.getElementById("journalEntryOverlay");
+  ov.addEventListener("click", e => { if (e.target === ov) ov.classList.add("hidden"); });
+  ov.querySelector(".ev-close").addEventListener("click", () => ov.classList.add("hidden"));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") ov.classList.add("hidden"); });
+}
+
+function openJournalEntry(dateStr) {
+  ensureJournalModal();
+  const ov = document.getElementById("journalEntryOverlay");
+  const body = document.getElementById("journalEntryBody");
+  const entry = journal[dateStr] || { mood: "", text: "" };
+  const dt = new Date(dateStr + "T12:00:00");
+  const pretty = dt.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const dayOfYear = Math.floor((dt - new Date(dt.getFullYear(), 0, 0)) / 86400000);
+  const prompt = JOURNAL_PROMPTS[dayOfYear % JOURNAL_PROMPTS.length];
+  body.innerHTML = `
+    <h3 class="ev-title">\u{1F4D3} ${pretty}</h3>
+    <div class="ev-row"><span class="ev-k">Mood</span><span>${esc(entry.mood || "\u2014")}</span></div>
+    <div class="ev-row"><span class="ev-k">Prompt</span><span>${esc(prompt)}</span></div>
+    <div class="jrn-text">${esc(entry.text || "")}</div>
+    <button class="mini-btn jrn-edit" data-date="${dateStr}">\u270F\uFE0F Edit in editor</button>`;
+  body.querySelector(".jrn-edit").addEventListener("click", () => {
+    ov.classList.add("hidden");
+    loadJournalEntry(dateStr);
+  });
+  ov.classList.remove("hidden");
 }
 
 function saveJournalEntry() {

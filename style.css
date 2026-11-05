@@ -885,6 +885,13 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 @media (max-width: 640px) {
   .ev-modal { padding: 1.1rem 1rem 1.3rem; max-height: 85vh; }
 }
+/* --- journal entry popup --- */
+.jrn-text {
+  margin-top: 0.8rem; padding: 0.7rem 0.9rem; background: rgba(159, 123, 255, 0.1);
+  border-radius: 0.6rem; font-size: 0.88rem; line-height: 1.5; white-space: pre-wrap;
+}
+.jrn-edit { margin-top: 0.9rem; }
+
 .ev-note {
   margin-top: 0.9rem; padding: 0.6rem 0.8rem; background: rgba(255, 213, 79, 0.1);
   border: 1px solid rgba(255, 213, 79, 0.3); border-radius: 0.6rem;
