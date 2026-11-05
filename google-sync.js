@@ -102,7 +102,7 @@ function toggleCal(id, on) {
 async function fetchAllCalendars() {
   if (!GCAL.token) { connectGcal(); return; }
   try {
-    if (!GCAL.calendars.length) await fetchCalendarList();
+    await fetchCalendarList(); // refresh the list every sync: new shares show up, picker stays visible
     const now = new Date();
     const monday = new Date(now);
     monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
@@ -181,5 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderHourly();
     renderWeek();
   }
+  if (GCAL.calendars.length) renderCalPicker(); // picker visible from cache immediately, no reconnect needed
   startAutoSync();
 });
