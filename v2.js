@@ -244,7 +244,7 @@ async function v2RenderKPIs() {
   document.getElementById("kpiTasks").textContent = tasks.filter(x => x.col !== "done" && x.col !== "graveyard").length;
   let bills = [];
   try { bills = JSON.parse(localStorage.getItem("ccc_bills")) || []; } catch (e) {}
-  const unpaid = bills.filter(b => !b.paid);
+  const unpaid = bills.filter(b => !b.paid).slice().sort((a, b) => String(a.due || "9999-99-99").localeCompare(String(b.due || "9999-99-99")));
   document.getElementById("kpiBills").textContent = unpaid.length;
   const bs = document.getElementById("kpiBillsSub");
   bs.textContent = unpaid.length
