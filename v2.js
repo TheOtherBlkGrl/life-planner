@@ -3,7 +3,7 @@
 // --- aura switcher (persists in this browser only) ---
 const V2_AURA_KEY = "ccc_v2_aura";
 const V2_MIX_KEY = "ccc_v2_mix";
-const V2_DEFAULT_AURA = "empress-jewel";
+const V2_DEFAULT_AURA = "command";
 const V2_MIX_VARS = ["--bg-deep", "--bg-card", "--bg-card-hover", "--leo-gold", "--taurus-emerald"];
 
 function v2ApplyAura(name) {
@@ -200,7 +200,7 @@ function v2Restore(file) {
 // --- wire it up ---
 document.addEventListener("DOMContentLoaded", () => {
   const saved = (function () { try { return localStorage.getItem(V2_AURA_KEY); } catch (e) { return null; } })();
-  v2ApplyAura(saved || V2_DEFAULT_AURA);
+  v2ApplyAura(saved === "custom" ? "command" : (saved || V2_DEFAULT_AURA));
   document.querySelectorAll("#auraTuner .aura-btn").forEach(b =>
     b.addEventListener("click", () => v2ApplyAura(b.dataset.aura)));
   document.getElementById("mixApply").addEventListener("click", v2SaveMix);
