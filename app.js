@@ -208,10 +208,11 @@ function editBill(id) {
     { id: "name", label: "Bill name", value: b.name },
     { id: "amount", label: "Amount ($)", type: "number", value: b.amount },
     { id: "due", label: "Due date", type: "date", value: b.due },
-    { id: "repeat", label: "Repeat", type: "select", value: b.repeat || "", options: [{ v: "", t: "No repeat" }, { v: "weekly", t: "🔁 Weekly" }, { v: "monthly", t: "🔁 Monthly" }, { v: "quarterly", t: "🔁 Quarterly" }, { v: "yearly", t: "🔁 Yearly" }] }
+    { id: "repeat", label: "Repeat", type: "select", value: b.repeat || "", options: [{ v: "", t: "No repeat" }, { v: "weekly", t: "🔁 Weekly" }, { v: "monthly", t: "🔁 Monthly" }, { v: "quarterly", t: "🔁 Quarterly" }, { v: "yearly", t: "🔁 Yearly" }] },
+    { id: "link", label: "Payment link (opens when you tap 💳 Pay)", type: "url", value: b.link || "" }
   ], v => {
     if (!v.name.trim()) { flashMsg("Bill name can't be empty"); return; }
-    Object.assign(b, { name: v.name.trim(), amount: Number(v.amount) || b.amount, due: v.due || b.due, repeat: v.repeat });
+    Object.assign(b, { name: v.name.trim(), amount: Number(v.amount) || b.amount, due: v.due || b.due, repeat: v.repeat, link: normalizeBillLink(v.link) });
     saveBills();
     flashMsg("Bill updated ✨");
   });
@@ -220,7 +221,7 @@ function editBill(id) {
 function copyBill(id) {
   const b = bills.find(x => x.id === id); if (!b) return;
   const due = b.repeat ? (nextRepeatDue(b.due, b.repeat) || b.due) : b.due;
-  bills.push({ id: Date.now() + 1, name: b.name, amount: b.amount, due, paid: false, repeat: b.repeat || "" });
+  bills.push({ id: Date.now() + 1, name: b.name, amount: b.amount, due, paid: false, repeat: b.repeat || "", link: b.link || "" });
   saveBills();
   flashMsg(due !== b.due ? `Copy added, due ${due}` : "Copy added ✨");
 }
@@ -532,6 +533,12 @@ function removeWeekItem(i, j) {
 }
 
 // --- 9. BILLS ---
+function normalizeBillLink(v) {
+  v = String(v || "").trim();
+  if (!v) return "";
+  if (!/^https?:\/\//i.test(v)) v = "https://" + v;
+  return v;
+}
 let bills = JSON.parse(localStorage.getItem("ccc_bills")) || [];
 
 function saveBills() {
@@ -565,7 +572,7 @@ function renderBills() {
       <input type="checkbox" ${b.paid ? "checked" : ""} onchange="toggleBillPaid(${b.id})" />
       <span>${b.name} · $${Number(b.amount).toFixed(2)}</span>
       <span class="due-tag">due ${b.due}${!b.paid && b.due < today ? " ⚠️" : ""}</span>${b.repeat ? `<span class="task-badge repeat-badge" title="Repeats ${b.repeat}">🔁 ${b.repeat}</span>` : ""}
-      <button onclick="editBill(${b.id})" title="Edit">✏️</button><button onclick="copyBill(${b.id})" title="Copy">⧉</button><button onclick="deleteBill(${b.id})">🗑️</button>
+      ${b.link ? `<a class="bill-pay" href="${esc(b.link)}" target="_blank" rel="noopener" title="Pay this bill">💳 Pay</a>` : ""}<button onclick="editBill(${b.id})" title="Edit">✏️</button><button onclick="copyBill(${b.id})" title="Copy">⧉</button><button onclick="deleteBill(${b.id})">🗑️</button>
     `;
     list.appendChild(row);
   });
@@ -589,7 +596,8 @@ function toggleBillPaid(id) {
         amount: before.amount,
         due: nextRepeatDue(before.due, before.repeat),
         paid: false,
-        repeat: before.repeat
+        repeat: before.repeat,
+        link: before.link
       });
     }
   }
@@ -825,7 +833,8 @@ document.addEventListener("DOMContentLoaded", () => {
       amount: Number(document.getElementById("billAmount").value),
       due: document.getElementById("billDue").value,
       paid: false,
-      repeat: document.getElementById("billRepeat").value || ""
+      repeat: document.getElementById("billRepeat").value || "",
+      link: normalizeBillLink(document.getElementById("billLink").value)
     });
     document.getElementById("billForm").reset();
     saveBills();

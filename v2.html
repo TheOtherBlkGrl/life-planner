@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Cormorant+Garamond:wght@600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261105e" />
-  <link rel="stylesheet" href="v2.css?v=20261105e" />
+  <link rel="stylesheet" href="style.css?v=20261105f" />
+  <link rel="stylesheet" href="v2.css?v=20261105f" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -323,6 +323,7 @@
           <input type="text" id="billName" placeholder="Bill name (PG&E, rent...)" required />
           <input type="number" id="billAmount" placeholder="Amount $" step="0.01" min="0" required />
           <input type="date" id="billDue" required />
+          <input type="url" id="billLink" placeholder="Payment link (optional)" />
           <select id="billRepeat" title="Repeat (optional)">
             <option value="">Repeat</option>
             <option value="weekly">🔁 Weekly</option>
@@ -692,13 +693,13 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261105e"></script>
-  <script src="astro.js?v=20261105e"></script>
+  <script src="app.js?v=20261105f"></script>
+  <script src="astro.js?v=20261105f"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261105e"></script>
-  <script src="google-sync.js?v=20261105e"></script>
-  <script src="month.js?v=20261105e"></script>
-  <script src="v2.js?v=20261105e"></script>
+  <script src="sync-config.js?v=20261105f"></script>
+  <script src="google-sync.js?v=20261105f"></script>
+  <script src="month.js?v=20261105f"></script>
+  <script src="v2.js?v=20261105f"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
       <button class="ev-close" id="briefCloseBtn">✕</button>

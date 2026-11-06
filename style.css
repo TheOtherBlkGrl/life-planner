@@ -962,7 +962,7 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .horo-aspect.hard { color: var(--libra-rose); }
 .horo-aspect.soft { color: var(--taurus-emerald); }
 .horo-aspect.conj { color: var(--cosmic-purple); }
-.row-form.bills-form { grid-template-columns: 2fr 1fr 1fr 1fr auto; }
+.row-form.bills-form { grid-template-columns: 2fr 1fr 1fr 1fr 2fr auto; }
 @media (max-width: 680px) { .row-form.bills-form { grid-template-columns: 1fr; } }
 .tab-task-list { margin-top: 0.75rem; }
 
@@ -1092,3 +1092,11 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 }
 .roulette-done { margin-top: 0.5rem; }
 .roulette-card .mini-btn:disabled { opacity: 0.55; cursor: wait; }
+
+/* --- bill pay links --- */
+.bill-pay {
+  padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.8rem; font-weight: 700;
+  color: #0d2818; background: #52b788; text-decoration: none; line-height: 1.5; white-space: nowrap;
+}
+.bill-pay:hover { background: #6fce9f; }
+.line-item.paid .bill-pay { opacity: 0.45; }
