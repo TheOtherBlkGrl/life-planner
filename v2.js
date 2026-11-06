@@ -211,6 +211,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   v2RenderKPIs();
   setInterval(v2RenderKPIs, 30000);
+  v2RenderForecast();
+  const frBtn = document.getElementById("forecastRefreshBtn");
+  if (frBtn) frBtn.addEventListener("click", v2RenderForecast);
     document.getElementById("vaultBackupBtn").addEventListener("click", v2Backup);
   document.getElementById("vaultRestoreInput").addEventListener("change", (e) => {
     if (e.target.files && e.target.files[0]) v2Restore(e.target.files[0]);
@@ -234,6 +237,7 @@ async function v2RenderKPIs() {
   const open = leads.filter(l => !dec[l.id]).length;
   const applied = leads.filter(l => dec[l.id] && dec[l.id].d === "apply").length;
   jobsEl.textContent = open;
+  const ju = document.getElementById("kpiJobsUnit"); if (ju) ju.textContent = "To Review";
   document.getElementById("kpiJobsSub").textContent = applied + " applied \u00b7 " + leads.length + " screened";
   let tasks = [];
   try { tasks = JSON.parse(localStorage.getItem("clarissa_tasks")) || []; } catch (e) {}
@@ -242,10 +246,39 @@ async function v2RenderKPIs() {
   try { bills = JSON.parse(localStorage.getItem("ccc_bills")) || []; } catch (e) {}
   const unpaid = bills.filter(b => !b.paid);
   document.getElementById("kpiBills").textContent = unpaid.length;
-  document.getElementById("kpiBillsSub").textContent = unpaid.length
+  const bs = document.getElementById("kpiBillsSub");
+  bs.textContent = unpaid.length
     ? "next due " + (unpaid[0] && unpaid[0].due ? unpaid[0].due.slice(5) : "\u2014")
     : "all paid \u{1F389}";
+  bs.className = "kpi-sub " + (unpaid.length ? "kpi-warn" : "kpi-good");
   const S = (v2GetSite() || {}).sinceLaunch || {};
   document.getElementById("kpiSite").textContent = S.visits != null ? S.visits : "\u2014";
   document.getElementById("kpiSiteSub").textContent = S.pageViews != null ? S.pageViews + " views \u00b7 portfolio" : "portfolio traffic";
+}
+
+
+// --- command deck: 5-day Antioch forecast, live from Open-Meteo ---
+const V2_FC_CODES = {0:["Clear","\u2600\uFE0F"],1:["Mostly clear","\uD83C\uDF24\uFE0F"],2:["Partly cloudy","\u26C5"],3:["Cloudy","\u2601\uFE0F"],45:["Foggy","\uD83C\uDF2B\uFE0F"],48:["Rime fog","\uD83C\uDF2B\uFE0F"],51:["Light drizzle","\uD83C\uDF26\uFE0F"],53:["Drizzle","\uD83C\uDF26\uFE0F"],55:["Heavy drizzle","\uD83C\uDF27\uFE0F"],61:["Light rain","\uD83C\uDF27\uFE0F"],63:["Rain","\uD83C\uDF27\uFE0F"],65:["Heavy rain","\u26C8\uFE0F"],66:["Freezing rain","\uD83C\uDF27\uFE0F"],67:["Freezing rain","\uD83C\uDF27\uFE0F"],71:["Snow","\uD83C\uDF28\uFE0F"],73:["Snow","\uD83C\uDF28\uFE0F"],75:["Heavy snow","\u2744\uFE0F"],77:["Snow grains","\uD83C\uDF28\uFE0F"],80:["Showers","\uD83C\uDF26\uFE0F"],81:["Showers","\uD83C\uDF27\uFE0F"],82:["Violent showers","\u26C8\uFE0F"],85:["Snow showers","\uD83C\uDF28\uFE0F"],86:["Snow showers","\uD83C\uDF28\uFE0F"],95:["Thunderstorm","\u26A1"],96:["Thunderstorm","\u26A1"],99:["Hailstorm","\u26A1"]};
+async function v2RenderForecast() {
+  const grid = document.getElementById("forecastGrid");
+  if (!grid) return;
+  grid.innerHTML = '<p class="helper-text">Reading the Antioch sky\u2026</p>';
+  try {
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=37.99&longitude=-121.81&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FLos_Angeles&forecast_days=5");
+    if (!r.ok) throw new Error("sky feed " + r.status);
+    const d = await r.json();
+    const days = d.daily, names = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    let html = "";
+    for (let i = 0; i < 5; i++) {
+      const dt = new Date(days.time[i] + "T12:00:00");
+      const label = i === 0 ? "Today" : names[dt.getDay()];
+      const c = V2_FC_CODES[days.weather_code[i]] || ["\u2014","\uD83C\uDF21\uFE0F"];
+      const maxF = Math.round(days.temperature_2m_max[i] * 9/5 + 32);
+      const minF = Math.round(days.temperature_2m_min[i] * 9/5 + 32);
+      html += '<div class="fc-tile"><span class="fc-day">' + esc(label) + '</span><span class="fc-emoji">' + c[1] + '</span><span class="fc-temp">' + maxF + '\u00B0<small> / ' + minF + '\u00B0</small></span><span class="fc-cond">' + esc(c[0]) + '</span></div>';
+    }
+    grid.innerHTML = html;
+  } catch (e) {
+    grid.innerHTML = '<p class="helper-text">Sky feed didn\u2019t load. Tap \u21BB Refresh to try again.</p>';
+  }
 }

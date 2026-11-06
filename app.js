@@ -56,6 +56,8 @@ function updateClock() {
   const ampm = hours24 >= 12 ? "PM" : "AM";
   const secs = String(now.getSeconds()).padStart(2, "0");
   document.getElementById("liveClock").textContent = `${hours12}:${mins}:${secs} ${ampm}`;
+  const clockDate = document.getElementById("clockDate");
+  if (clockDate) clockDate.textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
 
   const portalKey = `${hours12}:${mins}`;
   if (PORTAL_TIMES.includes(portalKey) && lastTriggeredMinute !== portalKey) {

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261105i" />
-  <link rel="stylesheet" href="v2.css?v=20261105k" />
+  <link rel="stylesheet" href="v2.css?v=20261106a" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -45,7 +45,9 @@
         </div>
       </div>
       <div class="clock-box">
-        <span id="liveClock">00:00</span>
+        <span class="clock-label"><span class="pulse-dot"></span>AMERICA/LOS_ANGELES • LIVE SECOND TICKER</span>
+        <span id="liveClock">00:00:00</span>
+        <span id="clockDate">&nbsp;</span>
       </div>
     </div>
   </header>
@@ -72,27 +74,34 @@
     <div class="kpi-strip" id="kpiStrip" title="Live counts from your planner">
       <div class="kpi-tile" onclick="switchTab('jobs')">
         <span class="kpi-label">💼 Job Hunt Queue</span>
-        <span class="kpi-num" id="kpiJobs">—</span>
-        <span class="kpi-sub" id="kpiJobsSub">loading…</span>
+        <div class="kpi-line"><span class="kpi-num" id="kpiJobs">—</span> <span class="kpi-unit" id="kpiJobsUnit">To Review</span></div>
+        <span class="kpi-sub kpi-good" id="kpiJobsSub">loading…</span>
       </div>
       <div class="kpi-tile" onclick="switchTab('tasks')">
         <span class="kpi-label">📋 Open Tasks</span>
-        <span class="kpi-num" id="kpiTasks">—</span>
+        <div class="kpi-line"><span class="kpi-num" id="kpiTasks">—</span> <span class="kpi-unit">Open</span></div>
         <span class="kpi-sub">Rule of 3 lives here</span>
       </div>
       <div class="kpi-tile" onclick="switchTab('bills')">
-        <span class="kpi-label">💸 Bills Unpaid</span>
-        <span class="kpi-num" id="kpiBills">—</span>
+        <span class="kpi-label">💸 Bills &amp; Utilities</span>
+        <div class="kpi-line"><span class="kpi-num" id="kpiBills">—</span> <span class="kpi-unit">Upcoming</span></div>
         <span class="kpi-sub" id="kpiBillsSub">loading…</span>
       </div>
       <div class="kpi-tile" onclick="switchTab('vault')">
-        <span class="kpi-label">📡 Portfolio Visits</span>
-        <span class="kpi-num" id="kpiSite">—</span>
-        <span class="kpi-sub" id="kpiSiteSub">clarissadward.com</span>
+        <span class="kpi-label">📡 clarissadward.com</span>
+        <div class="kpi-line"><span class="kpi-num" id="kpiSite">—</span> <span class="kpi-unit">Visits</span></div>
+        <span class="kpi-sub" id="kpiSiteSub">portfolio</span>
       </div>
     </div>
 
     <section class="tab-panel active" id="panel-today">
+      <div class="card forecast-card">
+        <div class="card-header">
+          <h2>🌦️ 5-Day Forecast — Antioch</h2>
+          <button type="button" class="mini-btn" id="forecastRefreshBtn">↻ Refresh</button>
+        </div>
+        <div class="forecast-grid" id="forecastGrid"><p class="helper-text">Reading the Antioch sky…</p></div>
+      </div>
 <div class="today-duo">
         <div class="card wins-tile">
           <div class="card-header">
@@ -728,13 +737,13 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261105k"></script>
+  <script src="app.js?v=20261106a"></script>
   <script src="astro.js?v=20261105i"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="sync-config.js?v=20261105i"></script>
   <script src="google-sync.js?v=20261105i"></script>
   <script src="month.js?v=20261105i"></script>
-  <script src="v2.js?v=20261105k"></script>
+  <script src="v2.js?v=20261106a"></script>
   <script src="vault.js?v=20261105i"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
