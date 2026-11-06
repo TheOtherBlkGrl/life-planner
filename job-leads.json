@@ -1,8 +1,98 @@
 {
-  "updated": "2026-11-05T15:10:00-08:00",
-  "updatedLocal": "Nov 5, 2026, 3:10 PM PT",
+  "updated": "2026-11-06T15:10:00-08:00",
+  "updatedLocal": "Nov 6, 2026, 3:10 PM PT",
   "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
   "leads": [
+    {
+      "id": "20261106-harvey-executive-assistant",
+      "title": "Executive Assistant",
+      "company": "Harvey",
+      "location": "San Francisco, CA (hybrid)",
+      "pay": "$125,000-$150,000",
+      "lane": "ea",
+      "fit": "EA on the HR/people team at a large AI legal-tech company; hybrid SF, just reposted (posted 1 day ago)",
+      "url": "https://jobs.ashbyhq.com/harvey/1483470d-c402-4d26-8f11-e1a2e404ce79?utm_source=jobs.lsvp.com",
+      "source": "lsvp:harvey",
+      "posted": "2026-11-05",
+      "details": {
+        "summary": "Executive Assistant role at Harvey, a legal-AI company, sitting in the HR/people organization. Hybrid in San Francisco. Listing card shows $125k-$150k and a 1-day-old repost, so it is fresh; full description only renders on Ashby's site.",
+        "salary": "$125,000-$150,000",
+        "loc": "San Francisco, CA, USA (hybrid)"
+      },
+      "addedAt": "2026-11-06T15:10:00-08:00"
+    },
+    {
+      "id": "20261106-flexport-business-operations-manager-office-of-the-ceo",
+      "title": "Business Operations Manager, Office of the CEO",
+      "company": "Flexport",
+      "location": "San Francisco, CA",
+      "pay": "$160,000-$180,000",
+      "lane": "ea",
+      "fit": "Exec-office business ops: pick a freight mode/region, run real problems, grow into a #2 to a business-unit leader; strong ops growth path",
+      "url": "https://job-boards.greenhouse.io/flexport/jobs/7166036",
+      "source": "greenhouse:flexport",
+      "posted": "2026-11-05",
+      "details": {
+        "summary": "Joins the Office of the CEO working directly on Flexport's highest-priority problems alongside the CEO and President; you take a mode or region (ocean, air, trucking, customs), learn it from the inside by solving real problems like pricing or missed plans, then go run part of the business. Some move into a business unit as the number two to the leader who runs it.",
+        "salary": "$160,000-$180,000",
+        "loc": "San Francisco, CA, USA"
+      },
+      "addedAt": "2026-11-06T15:10:00-08:00"
+    },
+    {
+      "id": "20261106-figma-executive-assistant-growth-marketing",
+      "title": "Executive Assistant, Growth Marketing",
+      "company": "Figma",
+      "location": "San Francisco, CA",
+      "pay": "$127,000-$269,000",
+      "lane": "ea",
+      "fit": "EA to the VP of Growth Marketing and the Director of B2B Growth, Strategy & Ops; strategic partner plus calendar/inbox/travel/POs",
+      "url": "https://job-boards.greenhouse.io/figma/jobs/6199185004",
+      "source": "greenhouse:figma",
+      "posted": "2026-10-27",
+      "details": {
+        "summary": "Direct support to Figma's VP of Growth Marketing and Director, B2B - Growth, Strategy & Ops: leadership meetings, agendas and action items, heavy calendar and inbox management, all-hands and team comms, travel, and expense/PO sign-off as their delegate, plus team cohesion and planning work as a strategic partner.",
+        "salary": "$127,000-$269,000",
+        "loc": "San Francisco, CA, USA"
+      },
+      "addedAt": "2026-11-06T15:10:00-08:00"
+    },
+    {
+      "id": "20261106-figma-executive-assistant-people",
+      "title": "Executive Assistant, People",
+      "company": "Figma",
+      "location": "San Francisco, CA (US-based)",
+      "pay": "$127,000-$269,000",
+      "lane": "ea",
+      "fit": "EA to three senior leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations); calendar, travel, POs, decks and process work",
+      "url": "https://job-boards.greenhouse.io/figma/jobs/5969046004",
+      "source": "greenhouse:figma",
+      "posted": "2026-10-27",
+      "details": {
+        "summary": "Supports three senior People-team leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations) with calendar, travel, meetings, notes and email; also strategic-partner work on team cohesion and planning, expense/PO sign-off as a delegate, and building decks and key documents for the VPs.",
+        "salary": "$127,000-$269,000",
+        "loc": "San Francisco, CA, USA (posting lists US)"
+      },
+      "addedAt": "2026-11-06T15:10:00-08:00"
+    },
+    {
+      "id": "20261106-stripe-administrative-business-partner-office-of-the-president",
+      "title": "Administrative Business Partner, Office of the President",
+      "company": "Stripe",
+      "location": "San Francisco, CA / New York, NY",
+      "pay": "Not posted",
+      "lane": "ea",
+      "fit": "Admin partner in the Office of the President; complex calendar, high-profile offsites, travel; pay not posted, flag",
+      "url": "https://job-boards.greenhouse.io/stripe/jobs/8209639",
+      "source": "greenhouse:stripe",
+      "posted": "2026-10-29",
+      "details": {
+        "summary": "Reports to the Lead Administrative Business Partner to the President and supports Stripe's President, Product and Business: managing a complex calendar, research and logistics for high-profile offsite events, and travel to other offices. Posting asks for judgment, discretion, and comfort in ambiguous environments.",
+        "salary": "Not posted",
+        "loc": "New York City, NY, USA; San Francisco, CA, USA"
+      },
+      "addedAt": "2026-11-06T15:10:00-08:00"
+    },
     {
       "id": "20261105-waymo-administrative-business-partner",
       "title": "Administrative Business Partner",
