@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Cormorant+Garamond:wght@600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261105f" />
-  <link rel="stylesheet" href="v2.css?v=20261105f" />
+  <link rel="stylesheet" href="style.css?v=20261105g" />
+  <link rel="stylesheet" href="v2.css?v=20261105g" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -83,6 +83,17 @@
           </div>
           <p id="briefMeta" class="brief-meta">Loading…</p>
           <button id="openBriefBtn" class="mini-btn brief-open">Read the brief</button>
+        </div>
+      </div>
+
+      <div class="card vault-card">
+        <div class="card-header">
+          <h2>☁️ Cloud Vault</h2>
+        </div>
+        <p class="helper-text">Your planner backs itself up to your own Google Drive, encrypted with your PIN. New browser? Set up or unlock here, and everything loads.</p>
+        <div class="vault-row">
+          <span id="vaultStatus" class="vault-status"></span>
+          <button id="vaultBtn" class="mini-btn">☁️ Set up cloud backup</button>
         </div>
       </div>
 
@@ -693,13 +704,14 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261105f"></script>
-  <script src="astro.js?v=20261105f"></script>
+  <script src="app.js?v=20261105g"></script>
+  <script src="astro.js?v=20261105g"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="sync-config.js?v=20261105f"></script>
-  <script src="google-sync.js?v=20261105f"></script>
-  <script src="month.js?v=20261105f"></script>
-  <script src="v2.js?v=20261105f"></script>
+  <script src="sync-config.js?v=20261105g"></script>
+  <script src="google-sync.js?v=20261105g"></script>
+  <script src="month.js?v=20261105g"></script>
+  <script src="v2.js?v=20261105g"></script>
+  <script src="vault.js?v=20261105g"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
       <button class="ev-close" id="briefCloseBtn">✕</button>
