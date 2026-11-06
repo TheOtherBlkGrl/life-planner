@@ -54,7 +54,8 @@ function updateClock() {
   const hours12 = hours24 % 12 || 12;
   const mins = String(now.getMinutes()).padStart(2, "0");
   const ampm = hours24 >= 12 ? "PM" : "AM";
-  document.getElementById("liveClock").textContent = `${hours12}:${mins} ${ampm}`;
+  const secs = String(now.getSeconds()).padStart(2, "0");
+  document.getElementById("liveClock").textContent = `${hours12}:${mins}:${secs} ${ampm}`;
 
   const portalKey = `${hours12}:${mins}`;
   if (PORTAL_TIMES.includes(portalKey) && lastTriggeredMinute !== portalKey) {
@@ -724,7 +725,7 @@ function copySelfcare(i) {
 document.addEventListener("DOMContentLoaded", () => {
   updateMoonPhase();
   updateClock();
-  setInterval(updateClock, 10000);
+  setInterval(updateClock, 1000);
   renderKanban();
   renderWeek();
   renderBills();

@@ -209,8 +209,43 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("portalBtn").addEventListener("click", () => {
     if (typeof showCosmicToast === "function") showCosmicToast();
   });
-  document.getElementById("vaultBackupBtn").addEventListener("click", v2Backup);
+  v2RenderKPIs();
+  setInterval(v2RenderKPIs, 30000);
+    document.getElementById("vaultBackupBtn").addEventListener("click", v2Backup);
   document.getElementById("vaultRestoreInput").addEventListener("change", (e) => {
     if (e.target.files && e.target.files[0]) v2Restore(e.target.files[0]);
   });
 });
+
+
+// --- command deck: live KPI tiles on Today (clickable shortcuts) ---
+async function v2RenderKPIs() {
+  const jobsEl = document.getElementById("kpiJobs");
+  if (!jobsEl) return;
+  if (!jobLeadsData) {
+    try {
+      const r = await fetch("job-leads.json?cb=" + Date.now());
+      if (r.ok) jobLeadsData = await r.json();
+    } catch (e) {}
+  }
+  if (!jobLeadsData) { try { jobLeadsData = JSON.parse(localStorage.getItem("ccc_job_leads_cache")); } catch (e) {} }
+  const leads = (jobLeadsData && jobLeadsData.leads) || [];
+  const dec = typeof jobLeadDecisions === "function" ? jobLeadDecisions() : {};
+  const open = leads.filter(l => !dec[l.id]).length;
+  const applied = leads.filter(l => dec[l.id] && dec[l.id].d === "apply").length;
+  jobsEl.textContent = open;
+  document.getElementById("kpiJobsSub").textContent = applied + " applied \u00b7 " + leads.length + " screened";
+  let tasks = [];
+  try { tasks = JSON.parse(localStorage.getItem("clarissa_tasks")) || []; } catch (e) {}
+  document.getElementById("kpiTasks").textContent = tasks.filter(x => x.col !== "done" && x.col !== "graveyard").length;
+  let bills = [];
+  try { bills = JSON.parse(localStorage.getItem("ccc_bills")) || []; } catch (e) {}
+  const unpaid = bills.filter(b => !b.paid);
+  document.getElementById("kpiBills").textContent = unpaid.length;
+  document.getElementById("kpiBillsSub").textContent = unpaid.length
+    ? "next due " + (unpaid[0] && unpaid[0].due ? unpaid[0].due.slice(5) : "\u2014")
+    : "all paid \u{1F389}";
+  const S = (v2GetSite() || {}).sinceLaunch || {};
+  document.getElementById("kpiSite").textContent = S.visits != null ? S.visits : "\u2014";
+  document.getElementById("kpiSiteSub").textContent = S.pageViews != null ? S.pageViews + " views \u00b7 portfolio" : "portfolio traffic";
+}
