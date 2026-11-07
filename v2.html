@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261106b" />
-  <link rel="stylesheet" href="v2.css?v=20261106a" />
+  <link rel="stylesheet" href="v2.css?v=20261106c" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -17,6 +17,23 @@
     <div class="brand">
       <h1>PLANNER</h1>
     </div>
+
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="today">🌟 Today</button>
+    <button class="tab-btn" data-tab="tasks">📋 Tasks</button>
+    <button class="tab-btn" data-tab="week">🗓️ Week</button>
+    <button class="tab-btn" data-tab="month">📆 Month</button>
+    <button class="tab-btn" data-tab="bills">💸 Bills</button>
+    <button class="tab-btn" data-tab="selfcare">🛁 Self Care</button>
+    <button class="tab-btn" data-tab="garden">🌱 Garden</button>
+    <button class="tab-btn" data-tab="social">👯 Social</button>
+    <button class="tab-btn" data-tab="work">🧰 Work</button>
+    <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
+    <button class="tab-btn" data-tab="blocks">🧱 Blocks</button>
+    <button class="tab-btn" data-tab="journal">📓 Journal</button>
+    <button class="tab-btn" data-tab="astro">🔮 Chart</button>
+    <button class="tab-btn" data-tab="vault">🗝️ Vault &amp; Hub</button>
+  </nav>
     <div class="header-widgets">
       <div class="aura-tuner" id="auraTuner" title="Pick a mood for the room">
         <button class="aura-btn" data-aura="command">🛡️ Command</button>
@@ -44,22 +61,6 @@
     </div>
   </header>
 
-  <nav class="tab-nav" id="tabNav">
-    <button class="tab-btn active" data-tab="today">🌟 Today</button>
-    <button class="tab-btn" data-tab="tasks">📋 Tasks</button>
-    <button class="tab-btn" data-tab="week">🗓️ Week</button>
-    <button class="tab-btn" data-tab="month">📆 Month</button>
-    <button class="tab-btn" data-tab="bills">💸 Bills</button>
-    <button class="tab-btn" data-tab="selfcare">🛁 Self Care</button>
-    <button class="tab-btn" data-tab="garden">🌱 Garden</button>
-    <button class="tab-btn" data-tab="social">👯 Social</button>
-    <button class="tab-btn" data-tab="work">🧰 Work</button>
-    <button class="tab-btn" data-tab="jobs">💼 Job Hunt</button>
-    <button class="tab-btn" data-tab="blocks">🧱 Blocks</button>
-    <button class="tab-btn" data-tab="journal">📓 Journal</button>
-    <button class="tab-btn" data-tab="astro">🔮 Chart</button>
-    <button class="tab-btn" data-tab="vault">🗝️ Vault &amp; Hub</button>
-  </nav>
 
   <main class="dashboard">
 
