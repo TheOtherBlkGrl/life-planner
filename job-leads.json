@@ -1,984 +1,984 @@
 {
-  "updated": "2026-11-06T15:10:00-08:00",
-  "updatedLocal": "Nov 6, 2026, 3:10 PM PT",
-  "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
-  "leads": [
-    {
-      "id": "20261106-harvey-executive-assistant",
-      "title": "Executive Assistant",
-      "company": "Harvey",
-      "location": "San Francisco, CA (hybrid)",
-      "pay": "$125,000-$150,000",
-      "lane": "ea",
-      "fit": "EA on the HR/people team at a large AI legal-tech company; hybrid SF, just reposted (posted 1 day ago)",
-      "url": "https://jobs.ashbyhq.com/harvey/1483470d-c402-4d26-8f11-e1a2e404ce79?utm_source=jobs.lsvp.com",
-      "source": "lsvp:harvey",
-      "posted": "2026-11-05",
-      "details": {
-        "summary": "Executive Assistant role at Harvey, a legal-AI company, sitting in the HR/people organization. Hybrid in San Francisco. Listing card shows $125k-$150k and a 1-day-old repost, so it is fresh; full description only renders on Ashby's site.",
-        "salary": "$125,000-$150,000",
-        "loc": "San Francisco, CA, USA (hybrid)"
-      },
-      "addedAt": "2026-11-06T15:10:00-08:00"
-    },
-    {
-      "id": "20261106-flexport-business-operations-manager-office-of-the-ceo",
-      "title": "Business Operations Manager, Office of the CEO",
-      "company": "Flexport",
-      "location": "San Francisco, CA",
-      "pay": "$160,000-$180,000",
-      "lane": "ea",
-      "fit": "Exec-office business ops: pick a freight mode/region, run real problems, grow into a #2 to a business-unit leader; strong ops growth path",
-      "url": "https://job-boards.greenhouse.io/flexport/jobs/7166036",
-      "source": "greenhouse:flexport",
-      "posted": "2026-11-05",
-      "details": {
-        "summary": "Joins the Office of the CEO working directly on Flexport's highest-priority problems alongside the CEO and President; you take a mode or region (ocean, air, trucking, customs), learn it from the inside by solving real problems like pricing or missed plans, then go run part of the business. Some move into a business unit as the number two to the leader who runs it.",
-        "salary": "$160,000-$180,000",
-        "loc": "San Francisco, CA, USA"
-      },
-      "addedAt": "2026-11-06T15:10:00-08:00"
-    },
-    {
-      "id": "20261106-figma-executive-assistant-growth-marketing",
-      "title": "Executive Assistant, Growth Marketing",
-      "company": "Figma",
-      "location": "San Francisco, CA",
-      "pay": "$127,000-$269,000",
-      "lane": "ea",
-      "fit": "EA to the VP of Growth Marketing and the Director of B2B Growth, Strategy & Ops; strategic partner plus calendar/inbox/travel/POs",
-      "url": "https://job-boards.greenhouse.io/figma/jobs/6199185004",
-      "source": "greenhouse:figma",
-      "posted": "2026-10-27",
-      "details": {
-        "summary": "Direct support to Figma's VP of Growth Marketing and Director, B2B - Growth, Strategy & Ops: leadership meetings, agendas and action items, heavy calendar and inbox management, all-hands and team comms, travel, and expense/PO sign-off as their delegate, plus team cohesion and planning work as a strategic partner.",
-        "salary": "$127,000-$269,000",
-        "loc": "San Francisco, CA, USA"
-      },
-      "addedAt": "2026-11-06T15:10:00-08:00"
-    },
-    {
-      "id": "20261106-figma-executive-assistant-people",
-      "title": "Executive Assistant, People",
-      "company": "Figma",
-      "location": "San Francisco, CA (US-based)",
-      "pay": "$127,000-$269,000",
-      "lane": "ea",
-      "fit": "EA to three senior leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations); calendar, travel, POs, decks and process work",
-      "url": "https://job-boards.greenhouse.io/figma/jobs/5969046004",
-      "source": "greenhouse:figma",
-      "posted": "2026-10-27",
-      "details": {
-        "summary": "Supports three senior People-team leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations) with calendar, travel, meetings, notes and email; also strategic-partner work on team cohesion and planning, expense/PO sign-off as a delegate, and building decks and key documents for the VPs.",
-        "salary": "$127,000-$269,000",
-        "loc": "San Francisco, CA, USA (posting lists US)"
-      },
-      "addedAt": "2026-11-06T15:10:00-08:00"
-    },
-    {
-      "id": "20261106-stripe-administrative-business-partner-office-of-the-president",
-      "title": "Administrative Business Partner, Office of the President",
-      "company": "Stripe",
-      "location": "San Francisco, CA / New York, NY",
-      "pay": "Not posted",
-      "lane": "ea",
-      "fit": "Admin partner in the Office of the President; complex calendar, high-profile offsites, travel; pay not posted, flag",
-      "url": "https://job-boards.greenhouse.io/stripe/jobs/8209639",
-      "source": "greenhouse:stripe",
-      "posted": "2026-10-29",
-      "details": {
-        "summary": "Reports to the Lead Administrative Business Partner to the President and supports Stripe's President, Product and Business: managing a complex calendar, research and logistics for high-profile offsite events, and travel to other offices. Posting asks for judgment, discretion, and comfort in ambiguous environments.",
-        "salary": "Not posted",
-        "loc": "New York City, NY, USA; San Francisco, CA, USA"
-      },
-      "addedAt": "2026-11-06T15:10:00-08:00"
-    },
-    {
-      "id": "20261105-waymo-administrative-business-partner",
-      "title": "Administrative Business Partner",
-      "company": "Waymo",
-      "location": "Mountain View, CA (hybrid)",
-      "pay": "Not posted",
-      "lane": "ea",
-      "fit": "Exec-team admin/business partner role at Waymo HQ; pay not posted, flag",
-      "url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs/7849334?gh_src=api",
-      "source": "greenhouse:waymo",
-      "posted": "2026-03-09",
-      "details": {
-        "summary": "Hybrid role reporting into Waymo's Executive Team Leadership; business partner supporting executives. Posting still open since March.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA, USA"
-      },
-      "addedAt": "2026-11-05T15:10:00-08:00"
-    },
-    {
-      "id": "20261105-waymo-training-delivery-manager-fleet-maintenance-validation-ttt",
-      "title": "Training Delivery Manager, Fleet Maintenance & Validation (TTT)",
-      "company": "Waymo",
-      "location": "San Francisco, CA / Tempe, AZ (hybrid)",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Builds and delivers technician and workshop training curriculum for the AV fleet; ops/training systems fit",
-      "url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs/7885934",
-      "source": "greenhouse:waymo",
-      "posted": "2026-07-29",
-      "details": {
-        "summary": "Designs a multi-modality technician and workshop management curriculum and assists in asset creation with Waymo's training team, covering fleet maintenance and validation training delivery.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA, USA; Tempe, AZ, USA"
-      },
-      "addedAt": "2026-11-05T15:10:00-08:00"
-    },
-    {
-      "id": "20261105-samsara-senior-supply-planning-manager-us",
-      "title": "Senior Supply Planning Manager, US",
-      "company": "Samsara",
-      "location": "Remote - US",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Owns 12-month production/shipment/capacity planning with demand planning and global ops engineering; remote US",
-      "url": "https://boards-api.greenhouse.io/v1/boards/samsara/jobs/8385569",
-      "source": "greenhouse:samsara",
-      "posted": "2026-11-05",
-      "details": {
-        "summary": "Develops and maintains rolling 12-month production, shipment, and capacity plans, working with Demand Planning, Global Ops Engineering, and supply stakeholders. Posted today (Nov 5).",
-        "salary": "Not posted",
-        "loc": "Remote - US"
-      },
-      "addedAt": "2026-11-05T15:10:00-08:00"
-    },
-    {
-      "id": "20261105-waymo-mapping-ops-senior-program-manager-real-time-disruptio",
-      "date": "2026-11-05",
-      "company": "Waymo",
-      "title": "Mapping Ops Senior Program Manager, Real-time Disruptions",
-      "location": "Mountain View, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Runs real-time disruption response for the mapping ops fleet: closest thing to her service-exceptions dispatch desk",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8315141",
-      "source": "greenhouse waymo",
-      "posted": "2026-10-22",
-      "addedAt": "2026-11-05T05:40:00-08:00",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
-      "salary": "Not posted",
-      "loc": "Mountain View, CA"
-    },
-    {
-      "id": "20261105-instacart-program-manager-escalation-management",
-      "date": "2026-11-05",
-      "company": "Instacart",
-      "title": "Program Manager, Escalation Management",
-      "location": "Remote, United States",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Owns escalations end to end across ops; pure service-exception muscle, fully remote",
-      "url": "https://instacart.careers/job/?gh_jid=8337981",
-      "source": "greenhouse instacart",
-      "posted": "2026-10-30",
-      "addedAt": "2026-11-05T05:40:00-08:00",
-      "summary": "Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community.",
-      "salary": "Not posted",
-      "loc": "Remote, United States"
-    },
-    {
-      "id": "20261105-waymo-partner-audit-remediation-program-manager",
-      "date": "2026-11-05",
-      "company": "Waymo",
-      "title": "Partner Audit Remediation Program Manager",
-      "location": "Remote, US (also Seattle, Chicago)",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Audit-and-remediate partner operations: SOP/compliance lane, fully remote",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8047200",
-      "source": "greenhouse waymo",
-      "posted": "2026-11-04",
-      "addedAt": "2026-11-05T05:40:00-08:00",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
-      "salary": "Not posted",
-      "loc": "Remote, US (also Seattle, Chicago)"
-    },
-    {
-      "id": "20261104-stripe-strategy-operations-risk",
-      "title": "Strategy & Operations, Risk",
-      "company": "Stripe",
-      "location": "US-SF, US-SEA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Risk-org strategy & ops role (SF/Seattle); bizops-adjacent, pay not posted",
-      "url": "https://stripe.com/jobs/search?gh_jid=8199596",
-      "source": "greenhouse:stripe",
-      "posted": "2026-09-14",
-      "addedAt": "2026-11-04T15:20:00-08:00",
-      "details": {
-        "summary": "Risk is central to Stripe’s ability to grow safely: the team protects Stripe and our users while enabling durable, responsible growth. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
-        "salary": "Not posted",
-        "loc": "US-SF, US-SEA"
-      },
-      "salary": "Not posted",
-      "loc": "US-SF, US-SEA",
-      "summary": "Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead."
-    },
-    {
-      "id": "20261104-olema-executive-assistant-supporting-chief-financial-officer",
-      "title": "Executive Assistant, supporting Chief Financial Officer",
-      "company": "Olema Oncology",
-      "location": "San Francisco, California",
-      "pay": "$120,000 - $150,000",
-      "lane": "ea",
-      "fit": "EA to the CFO at Olema Oncology, SF; $120-150k posted",
-      "url": "https://job-boards.greenhouse.io/olema/jobs/6147547004",
-      "source": "greenhouse:olema",
-      "posted": "2026-08-24",
-      "addedAt": "2026-11-04T15:20:00-08:00",
-      "details": {
-        "summary": "You will manage communications and coordinate activities with internal and key external parties, including investors and board members. Olema Oncology is a clinical-stage biopharmaceutical company committed to transforming the standard of care and improving outcomes for patients living with breast cancer and beyond.",
-        "salary": "$120,000 - $150,000",
-        "loc": "San Francisco, California"
-      }
-    },
-    {
-      "id": "20261104-waymo-lead-program-manager-new-platform-validation-operations",
-      "title": "Lead Program Manager - New Platform Validation Operations",
-      "company": "Waymo",
-      "location": "Mountain View, California, USA; San Francisco, California, USA;",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Leads program ops for validating Waymo's new hardware platform; ops program management across SF/MV",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8047527",
-      "source": "greenhouse:waymo",
-      "posted": "2026-07-09",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "In this hybrid role, you will report to a Head of Validation Operations You will: Lead NPI Platform Program Execution: Drive end-to-end program structuring for onboarding new platform variants into validation fleets, managing the critical path from arrival and upfit to testing and fleet deployment. Waymo is an autonomous driving technolog",
-        "salary": "Not posted",
-        "loc": "Mountain View, California, USA; San Francisco, California, USA;"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, California, USA; San Francisco, California, USA;",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261104-waymo-new-platform-enablement-manager-hw-ops-design-excellence",
-      "title": "New Platform Enablement Manager (HW/Ops Design Excellence)",
-      "company": "Waymo",
-      "location": "San Francisco, CA, US",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Owns ops design excellence + enablement for new platform hardware rollout in SF",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8039334",
-      "source": "greenhouse:waymo",
-      "posted": "2026-09-21",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "You will: Bring up and enable deployment of new and upcoming Waymo platforms across program phases from prototype requirement state to deployment Work with engineering and cross functional stakeholders on fast feedback, issue discovery and resolution Manage and drive operations for new sensor suite and base vehicle to ensure maturity and ",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA, US"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA, US",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261104-waymo-manager-resilience-risk",
-      "title": "Manager, Resilience Risk",
-      "company": "Waymo",
-      "location": "Mountain View, CA, USA; San Francisco, CA, USA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Leads business-continuity/resilience risk program (MV/SF); risk ops leadership",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8143380",
-      "source": "greenhouse:waymo",
-      "posted": "2026-08-20",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "In this hybrid role you will report into our Head of Enterprise Resilience. Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA, USA; San Francisco, CA, USA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, CA, USA; San Francisco, CA, USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261104-lyft-av-program-manager",
-      "title": "AV Program Manager",
-      "company": "Lyft",
-      "location": "San Francisco, CA",
-      "pay": "$108,000 - $135,000",
-      "lane": "logistics",
-      "fit": "Program manager for Lyft's autonomous vehicle operations rollout, SF",
-      "url": "https://app.careerpuck.com/job-board/lyft/job/8839156002?gh_jid=8839156002",
-      "source": "greenhouse:lyft",
-      "posted": "2026-09-25",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "You will maintain the program timeline, coordinate cross-functional workstreams spanning infrastructure, people, fleet operations, treasury, legal, and finance, and help ensure that requirements are tracked, dependencies are surfaced, and deployment milestones are met. Flexdrive, Lyft's wholly-owned fleet management subsidiary, is undergo",
-        "salary": "$108,000 - $135,000",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA",
-      "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Flexdrive, Lyft's wholly-owned fleet management subsidiary, is undergoing a transformational shift f"
-    },
-    {
-      "id": "20261104-samsara-sr-manager-procure-to-pay",
-      "title": "Sr. Manager, Procure to Pay",
-      "company": "Samsara",
-      "location": "Remote - US",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Leads procure-to-pay operations, fully remote US; procurement ops management",
-      "url": "https://www.samsara.com/company/careers/roles/8351204?gh_jid=8351204",
-      "source": "greenhouse:samsara",
-      "posted": "2026-11-03",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "You will set the governance model and service standards, partner with executive stakeholders, and build a team that delivers consistently. Who we are Samsara (NYSE: IOT) is the pioneer of the Connected Operations™ Cloud, which is a platform that enables organizations that depend on physical operations to harness Internet of Things (IoT) d",
-        "salary": "Not posted",
-        "loc": "Remote - US"
-      },
-      "salary": "Not posted",
-      "loc": "Remote - Toronto",
-      "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
-    },
-    {
-      "id": "20261104-figma-senior-order-management-analyst",
-      "title": "Senior Order Management Analyst",
-      "company": "Figma",
-      "location": "San Francisco, CA • New York, NY • United States",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Order management/fulfillment ops analyst (SF/NY); pay not posted",
-      "url": "https://boards.greenhouse.io/figma/jobs/6217137004?gh_jid=6217137004",
-      "source": "greenhouse:figma",
-      "posted": "2026-10-14",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "As Figma grows, we're building the order-to-cash process for what comes next, and this role is a builder's seat: you'll take on our most complex orders while helping shape how orders get processed, reviewed, and automated as we scale. Figma is growing our team of passionate creatives and builders on a mission to make design accessible to ",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA • New York, NY • United States"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA • New York, NY • United States",
-      "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
-    },
-    {
-      "id": "20261104-stripe-procurement-contracts-manager",
-      "title": "Procurement Contracts Manager",
-      "company": "Stripe",
-      "location": "Seattle, San Francisco, New York, Chicago",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Manages procurement contracts for Stripe (SF/Seattle/NY/Chicago); pay not posted",
-      "url": "https://stripe.com/jobs/search?gh_jid=8329743",
-      "source": "greenhouse:stripe",
-      "posted": "2026-10-29",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "Who we are About Stripe Stripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
-        "salary": "Not posted",
-        "loc": "Seattle, San Francisco, New York, Chicago"
-      },
-      "salary": "Not posted",
-      "loc": "Seattle, San Francisco, New York, Chicago ",
-      "summary": "Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead."
-    },
-    {
-      "id": "20261104-stripe-administrative-business-partner-coverage",
-      "title": "Administrative Business Partner, Coverage",
-      "company": "Stripe",
-      "location": "Remote - US",
-      "pay": "Not posted",
-      "lane": "ea",
-      "fit": "EA-style admin business partner, remote US; pay not posted",
-      "url": "https://stripe.com/jobs/search?gh_jid=8328118",
-      "source": "greenhouse:stripe",
-      "posted": "2026-10-30",
-      "addedAt": "2026-11-04T15:15:00-08:00",
-      "details": {
-        "summary": "You will be required to support multiple leaders on a temporary basis. Who we are About Stripe Stripe is a financial infrastructure platform for businesses.",
-        "salary": "Not posted",
-        "loc": "Remote - US"
-      },
-      "salary": "Not posted",
-      "loc": "Remote - US",
-      "summary": "Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead."
-    },
-    {
-      "id": "20261104-waymo-product-ops-manager-ops-compliance",
-      "date": "2026-11-04",
-      "company": "Waymo",
-      "title": "Product Operations Manager, Ops Compliance & Regulatory Infrastructure",
-      "location": "Mountain View, CA or San Francisco, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Ops governance + regulatory infrastructure for AV fleet ops; direct match for SOP/compliance-heavy dispatch background",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8315881",
-      "source": "greenhouse waymo",
-      "posted": "2026-11-04",
-      "addedAt": "2026-11-04T05:40:00-08:00",
-      "summary": "Owns operational compliance and regulatory infrastructure for Waymo's fleet operations program, coordinating cross-functional ops teams and building the processes that keep driverless operations audit-ready.",
-      "salary": "Not posted",
-      "loc": "Mountain View, CA or San Francisco, CA"
-    },
-    {
-      "id": "20261103-goodfire-ea-coo",
-      "title": "Executive Assistant",
-      "company": "Goodfire",
-      "location": "San Francisco, CA",
-      "pay": "$100,000-$200,000",
-      "lane": "ea",
-      "fit": "Supports COO and principal investigator at an AI interpretability lab; calendar, travel and ops partnership",
-      "url": "https://job-boards.greenhouse.io/goodfire/jobs/5373349008",
-      "source": "jobs.lsvp.com",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Protects the time and attention of Goodfire's COO and principal investigator at the San Francisco AI interpretability lab: calendar and inbox ownership, travel and meeting orchestration, and partnership with the Ops team on employee experience. Intense, fast-paced.",
-        "salary": "$100,000-$200,000",
-        "loc": "San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261103-rothys-executive-assistant",
-      "title": "Executive Assistant",
-      "company": "Rothy's",
-      "location": "San Francisco, CA",
-      "pay": "$120,000-$145,000",
-      "lane": "ea",
-      "fit": "Exec-team thought partner: communications, briefing materials and meeting prep at the SF HQ",
-      "url": "https://jobs.ashbyhq.com/Rothys/a95fa347-715e-40d5-925c-22016f1e7504",
-      "source": "jobs.lsvp.com",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Supports members of Rothy's executive team as a strategic thought partner: owns executive communications and correspondence, prepares briefing materials, and runs calendar and meeting logistics at the San Francisco HQ.",
-        "salary": "$120,000-$145,000",
-        "loc": "San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261103-exa-ea-to-founders",
-      "title": "Executive Assistant to Founders",
-      "company": "Exa",
-      "location": "San Francisco, CA (in office)",
-      "pay": "$100,000-$200,000",
-      "lane": "ea",
-      "fit": "In-person EA for the C-suite of a ~100-person AI search startup; wide, variable, high-trust workload",
-      "url": "https://jobs.ashbyhq.com/exa/b5665525-c2a3-4c6a-a3dd-d0d1f1df01f8",
-      "source": "jobs.lsvp.com",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "In-person EA to Exa's founders and C-suite in San Francisco: owns founder calendars, clears bottlenecks and handles scheduling, office coordination and connective-tissue ops for a ~100-person company; highly variable, high-trust workload.",
-        "salary": "$100,000-$200,000",
-        "loc": "San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261103-plaid-executive-operations-leader",
-      "title": "Executive Operations Leader",
-      "company": "Plaid",
-      "location": "San Francisco, CA",
-      "pay": "$172,800-$232,800",
-      "lane": "ea",
-      "fit": "Leads and develops the EA team plus one C-suite principal; a management step up from pure EA work",
-      "url": "https://jobs.ashbyhq.com/plaid/c7395637-aa6b-43c0-8204-f0381f9b04be",
-      "source": "jobs.lsvp.com",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Leads Plaid's EA program at SF HQ: coaching and developing the team of EAs, setting role expectations, coverage and operating standards, building scalable playbooks for leadership meetings, onsites and company events, while directly supporting one C-suite executive.",
-        "salary": "$172,800-$232,800",
-        "loc": "San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261103-databricks-sr-ea-coo",
-      "title": "Sr. Executive Assistant (COO)",
-      "company": "Databricks",
-      "location": "Mountain View, CA / San Francisco, CA",
-      "pay": "$155,300-$213,500",
-      "lane": "ea",
-      "fit": "COO support: calendar, global travel logistics and strategic events; heavy AI-tooling emphasis",
-      "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8523677002",
-      "source": "jobs.lsvp.com",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Right hand to Databricks' COO: a forward-looking, accurate calendar, meeting prep under pressure, global travel logistics and customer-engagement planning, plus strategic events for the leadership team; the posting leans on AI tools to automate routine admin.",
-        "salary": "$155,300-$213,500",
-        "loc": "Mountain View, CA / San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261103-verkada-supply-chain-manager-aftermarket",
-      "title": "Supply Chain Manager, Aftermarket Operations",
-      "company": "Verkada",
-      "location": "San Mateo, CA",
-      "pay": "$130,000-$170,000",
-      "lane": "logistics",
-      "fit": "Demand/supply planning across regional warehouses, reverse logistics and vendor management",
-      "url": "https://job-boards.greenhouse.io/verkada/jobs/5234561007",
-      "source": "jobs.lsvp.com",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Owns the post-sale lifecycle of Verkada's hardware: forward and reverse inventory across regional warehouses, refurbishment, spare parts and end-of-service inventory, with direct vendor relationships and warranty-return analysis alongside engineering and quality. In-office in San Mateo.",
-        "salary": "$130,000-$170,000",
-        "loc": "San Mateo, CA"
-      }
-    },
-    {
-      "id": "20261103-samsara-manager-operations-program-mgmt",
-      "title": "Manager, Operations Program Management",
-      "company": "Samsara",
-      "location": "Remote - US",
-      "pay": "$125,545-$211,000",
-      "lane": "logistics",
-      "fit": "People-manager role over an ops program team; hardware new-product introduction rather than dispatch",
-      "url": "https://www.samsara.com/company/careers/roles/7558150?gh_jid=7558150",
-      "source": "Greenhouse",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Manages Samsara's Operations Program Manager (OPM) team through new product introduction, orchestrating cross-functional launches from development through mass production and sustained volume; drives decisions on cost, quality and time to market. Remote US with up to 20% travel.",
-        "salary": "$125,545-$211,000",
-        "loc": "Remote - US"
-      },
-      "salary": "Not posted",
-      "loc": "Remote - US",
-      "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
-    },
-    {
-      "id": "20261103-waymo-market-operations-lead-sf",
-      "title": "Market Operations Lead - San Francisco",
-      "company": "Waymo",
-      "location": "San Francisco, CA",
-      "pay": "$190,000-$234,000",
-      "lane": "logistics",
-      "fit": "Owns SFBA ride-hail commercial ops end to end; on-road rider experience and service reliability; hybrid",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=7851972",
-      "source": "Greenhouse",
-      "posted": "recent",
-      "addedAt": "2026-11-03T15:20:00-08:00",
-      "details": {
-        "summary": "Owns the end-to-end performance of Waymo's San Francisco Bay Area ride-hail commercial operations: the ground-side leader who balances on-the-road service reliability with the rider experience, coordinating cross-functional teams for safe, reliable autonomous rides. Hybrid, reporting to the Head of Market Operations - West.",
-        "salary": "$190,000-$234,000",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261103-waymo-sr-supply-demand-manager",
-      "title": "Sr. Supply & Demand Manager",
-      "company": "Waymo",
-      "location": "Mountain View, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Supply/demand balancing for the AV fleet, closest to her Sherwin-Williams supply-network work",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8248270",
-      "source": "Greenhouse",
-      "posted": "Oct 20",
-      "addedAt": "2026-11-03T05:40:00-08:00",
-      "details": {
-        "summary": "Owns Waymo's global supply and demand balance for autonomous vehicles and sensor suites: aligning commercial rollout targets, fleet maintenance and manufacturing/logistics capacity across markets. Hybrid Mountain View; reports to the Head of Vehicle Supply Planning & Materials Ops.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, CA, USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261103-waymo-sr-tpm-fleet",
-      "title": "Senior Technical Program Manager, Fleet",
-      "company": "Waymo",
-      "location": "Mountain View / San Francisco, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Fleet program management; her 4,000-moves-a-year equipment-ops record fits the fleet lane",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8304640",
-      "source": "Greenhouse",
-      "posted": "Oct 23",
-      "addedAt": "2026-11-03T05:40:00-08:00",
-      "details": {
-        "summary": "Leads cross-functional fleet management programs across product, ops, systems engineering and design, owning end-to-end execution of Waymo's fleet roadmap where no playbook exists yet. Hybrid, Mountain View or San Francisco.",
-        "salary": "Not posted",
-        "loc": "Mountain View / San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, CA, USA; San Francisco, CA, USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261103-waymo-training-delivery-manager",
-      "title": "Training Delivery Manager (Fleet Maintenance & Validation)",
-      "company": "Waymo",
-      "location": "San Francisco, CA (also Tempe, AZ)",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Training systems + fleet maintenance, two of her documented strengths in one seat",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8049302",
-      "source": "Greenhouse",
-      "posted": "Oct 20",
-      "addedAt": "2026-11-03T05:40:00-08:00",
-      "details": {
-        "summary": "Designs the train-the-trainer curriculum for fleet maintenance technicians and workshop management, building the program with Waymo's training team. Hybrid San Francisco or Tempe, AZ.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA / Tempe, AZ"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA, USA; Tempe, AZ, USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261103-lyft-global-supply-manager",
-      "title": "Global Supply Manager",
-      "company": "Lyft",
-      "location": "San Francisco, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Vehicle/fleet supply sourcing and vendor management, her rate-negotiation sweet spot",
-      "url": "https://app.careerpuck.com/job-board/lyft/job/8856438002?gh_jid=8856438002",
-      "source": "Greenhouse",
-      "posted": "Oct 30",
-      "addedAt": "2026-11-03T05:40:00-08:00",
-      "details": {
-        "summary": "Indirect procurement at Lyft: sourcing strategy, supplier relationships and complex contract negotiation for safety, people and contingent-workforce spend, with heavy Excel cost modeling. San Francisco.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "New York, NY",
-      "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Lyft is seeking an experienced<strong> Indirect Global Supply Manager</strong> to join our Global Su"
-    },
-    {
-      "id": "20261103-kodiak-director-supply-chain",
-      "title": "Director of Supply Chain",
-      "company": "Kodiak",
-      "location": "Mountain View, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Autonomous trucking supply chain, heavy-vehicle world she knows; director step up from her manager level",
-      "url": "https://job-boards.greenhouse.io/kodiak/jobs/4302898009",
-      "source": "Greenhouse",
-      "posted": "Oct 22",
-      "addedAt": "2026-11-03T05:40:00-08:00",
-      "details": {
-        "summary": "Director-level supply chain build-out at Kodiak's autonomous trucking company, scaling Driver-as-a-Service freight ops with partners like Bosch and AWS. Mountain View. Director scope, above hands-on level.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA"
-      }
-    },
-    {
-      "id": "20261103-uberfreight-sr-mgr-logistics-analytics",
-      "title": "Senior Manager, Logistics Analytics & Optimization",
-      "company": "Uber Freight",
-      "location": "San Francisco, CA",
-      "pay": "Not posted",
-      "lane": "logistics",
-      "fit": "Freight-network optimization and reporting, her Tableau/oracle-reporting lane at scale",
-      "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5464389008",
-      "source": "Greenhouse",
-      "posted": "Oct 28",
-      "addedAt": "2026-11-03T05:40:00-08:00",
-      "details": {
-        "summary": "Leads a team of technical analysts optimizing Uber Freight's freight networks: advanced modeling, KPIs and automation across commercial strategy and operations. Hybrid San Francisco.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Chicago, IL 60607, United States",
-      "summary": "<div class=\"ewa-rteLine\"><strong>Schedule: Full Time</strong></div> <div class=\"ewa-rteLine\"><strong>Job Type: Hybrid</strong></div> <div class=\"ewa-rteLine\"><strong>Salary Type: Salary</strong></div> <div class=\"ewa-rteLine\"><str"
-    },
-    {
-      "id": "20261102-sierra-ea-office-of-co-founders",
-      "title": "Executive Assistant, Office of the Co-Founders",
-      "company": "Sierra",
-      "location": "San Francisco, CA",
-      "pay": "$130K-$140K + equity (posted)",
-      "lane": "EA",
-      "fit": "EA to two co-founders at a top AI startup; hourly role with overtime eligibility, so likely strong comp for hours worked",
-      "url": "https://jobs.ashbyhq.com/sierra/e963514d-8b85-4747-9620-cf9a66ce9b4c",
-      "source": "Ashby",
-      "posted": "recent",
-      "addedAt": "2026-11-02T21:20:00-08:00",
-      "details": {
-        "summary": "Second EA to co-founders Bret Taylor (OpenAI board chair, ex-Salesforce co-CEO) and Clay Bavor (ex-Google Labs): complex travel, onsite meeting logistics, offsites and exec events on a high-trust founding team. In-person San Francisco.",
-        "salary": "$130K-$140K + equity",
-        "loc": "San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261102-sierra-ea-legal-partnerships",
-      "title": "Executive Assistant, Legal & Partnerships",
-      "company": "Sierra",
-      "location": "San Francisco, CA",
-      "pay": "$130K-$170K + equity (posted)",
-      "lane": "EA",
-      "fit": "EA lane, contracts and partner-facing support; wide band, posted range clears the $90K floor comfortably",
-      "url": "https://jobs.ashbyhq.com/sierra/2329f770-dd47-494f-80c8-0c8a11877bea",
-      "source": "Ashby",
-      "posted": "recent",
-      "addedAt": "2026-11-02T21:20:00-08:00",
-      "details": {
-        "summary": "EA to Sierra's General Counsel and Partnerships leaders: multi-leader calendar and travel management, meeting prep and follow-up, correspondence drafting, and team offsites. 5+ years EA experience; in-person San Francisco.",
-        "salary": "$130K-$170K + equity",
-        "loc": "San Francisco, CA"
-      }
-    },
-    {
-      "id": "20261102-waymo-fleet-health-specialist",
-      "title": "Fleet Health Specialist",
-      "company": "Waymo",
-      "location": "San Francisco, CA",
-      "pay": "$62-$76/hr (posted)",
-      "lane": "logistics",
-      "fit": "Fleet monitoring and maintenance ops for the robotaxi fleet; closest match to her fleet/dispatch background, watch for a technical background ask in the full posting",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8250120",
-      "source": "Greenhouse",
-      "posted": "recent",
-      "addedAt": "2026-11-02T21:20:00-08:00",
-      "details": {
-        "summary": "Tracks fleet health and availability metrics, drives root-cause fixes with engineering and suppliers, and travels to regions for fleet inspections. Asking 3+ years in automotive service or fleet management with a related degree. San Francisco.",
-        "salary": "$62-$76/hr (about $129K-$158K annualized)",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA, US",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261102-waymo-network-operations-manager",
-      "title": "Network Operations Manager",
-      "company": "Waymo",
-      "location": "Mountain View, CA",
-      "pay": "",
-      "lane": "logistics",
-      "fit": "Manager-level ops role running a live network; your dispatch and driver-ops playbook transfers directly.",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8044544",
-      "source": "Waymo Greenhouse board",
-      "posted": "Oct 31",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Manages Waymo's IT network operations team under the WINS infrastructure group: major-incident ownership, ITIL governance and vendor-run deployments of firewalls, switches and UPS. Mountain View. IT infrastructure, not logistics.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View CA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261102-waymo-av-compliance-lead",
-      "title": "AV Compliance Lead, Fleet & Operator Compliance",
-      "company": "Waymo",
-      "location": "Mountain View, CA",
-      "pay": "",
-      "lane": "logistics",
-      "fit": "Fleet + DOT/FMCSA compliance leadership, your exact regulatory strength in an AV fleet.",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8163421",
-      "source": "Waymo Greenhouse board",
-      "posted": "Oct 30",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Builds Waymo's vehicle and operator compliance program for global scaling: regulator relationships, permitting and registration, vendor management and executive KPI dashboards. Expects 12-15 years of program management and teams of 10+. Hybrid Mountain View.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, CA, USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261102-waymo-head-of-logistics",
-      "title": "Head of Logistics",
-      "company": "Waymo",
-      "location": "Mountain View, CA",
-      "pay": "",
-      "lane": "logistics",
-      "fit": "Senior logistics role over fleet moves; a stretch up from dispatch manager but your 4,000-moves-a-year record speaks to it.",
-      "url": "https://careers.withwaymo.com/jobs?gh_jid=8039786",
-      "source": "Waymo Greenhouse board",
-      "posted": "Oct 28",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Stands up Waymo's entire logistics organization: global transport networks moving AVs and components, team building from scratch, cost reduction, reverse logistics and trade compliance. Expects 10+ years of logistics leadership. Mountain View.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, CA, USA",
-      "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
-    },
-    {
-      "id": "20261102-lyft-procurement-coe-manager",
-      "title": "Procurement COE Manager",
-      "company": "Lyft",
-      "location": "San Francisco, CA",
-      "pay": "$98,000-$122,500",
-      "lane": "logistics",
-      "fit": "Clears your $90K floor with a posted range; procurement + vendor rate negotiation is on your resume.",
-      "url": "https://app.careerpuck.com/job-board/lyft/job/8863960002?gh_jid=8863960002",
-      "source": "Lyft Greenhouse board",
-      "posted": "Oct 29",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Runs Lyft's procurement center of excellence: supplier relationship programs, sourcing workflows rebuilt with AI and automation, and cross-functional cost work. 3-5+ years procurement with Oracle or Zip experience. San Francisco.",
-        "salary": "$98,000-$122,500",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA",
-      "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Lyft is seeking an experienced Procurement Center of Excellence Manager to join our Global Supply Ch"
-    },
-    {
-      "id": "20261102-flexport-bizops-office-of-ceo",
-      "title": "Business Operations Manager, Office of the CEO",
-      "company": "Flexport",
-      "location": "San Francisco, CA",
-      "pay": "",
-      "lane": "logistics",
-      "fit": "Already on the parked VC-sweep shortlist; exec-ops flavor in a freight company, review it here now.",
-      "url": "https://job-boards.greenhouse.io/flexport/jobs/7166036",
-      "source": "Flexport Greenhouse board",
-      "posted": "Oct 24",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "BizOps in the Office of the CEO: owns Flexport's biggest open questions end to end, builds the financial models, and runs the operating cadence for a freight mode or region. 4-6 years in banking, consulting or high-growth ops. San Francisco.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, California, United States",
-      "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
-    },
-    {
-      "id": "20261102-flexport-head-data-center-logistics",
-      "title": "Head of Data Center Logistics Practice",
-      "company": "Flexport",
-      "location": "San Francisco, CA",
-      "pay": "",
-      "lane": "logistics",
-      "fit": "Also from the parked shortlist; senior logistics practice lead role.",
-      "url": "https://job-boards.greenhouse.io/flexport/jobs/8046640",
-      "source": "Flexport Greenhouse board",
-      "posted": "Oct 24",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Owns the commercial motion for Flexport's data center logistics practice, moving AI compute racks ($1M+, 4,000 lb, lithium battery dangerous goods) with white-glove project management. A sales-leadership profile, not an ops one.",
-        "salary": "OTE $500K+ (50/50 base + uncapped bonus)",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, California, United States",
-      "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
-    },
-    {
-      "id": "20261102-instacart-chief-of-staff-grocery",
-      "title": "Chief of Staff, Online Grocery",
-      "company": "Instacart",
-      "location": "US Remote",
-      "pay": "",
-      "lane": "ea",
-      "fit": "Remote chief-of-staff seat at a grocery/logistics company; your Safeway + delivery-ops background reads well here.",
-      "url": "https://instacart.careers/job/?gh_jid=8112136",
-      "source": "Instacart Greenhouse board",
-      "posted": "Oct 30",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Chief of staff to the GM of a ~200-person online grocery org: runs the operating rhythm, sharpens decision frameworks and handles communications. Individual contributor, no direct reports. US remote.",
-        "salary": "Not posted",
-        "loc": "US - Remote"
-      },
-      "salary": "Not posted",
-      "loc": "Canada - Remote (ON, AB, BC, or NS Only)",
-      "summary": "Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community."
-    },
-    {
-      "id": "20261102-nuro-chief-of-staff-driver",
-      "title": "Chief of Staff, Nuro Driver",
-      "company": "Nuro",
-      "location": "Mountain View, CA",
-      "pay": "",
-      "lane": "ea",
-      "fit": "CoS to AV company leadership; exec-ops lane, Mountain View commute.",
-      "url": "https://nuro.ai/careersitem?gh_jid=8044124",
-      "source": "Nuro Greenhouse board",
-      "posted": "Oct 27",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Chief of staff to the VP of the Nuro Driver autonomy platform: strategic program leadership, cross-org unblocking across engineering and safety, and partner execution. Mountain View.",
-        "salary": "Not posted",
-        "loc": "Mountain View, CA"
-      },
-      "salary": "Not posted",
-      "loc": "Mountain View, California (HQ)",
-      "summary": "<p><strong>Who We Are&nbsp;</strong></p> <p>Nuro believes self-driving vehicles are the most immediate and profound opportunity for AI to drive positive change in the physical world."
-    },
-    {
-      "id": "20261102-figma-ea-growth-marketing",
-      "title": "Executive Assistant, Growth Marketing",
-      "company": "Figma",
-      "location": "San Francisco, CA",
-      "pay": "",
-      "lane": "ea",
-      "fit": "SF EA seat supporting marketing leadership; exec calendar and event support strengths.",
-      "url": "https://boards.greenhouse.io/figma/jobs/6199185004?gh_jid=6199185004",
-      "source": "Figma Greenhouse board",
-      "posted": "Oct 26",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "EA to the VP of Growth Marketing: heavy calendar and inbox management, travel, expense and PO approvals, and offsite planning with the CMO's EA. 7+ years EA experience; SF office 2 days a week.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA",
-      "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
-    },
-    {
-      "id": "20261102-figma-ea-people",
-      "title": "Executive Assistant, People",
-      "company": "Figma",
-      "location": "San Francisco, CA",
-      "pay": "",
-      "lane": "ea",
-      "fit": "Second Figma EA opening; People-team support, SF onsite.",
-      "url": "https://boards.greenhouse.io/figma/jobs/5969046004?gh_jid=5969046004",
-      "source": "Figma Greenhouse board",
-      "posted": "Oct 20",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "EA to People-team VPs: calendars, tasks, expense and PO sign-off, and process optimization across the People org. 6+ years senior admin support; SF office 2 days a week.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA"
-      },
-      "salary": "Not posted",
-      "loc": "San Francisco, CA",
-      "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
-    },
-    {
-      "id": "20261102-pinterest-chief-of-staff-gm-ads",
-      "title": "Chief of Staff to GM, Ads",
-      "company": "Pinterest",
-      "location": "San Francisco, CA",
-      "pay": "",
-      "lane": "ea",
-      "fit": "CoS to a GM; heavier business-ops than pure EA, SF onsite.",
-      "url": "https://www.pinterestcareers.com/jobs/?gh_jid=7488432",
-      "source": "Pinterest Greenhouse board",
-      "posted": "Oct 23",
-      "addedAt": "2026-11-02",
-      "details": {
-        "summary": "Chief of staff to the GM of Ads (product, engineering, data science): runs the executive operating agenda, planning cycles and cross-functional forums for one of Pinterest's most business-critical teams. San Francisco.",
-        "salary": "Not posted",
-        "loc": "San Francisco, CA"
-      }
-    }
-  ]
+ "updated": "2026-11-06T15:10:00-08:00",
+ "updatedLocal": "Nov 6, 2026, 3:10 PM PT",
+ "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
+ "leads": [
+  {
+   "id": "20261106-harvey-executive-assistant",
+   "title": "Executive Assistant",
+   "company": "Harvey",
+   "location": "San Francisco, CA (hybrid)",
+   "pay": "$125,000-$150,000",
+   "lane": "ea",
+   "fit": "EA on the HR/people team at a large AI legal-tech company; hybrid SF, just reposted (posted 1 day ago)",
+   "url": "https://jobs.ashbyhq.com/harvey/1483470d-c402-4d26-8f11-e1a2e404ce79?utm_source=jobs.lsvp.com",
+   "source": "lsvp:harvey",
+   "posted": "2026-11-05",
+   "details": {
+    "summary": "Executive Assistant role at Harvey, a legal-AI company, sitting in the HR/people organization. Hybrid in San Francisco. Listing card shows $125k-$150k and a 1-day-old repost, so it is fresh; full description only renders on Ashby's site.",
+    "salary": "$125,000-$150,000",
+    "loc": "San Francisco, CA, USA (hybrid)"
+   },
+   "addedAt": "2026-11-06T15:10:00-08:00"
+  },
+  {
+   "id": "20261106-flexport-business-operations-manager-office-of-the-ceo",
+   "title": "Business Operations Manager, Office of the CEO",
+   "company": "Flexport",
+   "location": "San Francisco, CA",
+   "pay": "$160,000-$180,000",
+   "lane": "ea",
+   "fit": "Exec-office business ops: pick a freight mode/region, run real problems, grow into a #2 to a business-unit leader; strong ops growth path",
+   "url": "https://job-boards.greenhouse.io/flexport/jobs/7166036",
+   "source": "greenhouse:flexport",
+   "posted": "2026-11-05",
+   "details": {
+    "summary": "Joins the Office of the CEO working directly on Flexport's highest-priority problems alongside the CEO and President; you take a mode or region (ocean, air, trucking, customs), learn it from the inside by solving real problems like pricing or missed plans, then go run part of the business. Some move into a business unit as the number two to the leader who runs it.",
+    "salary": "$160,000-$180,000",
+    "loc": "San Francisco, CA, USA"
+   },
+   "addedAt": "2026-11-06T15:10:00-08:00"
+  },
+  {
+   "id": "20261106-figma-executive-assistant-growth-marketing",
+   "title": "Executive Assistant, Growth Marketing",
+   "company": "Figma",
+   "location": "San Francisco, CA",
+   "pay": "$127,000-$269,000",
+   "lane": "ea",
+   "fit": "EA to the VP of Growth Marketing and the Director of B2B Growth, Strategy & Ops; strategic partner plus calendar/inbox/travel/POs",
+   "url": "https://job-boards.greenhouse.io/figma/jobs/6199185004",
+   "source": "greenhouse:figma",
+   "posted": "2026-10-27",
+   "details": {
+    "summary": "Direct support to Figma's VP of Growth Marketing and Director, B2B - Growth, Strategy & Ops: leadership meetings, agendas and action items, heavy calendar and inbox management, all-hands and team comms, travel, and expense/PO sign-off as their delegate, plus team cohesion and planning work as a strategic partner.",
+    "salary": "$127,000-$269,000",
+    "loc": "San Francisco, CA, USA"
+   },
+   "addedAt": "2026-11-06T15:10:00-08:00"
+  },
+  {
+   "id": "20261106-figma-executive-assistant-people",
+   "title": "Executive Assistant, People",
+   "company": "Figma",
+   "location": "San Francisco, CA (US-based)",
+   "pay": "$127,000-$269,000",
+   "lane": "ea",
+   "fit": "EA to three senior leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations); calendar, travel, POs, decks and process work",
+   "url": "https://job-boards.greenhouse.io/figma/jobs/5969046004",
+   "source": "greenhouse:figma",
+   "posted": "2026-10-27",
+   "details": {
+    "summary": "Supports three senior People-team leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations) with calendar, travel, meetings, notes and email; also strategic-partner work on team cohesion and planning, expense/PO sign-off as a delegate, and building decks and key documents for the VPs.",
+    "salary": "$127,000-$269,000",
+    "loc": "San Francisco, CA, USA (posting lists US)"
+   },
+   "addedAt": "2026-11-06T15:10:00-08:00"
+  },
+  {
+   "id": "20261106-stripe-administrative-business-partner-office-of-the-president",
+   "title": "Administrative Business Partner, Office of the President",
+   "company": "Stripe",
+   "location": "San Francisco, CA / New York, NY",
+   "pay": "Not posted",
+   "lane": "ea",
+   "fit": "Admin partner in the Office of the President; complex calendar, high-profile offsites, travel; pay not posted, flag",
+   "url": "https://job-boards.greenhouse.io/stripe/jobs/8209639",
+   "source": "greenhouse:stripe",
+   "posted": "2026-10-29",
+   "details": {
+    "summary": "Reports to the Lead Administrative Business Partner to the President and supports Stripe's President, Product and Business: managing a complex calendar, research and logistics for high-profile offsite events, and travel to other offices. Posting asks for judgment, discretion, and comfort in ambiguous environments.",
+    "salary": "Not posted",
+    "loc": "New York City, NY, USA; San Francisco, CA, USA"
+   },
+   "addedAt": "2026-11-06T15:10:00-08:00"
+  },
+  {
+   "id": "20261105-waymo-administrative-business-partner",
+   "title": "Administrative Business Partner",
+   "company": "Waymo",
+   "location": "Mountain View, CA (hybrid)",
+   "pay": "Not posted",
+   "lane": "ea",
+   "fit": "Exec-team admin/business partner role at Waymo HQ; pay not posted, flag",
+   "url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs/7849334?gh_src=api",
+   "source": "greenhouse:waymo",
+   "posted": "2026-03-09",
+   "details": {
+    "summary": "Hybrid role reporting into Waymo's Executive Team Leadership; business partner supporting executives. Posting still open since March.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA, USA"
+   },
+   "addedAt": "2026-11-05T15:10:00-08:00"
+  },
+  {
+   "id": "20261105-waymo-training-delivery-manager-fleet-maintenance-validation-ttt",
+   "title": "Training Delivery Manager, Fleet Maintenance & Validation (TTT)",
+   "company": "Waymo",
+   "location": "San Francisco, CA / Tempe, AZ (hybrid)",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Builds and delivers technician and workshop training curriculum for the AV fleet; ops/training systems fit",
+   "url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs/7885934",
+   "source": "greenhouse:waymo",
+   "posted": "2026-07-29",
+   "details": {
+    "summary": "Designs a multi-modality technician and workshop management curriculum and assists in asset creation with Waymo's training team, covering fleet maintenance and validation training delivery.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA, USA; Tempe, AZ, USA"
+   },
+   "addedAt": "2026-11-05T15:10:00-08:00"
+  },
+  {
+   "id": "20261105-samsara-senior-supply-planning-manager-us",
+   "title": "Senior Supply Planning Manager, US",
+   "company": "Samsara",
+   "location": "Remote - US",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Owns 12-month production/shipment/capacity planning with demand planning and global ops engineering; remote US",
+   "url": "https://boards-api.greenhouse.io/v1/boards/samsara/jobs/8385569",
+   "source": "greenhouse:samsara",
+   "posted": "2026-11-05",
+   "details": {
+    "summary": "Develops and maintains rolling 12-month production, shipment, and capacity plans, working with Demand Planning, Global Ops Engineering, and supply stakeholders. Posted today (Nov 5).",
+    "salary": "Not posted",
+    "loc": "Remote - US"
+   },
+   "addedAt": "2026-11-05T15:10:00-08:00"
+  },
+  {
+   "id": "20261105-waymo-mapping-ops-senior-program-manager-real-time-disruptio",
+   "date": "2026-11-05",
+   "company": "Waymo",
+   "title": "Mapping Ops Senior Program Manager, Real-time Disruptions",
+   "location": "Mountain View, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Runs real-time disruption response for the mapping ops fleet: closest thing to her service-exceptions dispatch desk",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8315141",
+   "source": "greenhouse waymo",
+   "posted": "2026-10-22",
+   "addedAt": "2026-11-05T05:40:00-08:00",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
+   "salary": "Not posted",
+   "loc": "Mountain View, CA"
+  },
+  {
+   "id": "20261105-instacart-program-manager-escalation-management",
+   "date": "2026-11-05",
+   "company": "Instacart",
+   "title": "Program Manager, Escalation Management",
+   "location": "Remote, United States",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Owns escalations end to end across ops; pure service-exception muscle, fully remote",
+   "url": "https://instacart.careers/job/?gh_jid=8337981",
+   "source": "greenhouse instacart",
+   "posted": "2026-10-30",
+   "addedAt": "2026-11-05T05:40:00-08:00",
+   "summary": "Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community.",
+   "salary": "Not posted",
+   "loc": "Remote, United States"
+  },
+  {
+   "id": "20261105-waymo-partner-audit-remediation-program-manager",
+   "date": "2026-11-05",
+   "company": "Waymo",
+   "title": "Partner Audit Remediation Program Manager",
+   "location": "Remote, US (also Seattle, Chicago)",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Audit-and-remediate partner operations: SOP/compliance lane, fully remote",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8047200",
+   "source": "greenhouse waymo",
+   "posted": "2026-11-04",
+   "addedAt": "2026-11-05T05:40:00-08:00",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
+   "salary": "Not posted",
+   "loc": "Remote, US (also Seattle, Chicago)"
+  },
+  {
+   "id": "20261104-stripe-strategy-operations-risk",
+   "title": "Strategy & Operations, Risk",
+   "company": "Stripe",
+   "location": "US-SF, US-SEA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Risk-org strategy & ops role (SF/Seattle); bizops-adjacent, pay not posted",
+   "url": "https://stripe.com/jobs/search?gh_jid=8199596",
+   "source": "greenhouse:stripe",
+   "posted": "2026-09-14",
+   "addedAt": "2026-11-04T15:20:00-08:00",
+   "details": {
+    "summary": "Risk is central to Stripe’s ability to grow safely: the team protects Stripe and our users while enabling durable, responsible growth. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
+    "salary": "Not posted",
+    "loc": "US-SF, US-SEA"
+   },
+   "salary": "Not posted",
+   "loc": "US-SF, US-SEA",
+   "summary": "Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead."
+  },
+  {
+   "id": "20261104-olema-executive-assistant-supporting-chief-financial-officer",
+   "title": "Executive Assistant, supporting Chief Financial Officer",
+   "company": "Olema Oncology",
+   "location": "San Francisco, California",
+   "pay": "$120,000 - $150,000",
+   "lane": "ea",
+   "fit": "EA to the CFO at Olema Oncology, SF; $120-150k posted",
+   "url": "https://job-boards.greenhouse.io/olema/jobs/6147547004",
+   "source": "greenhouse:olema",
+   "posted": "2026-08-24",
+   "addedAt": "2026-11-04T15:20:00-08:00",
+   "details": {
+    "summary": "You will manage communications and coordinate activities with internal and key external parties, including investors and board members. Olema Oncology is a clinical-stage biopharmaceutical company committed to transforming the standard of care and improving outcomes for patients living with breast cancer and beyond.",
+    "salary": "$120,000 - $150,000",
+    "loc": "San Francisco, California"
+   }
+  },
+  {
+   "id": "20261104-waymo-lead-program-manager-new-platform-validation-operations",
+   "title": "Lead Program Manager - New Platform Validation Operations",
+   "company": "Waymo",
+   "location": "Mountain View, California, USA; San Francisco, California, USA;",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Leads program ops for validating Waymo's new hardware platform; ops program management across SF/MV",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8047527",
+   "source": "greenhouse:waymo",
+   "posted": "2026-07-09",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "In this hybrid role, you will report to a Head of Validation Operations You will: Lead NPI Platform Program Execution: Drive end-to-end program structuring for onboarding new platform variants into validation fleets, managing the critical path from arrival and upfit to testing and fleet deployment. Waymo is an autonomous driving technolog",
+    "salary": "Not posted",
+    "loc": "Mountain View, California, USA; San Francisco, California, USA;"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, California, USA; San Francisco, California, USA;",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261104-waymo-new-platform-enablement-manager-hw-ops-design-excellence",
+   "title": "New Platform Enablement Manager (HW/Ops Design Excellence)",
+   "company": "Waymo",
+   "location": "San Francisco, CA, US",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Owns ops design excellence + enablement for new platform hardware rollout in SF",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8039334",
+   "source": "greenhouse:waymo",
+   "posted": "2026-09-21",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "You will: Bring up and enable deployment of new and upcoming Waymo platforms across program phases from prototype requirement state to deployment Work with engineering and cross functional stakeholders on fast feedback, issue discovery and resolution Manage and drive operations for new sensor suite and base vehicle to ensure maturity and ",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA, US"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA, US",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261104-waymo-manager-resilience-risk",
+   "title": "Manager, Resilience Risk",
+   "company": "Waymo",
+   "location": "Mountain View, CA, USA; San Francisco, CA, USA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Leads business-continuity/resilience risk program (MV/SF); risk ops leadership",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8143380",
+   "source": "greenhouse:waymo",
+   "posted": "2026-08-20",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "In this hybrid role you will report into our Head of Enterprise Resilience. Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA, USA; San Francisco, CA, USA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, CA, USA; San Francisco, CA, USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261104-lyft-av-program-manager",
+   "title": "AV Program Manager",
+   "company": "Lyft",
+   "location": "San Francisco, CA",
+   "pay": "$108,000 - $135,000",
+   "lane": "logistics",
+   "fit": "Program manager for Lyft's autonomous vehicle operations rollout, SF",
+   "url": "https://app.careerpuck.com/job-board/lyft/job/8839156002?gh_jid=8839156002",
+   "source": "greenhouse:lyft",
+   "posted": "2026-09-25",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "You will maintain the program timeline, coordinate cross-functional workstreams spanning infrastructure, people, fleet operations, treasury, legal, and finance, and help ensure that requirements are tracked, dependencies are surfaced, and deployment milestones are met. Flexdrive, Lyft's wholly-owned fleet management subsidiary, is undergo",
+    "salary": "$108,000 - $135,000",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA",
+   "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Flexdrive, Lyft's wholly-owned fleet management subsidiary, is undergoing a transformational shift f"
+  },
+  {
+   "id": "20261104-samsara-sr-manager-procure-to-pay",
+   "title": "Sr. Manager, Procure to Pay",
+   "company": "Samsara",
+   "location": "Remote - US",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Leads procure-to-pay operations, fully remote US; procurement ops management",
+   "url": "https://www.samsara.com/company/careers/roles/8351204?gh_jid=8351204",
+   "source": "greenhouse:samsara",
+   "posted": "2026-11-03",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "You will set the governance model and service standards, partner with executive stakeholders, and build a team that delivers consistently. Who we are Samsara (NYSE: IOT) is the pioneer of the Connected Operations™ Cloud, which is a platform that enables organizations that depend on physical operations to harness Internet of Things (IoT) d",
+    "salary": "Not posted",
+    "loc": "Remote - US"
+   },
+   "salary": "Not posted",
+   "loc": "Remote - Toronto",
+   "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
+  },
+  {
+   "id": "20261104-figma-senior-order-management-analyst",
+   "title": "Senior Order Management Analyst",
+   "company": "Figma",
+   "location": "San Francisco, CA • New York, NY • United States",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Order management/fulfillment ops analyst (SF/NY); pay not posted",
+   "url": "https://boards.greenhouse.io/figma/jobs/6217137004?gh_jid=6217137004",
+   "source": "greenhouse:figma",
+   "posted": "2026-10-14",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "As Figma grows, we're building the order-to-cash process for what comes next, and this role is a builder's seat: you'll take on our most complex orders while helping shape how orders get processed, reviewed, and automated as we scale. Figma is growing our team of passionate creatives and builders on a mission to make design accessible to ",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA • New York, NY • United States"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA • New York, NY • United States",
+   "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
+  },
+  {
+   "id": "20261104-stripe-procurement-contracts-manager",
+   "title": "Procurement Contracts Manager",
+   "company": "Stripe",
+   "location": "Seattle, San Francisco, New York, Chicago",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Manages procurement contracts for Stripe (SF/Seattle/NY/Chicago); pay not posted",
+   "url": "https://stripe.com/jobs/search?gh_jid=8329743",
+   "source": "greenhouse:stripe",
+   "posted": "2026-10-29",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "Who we are About Stripe Stripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
+    "salary": "Not posted",
+    "loc": "Seattle, San Francisco, New York, Chicago"
+   },
+   "salary": "Not posted",
+   "loc": "Seattle, San Francisco, New York, Chicago ",
+   "summary": "Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead."
+  },
+  {
+   "id": "20261104-stripe-administrative-business-partner-coverage",
+   "title": "Administrative Business Partner, Coverage",
+   "company": "Stripe",
+   "location": "Remote - US",
+   "pay": "Not posted",
+   "lane": "ea",
+   "fit": "EA-style admin business partner, remote US; pay not posted",
+   "url": "https://stripe.com/jobs/search?gh_jid=8328118",
+   "source": "greenhouse:stripe",
+   "posted": "2026-10-30",
+   "addedAt": "2026-11-04T15:15:00-08:00",
+   "details": {
+    "summary": "You will be required to support multiple leaders on a temporary basis. Who we are About Stripe Stripe is a financial infrastructure platform for businesses.",
+    "salary": "Not posted",
+    "loc": "Remote - US"
+   },
+   "salary": "Not posted",
+   "loc": "Remote - US",
+   "summary": "Our mission is to increase the GDP of the internet, and we have a staggering amount of work ahead."
+  },
+  {
+   "id": "20261104-waymo-product-ops-manager-ops-compliance",
+   "date": "2026-11-04",
+   "company": "Waymo",
+   "title": "Product Operations Manager, Ops Compliance & Regulatory Infrastructure",
+   "location": "Mountain View, CA or San Francisco, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Ops governance + regulatory infrastructure for AV fleet ops; direct match for SOP/compliance-heavy dispatch background",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8315881",
+   "source": "greenhouse waymo",
+   "posted": "2026-11-04",
+   "addedAt": "2026-11-04T05:40:00-08:00",
+   "summary": "Owns operational compliance and regulatory infrastructure for Waymo's fleet operations program, coordinating cross-functional ops teams and building the processes that keep driverless operations audit-ready.",
+   "salary": "Not posted",
+   "loc": "Mountain View, CA or San Francisco, CA"
+  },
+  {
+   "id": "20261103-goodfire-ea-coo",
+   "title": "Executive Assistant",
+   "company": "Goodfire",
+   "location": "San Francisco, CA",
+   "pay": "$100,000-$200,000",
+   "lane": "ea",
+   "fit": "Supports COO and principal investigator at an AI interpretability lab; calendar, travel and ops partnership",
+   "url": "https://job-boards.greenhouse.io/goodfire/jobs/5373349008",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Protects the time and attention of Goodfire's COO and principal investigator at the San Francisco AI interpretability lab: calendar and inbox ownership, travel and meeting orchestration, and partnership with the Ops team on employee experience. Intense, fast-paced.",
+    "salary": "$100,000-$200,000",
+    "loc": "San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261103-rothys-executive-assistant",
+   "title": "Executive Assistant",
+   "company": "Rothy's",
+   "location": "San Francisco, CA",
+   "pay": "$120,000-$145,000",
+   "lane": "ea",
+   "fit": "Exec-team thought partner: communications, briefing materials and meeting prep at the SF HQ",
+   "url": "https://jobs.ashbyhq.com/Rothys/a95fa347-715e-40d5-925c-22016f1e7504",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Supports members of Rothy's executive team as a strategic thought partner: owns executive communications and correspondence, prepares briefing materials, and runs calendar and meeting logistics at the San Francisco HQ.",
+    "salary": "$120,000-$145,000",
+    "loc": "San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261103-exa-ea-to-founders",
+   "title": "Executive Assistant to Founders",
+   "company": "Exa",
+   "location": "San Francisco, CA (in office)",
+   "pay": "$100,000-$200,000",
+   "lane": "ea",
+   "fit": "In-person EA for the C-suite of a ~100-person AI search startup; wide, variable, high-trust workload",
+   "url": "https://jobs.ashbyhq.com/exa/b5665525-c2a3-4c6a-a3dd-d0d1f1df01f8",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "In-person EA to Exa's founders and C-suite in San Francisco: owns founder calendars, clears bottlenecks and handles scheduling, office coordination and connective-tissue ops for a ~100-person company; highly variable, high-trust workload.",
+    "salary": "$100,000-$200,000",
+    "loc": "San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261103-plaid-executive-operations-leader",
+   "title": "Executive Operations Leader",
+   "company": "Plaid",
+   "location": "San Francisco, CA",
+   "pay": "$172,800-$232,800",
+   "lane": "ea",
+   "fit": "Leads and develops the EA team plus one C-suite principal; a management step up from pure EA work",
+   "url": "https://jobs.ashbyhq.com/plaid/c7395637-aa6b-43c0-8204-f0381f9b04be",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Leads Plaid's EA program at SF HQ: coaching and developing the team of EAs, setting role expectations, coverage and operating standards, building scalable playbooks for leadership meetings, onsites and company events, while directly supporting one C-suite executive.",
+    "salary": "$172,800-$232,800",
+    "loc": "San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261103-databricks-sr-ea-coo",
+   "title": "Sr. Executive Assistant (COO)",
+   "company": "Databricks",
+   "location": "Mountain View, CA / San Francisco, CA",
+   "pay": "$155,300-$213,500",
+   "lane": "ea",
+   "fit": "COO support: calendar, global travel logistics and strategic events; heavy AI-tooling emphasis",
+   "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8523677002",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Right hand to Databricks' COO: a forward-looking, accurate calendar, meeting prep under pressure, global travel logistics and customer-engagement planning, plus strategic events for the leadership team; the posting leans on AI tools to automate routine admin.",
+    "salary": "$155,300-$213,500",
+    "loc": "Mountain View, CA / San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261103-verkada-supply-chain-manager-aftermarket",
+   "title": "Supply Chain Manager, Aftermarket Operations",
+   "company": "Verkada",
+   "location": "San Mateo, CA",
+   "pay": "$130,000-$170,000",
+   "lane": "logistics",
+   "fit": "Demand/supply planning across regional warehouses, reverse logistics and vendor management",
+   "url": "https://job-boards.greenhouse.io/verkada/jobs/5234561007",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Owns the post-sale lifecycle of Verkada's hardware: forward and reverse inventory across regional warehouses, refurbishment, spare parts and end-of-service inventory, with direct vendor relationships and warranty-return analysis alongside engineering and quality. In-office in San Mateo.",
+    "salary": "$130,000-$170,000",
+    "loc": "San Mateo, CA"
+   }
+  },
+  {
+   "id": "20261103-samsara-manager-operations-program-mgmt",
+   "title": "Manager, Operations Program Management",
+   "company": "Samsara",
+   "location": "Remote - US",
+   "pay": "$125,545-$211,000",
+   "lane": "logistics",
+   "fit": "People-manager role over an ops program team; hardware new-product introduction rather than dispatch",
+   "url": "https://www.samsara.com/company/careers/roles/7558150?gh_jid=7558150",
+   "source": "Greenhouse",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Manages Samsara's Operations Program Manager (OPM) team through new product introduction, orchestrating cross-functional launches from development through mass production and sustained volume; drives decisions on cost, quality and time to market. Remote US with up to 20% travel.",
+    "salary": "$125,545-$211,000",
+    "loc": "Remote - US"
+   },
+   "salary": "Not posted",
+   "loc": "Remote - US",
+   "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
+  },
+  {
+   "id": "20261103-waymo-market-operations-lead-sf",
+   "title": "Market Operations Lead - San Francisco",
+   "company": "Waymo",
+   "location": "San Francisco, CA",
+   "pay": "$190,000-$234,000",
+   "lane": "logistics",
+   "fit": "Owns SFBA ride-hail commercial ops end to end; on-road rider experience and service reliability; hybrid",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=7851972",
+   "source": "Greenhouse",
+   "posted": "recent",
+   "addedAt": "2026-11-03T15:20:00-08:00",
+   "details": {
+    "summary": "Owns the end-to-end performance of Waymo's San Francisco Bay Area ride-hail commercial operations: the ground-side leader who balances on-the-road service reliability with the rider experience, coordinating cross-functional teams for safe, reliable autonomous rides. Hybrid, reporting to the Head of Market Operations - West.",
+    "salary": "$190,000-$234,000",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261103-waymo-sr-supply-demand-manager",
+   "title": "Sr. Supply & Demand Manager",
+   "company": "Waymo",
+   "location": "Mountain View, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Supply/demand balancing for the AV fleet, closest to her Sherwin-Williams supply-network work",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8248270",
+   "source": "Greenhouse",
+   "posted": "Oct 20",
+   "addedAt": "2026-11-03T05:40:00-08:00",
+   "details": {
+    "summary": "Owns Waymo's global supply and demand balance for autonomous vehicles and sensor suites: aligning commercial rollout targets, fleet maintenance and manufacturing/logistics capacity across markets. Hybrid Mountain View; reports to the Head of Vehicle Supply Planning & Materials Ops.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, CA, USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261103-waymo-sr-tpm-fleet",
+   "title": "Senior Technical Program Manager, Fleet",
+   "company": "Waymo",
+   "location": "Mountain View / San Francisco, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Fleet program management; her 4,000-moves-a-year equipment-ops record fits the fleet lane",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8304640",
+   "source": "Greenhouse",
+   "posted": "Oct 23",
+   "addedAt": "2026-11-03T05:40:00-08:00",
+   "details": {
+    "summary": "Leads cross-functional fleet management programs across product, ops, systems engineering and design, owning end-to-end execution of Waymo's fleet roadmap where no playbook exists yet. Hybrid, Mountain View or San Francisco.",
+    "salary": "Not posted",
+    "loc": "Mountain View / San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, CA, USA; San Francisco, CA, USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261103-waymo-training-delivery-manager",
+   "title": "Training Delivery Manager (Fleet Maintenance & Validation)",
+   "company": "Waymo",
+   "location": "San Francisco, CA (also Tempe, AZ)",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Training systems + fleet maintenance, two of her documented strengths in one seat",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8049302",
+   "source": "Greenhouse",
+   "posted": "Oct 20",
+   "addedAt": "2026-11-03T05:40:00-08:00",
+   "details": {
+    "summary": "Designs the train-the-trainer curriculum for fleet maintenance technicians and workshop management, building the program with Waymo's training team. Hybrid San Francisco or Tempe, AZ.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA / Tempe, AZ"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA, USA; Tempe, AZ, USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261103-lyft-global-supply-manager",
+   "title": "Global Supply Manager",
+   "company": "Lyft",
+   "location": "San Francisco, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Vehicle/fleet supply sourcing and vendor management, her rate-negotiation sweet spot",
+   "url": "https://app.careerpuck.com/job-board/lyft/job/8856438002?gh_jid=8856438002",
+   "source": "Greenhouse",
+   "posted": "Oct 30",
+   "addedAt": "2026-11-03T05:40:00-08:00",
+   "details": {
+    "summary": "Indirect procurement at Lyft: sourcing strategy, supplier relationships and complex contract negotiation for safety, people and contingent-workforce spend, with heavy Excel cost modeling. San Francisco.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "New York, NY",
+   "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Lyft is seeking an experienced<strong> Indirect Global Supply Manager</strong> to join our Global Su"
+  },
+  {
+   "id": "20261103-kodiak-director-supply-chain",
+   "title": "Director of Supply Chain",
+   "company": "Kodiak",
+   "location": "Mountain View, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Autonomous trucking supply chain, heavy-vehicle world she knows; director step up from her manager level",
+   "url": "https://job-boards.greenhouse.io/kodiak/jobs/4302898009",
+   "source": "Greenhouse",
+   "posted": "Oct 22",
+   "addedAt": "2026-11-03T05:40:00-08:00",
+   "details": {
+    "summary": "Director-level supply chain build-out at Kodiak's autonomous trucking company, scaling Driver-as-a-Service freight ops with partners like Bosch and AWS. Mountain View. Director scope, above hands-on level.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA"
+   }
+  },
+  {
+   "id": "20261103-uberfreight-sr-mgr-logistics-analytics",
+   "title": "Senior Manager, Logistics Analytics & Optimization",
+   "company": "Uber Freight",
+   "location": "San Francisco, CA",
+   "pay": "Not posted",
+   "lane": "logistics",
+   "fit": "Freight-network optimization and reporting, her Tableau/oracle-reporting lane at scale",
+   "url": "https://job-boards.greenhouse.io/uberfreight/jobs/5464389008",
+   "source": "Greenhouse",
+   "posted": "Oct 28",
+   "addedAt": "2026-11-03T05:40:00-08:00",
+   "details": {
+    "summary": "Leads a team of technical analysts optimizing Uber Freight's freight networks: advanced modeling, KPIs and automation across commercial strategy and operations. Hybrid San Francisco.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Chicago, IL 60607, United States",
+   "summary": "<div class=\"ewa-rteLine\"><strong>Schedule: Full Time</strong></div> <div class=\"ewa-rteLine\"><strong>Job Type: Hybrid</strong></div> <div class=\"ewa-rteLine\"><strong>Salary Type: Salary</strong></div> <div class=\"ewa-rteLine\"><str"
+  },
+  {
+   "id": "20261102-sierra-ea-office-of-co-founders",
+   "title": "Executive Assistant, Office of the Co-Founders",
+   "company": "Sierra",
+   "location": "San Francisco, CA",
+   "pay": "$130K-$140K + equity (posted)",
+   "lane": "EA",
+   "fit": "EA to two co-founders at a top AI startup; hourly role with overtime eligibility, so likely strong comp for hours worked",
+   "url": "https://jobs.ashbyhq.com/sierra/e963514d-8b85-4747-9620-cf9a66ce9b4c",
+   "source": "Ashby",
+   "posted": "recent",
+   "addedAt": "2026-11-02T21:20:00-08:00",
+   "details": {
+    "summary": "Second EA to co-founders Bret Taylor (OpenAI board chair, ex-Salesforce co-CEO) and Clay Bavor (ex-Google Labs): complex travel, onsite meeting logistics, offsites and exec events on a high-trust founding team. In-person San Francisco.",
+    "salary": "$130K-$140K + equity",
+    "loc": "San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261102-sierra-ea-legal-partnerships",
+   "title": "Executive Assistant, Legal & Partnerships",
+   "company": "Sierra",
+   "location": "San Francisco, CA",
+   "pay": "$130K-$170K + equity (posted)",
+   "lane": "EA",
+   "fit": "EA lane, contracts and partner-facing support; wide band, posted range clears the $90K floor comfortably",
+   "url": "https://jobs.ashbyhq.com/sierra/2329f770-dd47-494f-80c8-0c8a11877bea",
+   "source": "Ashby",
+   "posted": "recent",
+   "addedAt": "2026-11-02T21:20:00-08:00",
+   "details": {
+    "summary": "EA to Sierra's General Counsel and Partnerships leaders: multi-leader calendar and travel management, meeting prep and follow-up, correspondence drafting, and team offsites. 5+ years EA experience; in-person San Francisco.",
+    "salary": "$130K-$170K + equity",
+    "loc": "San Francisco, CA"
+   }
+  },
+  {
+   "id": "20261102-waymo-fleet-health-specialist",
+   "title": "Fleet Health Specialist",
+   "company": "Waymo",
+   "location": "San Francisco, CA",
+   "pay": "$62-$76/hr (posted)",
+   "lane": "logistics",
+   "fit": "Fleet monitoring and maintenance ops for the robotaxi fleet; closest match to her fleet/dispatch background, watch for a technical background ask in the full posting",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8250120",
+   "source": "Greenhouse",
+   "posted": "recent",
+   "addedAt": "2026-11-02T21:20:00-08:00",
+   "details": {
+    "summary": "Tracks fleet health and availability metrics, drives root-cause fixes with engineering and suppliers, and travels to regions for fleet inspections. Asking 3+ years in automotive service or fleet management with a related degree. San Francisco.",
+    "salary": "$62-$76/hr (about $129K-$158K annualized)",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA, US",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261102-waymo-network-operations-manager",
+   "title": "Network Operations Manager",
+   "company": "Waymo",
+   "location": "Mountain View, CA",
+   "pay": "",
+   "lane": "logistics",
+   "fit": "Manager-level ops role running a live network; your dispatch and driver-ops playbook transfers directly.",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8044544",
+   "source": "Waymo Greenhouse board",
+   "posted": "Oct 31",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Manages Waymo's IT network operations team under the WINS infrastructure group: major-incident ownership, ITIL governance and vendor-run deployments of firewalls, switches and UPS. Mountain View. IT infrastructure, not logistics.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View CA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261102-waymo-av-compliance-lead",
+   "title": "AV Compliance Lead, Fleet & Operator Compliance",
+   "company": "Waymo",
+   "location": "Mountain View, CA",
+   "pay": "",
+   "lane": "logistics",
+   "fit": "Fleet + DOT/FMCSA compliance leadership, your exact regulatory strength in an AV fleet.",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8163421",
+   "source": "Waymo Greenhouse board",
+   "posted": "Oct 30",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Builds Waymo's vehicle and operator compliance program for global scaling: regulator relationships, permitting and registration, vendor management and executive KPI dashboards. Expects 12-15 years of program management and teams of 10+. Hybrid Mountain View.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, CA, USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261102-waymo-head-of-logistics",
+   "title": "Head of Logistics",
+   "company": "Waymo",
+   "location": "Mountain View, CA",
+   "pay": "",
+   "lane": "logistics",
+   "fit": "Senior logistics role over fleet moves; a stretch up from dispatch manager but your 4,000-moves-a-year record speaks to it.",
+   "url": "https://careers.withwaymo.com/jobs?gh_jid=8039786",
+   "source": "Waymo Greenhouse board",
+   "posted": "Oct 28",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Stands up Waymo's entire logistics organization: global transport networks moving AVs and components, team building from scratch, cost reduction, reverse logistics and trade compliance. Expects 10+ years of logistics leadership. Mountain View.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, CA, USA",
+   "summary": "<div class=\"content-intro\"><p>Waymo is an autonomous driving technology company with the mission to be the world's most trusted driver."
+  },
+  {
+   "id": "20261102-lyft-procurement-coe-manager",
+   "title": "Procurement COE Manager",
+   "company": "Lyft",
+   "location": "San Francisco, CA",
+   "pay": "$98,000-$122,500",
+   "lane": "logistics",
+   "fit": "Clears your $90K floor with a posted range; procurement + vendor rate negotiation is on your resume.",
+   "url": "https://app.careerpuck.com/job-board/lyft/job/8863960002?gh_jid=8863960002",
+   "source": "Lyft Greenhouse board",
+   "posted": "Oct 29",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Runs Lyft's procurement center of excellence: supplier relationship programs, sourcing workflows rebuilt with AI and automation, and cross-functional cost work. 3-5+ years procurement with Oracle or Zip experience. San Francisco.",
+    "salary": "$98,000-$122,500",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA",
+   "summary": "We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.</p> <p>Lyft is seeking an experienced Procurement Center of Excellence Manager to join our Global Supply Ch"
+  },
+  {
+   "id": "20261102-flexport-bizops-office-of-ceo",
+   "title": "Business Operations Manager, Office of the CEO",
+   "company": "Flexport",
+   "location": "San Francisco, CA",
+   "pay": "",
+   "lane": "logistics",
+   "fit": "Already on the parked VC-sweep shortlist; exec-ops flavor in a freight company, review it here now.",
+   "url": "https://job-boards.greenhouse.io/flexport/jobs/7166036",
+   "source": "Flexport Greenhouse board",
+   "posted": "Oct 24",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "BizOps in the Office of the CEO: owns Flexport's biggest open questions end to end, builds the financial models, and runs the operating cadence for a freight mode or region. 4-6 years in banking, consulting or high-growth ops. San Francisco.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, California, United States",
+   "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
+  },
+  {
+   "id": "20261102-flexport-head-data-center-logistics",
+   "title": "Head of Data Center Logistics Practice",
+   "company": "Flexport",
+   "location": "San Francisco, CA",
+   "pay": "",
+   "lane": "logistics",
+   "fit": "Also from the parked shortlist; senior logistics practice lead role.",
+   "url": "https://job-boards.greenhouse.io/flexport/jobs/8046640",
+   "source": "Flexport Greenhouse board",
+   "posted": "Oct 24",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Owns the commercial motion for Flexport's data center logistics practice, moving AI compute racks ($1M+, 4,000 lb, lithium battery dangerous goods) with white-glove project management. A sales-leadership profile, not an ops one.",
+    "salary": "OTE $500K+ (50/50 base + uncapped bonus)",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, California, United States",
+   "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
+  },
+  {
+   "id": "20261102-instacart-chief-of-staff-grocery",
+   "title": "Chief of Staff, Online Grocery",
+   "company": "Instacart",
+   "location": "US Remote",
+   "pay": "",
+   "lane": "ea",
+   "fit": "Remote chief-of-staff seat at a grocery/logistics company; your Safeway + delivery-ops background reads well here.",
+   "url": "https://instacart.careers/job/?gh_jid=8112136",
+   "source": "Instacart Greenhouse board",
+   "posted": "Oct 30",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Chief of staff to the GM of a ~200-person online grocery org: runs the operating rhythm, sharpens decision frameworks and handles communications. Individual contributor, no direct reports. US remote.",
+    "salary": "Not posted",
+    "loc": "US - Remote"
+   },
+   "salary": "Not posted",
+   "loc": "Canada - Remote (ON, AB, BC, or NS Only)",
+   "summary": "Where others see a simple need for grocery delivery, we see exciting complexity and endless opportunity to serve the varied needs of our community."
+  },
+  {
+   "id": "20261102-nuro-chief-of-staff-driver",
+   "title": "Chief of Staff, Nuro Driver",
+   "company": "Nuro",
+   "location": "Mountain View, CA",
+   "pay": "",
+   "lane": "ea",
+   "fit": "CoS to AV company leadership; exec-ops lane, Mountain View commute.",
+   "url": "https://nuro.ai/careersitem?gh_jid=8044124",
+   "source": "Nuro Greenhouse board",
+   "posted": "Oct 27",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Chief of staff to the VP of the Nuro Driver autonomy platform: strategic program leadership, cross-org unblocking across engineering and safety, and partner execution. Mountain View.",
+    "salary": "Not posted",
+    "loc": "Mountain View, CA"
+   },
+   "salary": "Not posted",
+   "loc": "Mountain View, California (HQ)",
+   "summary": "<p><strong>Who We Are&nbsp;</strong></p> <p>Nuro believes self-driving vehicles are the most immediate and profound opportunity for AI to drive positive change in the physical world."
+  },
+  {
+   "id": "20261102-figma-ea-growth-marketing",
+   "title": "Executive Assistant, Growth Marketing",
+   "company": "Figma",
+   "location": "San Francisco, CA",
+   "pay": "",
+   "lane": "ea",
+   "fit": "SF EA seat supporting marketing leadership; exec calendar and event support strengths.",
+   "url": "https://boards.greenhouse.io/figma/jobs/6199185004?gh_jid=6199185004",
+   "source": "Figma Greenhouse board",
+   "posted": "Oct 26",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "EA to the VP of Growth Marketing: heavy calendar and inbox management, travel, expense and PO approvals, and offsite planning with the CMO's EA. 7+ years EA experience; SF office 2 days a week.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA",
+   "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
+  },
+  {
+   "id": "20261102-figma-ea-people",
+   "title": "Executive Assistant, People",
+   "company": "Figma",
+   "location": "San Francisco, CA",
+   "pay": "",
+   "lane": "ea",
+   "fit": "Second Figma EA opening; People-team support, SF onsite.",
+   "url": "https://boards.greenhouse.io/figma/jobs/5969046004?gh_jid=5969046004",
+   "source": "Figma Greenhouse board",
+   "posted": "Oct 20",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "EA to People-team VPs: calendars, tasks, expense and PO sign-off, and process optimization across the People org. 6+ years senior admin support; SF office 2 days a week.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA"
+   },
+   "salary": "Not posted",
+   "loc": "San Francisco, CA",
+   "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
+  },
+  {
+   "id": "20261102-pinterest-chief-of-staff-gm-ads",
+   "title": "Chief of Staff to GM, Ads",
+   "company": "Pinterest",
+   "location": "San Francisco, CA",
+   "pay": "",
+   "lane": "ea",
+   "fit": "CoS to a GM; heavier business-ops than pure EA, SF onsite.",
+   "url": "https://www.pinterestcareers.com/jobs/?gh_jid=7488432",
+   "source": "Pinterest Greenhouse board",
+   "posted": "Oct 23",
+   "addedAt": "2026-11-02",
+   "details": {
+    "summary": "Chief of staff to the GM of Ads (product, engineering, data science): runs the executive operating agenda, planning cycles and cross-functional forums for one of Pinterest's most business-critical teams. San Francisco.",
+    "salary": "Not posted",
+    "loc": "San Francisco, CA"
+   }
+  }
+ ]
 }
