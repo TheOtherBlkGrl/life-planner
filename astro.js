@@ -336,8 +336,20 @@ const ASPECT_PLAIN = {
   trine: "easy flow: things come naturally, almost too naturally to notice",
   opposition: "a tug-of-war: something pulls from the opposite corner, and balance is the work"
 };
-function plainGloss(h) {
-  return `In plain terms: ${PLANET_PLAIN[h.planet] || h.planet + " energy"}, making a ${h.aspect} with ${NATAL_LABEL[h.natal]}. A ${h.aspect} is ${ASPECT_PLAIN[h.aspect] || "an angle between planets"}.`;
+const ASPECT_VERB = { conj: "teams up with", conjunction: "teams up with", sextile: "opens a lane to", square: "grinds against", trine: "flows with", opposition: "pulls against" };
+function transitPick(h, off) {
+  const lib = TRANSIT_READ[h.planet] || TRANSIT_READ.Sun;
+  const pool = lib[h.cls] || lib.soft;
+  const d = new Date(noonLocalMs(off || 0));
+  return pool[(d.getDate() + d.getMonth()) % pool.length];
+}
+function plainGloss(h, off) {
+  const pick = transitPick(h, off);
+  return `${h.planet} ${ASPECT_VERB[h.aspect] || "touches"} ${NATAL_LABEL[h.natal]}: ${pick.land} ${pick.move}`;
+}
+function shortGloss(h, off) {
+  const pick = transitPick(h, off);
+  return `${h.planet} ${ASPECT_VERB[h.aspect] || "touches"} ${NATAL_LABEL[h.natal]}: ${pick.land}`;
 }
 
 
@@ -356,7 +368,7 @@ function transitDetail(h, off, prevState) {
   } else {
     orbTxt = `orb ${h.orb.toFixed(1)}\u00B0, ${strengthWord(h.orb)} \u2014 `;
   }
-  return `${orbTxt}${pick.land} ${NATAL_TAIL[h.natal]} ${pick.move}`;
+  return `${orbTxt}${NATAL_TAIL[h.natal]}`;
 }
 
 function horoReadingFor(ms, off, prevState) {
@@ -385,7 +397,7 @@ function horoReadingFor(ms, off, prevState) {
     }
     for (const h of picked) {
       const line = aspectLine(h);
-      parts.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${line.head}</span> \u00b7 ${transitDetail(h, off, prevState)}</span>`);
+      parts.push(`<span class="horo-plain">\u{1F9ED} ${plainGloss(h, off)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${line.head}</span> \u00b7 ${transitDetail(h, off, prevState)}</span>`);
       shown.push(hitKey(h));
     }
     const closers = picked.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
@@ -448,7 +460,7 @@ function deepDiveHtml() {
   const sec = (cls, title, arr, fallback) => `
     <div class="horo-section ${cls}">
       <span class="horo-section-title">${title}</span>
-      ${arr.length ? `<p class="astro-summary">\u{1F9ED} In a nutshell: ${arr.map(h => plainGloss(h)).join(" ")}</p>` + arr.map(h => `<p><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span> \u00b7 ${transitDetail(h, 0, null)}</span></p>`).join("") : `<p>${fallback}</p>`}
+      ${arr.length ? `<p class="astro-summary">\u{1F9ED} In a nutshell: ${arr.map(h => shortGloss(h)).join(" ")}</p>` + arr.map(h => `<p><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span> \u00b7 ${transitDetail(h, 0, null)}</span></p>`).join("") : `<p>${fallback}</p>`}
     </div>`;
   const body = `
     <div class="horo-section"><span class="horo-section-title">\u{1F30C} The Sky Today</span>
