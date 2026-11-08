@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hillside Worm Tracker | Underground Nutrient Highway</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Cinzel (Sharp Serif), Space Grotesk (UI), JetBrains Mono (Data Tickers) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#090d0b',
+              900: '#0f1412',
+              800: '#161f1b',
+              700: '#1f2d27',
+              600: '#2b3e36'
+            },
+            emerald: {
+              950: '#0d261c',
+              900: '#1b4332',
+              800: '#2d6a4f',
+              600: '#40916c',
+              400: '#52b788',
+              300: '#74c69d'
+            },
+            plum: {
+              950: '#240046',
+              900: '#3c096c',
+              800: '#5a189a',
+              600: '#7b2cbf',
+              400: '#9d4edd',
+              300: '#c77dff'
+            },
+            harvest: {
+              600: '#b58e24',
+              500: '#d4af37',
+              400: '#e9c46a',
+              300: '#f4a261'
+            },
+            terracotta: {
+              900: '#4a1f14',
+              700: '#8c3b28',
+              500: '#c85a32',
+              400: '#e07a5f'
+            },
+            crimson: {
+              900: '#591218',
+              700: '#9e1f28',
+              500: '#e63946',
+              400: '#ff6b76'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict 0px Sharp Architectural Borders across the entire module */
+    *, *::before, *::after {
+      border-radius: 0px !important;
+    }
+
+    body {
+      background-color: #0f1412;
+      color: #e6f0ec;
+      font-family: 'Space Grotesk', sans-serif;
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(90, 24, 154, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(27, 67, 50, 0.22) 0%, transparent 45%),
+        linear-gradient(to bottom, #090d0b 0%, #0f1412 50%, #121916 100%);
+      min-height: 100vh;
+    }
+
+    /* Architectural Corner Brackets & Double Borders */
+    .sharp-panel {
+      background-color: #161f1b;
+      border: 1px solid #2b3e36;
+      box-shadow: 4px 4px 0px #090d0b;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .sharp-panel-gold {
+      background-color: #161f1b;
+      border: 1px solid #d4af37;
+      box-shadow: 4px 4px 0px rgba(212, 175, 55, 0.25);
+    }
+
+    .sharp-panel-plum {
+      background-color: #161f1b;
+      border: 1px solid #9d4edd;
+      box-shadow: 4px 4px 0px rgba(157, 78, 221, 0.25);
+    }
+
+    .bin-card {
+      background-color: #131b18;
+      border: 1px solid #2b3e36;
+      box-shadow: 4px 4px 0px #070a09;
+      transition: all 0.15s ease;
+    }
+
+    .bin-card:hover {
+      border-color: #52b788;
+      box-shadow: 6px 6px 0px #070a09;
+    }
+
+    .bin-card.selected-bin {
+      border: 2px solid #d4af37;
+      background-color: #192420;
+      box-shadow: 5px 5px 0px rgba(212, 175, 55, 0.35);
+    }
+
+    .bin-card.harvest-ready {
+      border: 2px solid #d4af37;
+      background-image: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(22, 31, 27, 0) 55%);
+    }
+
+    /* Button Press Mechanics */
+    .sharp-btn {
+      border: 1px solid #2b3e36;
+      box-shadow: 2px 2px 0px #070a09;
+      transition: all 0.1s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .sharp-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px #070a09;
+    }
+    .sharp-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px #070a09;
+    }
+
+    /* Striped Progress Bar for Castings Fill */
+    .castings-bar-fill {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.12) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f1412;
+      border-left: 1px solid #1f2d27;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2d6a4f;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+
+    /* Custom Sharp Checkbox */
+    .sharp-checkbox {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #52b788;
+      background-color: #090d0b;
+      display: inline-grid;
+      place-content: center;
+      cursor: pointer;
+    }
+    .sharp-checkbox::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      transform: scale(0);
+      transition: 100ms transform ease-in-out;
+      background-color: #d4af37;
+    }
+    .sharp-checkbox:checked {
+      border-color: #d4af37;
+    }
+    .sharp-checkbox:checked::before {
+      transform: scale(1);
+    }
+
+    /* Subtle pulse for harvest gold & priority badges */
+    @keyframes borderPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .pulse-badge {
+      animation: borderPulse 2.2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-6 lg:p-8 selection:bg-plum-800 selection:text-harvest-400">
+
+  <!-- MAIN CONTAINER -->
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- 1. ASTROLOGICAL GARDEN SYNC & HEADER BANNER -->
+    <header class="sharp-panel border-t-4 border-t-harvest-500 p-4 sm:p-6 bg-obsidian-800">
+      <!-- Top Astrological Sync Ticker -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-obsidian-600 text-xs font-mono">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+          <span class="px-2.5 py-1 bg-plum-950 border border-plum-400 text-plum-300 font-bold tracking-wider uppercase">
+            🌒 Waning Crescent • Root &amp; Underground Soil Work Optimal
+          </span>
+          <span class="text-emerald-300 hidden md:inline">
+            ✦ GRAVITY-FED TERRACE NETWORK • 8 IN-GROUND STATIONS ACTIVE
+          </span>
+        </div>
+
+        <!-- Planner Date Controls (Allows simulating future dates to test hunger timers) -->
+        <div class="flex items-center gap-1.5 bg-obsidian-950 border border-obsidian-600 p-1">
+          <span class="text-gray-400 px-2 uppercase tracking-wider">Planner Date:</span>
+          <button onclick="shiftSimulatedDate(-1)" title="Back 1 Day" class="sharp-btn px-2 py-0.5 bg-obsidian-800 hover:bg-obsidian-700 text-gray-300 font-bold">-1d</button>
+          <span id="current-date-display" class="px-2.5 py-0.5 bg-emerald-950 border border-emerald-600 text-harvest-400 font-bold">
+            NOV 7, 2026
+          </span>
+          <button onclick="shiftSimulatedDate(1)" title="Forward 1 Day (Test Hunger Badges)" class="sharp-btn px-2 py-0.5 bg-obsidian-800 hover:bg-obsidian-700 text-gray-300 font-bold">+1d</button>
+          <button onclick="shiftSimulatedDate(7)" title="Forward 1 Week" class="sharp-btn px-2 py-0.5 bg-obsidian-800 hover:bg-obsidian-700 text-harvest-400 font-bold">+7d</button>
+          <button onclick="resetSimulatedDate()" title="Reset to Nov 7, 2026" class="sharp-btn px-2 py-0.5 bg-plum-950 hover:bg-plum-900 text-plum-300 border-plum-600">Reset</button>
+        </div>
+      </div>
+
+      <!-- Title & High-Level Yard Telemetry -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-harvest-500 mb-1">
+            <span>🪱 CLARE'S GARDEN PLANNER MODULE</span>
+            <span>//</span>
+            <span>TERRACED SLOPE EDITION</span>
+          </div>
+          <h1 class="font-serif text-2xl sm:text-4xl font-extrabold tracking-wide text-white uppercase">
+            Hillside Worm Tracker
+          </h1>
+          <p class="text-sm text-gray-300 mt-1 max-w-2xl">
+            Top-to-bottom elevation directory from the <span class="text-plum-300 font-medium">Oleander Summit</span> down to the <span class="text-emerald-300 font-medium">Bay Laurel Patio Tier</span>. Tap bins along your path to batch-log scraps, moisture checks, and black gold harvests.
+          </p>
+        </div>
+
+        <!-- Live Telemetry KPI Boxes -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 shrink-0 font-mono">
+          <div class="bg-obsidian-950 border border-emerald-800 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Stuffed / Happy</div>
+            <div id="stat-stuffed" class="text-xl font-bold text-emerald-400 mt-0.5">8 / 8</div>
+            <div class="text-[10px] text-emerald-300">Active Stations</div>
+          </div>
+          <div class="bg-obsidian-950 border border-harvest-600 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Need Feeding</div>
+            <div id="stat-hungry" class="text-xl font-bold text-harvest-400 mt-0.5">0</div>
+            <div id="stat-hungry-sub" class="text-[10px] text-gray-400">All Tucked In</div>
+          </div>
+          <div class="bg-obsidian-950 border border-plum-600 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Moisture Alerts</div>
+            <div id="stat-dry" class="text-xl font-bold text-plum-300 mt-0.5">2</div>
+            <div class="text-[10px] text-plum-300">Upper Tiers</div>
+          </div>
+          <div class="bg-obsidian-950 border border-harvest-500 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Avg Castings</div>
+            <div id="stat-castings" class="text-xl font-bold text-harvest-500 mt-0.5">61%</div>
+            <div id="stat-harvest-ready" class="text-[10px] text-harvest-300">0 Ready to Scoop</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. "CLIMB VS. CRUISE" ROUTE SELECTOR & BATCH ACTION COMMAND BAR -->
+    <section class="sharp-panel p-4 sm:p-5 bg-obsidian-800 border-l-4 border-l-plum-400 space-y-4">
+      <!-- Row 1: Route Quick-Select Buttons -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-obsidian-600">
+        <div>
+          <h2 class="font-serif text-base sm:text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>🥾 "Climb vs. Cruise" Scrap Routing</span>
+            <span id="selected-count-badge" class="font-mono text-xs px-2 py-0.5 bg-harvest-500 text-obsidian-950 font-bold">
+              0 SELECTED
+            </span>
+          </h2>
+          <p class="text-xs text-gray-400">Select a backyard elevation route or tap individual bin numbers below:</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+          <button onclick="selectRoute([7, 8], 'Patio Drop (Ground Level)')" class="sharp-btn px-3 py-2 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border-emerald-600 font-semibold">
+            🏠 Patio Drop (#7–#8)
+          </button>
+          <button onclick="selectRoute([2, 3, 4, 5, 6], 'Mid-Hill Run (Slope + Tier 2)')" class="sharp-btn px-3 py-2 bg-obsidian-900 hover:bg-obsidian-700 text-harvest-400 border-harvest-600 font-semibold">
+            ⛰️ Mid-Hill Run (#2–#6)
+          </button>
+          <button onclick="selectRoute([1], 'Summit Trek (Oleander Crown)')" class="sharp-btn px-3 py-2 bg-plum-950 hover:bg-plum-900 text-plum-300 border-plum-400 font-semibold">
+            👑 Summit Trek (#1)
+          </button>
+          <button onclick="selectRoute([1, 2, 3], 'Upper Slope Moisture Check')" class="sharp-btn px-3 py-2 bg-obsidian-900 hover:bg-obsidian-700 text-amber-300 border-amber-500/60 font-semibold">
+            ☀️ Upper Slope Dry Check (#1–#3)
+          </button>
+          <button onclick="selectRoute([1, 2, 3, 4, 5, 6, 7, 8], 'All 8 Hillside Bins')" class="sharp-btn px-3 py-2 bg-harvest-500 hover:bg-harvest-400 text-obsidian-950 border-harvest-300 font-bold">
+            🪱 All 8 Bins
+          </button>
+          <button onclick="clearSelection()" class="sharp-btn px-2.5 py-2 bg-obsidian-950 hover:bg-crimson-900 text-gray-400 hover:text-white border-obsidian-600">
+            ✕ Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Row 2: Direct Number Pill Toggles [1]..[8] & Menu Tag Selector -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+        <!-- Quick Number Toggles -->
+        <div class="lg:col-span-5 flex flex-wrap items-center gap-1.5">
+          <span class="text-xs font-mono uppercase text-gray-400 mr-1">Bins:</span>
+          <div id="quick-bin-pills" class="flex flex-wrap gap-1.5">
+            <!-- Dynamically populated [1] - [8] buttons -->
+          </div>
+        </div>
+
+        <!-- Scrap Menu Tag Selector -->
+        <div class="lg:col-span-7 flex flex-wrap items-center gap-1.5">
+          <span class="text-xs font-mono uppercase text-gray-400 mr-1">Today's Menu:</span>
+          <div id="scrap-menu-tags" class="flex flex-wrap gap-1.5 text-xs font-mono">
+            <!-- Dynamically rendered food tags -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Batch Execution Buttons & Status Toast -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2 border-t border-obsidian-600">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="executeBatchAction('feed')" class="sharp-btn px-4 py-2.5 bg-emerald-800 hover:bg-emerald-600 text-white border-emerald-400 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>🪱 Feed Selected</span>
+          </button>
+          <button onclick="executeBatchAction('water')" class="sharp-btn px-4 py-2.5 bg-plum-800 hover:bg-plum-600 text-white border-plum-400 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>💧 Moisture Check</span>
+          </button>
+          <button onclick="executeBatchAction('harvest')" class="sharp-btn px-4 py-2.5 bg-terracotta-900 hover:bg-harvest-500 text-harvest-400 hover:text-obsidian-950 border-terracotta-500 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>🪣 Harvest Castings</span>
+          </button>
+        </div>
+
+        <!-- Live Feedback Banner -->
+        <div id="action-toast" class="font-mono text-xs px-3 py-2 bg-obsidian-950 border border-emerald-800 text-emerald-300 flex items-center gap-2">
+          <span>✦ Ready: Nov 7 install of Bin #6 (Young Tree) &amp; 8-bin feeding logged!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MAIN WORKSPACE: STACKED HILLSIDE TIERS (LEFT 8 COLS) + ACTIVITY LOG & EXPERIMENTS (RIGHT 4 COLS) -->
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: 4 ELEVATION TIERS (TOP RIDGE DOWN TO GROUND LEVEL) -->
+      <div class="xl:col-span-8 space-y-6" id="hillside-tiers-container">
+        <!-- Populated dynamically by renderHillsideTiers() -->
+      </div>
+
+      <!-- RIGHT COLUMN: ELEVATION RADAR, UNDERGROUND LOG & EXPERIMENT STICKY NOTES -->
+      <aside class="xl:col-span-4 space-y-6 sticky top-6">
+
+        <!-- HILLSIDE CROSS-SECTION MINI-MAP -->
+        <div class="sharp-panel p-4 bg-obsidian-800 border-t-2 border-t-plum-400">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-white">
+              ⛰️ Slope Elevation Cross-Section
+            </h3>
+            <span class="font-mono text-[11px] text-plum-300">Gravity Flow ↓</span>
+          </div>
+          <p class="text-xs text-gray-400 mb-3">
+            Water and nutrients percolate downhill from the Oleander Summit to the Bay Laurels. Tap any station below to jump or toggle selection:
+          </p>
+          <div id="slope-minimap" class="space-y-1.5 font-mono text-xs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- TREE & BIN #6 GROWTH PAIRING TRACKER -->
+        <div class="sharp-panel-gold p-4 bg-obsidian-800">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-harvest-400 flex items-center gap-1.5">
+              <span>🌳 Young Tree + Bin #6 Pairing</span>
+            </h3>
+            <span class="font-mono text-[10px] px-2 py-0.5 bg-harvest-500 text-obsidian-950 font-bold">INSTALLED NOV 7</span>
+          </div>
+          <p class="text-xs text-gray-300 mb-3">
+            Track your young tree's root-zone boost from burying <span class="text-harvest-400 font-semibold">Bin #6</span> right next to it:
+          </p>
+          <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-3">
+            <div class="bg-obsidian-950 border border-obsidian-600 p-2">
+              <label class="text-[10px] text-gray-400 block uppercase">Tree Height / Spread</label>
+              <input id="tree-height-input" type="text" onchange="saveTreeStats()" placeholder="e.g. 4.5 ft / 30 in canopy" class="w-full bg-transparent text-harvest-400 font-bold focus:outline-none border-b border-obsidian-700 focus:border-harvest-400 mt-1" />
+            </div>
+            <div class="bg-obsidian-950 border border-obsidian-600 p-2">
+              <label class="text-[10px] text-gray-400 block uppercase">3-Mo Check Target</label>
+              <div class="text-emerald-300 font-bold mt-1">FEB 7, 2027</div>
+            </div>
+          </div>
+          <div>
+            <label class="text-[10px] font-mono text-gray-400 uppercase block mb-1">Tree Canopy &amp; Root Zone Notes:</label>
+            <textarea id="tree-pairing-notes" rows="2" onchange="saveTreeStats()" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 text-xs text-gray-200 focus:outline-none focus:border-harvest-500" placeholder="Log new leaf flush, trunk caliper, or worm activity around the drip line..."></textarea>
+          </div>
+        </div>
+
+        <!-- "WHAT WORKED / WHAT FLOPPED" EXPERIMENT STICKY NOTES -->
+        <div class="sharp-panel-plum p-4 bg-obsidian-800">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-plum-300">
+              🧪 Field Experiments &amp; Notes
+            </h3>
+            <span class="font-mono text-[10px] text-gray-400">AUTO-SAVED</span>
+          </div>
+          <div class="flex gap-1.5 mb-3">
+            <input id="new-experiment-input" type="text" placeholder="Add observation (e.g. Castors loving worm tea)..." onkeydown="if(event.key==='Enter') addExperimentNote()" class="flex-1 bg-obsidian-950 border border-obsidian-600 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-plum-400" />
+            <button onclick="addExperimentNote()" class="sharp-btn px-3 py-1.5 bg-plum-800 hover:bg-plum-600 text-white font-mono text-xs font-bold">+ Pin</button>
+          </div>
+          <ul id="experiment-notes-list" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+
+        <!-- UNDERGROUND ACTIVITY LOG -->
+        <div class="sharp-panel p-4 bg-obsidian-800">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-white">
+              📜 Underground Activity Log
+            </h3>
+            <div class="flex items-center gap-1.5">
+              <button onclick="copyMarkdownReport()" title="Copy Planner Markdown Table" class="sharp-btn px-2 py-0.5 bg-obsidian-950 hover:bg-emerald-950 text-emerald-300 border-emerald-700 font-mono text-[10px]">
+                📋 Copy MD
+              </button>
+              <button onclick="exportDataModal()" title="Export / Import JSON Backup" class="sharp-btn px-2 py-0.5 bg-obsidian-950 hover:bg-obsidian-700 text-harvest-400 border-harvest-600 font-mono text-[10px]">
+                💾 Backup
+              </button>
+              <button onclick="openResetConfirmModal()" title="Reset to Nov 7 Defaults" class="sharp-btn px-2 py-0.5 bg-obsidian-950 hover:bg-crimson-900 text-crimson-400 border-crimson-700 font-mono text-[10px]">
+                ↺ Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Custom Log Entry -->
+          <div class="flex gap-1.5 mb-3">
+            <select id="custom-log-stamp" class="bg-obsidian-950 border border-obsidian-600 px-2 py-1.5 text-xs font-mono text-harvest-400 focus:outline-none">
+              <option value="🪱 Fed Worms">🪱 Fed</option>
+              <option value="🏠 New Install">🏠 Install</option>
+              <option value="💧 Moisture Check">💧 Water</option>
+              <option value="🧺 Castings Harvest">🧺 Harvest</option>
+              <option value="✂️ Pruned Host">✂️ Pruned</option>
+              <option value="🍵 Worm Tea">🍵 Tea</option>
+            </select>
+            <input id="custom-log-text" type="text" placeholder="Quick garden log entry..." onkeydown="if(event.key==='Enter') addCustomLogEntry()" class="flex-1 bg-obsidian-950 border border-obsidian-600 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400" />
+            <button onclick="addCustomLogEntry()" class="sharp-btn px-3 py-1.5 bg-emerald-800 hover:bg-emerald-600 text-white font-mono text-xs font-bold">Log</button>
+          </div>
+
+          <div id="activity-log-container" class="space-y-2 max-h-80 overflow-y-auto pr-1 font-mono text-xs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- CUSTOM SHARP MODAL FOR BACKUP / EXPORT / RESET CONFIRMATION (NO ALERT/CONFIRM) -->
+    <div id="custom-modal-backdrop" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+      <div class="sharp-panel-gold bg-obsidian-900 max-w-lg w-full p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-obsidian-600 pb-2">
+          <h3 id="modal-title" class="font-serif text-lg font-bold text-harvest-400 uppercase">Planner Data Manager</h3>
+          <button onclick="closeModal()" class="sharp-btn px-2 py-0.5 bg-obsidian-800 text-gray-300 hover:text-white font-mono text-xs">✕ ESC</button>
+        </div>
+        <div id="modal-body" class="text-xs text-gray-300 space-y-3">
+          <!-- Dynamic modal content -->
+        </div>
+        <div id="modal-footer" class="flex justify-end gap-2 pt-2 border-t border-obsidian-600 font-mono text-xs">
+          <!-- Dynamic modal buttons -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    // =========================================================================
+    // 1. DEFAULT STATE & HILLSIDE DIRECTORY ARCHITECTURE
+    // =========================================================================
+    const STORAGE_KEY = 'hillside_worm_tracker_v6';
+    const BASE_INSTALL_DATE = '2026-11-07';
+
+    const SCRAP_MENU_OPTIONS = [
+      { id: 'coffee', label: '☕ Coffee Grounds' },
+      { id: 'veggies', label: '🥬 Veggie Peels' },
+      { id: 'fruit', label: '🍎 Fruit Scraps' },
+      { id: 'cardboard', label: '📦 Wet Cardboard' },
+      { id: 'eggshells', label: '🥚 Crushed Eggshells' },
+      { id: 'leaves', label: '🍂 Dry Leaves / Bedding' }
+    ];
+
+    const TIER_DEFINITIONS = [
+      {
+        tierId: 4,
+        name: 'Tier 4 • Top Ridge (Summit)',
+        subtitle: 'Highest elevation between the oleanders — fastest drainage, check moisture often!',
+        badge: 'SUMMIT RIDGE',
+        accentClass: 'border-l-4 border-l-plum-400'
+      },
+      {
+        tierId: 3,
+        name: 'Tier 3 • Second Tier (Mid-Slope)',
+        subtitle: 'Upper & lower slope lavender patch — drier Mediterranean root zone, pair scraps with damp cardboard.',
+        badge: 'UPPER MID-SLOPE',
+        accentClass: 'border-l-4 border-l-plum-600'
+      },
+      {
+        tierId: 2,
+        name: 'Tier 2 • Slope Side & Young Tree Zone',
+        subtitle: 'Heavy-feeding Castor stations + your brand-new Young Tree root-zone bin (#6)!',
+        badge: 'SLOPE & TREE ZONE',
+        accentClass: 'border-l-4 border-l-harvest-500'
+      },
+      {
+        tierId: 1,
+        name: 'Tier 1 • Lowest Tier (Ground Level)',
+        subtitle: 'Sweet Bay Laurels at patio level — retains moisture longest & easiest for quick mid-week scrap drops.',
+        badge: 'PATIO GROUND LEVEL',
+        accentClass: 'border-l-4 border-l-emerald-400'
+      }
+    ];
+
+    function getDefaultState() {
+      return {
+        simulatedDate: BASE_INSTALL_DATE,
+        selectedBins: [],
+        selectedMenuTags: ['🥬 Veggie Peels', '☕ Coffee Grounds', '📦 Wet Cardboard'],
+        treeStats: {
+          height: '4.2 ft / 28" canopy',
+          notes: 'Nov 7: Buried Bin #6 right next to the root zone to feed the young tree directly!'
+        },
+        experiments: [
+          {
+            id: 'exp-1',
+            date: '2026-11-07',
+            text: 'Buried Bin #6 next to the young tree! Now up to 8 active in-ground bins across all 4 tiers.'
+          },
+          {
+            id: 'exp-2',
+            date: '2026-11-07',
+            text: 'Top Ridge (Oleander #1) and Mid-Slope (Lavender #2 & #3) drain fastest—soak cardboard bedding before feeding.'
+          }
+        ],
+        logs: [
+          {
+            id: 'log-init-1',
+            date: '2026-11-07',
+            stamp: '🏠 New Install',
+            target: 'Bin #6 (Young Tree)',
+            details: 'Buried new in-ground worm bin next to the young tree root zone with damp starter bedding & kitchen scraps.'
+          },
+          {
+            id: 'log-init-2',
+            date: '2026-11-07',
+            stamp: '🪱 Fed Worms',
+            target: 'All 8 Hillside Bins (#1–#8)',
+            details: 'Fed all 8 buried stations across the hillside with veggie peels, coffee grounds, and damp cardboard.'
+          }
+        ],
+        bins: [
+          {
+            id: 1,
+            tier: 4,
+            name: 'Bin #1: Oleander Crown 🌸',
+            host: 'Between the Oleanders',
+            lastFed: '2026-11-07',
+            lastMenu: '🥬 Veggie Peels, 📦 Wet Cardboard',
+            moisture: 'Just Right',
+            fillLevel: 50,
+            isNewInstall: false,
+            notes: 'Summit station at the very top ridge. Gravity pulls moisture downhill fast—add extra splash of water in warm weather.'
+          },
+          {
+            id: 2,
+            tier: 3,
+            name: 'Bin #2: Lavender (Bottom) 💜',
+            host: 'Slope Lavender Patch (Bottom)',
+            lastFed: '2026-11-07',
+            lastMenu: '☕ Coffee Grounds, 📦 Wet Cardboard',
+            moisture: 'Just Right',
+            fillLevel: 75,
+            isNewInstall: false,
+            notes: 'Lower lavender station on the second tier. Damp shredded cardboard keeps the bin interior moist without overwatering the lavender.'
+          },
+          {
+            id: 3,
+            tier: 3,
+            name: 'Bin #3: Lavender (Top) 💜',
+            host: 'Slope Lavender Patch (Top)',
+            lastFed: '2026-11-07',
+            lastMenu: '🥬 Veggie Peels, 📦 Wet Cardboard',
+            moisture: 'Dry',
+            fillLevel: 50,
+            isNewInstall: false,
+            notes: 'Upper lavender station on the second tier. Exposed to more sun and slope runoff—check bedding moisture weekly.'
+          },
+          {
+            id: 4,
+            tier: 2,
+            name: 'Bin #4: Castor Station A (Corner) 🪴',
+            host: 'Castor Plants (Corner)',
+            lastFed: '2026-11-07',
+            lastMenu: '🍎 Fruit Scraps, ☕ Coffee Grounds',
+            moisture: 'Juicy',
+            fillLevel: 75,
+            isNewInstall: false,
+            notes: 'Tucked into the slope corner by the Castors. Heavy feeders that drink up every drop of underground worm tea!'
+          },
+          {
+            id: 5,
+            tier: 2,
+            name: 'Bin #5: Castor Station B 🪴',
+            host: 'Castor Plants',
+            lastFed: '2026-11-07',
+            lastMenu: '🥬 Veggie Peels, 🥚 Crushed Eggshells',
+            moisture: 'Just Right',
+            fillLevel: 75,
+            isNewInstall: false,
+            notes: 'Paired with Castor Station A along the slope side. Fast worm turnover here!'
+          },
+          {
+            id: 6,
+            tier: 2,
+            name: 'Bin #6: Young Tree Root Zone 🌳',
+            host: 'Young Tree (Newbie!)',
+            lastFed: '2026-11-07',
+            lastMenu: '🥬 Veggie Peels, 🍂 Dry Leaves / Bedding',
+            moisture: 'Just Right',
+            fillLevel: 25,
+            isNewInstall: true,
+            notes: 'Brand-new bin buried Nov 7! Let worms settle into their starter bedding for 7–10 days before heavy scrap drops.'
+          },
+          {
+            id: 7,
+            tier: 1,
+            name: 'Bin #7: Bay Laurel A (Left) 🍃',
+            host: 'Sweet Bay Laurels (Left)',
+            lastFed: '2026-11-07',
+            lastMenu: '☕ Coffee Grounds, 🥬 Veggie Peels',
+            moisture: 'Juicy',
+            fillLevel: 75,
+            isNewInstall: false,
+            notes: 'Left-side ground-level station next to the Bay Laurels. Super easy patio access for quick mid-week kitchen scrap drops.'
+          },
+          {
+            id: 8,
+            tier: 1,
+            name: 'Bin #8: Bay Laurel B (Right) 🍃',
+            host: 'Sweet Bay Laurels (Right)',
+            lastFed: '2026-11-07',
+            lastMenu: '🍎 Fruit Scraps, ☕ Coffee Grounds',
+            moisture: 'Just Right',
+            fillLevel: 50,
+            isNewInstall: false,
+            notes: 'Right-side ground-level station next to the Bay Laurels. Collects downhill moisture nicely.'
+          }
+        ]
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return getDefaultState();
+        const parsed = JSON.parse(raw);
+        if (!parsed.bins || parsed.bins.length !== 8) return getDefaultState();
+        return parsed;
+      } catch (err) {
+        console.warn('Could not load saved state, using defaults:', err);
+        return getDefaultState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.warn('Could not save state to localStorage:', err);
+      }
+    }
+
+    // =========================================================================
+    // 2. DATE CALCULATIONS & HUNGER STATUS ENGINE
+    // =========================================================================
+    function parseISODate(isoStr) {
+      const [y, m, d] = isoStr.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function toISODate(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatShortDate(isoStr) {
+      const dt = parseISODate(isoStr);
+      return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function daysBetween(startIso, endIso) {
+      const d1 = parseISODate(startIso);
+      const d2 = parseISODate(endIso);
+      const diffMs = d2.getTime() - d1.getTime();
+      return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    }
+
+    function getBinStatus(bin) {
+      const daysSinceFed = Math.max(0, daysBetween(bin.lastFed, state.simulatedDate));
+
+      if (bin.isNewInstall && daysSinceFed <= 5) {
+        return {
+          code: 'NEW',
+          label: '🆕 SETTLING IN',
+          subtext: daysSinceFed === 0 ? 'Installed Today' : `${daysSinceFed}d since install`,
+          badgeClass: 'bg-plum-950 text-plum-300 border-plum-400',
+          daysSinceFed
+        };
+      }
+
+      if (daysSinceFed <= 5) {
+        return {
+          code: 'STUFFED',
+          label: '🟢 STUFFED',
+          subtext: daysSinceFed === 0 ? 'Fed Today' : `Fed ${daysSinceFed}d ago`,
+          badgeClass: 'bg-emerald-950 text-emerald-300 border-emerald-500',
+          daysSinceFed
+        };
+      } else if (daysSinceFed <= 10) {
+        return {
+          code: 'SNACK',
+          label: '🟡 SNACK-READY',
+          subtext: `${daysSinceFed}d since last meal`,
+          badgeClass: 'bg-obsidian-950 text-harvest-400 border-harvest-500',
+          daysSinceFed
+        };
+      } else {
+        return {
+          code: 'HANGRY',
+          label: '🔴 HANGRY / PRIORITY',
+          subtext: `${daysSinceFed}d overdue!`,
+          badgeClass: 'bg-crimson-900 text-crimson-400 border-crimson-500 pulse-badge',
+          daysSinceFed
+        };
+      }
+    }
+
+    function shiftSimulatedDate(deltaDays) {
+      const current = parseISODate(state.simulatedDate);
+      current.setDate(current.getDate() + deltaDays);
+      state.simulatedDate = toISODate(current);
+      saveState();
+      renderAll();
+      showToast(`📅 Planner date shifted to ${formatShortDate(state.simulatedDate)}`);
+    }
+
+    function resetSimulatedDate() {
+      state.simulatedDate = BASE_INSTALL_DATE;
+      saveState();
+      renderAll();
+      showToast(`📅 Planner date reset to Nov 7, 2026`);
+    }
+
+    // =========================================================================
+    // 3. SELECTION, ROUTE SHORTCUTS & BATCH ACTIONS
+    // =========================================================================
+    function toggleBinSelection(binId) {
+      const idx = state.selectedBins.indexOf(binId);
+      if (idx === -1) {
+        state.selectedBins.push(binId);
+      } else {
+        state.selectedBins.splice(idx, 1);
+      }
+      state.selectedBins.sort((a, b) => a - b);
+      saveState();
+      renderAll();
+    }
+
+    function selectRoute(binIds, routeName) {
+      state.selectedBins = [...binIds];
+      saveState();
+      renderAll();
+      showToast(`🥾 Route Selected: ${routeName} (Bins #${binIds.join(', #')})`);
+    }
+
+    function clearSelection() {
+      state.selectedBins = [];
+      saveState();
+      renderAll();
+      showToast(`Cleared bin selection.`);
+    }
+
+    function toggleMenuTag(tagLabel) {
+      const idx = state.selectedMenuTags.indexOf(tagLabel);
+      if (idx === -1) {
+        state.selectedMenuTags.push(tagLabel);
+      } else {
+        state.selectedMenuTags.splice(idx, 1);
+      }
+      saveState();
+      renderMenuTags();
+    }
+
+    function executeBatchAction(actionType) {
+      if (state.selectedBins.length === 0) {
+        showToast(`⚠️ Tap one or more bins (or choose a Climb vs. Cruise route) first!`, true);
+        return;
+      }
+
+      const targetBins = state.bins.filter(b => state.selectedBins.includes(b.id));
+      const binNumbersStr = targetBins.map(b => `#${b.id}`).join(', ');
+      const menuStr = state.selectedMenuTags.length > 0
+        ? state.selectedMenuTags.join(', ')
+        : 'Kitchen Scraps & Damp Bedding';
+
+      if (actionType === 'feed') {
+        targetBins.forEach(b => {
+          b.lastFed = state.simulatedDate;
+          b.lastMenu = menuStr;
+          if (b.fillLevel < 100) {
+            b.fillLevel = Math.min(100, b.fillLevel + 25);
+          }
+          if (b.moisture === 'Dry') {
+            b.moisture = 'Just Right';
+          }
+        });
+
+        state.logs.unshift({
+          id: 'log-' + Date.now(),
+          date: state.simulatedDate,
+          stamp: '🪱 Fed Worms',
+          target: `Bins ${binNumbersStr}`,
+          details: `Fed ${ menuStr }. Bedding tucked in!`
+        });
+
+        showToast(`🪱 Fed Bins ${binNumbersStr} with ${menuStr}!`);
+      } else if (actionType === 'water') {
+        targetBins.forEach(b => {
+          b.moisture = 'Just Right';
+        });
+
+        state.logs.unshift({
+          id: 'log-' + Date.now(),
+          date: state.simulatedDate,
+          stamp: '💧 Moisture Check',
+          target: `Bins ${binNumbersStr}`,
+          details: `Checked bedding moisture & soaked dry upper-tier lids.`
+        });
+
+        showToast(`💧 Logged moisture check for Bins ${binNumbersStr}!`);
+      } else if (actionType === 'harvest') {
+        targetBins.forEach(b => {
+          b.fillLevel = 25;
+          b.isNewInstall = false;
+        });
+
+        state.logs.unshift({
+          id: 'log-' + Date.now(),
+          date: state.simulatedDate,
+          stamp: '🧺 Castings Harvest',
+          target: `Bins ${binNumbersStr}`,
+          details: `Scooped finished black gold castings around host plants & reset fresh bedding to 25%.`
+        });
+
+        showToast(`🪣 Harvested castings from Bins ${binNumbersStr} & top-dressed host plants!`);
+      }
+
+      saveState();
+      renderAll();
+    }
+
+    // =========================================================================
+    // 4. INDIVIDUAL BIN CARD CONTROLS
+    // =========================================================================
+    function quickFeedSingleBin(binId, event) {
+      if (event) event.stopPropagation();
+      const bin = state.bins.find(b => b.id === binId);
+      if (!bin) return;
+
+      const menuStr = state.selectedMenuTags.length > 0
+        ? state.selectedMenuTags.join(', ')
+        : 'Kitchen Scraps & Damp Bedding';
+
+      bin.lastFed = state.simulatedDate;
+      bin.lastMenu = menuStr;
+      if (bin.moisture === 'Dry') bin.moisture = 'Just Right';
+
+      state.logs.unshift({
+        id: 'log-' + Date.now(),
+        date: state.simulatedDate,
+        stamp: '🪱 Fed Worms',
+        target: bin.name,
+        details: `Fed ${menuStr} directly to ${bin.host}.`
+      });
+
+      saveState();
+      renderAll();
+      showToast(`🪱 Fed ${bin.name} (${bin.host})!`);
+    }
+
+    function cycleMoisture(binId, event) {
+      if (event) event.stopPropagation();
+      const bin = state.bins.find(b => b.id === binId);
+      if (!bin) return;
+
+      const order = ['Dry', 'Just Right', 'Juicy'];
+      const nextIdx = (order.indexOf(bin.moisture) + 1) % order.length;
+      bin.moisture = order[nextIdx];
+
+      saveState();
+      renderAll();
+      showToast(`💧 ${bin.name} moisture set to: ${bin.moisture}`);
+    }
+
+    function cycleFillLevel(binId, event) {
+      if (event) event.stopPropagation();
+      const bin = state.bins.find(b => b.id === binId);
+      if (!bin) return;
+
+      const levels = [25, 50, 75, 100];
+      const currentIdx = levels.indexOf(bin.fillLevel);
+      const nextLevel = levels[(currentIdx + 1) % levels.length];
+      bin.fillLevel = nextLevel;
+
+      saveState();
+      renderAll();
+      if (nextLevel === 100) {
+        showToast(`🪣 ${bin.name} is at 100% — Ready to scoop black gold castings!`);
+      } else {
+        showToast(`📊 ${bin.name} castings fill level updated to ${nextLevel}%`);
+      }
+    }
+
+    function updateBinNote(binId, newNote) {
+      const bin = state.bins.find(b => b.id === binId);
+      if (!bin) return;
+      bin.notes = newNote.trim();
+      saveState();
+      showToast(`✍️ Saved note for ${bin.name}`);
+    }
+
+    // =========================================================================
+    // 5. SIDEBAR WIDGETS: TREE PAIRING, EXPERIMENTS & CUSTOM LOGS
+    // =========================================================================
+    function saveTreeStats() {
+      const heightEl = document.getElementById('tree-height-input');
+      const notesEl = document.getElementById('tree-pairing-notes');
+      if (heightEl) state.treeStats.height = heightEl.value;
+      if (notesEl) state.treeStats.notes = notesEl.value;
+      saveState();
+      showToast(`🌳 Saved Young Tree & Bin #6 growth notes!`);
+    }
+
+    function addExperimentNote() {
+      const input = document.getElementById('new-experiment-input');
+      if (!input || !input.value.trim()) return;
+      state.experiments.unshift({
+        id: 'exp-' + Date.now(),
+        date: state.simulatedDate,
+        text: input.value.trim()
+      });
+      input.value = '';
+      saveState();
+      renderExperiments();
+      showToast(`🧪 Pinned new field observation!`);
+    }
+
+    function deleteExperimentNote(expId) {
+      state.experiments = state.experiments.filter(e => e.id !== expId);
+      saveState();
+      renderExperiments();
+    }
+
+    function addCustomLogEntry() {
+      const stampEl = document.getElementById('custom-log-stamp');
+      const textEl = document.getElementById('custom-log-text');
+      if (!textEl || !textEl.value.trim()) return;
+
+      state.logs.unshift({
+        id: 'log-' + Date.now(),
+        date: state.simulatedDate,
+        stamp: stampEl ? stampEl.value : '🪱 Garden Note',
+        target: 'Hillside Garden',
+        details: textEl.value.trim()
+      });
+
+      textEl.value = '';
+      saveState();
+      renderLogs();
+      showToast(`📜 Added entry to Underground Activity Log!`);
+    }
+
+    function showToast(message, isWarning = false) {
+      const toast = document.getElementById('action-toast');
+      if (!toast) return;
+      toast.className = isWarning
+        ? 'font-mono text-xs px-3 py-2 bg-crimson-900/60 border border-crimson-500 text-crimson-300 flex items-center gap-2'
+        : 'font-mono text-xs px-3 py-2 bg-obsidian-950 border border-emerald-600 text-emerald-300 flex items-center gap-2';
+      toast.innerHTML = `<span>${message}</span>`;
+    }
+
+    // =========================================================================
+    // 6. CLIPBOARD EXPORT, JSON BACKUP & CUSTOM MODAL (NO ALERT/CONFIRM)
+    // =========================================================================
+    function copyMarkdownReport() {
+      const lines = [
+        `### 🪱 Clare's Hillside Worm Tracker (${formatShortDate(state.simulatedDate)})`,
+        ``,
+        `| Bin & Tier | Host Landmark | Status | Fill | Moisture | Last Fed |`,
+        `| :--- | :--- | :--- | :--- | :--- | :--- |`
+      ];
+      state.bins.forEach(b => {
+        const st = getBinStatus(b);
+        lines.push(`| **${b.name}** (Tier ${b.tier}) | ${b.host} | ${st.label} | ${b.fillLevel}% | ${b.moisture} | ${formatShortDate(b.lastFed)} |`);
+      });
+
+      const mdText = lines.join('\n');
+      const tempArea = document.createElement('textarea');
+      tempArea.value = mdText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(`📋 Copied Markdown table for all 8 bins to clipboard!`);
+      } catch (err) {
+        showToast(`⚠️ Could not auto-copy. Use Backup button to copy manually.`, true);
+      }
+      document.body.removeChild(tempArea);
+    }
+
+    function exportDataModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      const footer = document.getElementById('modal-footer');
+
+      title.textContent = '💾 Backup / Restore Hillside Tracker JSON';
+      const jsonStr = JSON.stringify(state, null, 2);
+
+      body.innerHTML = `
+        <p class="text-gray-300">Copy the JSON below to back up your 8-bin hillside history, or paste a saved JSON snapshot to restore:</p>
+        <textarea id="modal-json-textarea" rows="8" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 font-mono text-[11px] text-emerald-300 focus:outline-none focus:border-harvest-400">${jsonStr}</textarea>
+      `;
+
+      footer.innerHTML = `
+        <button onclick="copyModalJson()" class="sharp-btn px-3 py-1.5 bg-emerald-800 hover:bg-emerald-600 text-white font-bold">📋 Copy JSON</button>
+        <button onclick="importModalJson()" class="sharp-btn px-3 py-1.5 bg-harvest-500 hover:bg-harvest-400 text-obsidian-950 font-bold">📥 Restore JSON</button>
+        <button onclick="closeModal()" class="sharp-btn px-3 py-1.5 bg-obsidian-800 text-gray-300">Close</button>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function copyModalJson() {
+      const area = document.getElementById('modal-json-textarea');
+      if (!area) return;
+      area.select();
+      document.execCommand('copy');
+      showToast(`📋 Copied full JSON backup to clipboard!`);
+    }
+
+    function importModalJson() {
+      const area = document.getElementById('modal-json-textarea');
+      if (!area) return;
+      try {
+        const parsed = JSON.parse(area.value);
+        if (parsed && Array.isArray(parsed.bins)) {
+          state = parsed;
+          saveState();
+          renderAll();
+          closeModal();
+          showToast(`✅ Restored Hillside Worm Tracker data!`);
+        } else {
+          showToast(`⚠️ Invalid backup JSON format.`, true);
+        }
+      } catch (e) {
+        showToast(`⚠️ JSON Parse Error: check syntax.`, true);
+      }
+    }
+
+    function openResetConfirmModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      const footer = document.getElementById('modal-footer');
+
+      title.textContent = '↺ Reset Hillside Tracker to Nov 7 Defaults?';
+      body.innerHTML = `
+        <p class="text-gray-300">This will restore all 8 hillside bins back to your baseline <strong>Nov 7, 2026</strong> setup (with Bin #6 newly installed by the young tree and all 8 bins freshly fed).</p>
+      `;
+      footer.innerHTML = `
+        <button onclick="confirmFactoryReset()" class="sharp-btn px-3 py-1.5 bg-crimson-700 hover:bg-crimson-500 text-white font-bold">Yes, Reset to Nov 7</button>
+        <button onclick="closeModal()" class="sharp-btn px-3 py-1.5 bg-obsidian-800 text-gray-300">Cancel</button>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function confirmFactoryReset() {
+      state = getDefaultState();
+      saveState();
+      renderAll();
+      closeModal();
+      showToast(`↺ Reset tracker to Nov 7, 2026 baseline!`);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // =========================================================================
+    // 7. DOM RENDERING FUNCTIONS
+    // =========================================================================
+    function renderHeaderStats() {
+      const dateEl = document.getElementById('current-date-display');
+      if (dateEl) dateEl.textContent = formatShortDate(state.simulatedDate).toUpperCase();
+
+      let stuffedCount = 0;
+      let hungryCount = 0;
+      let dryCount = 0;
+      let totalFill = 0;
+      let harvestReadyCount = 0;
+
+      state.bins.forEach(b => {
+        const st = getBinStatus(b);
+        if (st.code === 'STUFFED' || st.code === 'NEW') stuffedCount++;
+        if (st.code === 'SNACK' || st.code === 'HANGRY') hungryCount++;
+        if (b.moisture === 'Dry') dryCount++;
+        totalFill += b.fillLevel;
+        if (b.fillLevel >= 100) harvestReadyCount++;
+      });
+
+      const avgFill = Math.round(totalFill / state.bins.length);
+
+      document.getElementById('stat-stuffed').textContent = `${stuffedCount} / ${state.bins.length}`;
+      document.getElementById('stat-hungry').textContent = `${hungryCount}`;
+      document.getElementById('stat-hungry-sub').textContent = hungryCount === 0 ? 'All Tucked In' : 'Ready for Scraps';
+      document.getElementById('stat-dry').textContent = `${dryCount}`;
+      document.getElementById('stat-castings').textContent = `${avgFill}%`;
+      document.getElementById('stat-harvest-ready').textContent = `${harvestReadyCount} Ready to Scoop`;
+
+      const selBadge = document.getElementById('selected-count-badge');
+      if (selBadge) {
+        selBadge.textContent = `${state.selectedBins.length} SELECTED`;
+      }
+    }
+
+    function renderQuickBinPills() {
+      const container = document.getElementById('quick-bin-pills');
+      if (!container) return;
+
+      container.innerHTML = state.bins.map(bin => {
+        const isSelected = state.selectedBins.includes(bin.id);
+        const btnClass = isSelected
+          ? 'bg-harvest-500 text-obsidian-950 border-harvest-300 font-bold'
+          : 'bg-obsidian-950 text-gray-300 border-obsidian-600 hover:border-emerald-400';
+        return `
+          <button onclick="toggleBinSelection(${bin.id})" class="sharp-btn px-2.5 py-1 text-xs font-mono ${btnClass}" title="${bin.name}">
+            #${bin.id}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderMenuTags() {
+      const container = document.getElementById('scrap-menu-tags');
+      if (!container) return;
+
+      container.innerHTML = SCRAP_MENU_OPTIONS.map(opt => {
+        const active = state.selectedMenuTags.includes(opt.label);
+        const cls = active
+          ? 'bg-emerald-900 text-emerald-300 border-emerald-400 font-semibold'
+          : 'bg-obsidian-950 text-gray-400 border-obsidian-600 hover:text-gray-200';
+        return `
+          <button onclick="toggleMenuTag('${opt.label}')" class="sharp-btn px-2.5 py-1 ${cls}">
+            ${opt.label}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function getMoistureBadge(moisture) {
+      if (moisture === 'Dry') {
+        return `<span class="px-2 py-0.5 bg-terracotta-900 border border-terracotta-400 text-terracotta-400 font-mono text-[11px]">☀️ Dry (Add Water)</span>`;
+      }
+      if (moisture === 'Juicy') {
+        return `<span class="px-2 py-0.5 bg-plum-950 border border-plum-400 text-plum-300 font-mono text-[11px]">💦 Juicy / Rich</span>`;
+      }
+      return `<span class="px-2 py-0.5 bg-emerald-950 border border-emerald-600 text-emerald-300 font-mono text-[11px]">💧 Just Right</span>`;
+    }
+
+    function renderHillsideTiers() {
+      const container = document.getElementById('hillside-tiers-container');
+      if (!container) return;
+
+      container.innerHTML = TIER_DEFINITIONS.map(tier => {
+        const tierBins = state.bins.filter(b => b.tier === tier.tierId);
+
+        const cardsHtml = tierBins.map(bin => {
+          const st = getBinStatus(bin);
+          const isSelected = state.selectedBins.includes(bin.id);
+          const isHarvestReady = bin.fillLevel >= 100;
+
+          const fillBarColor = isHarvestReady
+            ? 'bg-harvest-500'
+            : bin.fillLevel >= 75
+              ? 'bg-emerald-400'
+              : 'bg-emerald-600';
+
+          return `
+            <article id="bin-card-${bin.id}" class="bin-card p-4 flex flex-col justify-between gap-3 ${isSelected ? 'selected-bin' : ''} ${isHarvestReady ? 'harvest-ready' : ''}">
+              <!-- Top Row: Checkbox + Name + Status Badge -->
+              <div>
+                <div class="flex items-start justify-between gap-2">
+                  <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                    <input type="checkbox" class="sharp-checkbox mt-0.5 shrink-0" ${isSelected ? 'checked' : ''} onchange="toggleBinSelection(${bin.id})" />
+                    <div>
+                      <h4 class="font-serif text-base font-bold text-white leading-tight">${bin.name}</h4>
+                      <div class="text-xs font-mono text-harvest-400 mt-0.5">Host: ${bin.host}</div>
+                    </div>
+                  </label>
+                  <span class="px-2 py-0.5 border font-mono text-[10px] font-bold uppercase shrink-0 ${st.badgeClass}">
+                    ${st.label}
+                  </span>
+                </div>
+
+                <!-- Telemetry Grid -->
+                <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-obsidian-700 font-mono text-xs">
+                  <div class="bg-obsidian-950 border border-obsidian-700 p-2">
+                    <div class="text-[10px] text-gray-400 uppercase">Last Fed (${st.subtext})</div>
+                    <div class="text-white font-bold mt-0.5">${formatShortDate(bin.lastFed)}</div>
+                  </div>
+                  <div class="bg-obsidian-950 border border-obsidian-700 p-2 flex flex-col justify-between">
+                    <div class="text-[10px] text-gray-400 uppercase">Bedding Moisture</div>
+                    <button onclick="cycleMoisture(${bin.id}, event)" title="Click to cycle: Dry ➔ Just Right ➔ Juicy" class="mt-0.5 text-left hover:opacity-90">
+                      ${getMoistureBadge(bin.moisture)}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Last Menu Line -->
+                <div class="mt-2 bg-obsidian-950 border border-obsidian-700 px-2.5 py-1.5 text-xs font-mono flex items-center justify-between">
+                  <span class="text-gray-400 text-[10px] uppercase">Last Menu:</span>
+                  <span class="text-gray-200 truncate max-w-[70%]" title="${bin.lastMenu}">${bin.lastMenu}</span>
+                </div>
+
+                <!-- Castings Fill Gauge (Clickable to cycle 25% -> 50% -> 75% -> 100%) -->
+                <div class="mt-3">
+                  <div class="flex items-center justify-between font-mono text-[11px] mb-1">
+                    <span class="text-gray-400 uppercase">Castings Fill Level:</span>
+                    <button onclick="cycleFillLevel(${bin.id}, event)" class="text-harvest-400 hover:underline font-bold">
+                      ${bin.fillLevel}% ${isHarvestReady ? '• 🪣 SCOOP TIME!' : '(Tap to adjust)'}
+                    </button>
+                  </div>
+                  <div onclick="cycleFillLevel(${bin.id}, event)" title="Click to cycle fill level (25% ➔ 50% ➔ 75% ➔ 100%)" class="w-full h-3 bg-obsidian-950 border border-obsidian-600 cursor-pointer overflow-hidden">
+                    <div class="h-full castings-bar-fill ${fillBarColor}" style="width: ${bin.fillLevel}%"></div>
+                  </div>
+                </div>
+
+                <!-- Editable Field Note -->
+                <div class="mt-3">
+                  <label class="text-[10px] font-mono text-gray-400 uppercase block mb-1">Station Care Note:</label>
+                  <input
+                    type="text"
+                    value="${bin.notes.replace(/"/g, '&quot;')}"
+                    onchange="updateBinNote(${bin.id}, this.value)"
+                    class="w-full bg-obsidian-950 border border-obsidian-700 focus:border-harvest-400 px-2.5 py-1.5 text-xs text-gray-300 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <!-- Quick Single-Card Action Footer -->
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-obsidian-700 font-mono text-xs">
+                <button onclick="quickFeedSingleBin(${bin.id}, event)" class="sharp-btn flex-1 py-1.5 bg-emerald-900 hover:bg-emerald-700 text-emerald-200 border-emerald-500 font-bold">
+                  🪱 Quick Feed #${bin.id}
+                </button>
+                <button onclick="cycleMoisture(${bin.id}, event)" class="sharp-btn px-2.5 py-1.5 bg-obsidian-900 hover:bg-plum-900 text-plum-300 border-obsidian-600" title="Toggle Moisture">
+                  💧
+                </button>
+                <button onclick="cycleFillLevel(${bin.id}, event)" class="sharp-btn px-2.5 py-1.5 bg-obsidian-900 hover:bg-terracotta-900 text-harvest-400 border-obsidian-600" title="Adjust Fill %">
+                  📊
+                </button>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        const gridCols = tierBins.length === 1
+          ? 'grid-cols-1'
+          : tierBins.length === 3
+            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+            : 'grid-cols-1 md:grid-cols-2';
+
+        return `
+          <div class="sharp-panel p-4 sm:p-5 bg-obsidian-800 ${tier.accentClass} space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-obsidian-600 pb-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 bg-obsidian-950 border border-obsidian-600 font-mono text-[10px] text-harvest-400 font-bold uppercase">
+                    ${tier.badge}
+                  </span>
+                  <h3 class="font-serif text-lg font-bold text-white uppercase tracking-wide">${tier.name}</h3>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">${tier.subtitle}</p>
+              </div>
+              <button onclick="selectRoute([${tierBins.map(b => b.id).join(',')}], '${tier.name}')" class="sharp-btn px-3 py-1 bg-obsidian-950 hover:bg-obsidian-700 text-xs font-mono text-emerald-300 border-emerald-700">
+                Select Tier (${tierBins.map(b => '#' + b.id).join(', ')})
+              </button>
+            </div>
+
+            <div class="grid ${gridCols} gap-4">
+              ${cardsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSlopeMinimap() {
+      const container = document.getElementById('slope-minimap');
+      if (!container) return;
+
+      container.innerHTML = TIER_DEFINITIONS.map(tier => {
+        const tierBins = state.bins.filter(b => b.tier === tier.tierId);
+        const pills = tierBins.map(b => {
+          const isSelected = state.selectedBins.includes(b.id);
+          const st = getBinStatus(b);
+          const dot = st.code === 'STUFFED' ? '🟢' : st.code === 'NEW' ? '🆕' : st.code === 'SNACK' ? '🟡' : '🔴';
+          return `
+            <button onclick="toggleBinSelection(${b.id})" class="sharp-btn px-2 py-1 text-left flex-1 ${isSelected ? 'bg-harvest-500 text-obsidian-950 font-bold border-harvest-300' : 'bg-obsidian-950 text-gray-200 border-obsidian-600'}">
+              ${dot} #${b.id} ${b.host.split(' ')[0]}
+            </button>
+          `;
+        }).join('');
+
+        return `
+          <div class="bg-obsidian-900 border border-obsidian-700 p-2">
+            <div class="text-[10px] text-gray-400 uppercase mb-1">${tier.name}</div>
+            <div class="flex flex-wrap gap-1.5">${pills}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderTreeStats() {
+      const heightEl = document.getElementById('tree-height-input');
+      const notesEl = document.getElementById('tree-pairing-notes');
+      if (heightEl) heightEl.value = state.treeStats.height || '';
+      if (notesEl) notesEl.value = state.treeStats.notes || '';
+    }
+
+    function renderExperiments() {
+      const list = document.getElementById('experiment-notes-list');
+      if (!list) return;
+
+      if (state.experiments.length === 0) {
+        list.innerHTML = `<li class="text-gray-500 italic">No field observations pinned yet.</li>`;
+        return;
+      }
+
+      list.innerHTML = state.experiments.map(exp => `
+        <li class="bg-obsidian-950 border border-obsidian-700 p-2.5 flex items-start justify-between gap-2">
+          <div>
+            <span class="font-mono text-[10px] text-plum-300 uppercase block">${formatShortDate(exp.date)}</span>
+            <p class="text-gray-200 mt-0.5">${exp.text}</p>
+          </div>
+          <button onclick="deleteExperimentNote('${exp.id}')" class="text-gray-500 hover:text-crimson-400 font-mono text-xs px-1" title="Remove note">✕</button>
+        </li>
+      `).join('');
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('activity-log-container');
+      if (!container) return;
+
+      if (state.logs.length === 0) {
+        container.innerHTML = `<div class="text-gray-500 italic">No garden actions logged yet.</div>`;
+        return;
+      }
+
+      container.innerHTML = state.logs.map(entry => `
+        <div class="bg-obsidian-950 border-l-2 border-l-emerald-500 border border-obsidian-700 p-2.5">
+          <div class="flex items-center justify-between text-[10px] text-gray-400">
+            <span class="font-bold text-harvest-400">${entry.stamp}</span>
+            <span>${formatShortDate(entry.date)}</span>
+          </div>
+          <div class="text-emerald-300 font-semibold mt-0.5">${entry.target}</div>
+          <p class="text-gray-300 text-[11px] mt-0.5 font-sans">${entry.details}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAll() {
+      renderHeaderStats();
+      renderQuickBinPills();
+      renderMenuTags();
+      renderHillsideTiers();
+      renderSlopeMinimap();
+      renderTreeStats();
+      renderExperiments();
+      renderLogs();
+    }
+
+    // Initialize on load
+    window.onload = function () {
+      renderAll();
+    };
+  </script>
+</body>
+</html>
