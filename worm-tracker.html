@@ -542,7 +542,7 @@
 
     function getDefaultState() {
       return {
-        simulatedDate: BASE_INSTALL_DATE,
+        simulatedDate: toISODate(new Date()),
         selectedBins: [],
         selectedMenuTags: ['🥬 Veggie Peels', '☕ Coffee Grounds', '📦 Wet Cardboard'],
         treeStats: {
@@ -686,6 +686,7 @@
         if (!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
         if (!parsed.bins || parsed.bins.length !== 8) return getDefaultState();
+        if (parsed.simulatedDate === BASE_INSTALL_DATE) parsed.simulatedDate = toISODate(new Date());
         return parsed;
       } catch (err) {
         console.warn('Could not load saved state, using defaults:', err);
@@ -778,10 +779,10 @@
     }
 
     function resetSimulatedDate() {
-      state.simulatedDate = BASE_INSTALL_DATE;
+      state.simulatedDate = toISODate(new Date());
       saveState();
       renderAll();
-      showToast(`📅 Planner date reset to Nov 7, 2026`);
+      showToast(`📅 Planner date reset to ${formatShortDate(state.simulatedDate)}`);
     }
 
     // =========================================================================
