@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hillside Slope Plant Tracker | Clare's Garden Planner</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Cinzel (Sharp Serif), Space Grotesk (UI), JetBrains Mono (Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#090d0b',
+              900: '#0f1412',
+              800: '#161f1b',
+              700: '#1f2d27',
+              600: '#2b3e36'
+            },
+            emerald: {
+              950: '#0d261c',
+              900: '#1b4332',
+              800: '#2d6a4f',
+              600: '#40916c',
+              400: '#52b788',
+              300: '#74c69d'
+            },
+            plum: {
+              950: '#240046',
+              900: '#3c096c',
+              800: '#5a189a',
+              600: '#7b2cbf',
+              400: '#9d4edd',
+              300: '#c77dff'
+            },
+            harvest: {
+              600: '#b58e24',
+              500: '#d4af37',
+              400: '#e9c46a',
+              300: '#f4a261'
+            },
+            terracotta: {
+              900: '#4a1f14',
+              700: '#8c3b28',
+              500: '#c85a32',
+              400: '#e07a5f'
+            },
+            crimson: {
+              900: '#591218',
+              700: '#9e1f28',
+              500: '#e63946',
+              400: '#ff6b76'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict 0px Sharp Architectural Borders */
+    *, *::before, *::after {
+      border-radius: 0px !important;
+    }
+
+    body {
+      background-color: #0f1412;
+      color: #e6f0ec;
+      font-family: 'Space Grotesk', sans-serif;
+      background-image:
+        radial-gradient(circle at 85% 10%, rgba(90, 24, 154, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 15% 35%, rgba(27, 67, 50, 0.25) 0%, transparent 45%),
+        linear-gradient(to bottom, #090d0b 0%, #0f1412 50%, #121916 100%);
+      min-height: 100vh;
+    }
+
+    .sharp-panel {
+      background-color: #161f1b;
+      border: 1px solid #2b3e36;
+      box-shadow: 4px 4px 0px #090d0b;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .sharp-panel-gold {
+      background-color: #161f1b;
+      border: 1px solid #d4af37;
+      box-shadow: 4px 4px 0px rgba(212, 175, 55, 0.25);
+    }
+
+    .sharp-panel-plum {
+      background-color: #161f1b;
+      border: 1px solid #9d4edd;
+      box-shadow: 4px 4px 0px rgba(157, 78, 221, 0.25);
+    }
+
+    .plant-card {
+      background-color: #131b18;
+      border: 1px solid #2b3e36;
+      box-shadow: 4px 4px 0px #070a09;
+      transition: all 0.15s ease;
+    }
+
+    .plant-card:hover {
+      border-color: #52b788;
+      box-shadow: 6px 6px 0px #070a09;
+    }
+
+    .plant-card.selected-plant {
+      border: 2px solid #d4af37;
+      background-color: #192420;
+      box-shadow: 5px 5px 0px rgba(212, 175, 55, 0.35);
+    }
+
+    .plant-card.thirsty-alert {
+      border: 2px solid #e07a5f;
+      background-image: linear-gradient(135deg, rgba(200, 90, 50, 0.14) 0%, rgba(22, 31, 27, 0) 55%);
+    }
+
+    .sharp-btn {
+      border: 1px solid #2b3e36;
+      box-shadow: 2px 2px 0px #070a09;
+      transition: all 0.1s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .sharp-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px #070a09;
+    }
+    .sharp-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px #070a09;
+    }
+
+    .meter-bar-fill {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.14),
+        rgba(255, 255, 255, 0.14) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f1412;
+      border-left: 1px solid #1f2d27;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2d6a4f;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+
+    .sharp-checkbox {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #52b788;
+      background-color: #090d0b;
+      display: inline-grid;
+      place-content: center;
+      cursor: pointer;
+    }
+    .sharp-checkbox::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      transform: scale(0);
+      transition: 100ms transform ease-in-out;
+      background-color: #d4af37;
+    }
+    .sharp-checkbox:checked {
+      border-color: #d4af37;
+    }
+    .sharp-checkbox:checked::before {
+      transform: scale(1);
+    }
+
+    @keyframes borderPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .pulse-badge {
+      animation: borderPulse 2.2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-6 lg:p-8 selection:bg-plum-800 selection:text-harvest-400">
+
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- 1. HEADER & ASTROLOGICAL / ZONE 9B TELEMETRY BANNER -->
+    <header class="sharp-panel border-t-4 border-t-emerald-400 p-4 sm:p-6 bg-obsidian-800">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-obsidian-600 text-xs font-mono">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+          <span class="px-2.5 py-1 bg-plum-950 border border-plum-400 text-plum-300 font-bold tracking-wider uppercase">
+            🌒 Waning Crescent • Fall Root Establishment &amp; Castings Sync
+          </span>
+          <span class="text-emerald-300 hidden md:inline">
+            ✦ ANTIOCH, CA (ZONE 9B) • 8 WORM BINS LINKED • XLUX METER &amp; NEMATODE LOG
+          </span>
+        </div>
+
+        <!-- Planner Date Simulator -->
+        <div class="flex items-center gap-1.5 bg-obsidian-950 border border-obsidian-600 p-1">
+          <span class="text-gray-400 px-2 uppercase tracking-wider">Planner Date:</span>
+          <button onclick="shiftSimulatedDate(-1)" title="Back 1 Day" class="sharp-btn px-2 py-0.5 bg-obsidian-800 hover:bg-obsidian-700 text-gray-300 font-bold">-1d</button>
+          <span id="current-date-display" class="px-2.5 py-0.5 bg-emerald-950 border border-emerald-600 text-harvest-400 font-bold">
+            NOV 7, 2026
+          </span>
+          <button onclick="shiftSimulatedDate(1)" title="Forward 1 Day" class="sharp-btn px-2 py-0.5 bg-obsidian-800 hover:bg-obsidian-700 text-gray-300 font-bold">+1d</button>
+          <button onclick="shiftSimulatedDate(7)" title="Forward 1 Week (Test Watering Alerts)" class="sharp-btn px-2 py-0.5 bg-obsidian-800 hover:bg-obsidian-700 text-harvest-400 font-bold">+7d</button>
+          <button onclick="resetSimulatedDate()" title="Reset to Nov 7, 2026" class="sharp-btn px-2 py-0.5 bg-plum-950 hover:bg-plum-900 text-plum-300 border-plum-600">Reset</button>
+        </div>
+      </div>
+
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-harvest-500 mb-1">
+            <span>🌿 CLARE'S GARDEN PLANNER MODULE</span>
+            <span>//</span>
+            <span>BOTANICAL &amp; ROOT-ZONE EDITION</span>
+          </div>
+          <h1 class="font-serif text-2xl sm:text-4xl font-extrabold tracking-wide text-white uppercase">
+            Hillside Slope Plant Tracker
+          </h1>
+          <p class="text-sm text-gray-300 mt-1 max-w-2xl">
+            Consolidated botanical inventory featuring <span class="text-plum-300 font-medium">Oleander, Lavender, California Lilac, Rosemary &amp; Sage</span> on the upper tiers, <span class="text-harvest-400 font-medium">Castors, Weeping Birch, Society Garlic &amp; Mexican Petunia</span> mid-slope, and <span class="text-emerald-300 font-medium">Sweet Bay Laurels &amp; Jasmine</span> at ground level.
+          </p>
+        </div>
+
+        <!-- Live Telemetry KPI Boxes -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 shrink-0 font-mono">
+          <div class="bg-obsidian-950 border border-emerald-800 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Thriving Squad</div>
+            <div id="stat-thriving" class="text-xl font-bold text-emerald-400 mt-0.5">14 / 14</div>
+            <div class="text-[10px] text-emerald-300">Consolidated Species</div>
+          </div>
+          <div class="bg-obsidian-950 border border-terracotta-500 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Thirsty / Due</div>
+            <div id="stat-thirsty" class="text-xl font-bold text-terracotta-400 mt-0.5">0</div>
+            <div id="stat-thirsty-sub" class="text-[10px] text-gray-400">Hydration Good</div>
+          </div>
+          <div class="bg-obsidian-950 border border-harvest-500 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Worm-Fed Zones</div>
+            <div id="stat-worm-linked" class="text-xl font-bold text-harvest-400 mt-0.5">8 Bins</div>
+            <div class="text-[10px] text-harvest-300">Active Root Highway</div>
+          </div>
+          <div class="bg-obsidian-950 border border-plum-500 p-3 min-w-[125px]">
+            <div class="text-[10px] text-gray-400 uppercase">Avg XLUX Meter</div>
+            <div id="stat-avg-moisture" class="text-xl font-bold text-plum-300 mt-0.5">5.6 / 10</div>
+            <div class="text-[10px] text-plum-300">Soil Moisture</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. "CLIMB VS. CRUISE" PLANT CARE ROUTING & BATCH ACTION BAR -->
+    <section class="sharp-panel p-4 sm:p-5 bg-obsidian-800 border-l-4 border-l-harvest-500 space-y-4">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-obsidian-600">
+        <div>
+          <h2 class="font-serif text-base sm:text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>🚿 Slope Care Routing &amp; Batch Actions</span>
+            <span id="selected-count-badge" class="font-mono text-xs px-2 py-0.5 bg-harvest-500 text-obsidian-950 font-bold">
+              0 SELECTED
+            </span>
+          </h2>
+          <p class="text-xs text-gray-400">Select an elevation zone or plant group to log hose watering, worm tea drenches, XLUX moisture checks, or pruning:</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+          <button onclick="selectPlantGroup([10, 11], 'Ground Tier (Sweet Bay Laurels & Jasmine)')" class="sharp-btn px-3 py-2 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border-emerald-600 font-semibold">
+            🍃 Ground Tier (#10–#11)
+          </button>
+          <button onclick="selectPlantGroup([6, 7, 8, 9], 'Slope & Tree Zone (Castors, Weeping Birch, Society Garlic & Mexican Petunia)')" class="sharp-btn px-3 py-2 bg-obsidian-900 hover:bg-obsidian-700 text-harvest-400 border-harvest-600 font-semibold">
+            🌳 Slope &amp; Birch Zone (#6–#9)
+          </button>
+          <button onclick="selectPlantGroup([1, 2, 3, 4, 5], 'Upper Slope (Oleander, Lavender, CA Lilac, Rosemary & Sage)')" class="sharp-btn px-3 py-2 bg-plum-950 hover:bg-plum-900 text-plum-300 border-plum-400 font-semibold">
+            ☀️ Upper Slope (#1–#5)
+          </button>
+          <button onclick="selectPlantGroup([12, 13, 14], 'Nursery Specimens (Cedars, Thujas & Encore Azalea)')" class="sharp-btn px-3 py-2 bg-obsidian-900 hover:bg-obsidian-700 text-amber-300 border-amber-500/60 font-semibold">
+            🌲 Cedars, Thujas &amp; Azalea (#12–#14)
+          </button>
+          <button onclick="selectAllPlants()" class="sharp-btn px-3 py-2 bg-harvest-500 hover:bg-harvest-400 text-obsidian-950 border-harvest-300 font-bold">
+            🌿 All 14 Plants
+          </button>
+          <button onclick="clearSelection()" class="sharp-btn px-2.5 py-2 bg-obsidian-950 hover:bg-crimson-900 text-gray-400 hover:text-white border-obsidian-600">
+            ✕ Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Row 2: Direct Plant Pills & Care Treatment Tags -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+        <div class="lg:col-span-5 flex flex-wrap items-center gap-1.5">
+          <span class="text-xs font-mono uppercase text-gray-400 mr-1">Stations:</span>
+          <div id="quick-plant-pills" class="flex flex-wrap gap-1.5">
+            <!-- Dynamically populated plant pills -->
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-wrap items-center gap-1.5">
+          <span class="text-xs font-mono uppercase text-gray-400 mr-1">Care Toolkit:</span>
+          <div id="care-treatment-tags" class="flex flex-wrap gap-1.5 text-xs font-mono">
+            <!-- Dynamically populated treatment tags -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Batch Execution Buttons & Add Plant Button -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2 border-t border-obsidian-600">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="executeBatchCare('water')" class="sharp-btn px-4 py-2.5 bg-emerald-800 hover:bg-emerald-600 text-white border-emerald-400 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>💧 Deep Water Selected</span>
+          </button>
+          <button onclick="executeBatchCare('wormfeed')" class="sharp-btn px-4 py-2.5 bg-harvest-500 hover:bg-harvest-400 text-obsidian-950 border-harvest-300 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>🍵 Worm Tea / Castings</span>
+          </button>
+          <button onclick="executeBatchCare('prune')" class="sharp-btn px-4 py-2.5 bg-plum-800 hover:bg-plum-600 text-white border-plum-400 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>✂️ Prune / Deadhead</span>
+          </button>
+          <button onclick="openAddPlantModal()" class="sharp-btn px-3.5 py-2.5 bg-obsidian-950 hover:bg-obsidian-700 text-emerald-300 border-emerald-600 font-mono text-xs font-bold uppercase tracking-wider">
+            + Add Plant
+          </button>
+        </div>
+
+        <div id="action-toast" class="font-mono text-xs px-3 py-2 bg-obsidian-950 border border-emerald-800 text-emerald-300 flex items-center gap-2">
+          <span>✦ Ready: All 4 hillside tiers + nursery tree &amp; shrub records loaded!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MAIN WORKSPACE: TIERED PLANT CARDS (LEFT 8 COLS) + SIDEBAR TOOLS (RIGHT 4 COLS) -->
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: STACKED HILLSIDE TIERS + NURSERY SPECIMENS -->
+      <div class="xl:col-span-8 space-y-6" id="plant-tiers-container">
+        <!-- Populated dynamically by renderPlantTiers() -->
+      </div>
+
+      <!-- RIGHT COLUMN: XLUX MOISTURE RADAR, NURSERY WARRANTY TRACKER & CARE LOG -->
+      <aside class="xl:col-span-4 space-y-6 sticky top-6">
+
+        <!-- HILLSIDE MOISTURE & WORM PAIRING MATRIX -->
+        <div class="sharp-panel p-4 bg-obsidian-800 border-t-2 border-t-emerald-400">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-white">
+              📟 XLUX Moisture &amp; Tier Radar
+            </h3>
+            <span class="font-mono text-[11px] text-emerald-300">1–10 Scale</span>
+          </div>
+          <p class="text-xs text-gray-400 mb-3">
+            Snapshot of soil moisture across your slope. Upper Mediterranean plants (Oleander, Lavender) like <span class="text-harvest-400">3–5</span>; Castors, Bay Laurels &amp; Young Cedars thrive at <span class="text-emerald-300">6–8</span>:
+          </p>
+          <div id="slope-plant-minimap" class="space-y-1.5 font-mono text-xs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- NURSERY ORDER & biological SOIL SHIELD TRACKER -->
+        <div class="sharp-panel-gold p-4 bg-obsidian-800">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-harvest-400">
+              🛡️ Nursery Orders &amp; Bio-Shield
+            </h3>
+            <span class="font-mono text-[10px] px-2 py-0.5 bg-harvest-500 text-obsidian-950 font-bold">VERIFIED RECORDS</span>
+          </div>
+          <div class="space-y-2.5 text-xs font-mono">
+            <div class="bg-obsidian-950 border border-obsidian-700 p-2.5">
+              <div class="flex justify-between text-emerald-300 font-bold">
+                <span>🍃 4× Sweet Bay Laurel (5-Gal)</span>
+                <span>JUN 19, 2026</span>
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Plants Express #S36481 • Ground Level (Bins #7 &amp; #8)</div>
+            </div>
+            <div class="bg-obsidian-950 border border-obsidian-700 p-2.5">
+              <div class="flex justify-between text-plum-300 font-bold">
+                <span>🌺 Autumn Debutante® Azalea</span>
+                <span>JUN 30, 2026</span>
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Fast-Growing-Trees #9503781786 • 1-Yr Warranty</div>
+            </div>
+            <div class="bg-obsidian-950 border border-obsidian-700 p-2.5">
+              <div class="flex justify-between text-harvest-400 font-bold">
+                <span>🌲 Northern Spire Red Cedar</span>
+                <span>JUN 23, 2026</span>
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">FGT Replacement #9503763548 • 1-Yr Warranty</div>
+            </div>
+            <div class="bg-obsidian-950 border border-obsidian-700 p-2.5">
+              <div class="flex justify-between text-emerald-400 font-bold">
+                <span>🌲 10× Thuja Green Giant</span>
+                <span>MAR 28, 2024</span>
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Fast-Growing-Trees #9502088017 • Established Screen</div>
+            </div>
+            <div class="bg-obsidian-950 border border-plum-700 p-2.5">
+              <div class="flex justify-between text-plum-300 font-bold">
+                <span>🦠 Beneficial Nematodes (25M)</span>
+                <span>OCT 13, 2026</span>
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Nature's Good Guys #N351515 • HB+SC Soil Shield</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEASONAL & HILLSIDE OBSERVATION NOTES -->
+        <div class="sharp-panel-plum p-4 bg-obsidian-800">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-plum-300">
+              🌸 Bloom &amp; Growth Observations
+            </h3>
+            <span class="font-mono text-[10px] text-gray-400">AUTO-SAVED</span>
+          </div>
+          <div class="flex gap-1.5 mb-3">
+            <input id="new-observation-input" type="text" placeholder="Add plant note (e.g. New flush on Bay Laurels)..." onkeydown="if(event.key==='Enter') addObservationNote()" class="flex-1 bg-obsidian-950 border border-obsidian-600 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-plum-400" />
+            <button onclick="addObservationNote()" class="sharp-btn px-3 py-1.5 bg-plum-800 hover:bg-plum-600 text-white font-mono text-xs font-bold">+ Pin</button>
+          </div>
+          <ul id="observation-notes-list" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+
+        <!-- BOTANICAL CARE LOG -->
+        <div class="sharp-panel p-4 bg-obsidian-800">
+          <div class="flex items-center justify-between border-b border-obsidian-600 pb-2 mb-3">
+            <h3 class="font-serif text-sm font-bold uppercase tracking-wider text-white">
+              📜 Hillside Care Log
+            </h3>
+            <div class="flex items-center gap-1.5">
+              <button onclick="copyPlantMarkdownReport()" title="Copy Planner Markdown Table" class="sharp-btn px-2 py-0.5 bg-obsidian-950 hover:bg-emerald-950 text-emerald-300 border-emerald-700 font-mono text-[10px]">
+                📋 Copy MD
+              </button>
+              <button onclick="openBackupModal()" title="Export / Import JSON Backup" class="sharp-btn px-2 py-0.5 bg-obsidian-950 hover:bg-obsidian-700 text-harvest-400 border-harvest-600 font-mono text-[10px]">
+                💾 Backup
+              </button>
+              <button onclick="openResetModal()" title="Reset to Nov 7 Defaults" class="sharp-btn px-2 py-0.5 bg-obsidian-950 hover:bg-crimson-900 text-crimson-400 border-crimson-700 font-mono text-[10px]">
+                ↺ Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Custom Log Entry -->
+          <div class="flex gap-1.5 mb-3">
+            <select id="custom-log-stamp" class="bg-obsidian-950 border border-obsidian-600 px-2 py-1.5 text-xs font-mono text-harvest-400 focus:outline-none">
+              <option value="💧 Deep Watered">💧 Water</option>
+              <option value="🍵 Worm Tea / Castings">🍵 Castings</option>
+              <option value="📟 XLUX Meter Check">📟 XLUX</option>
+              <option value="✂️ Pruned / Shaped">✂️ Pruned</option>
+              <option value="🦠 Applied Nematodes">🦠 Nematodes</option>
+              <option value="🌸 New Blooms / Flush">🌸 Growth</option>
+            </select>
+            <input id="custom-log-text" type="text" placeholder="Quick plant care note..." onkeydown="if(event.key==='Enter') addCustomLogEntry()" class="flex-1 bg-obsidian-950 border border-obsidian-600 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400" />
+            <button onclick="addCustomLogEntry()" class="sharp-btn px-3 py-1.5 bg-emerald-800 hover:bg-emerald-600 text-white font-mono text-xs font-bold">Log</button>
+          </div>
+
+          <div id="care-log-container" class="space-y-2 max-h-80 overflow-y-auto pr-1 font-mono text-xs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- CUSTOM SHARP MODAL (ADD PLANT / BACKUP / RESET) -->
+    <div id="custom-modal-backdrop" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+      <div class="sharp-panel-gold bg-obsidian-900 max-w-lg w-full p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-obsidian-600 pb-2">
+          <h3 id="modal-title" class="font-serif text-lg font-bold text-harvest-400 uppercase">Modal Title</h3>
+          <button onclick="closeModal()" class="sharp-btn px-2 py-0.5 bg-obsidian-800 text-gray-300 hover:text-white font-mono text-xs">✕ ESC</button>
+        </div>
+        <div id="modal-body" class="text-xs text-gray-300 space-y-3"></div>
+        <div id="modal-footer" class="flex justify-end gap-2 pt-2 border-t border-obsidian-600 font-mono text-xs"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. STATE & BOTANICAL INVENTORY CONFIGURATION
+    // =========================================================================
+    const STORAGE_KEY = 'clare_hillside_plant_tracker_v3';
+    const BASE_DATE = '2026-11-07';
+
+    const CARE_TOOLKIT_OPTIONS = [
+      { id: 'hose', label: '💧 Deep Hose Soak' },
+      { id: 'castings', label: '🪣 Worm Castings Top-Dress' },
+      { id: 'tea', label: '🍵 Worm Tea Drench' },
+      { id: 'xlux', label: '📟 XLUX Moisture Check' },
+      { id: 'nematodes', label: '🦠 Beneficial Nematodes' },
+      { id: 'prune', label: '✂️ Prune / Deadhead' }
+    ];
+
+    const TIER_SECTIONS = [
+      {
+        tierId: 4,
+        name: 'Tier 4 • Top Ridge (Summit)',
+        subtitle: 'Highest elevation between the oleanders — full sun exposure & fastest downhill drainage.',
+        badge: 'SUMMIT RIDGE',
+        accentClass: 'border-l-4 border-l-plum-400'
+      },
+      {
+        tierId: 3,
+        name: 'Tier 3 • Second Tier (Mid-Slope Mediterranean & Natives)',
+        subtitle: 'Consolidated Lavender patch + California Lilac, Rosemary & Sage — thrives in full sun and fast-draining slope soil.',
+        badge: 'UPPER MID-SLOPE',
+        accentClass: 'border-l-4 border-l-plum-600'
+      },
+      {
+        tierId: 2,
+        name: 'Tier 2 • Slope Side & Weeping Birch Zone',
+        subtitle: 'Consolidated Castor stations + 5 ft Weeping Birch (grown from a twig in 2024 • Bin #6), Society Garlic & Mexican Petunia.',
+        badge: 'SLOPE & BIRCH ZONE',
+        accentClass: 'border-l-4 border-l-harvest-500'
+      },
+      {
+        tierId: 1,
+        name: 'Tier 1 • Lowest Tier (Ground Level / Patio)',
+        subtitle: 'Consolidated 4× Sweet Bay Laurels (Left & Right) + fragrant Jasmine — catches downhill moisture & worm tea runoff.',
+        badge: 'PATIO GROUND LEVEL',
+        accentClass: 'border-l-4 border-l-emerald-400'
+      },
+      {
+        tierId: 0,
+        name: 'Yard Perimeter & Nursery Specimen Collection',
+        subtitle: 'Additional trees & shrubs from your Fast-Growing-Trees orders (use the card dropdown to reassign to any tier!).',
+        badge: 'YARD & SPECIMENS',
+        accentClass: 'border-l-4 border-l-amber-400'
+      }
+    ];
+
+    function getDefaultState() {
+      return {
+        simulatedDate: BASE_DATE,
+        selectedPlants: [],
+        selectedCareTags: ['💧 Deep Hose Soak', '🪣 Worm Castings Top-Dress'],
+        observations: [
+          {
+            id: 'obs-1',
+            date: '2026-11-07',
+            text: 'Weeping Birch planted from a twig in 2024 is now ~5 feet tall! Buried Worm Bin #6 right next to its root zone.'
+          },
+          {
+            id: 'obs-2',
+            date: '2026-11-07',
+            text: 'Consolidated duplicate plant stations and added California Lilac, Sage, Rosemary, Jasmine, Society Garlic & Mexican Petunia!'
+          },
+          {
+            id: 'obs-3',
+            date: '2026-10-13',
+            text: 'Applied 25M Beneficial Nematodes (HB+SC Mix from Nature\'s Good Guys) to protect roots from grubs.'
+          },
+          {
+            id: 'obs-4',
+            date: '2026-07-11',
+            text: '4× 5-Gallon Sweet Bay Laurels from Plants Express went straight into the ground on the lowest tier and are thriving!'
+          }
+        ],
+        logs: [
+          {
+            id: 'plog-1',
+            date: '2026-11-07',
+            stamp: '🍵 Worm Tea / Castings',
+            target: 'All 8 Hillside Host Zones (Bins #1–#8)',
+            details: 'Fed all 8 buried worm bins (#1–#8) and added Bin #6 directly next to the 5 ft Weeping Birch root zone.'
+          },
+          {
+            id: 'plog-2',
+            date: '2026-10-13',
+            stamp: '🦠 Applied Nematodes',
+            target: 'Backyard Soil & Root Zones',
+            details: 'Watered in 25 million HB+SC Beneficial Nematodes (Nature\'s Good Guys Order #N351515).'
+          }
+        ],
+        plants: [
+          {
+            id: 1,
+            tier: 4,
+            name: 'Oleander 🌸',
+            botanical: 'Nerium oleander',
+            wormBin: 'Bin #1 (Summit Between Oleanders)',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 10,
+            lastWatered: '2026-11-03',
+            lastFed: '2026-11-07',
+            xluxMoisture: 5,
+            status: '✨ Thriving',
+            plantedDate: 'Summit Ridge',
+            notes: 'Top ridge anchor with Bin #1 buried right between the oleanders. Super drought-tolerant once established.'
+          },
+          {
+            id: 2,
+            tier: 3,
+            name: 'Lavender 💜',
+            botanical: 'Lavandula spp. (Top & Bottom Patch)',
+            wormBin: 'Bins #2 (Bottom) & #3 (Top)',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 10,
+            lastWatered: '2026-11-02',
+            lastFed: '2026-11-07',
+            xluxMoisture: 4,
+            status: '✨ Thriving',
+            plantedDate: 'Tier 3 Mid-Slope',
+            notes: 'Consolidated Top & Bottom lavender patch flanked by Bins #2 & #3. Prefers XLUX moisture around 3–5; deadhead spent spikes.'
+          },
+          {
+            id: 3,
+            tier: 3,
+            name: 'California Lilac 💙',
+            botanical: 'Ceanothus spp.',
+            wormBin: 'Slope Runoff / Castings',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 12,
+            lastWatered: '2026-11-01',
+            lastFed: '2026-10-28',
+            xluxMoisture: 4,
+            status: '✨ Thriving',
+            plantedDate: 'CA Native Slope Anchor',
+            notes: 'Nitrogen-fixing California native with deep roots that stabilize the hillside slope. Avoid heavy summer overwatering.'
+          },
+          {
+            id: 4,
+            tier: 3,
+            name: 'Rosemary 🌿',
+            botanical: 'Salvia rosmarinus',
+            wormBin: 'Tier 3 Slope / Castings',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 10,
+            lastWatered: '2026-11-02',
+            lastFed: '2026-11-01',
+            xluxMoisture: 4,
+            status: '✨ Thriving',
+            plantedDate: 'Mediterranean Herb Guild',
+            notes: 'Woody aromatic evergreen that loves the fast-draining slope next to the lavender. Harvest sprigs anytime for cooking!'
+          },
+          {
+            id: 5,
+            tier: 3,
+            name: 'Sage 🌿',
+            botanical: 'Salvia spp.',
+            wormBin: 'Tier 3 Slope / Castings',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 9,
+            lastWatered: '2026-11-03',
+            lastFed: '2026-11-01',
+            xluxMoisture: 5,
+            status: '✨ Thriving',
+            plantedDate: 'Mediterranean Herb Guild',
+            notes: ' Pollinator magnet that pairs with rosemary and lavender on well-drained slopes. Lightly prune woody stems in spring.'
+          },
+          {
+            id: 6,
+            tier: 2,
+            name: 'Castor Plants 🪴',
+            botanical: 'Ricinus communis (Corner & Slope Side)',
+            wormBin: 'Bins #4 (Corner) & #5 (Slope Side)',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 5,
+            lastWatered: '2026-11-05',
+            lastFed: '2026-11-07',
+            xluxMoisture: 7,
+            status: '✨ Thriving',
+            plantedDate: 'Slope Side & Corner',
+            notes: 'Consolidated Corner (Station A) & Slope Side (Station B) castors. Heavy feeders that drink up worm tea from Bins #4 & #5!'
+          },
+          {
+            id: 7,
+            tier: 2,
+            name: 'Weeping Birch 🌳',
+            botanical: 'Betula pendula (From a Twig • 2024)',
+            wormBin: 'Bin #6 (Installed Nov 7!)',
+            sun: '☀️ Full–Part Sun',
+            waterIntervalDays: 4,
+            lastWatered: '2026-11-07',
+            lastFed: '2026-11-07',
+            xluxMoisture: 7,
+            status: '✨ Thriving (~5 ft!)',
+            plantedDate: 'Planted 2024 from a Twig (~5 ft tall)',
+            notes: 'Propagated from a twig in 2024 and already ~5 feet tall! Buried Worm Bin #6 right next to its moisture-loving roots on Nov 7.'
+          },
+          {
+            id: 8,
+            tier: 2,
+            name: 'Society Garlic 🧄',
+            botanical: 'Tulbaghia violacea',
+            wormBin: 'Slope Companion / Castings',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 8,
+            lastWatered: '2026-11-04',
+            lastFed: '2026-11-01',
+            xluxMoisture: 5,
+            status: '🌸 Blooming',
+            plantedDate: 'Pest-Guard Companion',
+            notes: 'Lilac-pink blooms with natural garlicky scent that deters gophers, moles, and aphids around your young tree and slope beds.'
+          },
+          {
+            id: 9,
+            tier: 2,
+            name: 'Mexican Petunia 🎺',
+            botanical: 'Ruellia simplex',
+            wormBin: 'Slope / Castings Top-Dress',
+            sun: '☀️ Full–Part Sun',
+            waterIntervalDays: 6,
+            lastWatered: '2026-11-05',
+            lastFed: '2026-11-01',
+            xluxMoisture: 6,
+            status: '🌸 Blooming',
+            plantedDate: 'Hillside Color Accent',
+            notes: 'Heat-loving perennial with vibrant violet-purple trumpet blooms. Loves worm castings for non-stop flowering.'
+          },
+          {
+            id: 10,
+            tier: 1,
+            name: 'Sweet Bay Laurels (×4) 🍃',
+            botanical: 'Laurus nobilis (5-Gal • Left & Right)',
+            wormBin: 'Bins #7 (Left) & #8 (Right)',
+            sun: '☀️ Full–Part Sun',
+            waterIntervalDays: 7,
+            lastWatered: '2026-11-05',
+            lastFed: '2026-11-07',
+            xluxMoisture: 7,
+            status: '✨ Thriving',
+            plantedDate: 'Planted Jun 19, 2026 (#S36481)',
+            notes: 'Consolidated Left & Right ground-level Bay Laurels (4× 5-gal from Plants Express) paired with Worm Bins #7 & #8.'
+          },
+          {
+            id: 11,
+            tier: 1,
+            name: 'Jasmine 🌼',
+            botanical: 'Jasminum / Trachelospermum spp.',
+            wormBin: 'Ground Level Castings',
+            sun: '☀️ Full Sun–Part Shade',
+            waterIntervalDays: 6,
+            lastWatered: '2026-11-05',
+            lastFed: '2026-11-01',
+            xluxMoisture: 6,
+            status: '✨ Thriving',
+            plantedDate: 'Patio / Trellis Fragrance',
+            notes: 'Sweetly scented evergreen vine/shrub. Top-dress with castings from Bins #7 & #8 in early spring before bud set.'
+          },
+          {
+            id: 12,
+            tier: 0,
+            name: 'Northern Spire Western Red Cedar 🌲',
+            botanical: 'Thuja plicata \'Northern Spire\'',
+            wormBin: 'Top-Dress Castings',
+            sun: '☀️ Full–Part Sun',
+            waterIntervalDays: 5,
+            lastWatered: '2026-11-05',
+            lastFed: '2026-10-25',
+            xluxMoisture: 6,
+            status: '🌱 Establishing',
+            plantedDate: 'Jun 23, 2026 (FGT #9503763548)',
+            notes: 'Replacement cedar delivered June 23, 2026. Keep root zone mulched and evenly moist (XLUX 6–7).'
+          },
+          {
+            id: 13,
+            tier: 0,
+            name: 'Autumn Debutante® Encore® Azalea 🌺',
+            botanical: 'Rhododendron \'Robleg\'',
+            wormBin: 'Top-Dress Castings',
+            sun: '⛅ Filtered / Morning Sun',
+            waterIntervalDays: 5,
+            lastWatered: '2026-11-05',
+            lastFed: '2026-10-28',
+            xluxMoisture: 6,
+            status: '🌸 Blooming',
+            plantedDate: 'Jun 30, 2026 (FGT #9503781786)',
+            notes: 'Re-blooming soft pink Encore Azalea delivered June 30, 2026. Loves acidic soil, worm castings & afternoon shade.'
+          },
+          {
+            id: 14,
+            tier: 0,
+            name: 'Thuja Green Giant Screen (×10) 🌲',
+            botanical: 'Thuja standishii × plicata',
+            wormBin: 'Top-Dress Castings',
+            sun: '☀️ Full Sun',
+            waterIntervalDays: 7,
+            lastWatered: '2026-11-03',
+            lastFed: '2026-10-20',
+            xluxMoisture: 6,
+            status: '✨ Thriving',
+            plantedDate: 'Mar 28, 2024 (FGT #9502088017)',
+            notes: '10-tree privacy hedge planted Spring 2024. Deep soak along the drip line during dry spells.'
+          }
+        ]
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return getDefaultState();
+        const parsed = JSON.parse(raw);
+        if (!parsed.plants || !Array.isArray(parsed.plants)) return getDefaultState();
+        return parsed;
+      } catch (e) {
+        return getDefaultState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Could not save plant tracker state:', e);
+      }
+    }
+
+    // =========================================================================
+    // 2. DATE & HYDRATION TELEMETRY ENGINE
+    // =========================================================================
+    function parseISODate(isoStr) {
+      const [y, m, d] = isoStr.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function toISODate(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatShortDate(isoStr) {
+      const dt = parseISODate(isoStr);
+      return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function daysBetween(startIso, endIso) {
+      const d1 = parseISODate(startIso);
+      const d2 = parseISODate(endIso);
+      return Math.floor((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+    function getHydrationStatus(plant) {
+      const daysSinceWater = Math.max(0, daysBetween(plant.lastWatered, state.simulatedDate));
+      const daysLeft = plant.waterIntervalDays - daysSinceWater;
+
+      if (plant.xluxMoisture <= 3 || daysLeft < 0) {
+        return {
+          isThirsty: true,
+          label: '🔴 THIRSTY / WATER NOW',
+          subtext: daysLeft < 0 ? `${Math.abs(daysLeft)}d overdue` : `XLUX Low (${plant.xluxMoisture}/10)`,
+          badgeClass: 'bg-terracotta-900 text-terracotta-400 border-terracotta-400 pulse-badge'
+        };
+      }
+      if (daysLeft <= 1 || plant.xluxMoisture === 4) {
+        return {
+          isThirsty: false,
+          label: '🟡 CHECK SOIL SOON',
+          subtext: `Water in ~${Math.max(0, daysLeft)}d`,
+          badgeClass: 'bg-obsidian-950 text-harvest-400 border-harvest-500'
+        };
+      }
+      return {
+        isThirsty: false,
+        label: '🟢 HYDRATED',
+        subtext: `Watered ${daysSinceWater === 0 ? 'Today' : daysSinceWater + 'd ago'}`,
+        badgeClass: 'bg-emerald-950 text-emerald-300 border-emerald-500'
+      };
+    }
+
+    function shiftSimulatedDate(deltaDays) {
+      const current = parseISODate(state.simulatedDate);
+      current.setDate(current.getDate() + deltaDays);
+      state.simulatedDate = toISODate(current);
+      saveState();
+      renderAll();
+      showToast(`📅 Planner date shifted to ${formatShortDate(state.simulatedDate)}`);
+    }
+
+    function resetSimulatedDate() {
+      state.simulatedDate = BASE_DATE;
+      saveState();
+      renderAll();
+      showToast(`📅 Planner date reset to Nov 7, 2026`);
+    }
+
+    // =========================================================================
+    // 3. SELECTION & BATCH CARE ACTIONS
+    // =========================================================================
+    function togglePlantSelection(plantId) {
+      const idx = state.selectedPlants.indexOf(plantId);
+      if (idx === -1) {
+        state.selectedPlants.push(plantId);
+      } else {
+        state.selectedPlants.splice(idx, 1);
+      }
+      state.selectedPlants.sort((a, b) => a - b);
+      saveState();
+      renderAll();
+    }
+
+    function selectPlantGroup(ids, groupName) {
+      state.selectedPlants = ids.filter(id => state.plants.some(p => p.id === id));
+      saveState();
+      renderAll();
+      showToast(`🌿 Selected: ${groupName}`);
+    }
+
+    function selectAllPlants() {
+      state.selectedPlants = state.plants.map(p => p.id);
+      saveState();
+      renderAll();
+      showToast(`🌿 Selected all ${state.plants.length} plants across the yard!`);
+    }
+
+    function clearSelection() {
+      state.selectedPlants = [];
+      saveState();
+      renderAll();
+      showToast(`Cleared plant selection.`);
+    }
+
+    function toggleCareTag(label) {
+      const idx = state.selectedCareTags.indexOf(label);
+      if (idx === -1) {
+        state.selectedCareTags.push(label);
+      } else {
+        state.selectedCareTags.splice(idx, 1);
+      }
+      saveState();
+      renderCareTags();
+    }
+
+    function executeBatchCare(actionType) {
+      if (state.selectedPlants.length === 0) {
+        showToast(`⚠️ Select one or more plants (or a slope route button) first!`, true);
+        return;
+      }
+
+      const targets = state.plants.filter(p => state.selectedPlants.includes(p.id));
+      const namesShort = targets.map(p => p.name.split(' ')[0]).join(', ');
+      const tagsStr = state.selectedCareTags.length > 0 ? state.selectedCareTags.join(', ') : 'Standard Care';
+
+      if (actionType === 'water') {
+        targets.forEach(p => {
+          p.lastWatered = state.simulatedDate;
+          p.xluxMoisture = p.tier >= 3 ? 6 : 8;
+        });
+        state.logs.unshift({
+          id: 'plog-' + Date.now(),
+          date: state.simulatedDate,
+          stamp: '💧 Deep Watered',
+          target: `${targets.length} Plantings (${namesShort})`,
+          details: `Deep root-zone watering applied (${tagsStr}). XLUX moisture replenished.`
+        });
+        showToast(`💧 Deep watered ${targets.length} selected plant zones!`);
+      } else if (actionType === 'wormfeed') {
+        targets.forEach(p => {
+          p.lastFed = state.simulatedDate;
+        });
+        state.logs.unshift({
+          id: 'plog-' + Date.now(),
+          date: state.simulatedDate,
+          stamp: '🍵 Worm Tea / Castings',
+          target: `${targets.length} Plantings (${namesShort})`,
+          details: `Fed root zones with fresh worm castings & worm tea (${tagsStr}).`
+        });
+        showToast(`🍵 Logged worm castings / worm tea boost for ${targets.length} plantings!`);
+      } else if (actionType === 'prune') {
+        state.logs.unshift({
+          id: 'plog-' + Date.now(),
+          date: state.simulatedDate,
+          stamp: '✂️ Pruned / Shaped',
+          target: `${targets.length} Plantings (${namesShort})`,
+          details: `Pruned deadwood, shaped canopy, and cleared mulch ring (${tagsStr}).`
+        });
+        showToast(`✂️ Logged pruning & canopy care for ${targets.length} plantings!`);
+      }
+
+      saveState();
+      renderAll();
+    }
+
+    // =========================================================================
+    // 4. SINGLE PLANT CARD INTERACTIONS
+    // =========================================================================
+    function quickWaterPlant(plantId, event) {
+      if (event) event.stopPropagation();
+      const plant = state.plants.find(p => p.id === plantId);
+      if (!plant) return;
+
+      plant.lastWatered = state.simulatedDate;
+      plant.xluxMoisture = plant.tier >= 3 ? 6 : 8;
+
+      state.logs.unshift({
+        id: 'plog-' + Date.now(),
+        date: state.simulatedDate,
+        stamp: '💧 Deep Watered',
+        target: plant.name,
+        details: `Deep root soak applied to ${plant.name} (${plant.wormBin}).`
+      });
+
+      saveState();
+      renderAll();
+      showToast(`💧 Watered ${plant.name}!`);
+    }
+
+    function quickFeedPlantCastings(plantId, event) {
+      if (event) event.stopPropagation();
+      const plant = state.plants.find(p => p.id === plantId);
+      if (!plant) return;
+
+      plant.lastFed = state.simulatedDate;
+
+      state.logs.unshift({
+        id: 'plog-' + Date.now(),
+        date: state.simulatedDate,
+        stamp: '🍵 Worm Tea / Castings',
+        target: plant.name,
+        details: `Top-dressed ${plant.name} with black gold castings (${plant.wormBin}).`
+      });
+
+      saveState();
+      renderAll();
+      showToast(`🍵 Fed worm castings/tea to ${plant.name}!`);
+    }
+
+    function cyclePlantStatus(plantId, event) {
+      if (event) event.stopPropagation();
+      const plant = state.plants.find(p => p.id === plantId);
+      if (!plant) return;
+
+      const statuses = ['✨ Thriving', '🌱 Establishing', '🌸 Blooming', '🥀 Watch / TLC'];
+      const nextIdx = (statuses.indexOf(plant.status) + 1) % statuses.length;
+      plant.status = statuses[nextIdx];
+
+      saveState();
+      renderAll();
+      showToast(`🌿 ${plant.name} status updated to: ${plant.status}`);
+    }
+
+    function cycleXluxMoisture(plantId, event) {
+      if (event) event.stopPropagation();
+      const plant = state.plants.find(p => p.id === plantId);
+      if (!plant) return;
+
+      const readings = [2, 4, 6, 8, 9];
+      const currIdx = readings.findIndex(r => r >= plant.xluxMoisture);
+      const nextReading = readings[(currIdx + 1) % readings.length];
+      plant.xluxMoisture = nextReading;
+
+      saveState();
+      renderAll();
+      showToast(`📟 XLUX Soil Moisture Meter for ${plant.name} set to ${nextReading}/10`);
+    }
+
+    function changePlantTier(plantId, newTierVal) {
+      const plant = state.plants.find(p => p.id === plantId);
+      if (!plant) return;
+      plant.tier = Number(newTierVal);
+      saveState();
+      renderAll();
+      showToast(`⛰️ Moved ${plant.name} to Tier ${newTierVal}`);
+    }
+
+    function updatePlantNote(plantId, newNote) {
+      const plant = state.plants.find(p => p.id === plantId);
+      if (!plant) return;
+      plant.notes = newNote.trim();
+      saveState();
+      showToast(`✍️ Saved care note for ${plant.name}`);
+    }
+
+    // =========================================================================
+    // 5. ADD NEW PLANT MODAL & OBSERVATION LOGS
+    // =========================================================================
+    function openAddPlantModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      const footer = document.getElementById('modal-footer');
+
+      title.textContent = '🌱 Add New Plant to Hillside Tracker';
+      body.innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+          <div>
+            <label class="block text-[10px] text-gray-400 uppercase mb-1">Plant Name &amp; Emoji *</label>
+            <input id="new-plant-name" type="text" placeholder="e.g. Rosemary Bush 🌿" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 text-white focus:border-harvest-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 uppercase mb-1">Botanical / Source</label>
+            <input id="new-plant-botanical" type="text" placeholder="e.g. Salvia rosmarinus" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 text-white focus:border-harvest-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 uppercase mb-1">Hillside Tier</label>
+            <select id="new-plant-tier" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 text-harvest-400 focus:outline-none">
+              <option value="4">Tier 4 • Top Ridge (Summit)</option>
+              <option value="3">Tier 3 • Second Tier (Mid-Slope)</option>
+              <option value="2">Tier 2 • Slope Side &amp; Tree Zone</option>
+              <option value="1">Tier 1 • Lowest Tier (Ground Level)</option>
+              <option value="0">Yard Perimeter / Specimen</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 uppercase mb-1">Linked Worm Bin</label>
+            <input id="new-plant-bin" type="text" placeholder="e.g. Bin #2 or Castings Top-Dress" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 text-white focus:border-harvest-400 focus:outline-none" />
+          </div>
+        </div>
+        <div class="font-mono text-xs mt-2">
+          <label class="block text-[10px] text-gray-400 uppercase mb-1">Special Care Note</label>
+          <input id="new-plant-notes" type="text" placeholder="Sun exposure, watering rhythm, or pruning notes..." class="w-full bg-obsidian-950 border border-obsidian-600 p-2 text-white focus:border-harvest-400 focus:outline-none" />
+        </div>
+      `;
+
+      footer.innerHTML = `
+        <button onclick="saveNewPlantFromModal()" class="sharp-btn px-4 py-1.5 bg-emerald-800 hover:bg-emerald-600 text-white font-bold">+ Add Plant</button>
+        <button onclick="closeModal()" class="sharp-btn px-3 py-1.5 bg-obsidian-800 text-gray-300">Cancel</button>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function saveNewPlantFromModal() {
+      const nameEl = document.getElementById('new-plant-name');
+      if (!nameEl || !nameEl.value.trim()) {
+        showToast(`⚠️ Please enter a plant name.`, true);
+        return;
+      }
+
+      const newId = state.plants.reduce((max, p) => Math.max(max, p.id), 0) + 1;
+      const tierVal = Number(document.getElementById('new-plant-tier').value);
+      const botanicalVal = document.getElementById('new-plant-botanical').value.trim() || 'Backyard Addition';
+      const binVal = document.getElementById('new-plant-bin').value.trim() || 'Castings Top-Dress';
+      const notesVal = document.getElementById('new-plant-notes').value.trim() || 'Added to Clare\'s Hillside Plant Tracker.';
+
+      state.plants.push({
+        id: newId,
+        tier: tierVal,
+        name: nameEl.value.trim(),
+        botanical: botanicalVal,
+        wormBin: binVal,
+        sun: '☀️ Full–Part Sun',
+        waterIntervalDays: 7,
+        lastWatered: state.simulatedDate,
+        lastFed: state.simulatedDate,
+        xluxMoisture: 6,
+        status: '🌱 Establishing',
+        plantedDate: `Added ${formatShortDate(state.simulatedDate)}`,
+        notes: notesVal
+      });
+
+      state.logs.unshift({
+        id: 'plog-' + Date.now(),
+        date: state.simulatedDate,
+        stamp: '🌱 New Plant Added',
+        target: nameEl.value.trim(),
+        details: `Added ${nameEl.value.trim()} (${botanicalVal}) to Tier ${tierVal}.`
+      });
+
+      saveState();
+      renderAll();
+      closeModal();
+      showToast(`🌱 Added ${nameEl.value.trim()} to your Hillside Tracker!`);
+    }
+
+    function addObservationNote() {
+      const input = document.getElementById('new-observation-input');
+      if (!input || !input.value.trim()) return;
+      state.observations.unshift({
+        id: 'obs-' + Date.now(),
+        date: state.simulatedDate,
+        text: input.value.trim()
+      });
+      input.value = '';
+      saveState();
+      renderObservations();
+      showToast(`🌸 Pinned new plant observation!`);
+    }
+
+    function deleteObservationNote(obsId) {
+      state.observations = state.observations.filter(o => o.id !== obsId);
+      saveState();
+      renderObservations();
+    }
+
+    function addCustomLogEntry() {
+      const stampEl = document.getElementById('custom-log-stamp');
+      const textEl = document.getElementById('custom-log-text');
+      if (!textEl || !textEl.value.trim()) return;
+
+      state.logs.unshift({
+        id: 'plog-' + Date.now(),
+        date: state.simulatedDate,
+        stamp: stampEl ? stampEl.value : '🌿 Garden Note',
+        target: 'Hillside Plants',
+        details: textEl.value.trim()
+      });
+
+      textEl.value = '';
+      saveState();
+      renderLogs();
+      showToast(`📜 Added entry to Hillside Care Log!`);
+    }
+
+    function showToast(msg, isWarning = false) {
+      const toast = document.getElementById('action-toast');
+      if (!toast) return;
+      toast.className = isWarning
+        ? 'font-mono text-xs px-3 py-2 bg-crimson-900/60 border border-crimson-500 text-crimson-300 flex items-center gap-2'
+        : 'font-mono text-xs px-3 py-2 bg-obsidian-950 border border-emerald-600 text-emerald-300 flex items-center gap-2';
+      toast.innerHTML = `<span>${msg}</span>`;
+    }
+
+    // =========================================================================
+    // 6. EXPORT MARKDOWN & BACKUP / RESET MODALS
+    // =========================================================================
+    function copyPlantMarkdownReport() {
+      const lines = [
+        `### 🌿 Clare's Hillside Slope Plant Tracker (${formatShortDate(state.simulatedDate)})`,
+        ``,
+        `| Station & Tier | Botanical Name | Linked Worm Bin | Vigor Status | XLUX Moisture | Last Watered | Last Castings/Tea |`,
+        `| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`
+      ];
+      state.plants.forEach(p => {
+        const tierLabel = p.tier === 0 ? 'Perimeter' : `Tier ${p.tier}`;
+        lines.push(`| **${p.name}** (${tierLabel}) | *${p.botanical}* | ${p.wormBin} | ${p.status} | ${p.xluxMoisture}/10 | ${formatShortDate(p.lastWatered)} | ${formatShortDate(p.lastFed)} |`);
+      });
+
+      const temp = document.createElement('textarea');
+      temp.value = lines.join('\n');
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast(`📋 Copied full Hillside Plant Markdown table to clipboard!`);
+    }
+
+    function openBackupModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      document.getElementById('modal-title').textContent = '💾 Backup / Restore Plant Tracker JSON';
+      const jsonStr = JSON.stringify(state, null, 2);
+      document.getElementById('modal-body').innerHTML = `
+        <p class="text-gray-300">Copy the JSON below to save a backup of your plant inventory, or paste a saved JSON snapshot to restore:</p>
+        <textarea id="modal-json-area" rows="8" class="w-full bg-obsidian-950 border border-obsidian-600 p-2 font-mono text-[11px] text-emerald-300 focus:outline-none">${jsonStr}</textarea>
+      `;
+      document.getElementById('modal-footer').innerHTML = `
+        <button onclick="copyBackupJson()" class="sharp-btn px-3 py-1.5 bg-emerald-800 text-white font-bold">📋 Copy JSON</button>
+        <button onclick="restoreBackupJson()" class="sharp-btn px-3 py-1.5 bg-harvest-500 text-obsidian-950 font-bold">📥 Restore JSON</button>
+        <button onclick="closeModal()" class="sharp-btn px-3 py-1.5 bg-obsidian-800 text-gray-300">Close</button>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function copyBackupJson() {
+      const el = document.getElementById('modal-json-area');
+      if (!el) return;
+      el.select();
+      document.execCommand('copy');
+      showToast(`📋 Copied Plant Tracker JSON backup!`);
+    }
+
+    function restoreBackupJson() {
+      const el = document.getElementById('modal-json-area');
+      if (!el) return;
+      try {
+        const parsed = JSON.parse(el.value);
+        if (parsed && Array.isArray(parsed.plants)) {
+          state = parsed;
+          saveState();
+          renderAll();
+          closeModal();
+          showToast(`✅ Restored Hillside Plant Tracker data!`);
+        }
+      } catch (e) {
+        showToast(`⚠️ Invalid JSON format.`, true);
+      }
+    }
+
+    function openResetModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      document.getElementById('modal-title').textContent = '↺ Reset Hillside Plant Tracker?';
+      document.getElementById('modal-body').innerHTML = `
+        <p class="text-gray-300">This will restore all 11 default backyard plantings and logs back to your <strong>Nov 7, 2026</strong> baseline.</p>
+      `;
+      document.getElementById('modal-footer').innerHTML = `
+        <button onclick="confirmReset()" class="sharp-btn px-3 py-1.5 bg-crimson-700 text-white font-bold">Yes, Reset</button>
+        <button onclick="closeModal()" class="sharp-btn px-3 py-1.5 bg-obsidian-800 text-gray-300">Cancel</button>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function confirmReset() {
+      state = getDefaultState();
+      saveState();
+      renderAll();
+      closeModal();
+      showToast(`↺ Reset Hillside Plant Tracker to Nov 7 defaults!`);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('custom-modal-backdrop');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // =========================================================================
+    // 7. RENDERING ENGINE
+    // =========================================================================
+    function renderHeaderStats() {
+      document.getElementById('current-date-display').textContent = formatShortDate(state.simulatedDate).toUpperCase();
+
+      let thrivingCount = 0;
+      let thirstyCount = 0;
+      let totalMoisture = 0;
+
+      state.plants.forEach(p => {
+        const hyd = getHydrationStatus(p);
+        if (p.status !== '🥀 Watch / TLC') thrivingCount++;
+        if (hyd.isThirsty) thirstyCount++;
+        totalMoisture += p.xluxMoisture;
+      });
+
+      const avgMoisture = (totalMoisture / state.plants.length).toFixed(1);
+
+      document.getElementById('stat-thriving').textContent = `${thrivingCount} / ${state.plants.length}`;
+      document.getElementById('stat-thirsty').textContent = `${thirstyCount}`;
+      document.getElementById('stat-thirsty-sub').textContent = thirstyCount === 0 ? 'Hydration Good' : 'Needs Watering';
+      document.getElementById('stat-avg-moisture').textContent = `${avgMoisture} / 10`;
+      document.getElementById('selected-count-badge').textContent = `${state.selectedPlants.length} SELECTED`;
+    }
+
+    function renderQuickPlantPills() {
+      const container = document.getElementById('quick-plant-pills');
+      if (!container) return;
+
+      container.innerHTML = state.plants.map(p => {
+        const isSelected = state.selectedPlants.includes(p.id);
+        const cls = isSelected
+          ? 'bg-harvest-500 text-obsidian-950 border-harvest-300 font-bold'
+          : 'bg-obsidian-950 text-gray-300 border-obsidian-600 hover:border-emerald-400';
+        return `
+          <button onclick="togglePlantSelection(${p.id})" class="sharp-btn px-2 py-1 text-xs font-mono ${cls}" title="${p.name}">
+            #${p.id} ${p.name.split(' ')[0]}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderCareTags() {
+      const container = document.getElementById('care-treatment-tags');
+      if (!container) return;
+
+      container.innerHTML = CARE_TOOLKIT_OPTIONS.map(opt => {
+        const active = state.selectedCareTags.includes(opt.label);
+        const cls = active
+          ? 'bg-emerald-900 text-emerald-300 border-emerald-400 font-semibold'
+          : 'bg-obsidian-950 text-gray-400 border-obsidian-600 hover:text-gray-200';
+        return `
+          <button onclick="toggleCareTag('${opt.label}')" class="sharp-btn px-2.5 py-1 ${cls}">
+            ${opt.label}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderPlantTiers() {
+      const container = document.getElementById('plant-tiers-container');
+      if (!container) return;
+
+      container.innerHTML = TIER_SECTIONS.map(tier => {
+        const tierPlants = state.plants.filter(p => p.tier === tier.tierId);
+        if (tierPlants.length === 0) return '';
+
+        const cardsHtml = tierPlants.map(plant => {
+          const hyd = getHydrationStatus(plant);
+          const isSelected = state.selectedPlants.includes(plant.id);
+          const moisturePct = Math.min(100, plant.xluxMoisture * 10);
+
+          const meterColor = plant.xluxMoisture <= 3
+            ? 'bg-terracotta-500'
+            : plant.xluxMoisture <= 7
+              ? 'bg-emerald-400'
+              : 'bg-plum-400';
+
+          return `
+            <article class="plant-card p-4 flex flex-col justify-between gap-3 ${isSelected ? 'selected-plant' : ''} ${hyd.isThirsty ? 'thirsty-alert' : ''}">
+              <div>
+                <!-- Header Row -->
+                <div class="flex items-start justify-between gap-2">
+                  <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                    <input type="checkbox" class="sharp-checkbox mt-0.5 shrink-0" ${isSelected ? 'checked' : ''} onchange="togglePlantSelection(${plant.id})" />
+                    <div>
+                      <h4 class="font-serif text-base font-bold text-white leading-tight">${plant.name}</h4>
+                      <div class="text-xs font-mono text-gray-400 italic mt-0.5">${plant.botanical}</div>
+                    </div>
+                  </label>
+                  <span class="px-2 py-0.5 border font-mono text-[10px] font-bold uppercase shrink-0 ${hyd.badgeClass}">
+                    ${hyd.label}
+                  </span>
+                </div>
+
+                <!-- Worm Bin Pairing & Vigor Badges -->
+                <div class="flex flex-wrap items-center justify-between gap-1.5 mt-3 pt-2.5 border-t border-obsidian-700 font-mono text-[11px]">
+                  <span class="px-2 py-0.5 bg-obsidian-950 border border-harvest-600/80 text-harvest-400 font-semibold">
+                    🪱 ${plant.wormBin}
+                  </span>
+                  <button onclick="cyclePlantStatus(${plant.id}, event)" title="Click to cycle plant vigor status" class="sharp-btn px-2 py-0.5 bg-plum-950 text-plum-300 border-plum-600 hover:border-plum-300">
+                    ${plant.status}
+                  </button>
+                </div>
+
+                <!-- Telemetry Grid: Last Watered + Last Worm Castings Fed -->
+                <div class="grid grid-cols-2 gap-2 mt-2.5 font-mono text-xs">
+                  <div class="bg-obsidian-950 border border-obsidian-700 p-2">
+                    <div class="text-[10px] text-gray-400 uppercase">Last Watered (${hyd.subtext})</div>
+                    <div class="text-white font-bold mt-0.5">${formatShortDate(plant.lastWatered)}</div>
+                  </div>
+                  <div class="bg-obsidian-950 border border-obsidian-700 p-2">
+                    <div class="text-[10px] text-gray-400 uppercase">Castings / Worm Tea</div>
+                    <div class="text-emerald-300 font-bold mt-0.5">${formatShortDate(plant.lastFed)}</div>
+                  </div>
+                </div>
+
+                <!-- XLUX Soil Moisture Meter Bar (1-10 Scale) -->
+                <div class="mt-3">
+                  <div class="flex items-center justify-between font-mono text-[11px] mb-1">
+                    <span class="text-gray-400 uppercase">📟 XLUX Moisture Meter:</span>
+                    <button onclick="cycleXluxMoisture(${plant.id}, event)" class="text-harvest-400 hover:underline font-bold">
+                      ${plant.xluxMoisture} / 10 (${plant.xluxMoisture <= 3 ? 'Dry' : plant.xluxMoisture <= 7 ? 'Moist / Ideal' : 'Wet'})
+                    </button>
+                  </div>
+                  <div onclick="cycleXluxMoisture(${plant.id}, event)" title="Click to log XLUX Soil Moisture Meter reading (1–10)" class="w-full h-3 bg-obsidian-950 border border-obsidian-600 cursor-pointer overflow-hidden">
+                    <div class="h-full meter-bar-fill ${meterColor}" style="width: ${moisturePct}%"></div>
+                  </div>
+                </div>
+
+                <!-- Planted / Source Info & Tier Reassignment -->
+                <div class="flex items-center justify-between gap-2 mt-2.5 text-[11px] font-mono text-gray-400">
+                  <span>📦 ${plant.plantedDate}</span>
+                  <select onchange="changePlantTier(${plant.id}, this.value)" class="bg-obsidian-950 border border-obsidian-700 px-1.5 py-0.5 text-[10px] text-gray-300 focus:outline-none">
+                    <option value="4" ${plant.tier === 4 ? 'selected' : ''}>Tier 4 (Summit)</option>
+                    <option value="3" ${plant.tier === 3 ? 'selected' : ''}>Tier 3 (Mid-Slope)</option>
+                    <option value="2" ${plant.tier === 2 ? 'selected' : ''}>Tier 2 (Slope/Tree)</option>
+                    <option value="1" ${plant.tier === 1 ? 'selected' : ''}>Tier 1 (Ground)</option>
+                    <option value="0" ${plant.tier === 0 ? 'selected' : ''}>Perimeter / Yard</option>
+                  </select>
+                </div>
+
+                <!-- Editable Care Note -->
+                <div class="mt-2.5">
+                  <input
+                    type="text"
+                    value="${plant.notes.replace(/"/g, '&quot;')}"
+                    onchange="updatePlantNote(${plant.id}, this.value)"
+                    class="w-full bg-obsidian-950 border border-obsidian-700 focus:border-harvest-400 px-2.5 py-1.5 text-xs text-gray-300 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <!-- Quick Single-Card Action Footer -->
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-obsidian-700 font-mono text-xs">
+                <button onclick="quickWaterPlant(${plant.id}, event)" class="sharp-btn flex-1 py-1.5 bg-emerald-900 hover:bg-emerald-700 text-emerald-200 border-emerald-500 font-bold">
+                  💧 Water
+                </button>
+                <button onclick="quickFeedPlantCastings(${plant.id}, event)" class="sharp-btn flex-1 py-1.5 bg-obsidian-900 hover:bg-harvest-500 text-harvest-400 hover:text-obsidian-950 border-harvest-600 font-bold">
+                  🍵 Castings
+                </button>
+                <button onclick="cycleXluxMoisture(${plant.id}, event)" class="sharp-btn px-2.5 py-1.5 bg-obsidian-900 hover:bg-plum-900 text-plum-300 border-obsidian-600" title="Log XLUX Meter">
+                  📟
+                </button>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        const gridCols = tierPlants.length === 1
+          ? 'grid-cols-1'
+          : tierPlants.length === 3
+            ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+            : 'grid-cols-1 md:grid-cols-2';
+
+        return `
+          <div class="sharp-panel p-4 sm:p-5 bg-obsidian-800 ${tier.accentClass} space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-obsidian-600 pb-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 bg-obsidian-950 border border-obsidian-600 font-mono text-[10px] text-harvest-400 font-bold uppercase">
+                    ${tier.badge}
+                  </span>
+                  <h3 class="font-serif text-lg font-bold text-white uppercase tracking-wide">${tier.name}</h3>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">${tier.subtitle}</p>
+              </div>
+              <button onclick="selectPlantGroup([${tierPlants.map(p => p.id).join(',')}], '${tier.name}')" class="sharp-btn px-3 py-1 bg-obsidian-950 hover:bg-obsidian-700 text-xs font-mono text-emerald-300 border-emerald-700">
+                Select Zone (${tierPlants.length})
+              </button>
+            </div>
+            <div class="grid ${gridCols} gap-4">
+              ${cardsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSlopeMinimap() {
+      const container = document.getElementById('slope-plant-minimap');
+      if (!container) return;
+
+      container.innerHTML = TIER_SECTIONS.map(tier => {
+        const tierPlants = state.plants.filter(p => p.tier === tier.tierId);
+        if (tierPlants.length === 0) return '';
+
+        const pills = tierPlants.map(p => {
+          const isSelected = state.selectedPlants.includes(p.id);
+          const hyd = getHydrationStatus(p);
+          const dot = hyd.isThirsty ? '🔴' : p.xluxMoisture <= 4 ? '🟡' : '🟢';
+          return `
+            <button onclick="togglePlantSelection(${p.id})" class="sharp-btn px-2 py-1 text-left flex-1 ${isSelected ? 'bg-harvest-500 text-obsidian-950 font-bold border-harvest-300' : 'bg-obsidian-950 text-gray-200 border-obsidian-600'}">
+              ${dot} ${p.name.split(' ')[0]} (${p.xluxMoisture}/10)
+            </button>
+          `;
+        }).join('');
+
+        return `
+          <div class="bg-obsidian-900 border border-obsidian-700 p-2">
+            <div class="text-[10px] text-gray-400 uppercase mb-1">${tier.name}</div>
+            <div class="flex flex-wrap gap-1.5">${pills}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderObservations() {
+      const list = document.getElementById('observation-notes-list');
+      if (!list) return;
+
+      if (state.observations.length === 0) {
+        list.innerHTML = `<li class="text-gray-500 italic">No plant observations pinned yet.</li>`;
+        return;
+      }
+
+      list.innerHTML = state.observations.map(obs => `
+        <li class="bg-obsidian-950 border border-obsidian-700 p-2.5 flex items-start justify-between gap-2">
+          <div>
+            <span class="font-mono text-[10px] text-plum-300 uppercase block">${formatShortDate(obs.date)}</span>
+            <p class="text-gray-200 mt-0.5">${obs.text}</p>
+          </div>
+          <button onclick="deleteObservationNote('${obs.id}')" class="text-gray-500 hover:text-crimson-400 font-mono text-xs px-1">✕</button>
+        </li>
+      `).join('');
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('care-log-container');
+      if (!container) return;
+
+      if (state.logs.length === 0) {
+        container.innerHTML = `<div class="text-gray-500 italic">No plant care actions logged yet.</div>`;
+        return;
+      }
+
+      container.innerHTML = state.logs.map(entry => `
+        <div class="bg-obsidian-950 border-l-2 border-l-harvest-500 border border-obsidian-700 p-2.5">
+          <div class="flex items-center justify-between text-[10px] text-gray-400">
+            <span class="font-bold text-harvest-400">${entry.stamp}</span>
+            <span>${formatShortDate(entry.date)}</span>
+          </div>
+          <div class="text-emerald-300 font-semibold mt-0.5">${entry.target}</div>
+          <p class="text-gray-300 text-[11px] mt-0.5 font-sans">${entry.details}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAll() {
+      renderHeaderStats();
+      renderQuickPlantPills();
+      renderCareTags();
+      renderPlantTiers();
+      renderSlopeMinimap();
+      renderObservations();
+      renderLogs();
+    }
+
+    window.onload = function () {
+      renderAll();
+    };
+  </script>
+</body>
+</html>
