@@ -254,6 +254,10 @@ let tasks = JSON.parse(localStorage.getItem("clarissa_tasks")) || [
   { id: 1, text: "Water Priscilla & do a quick indoor plant check 🌿", col: "low" },
   { id: 2, text: "Review weekly route & logistics priorities 🚛", col: "top3" }
 ];
+// seed the shared store on first load so the Conservatory imports from it (it only trusts an existing store)
+if (!localStorage.getItem("clarissa_tasks")) {
+  try { localStorage.setItem("clarissa_tasks", JSON.stringify(tasks)); } catch (e) {}
+}
 
 const TASK_COLS = ["dump", "high", "low", "top3", "steady", "done", "graveyard"];
 const COL_LABELS = {
