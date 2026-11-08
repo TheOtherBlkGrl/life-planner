@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Botanical Task Conservatory | Clare's Garden Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #0b0914; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<!-- ==========================================
+     BOTANICAL TASK CONSERVATORY (v4 - ULTRA-DETAILED BOTANICAL ART)
+     For: planner.clarissadward.com
+     ========================================== -->
+<section id="botanical-task-conservatory" class="btc-wrapper">
+  <!-- MASTER BOTANICAL SVG DEFS, SHADERS, PATTERNS & FILTERS -->
+  <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Deep 3D Leaf Gradients -->
+      <linearGradient id="btc-emerald-left" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2ecc71" />
+        <stop offset="45%" stop-color="#196f3d" />
+        <stop offset="100%" stop-color="#092e17" />
+      </linearGradient>
+      <linearGradient id="btc-emerald-right" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#82e0aa" />
+        <stop offset="50%" stop-color="#27ae60" />
+        <stop offset="100%" stop-color="#114b27" />
+      </linearGradient>
+      <linearGradient id="btc-leaf-back" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#145a32" />
+        <stop offset="100%" stop-color="#061f0f" />
+      </linearGradient>
+      <linearGradient id="btc-unfurl-lime" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#d4efdf" />
+        <stop offset="45%" stop-color="#82e0aa" />
+        <stop offset="100%" stop-color="#27ae60" />
+      </linearGradient>
+
+      <!-- Thai Constellation / Albo Variegation Gradients -->
+      <linearGradient id="btc-thai-cream" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fffdf5" />
+        <stop offset="55%" stop-color="#f9e79f" />
+        <stop offset="100%" stop-color="#d4ac0d" />
+      </linearGradient>
+      <linearGradient id="btc-marble-queen" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" />
+        <stop offset="40%" stop-color="#e8f8f5" />
+        <stop offset="75%" stop-color="#a3e4d7" />
+        <stop offset="100%" stop-color="#1e8449" />
+      </linearGradient>
+
+      <!-- Peace Lily Hooded Spathe & Golden Spadix -->
+      <radialGradient id="btc-spathe-ivory" cx="50%" cy="45%" r="60%">
+        <stop offset="0%" stop-color="#ffffff" />
+        <stop offset="65%" stop-color="#f8f9f9" />
+        <stop offset="90%" stop-color="#d5f5e3" />
+        <stop offset="100%" stop-color="#58d68d" />
+      </radialGradient>
+      <linearGradient id="btc-spadix-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#b7950b" />
+        <stop offset="45%" stop-color="#fef9e7" />
+        <stop offset="70%" stop-color="#f1c40f" />
+        <stop offset="100%" stop-color="#7d6608" />
+      </linearGradient>
+
+      <!-- Snake Plant Gold Margin & Core -->
+      <linearGradient id="btc-laurentii-edge" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#fef9e7" />
+        <stop offset="35%" stop-color="#f4d03f" />
+        <stop offset="80%" stop-color="#b7950b" />
+        <stop offset="100%" stop-color="#7d6608" />
+      </linearGradient>
+
+      <!-- 3D Pots & Planters -->
+      <linearGradient id="btc-pot-terracotta" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#5c2310" />
+        <stop offset="22%" stop-color="#cd6133" />
+        <stop offset="48%" stop-color="#e57e51" />
+        <stop offset="78%" stop-color="#a8431b" />
+        <stop offset="100%" stop-color="#4a1a0a" />
+      </linearGradient>
+      <linearGradient id="btc-pot-royal" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#090511" />
+        <stop offset="25%" stop-color="#2c1854" />
+        <stop offset="45%" stop-color="#3f2475" />
+        <stop offset="75%" stop-color="#1c0e38" />
+        <stop offset="100%" stop-color="#07040d" />
+      </linearGradient>
+      <linearGradient id="btc-brass-lux" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#7d6010" />
+        <stop offset="30%" stop-color="#f9e79f" />
+        <stop offset="50%" stop-color="#d4af37" />
+        <stop offset="75%" stop-color="#fff8dc" />
+        <stop offset="100%" stop-color="#6e530b" />
+      </linearGradient>
+      <linearGradient id="btc-coir-pole" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#3b220c" />
+        <stop offset="35%" stop-color="#784b23" />
+        <stop offset="65%" stop-color="#5c3717" />
+        <stop offset="100%" stop-color="#2b1707" />
+      </linearGradient>
+
+      <!-- Layered Drop Shadow for 3D Botanical Depth -->
+      <filter id="btc-shadow-deep" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="1" dy="4" stdDeviation="2.5" flood-color="#040208" flood-opacity="0.72" />
+      </filter>
+      <filter id="btc-shadow-soft" x="-15%" y="-15%" width="130%" height="130%">
+        <feDropShadow dx="0" dy="2" stdDeviation="1.4" flood-color="#05030a" flood-opacity="0.55" />
+      </filter>
+      <filter id="btc-glow-gold" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="2.5" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
+
+  <style>
+    :root {
+      --btc-bg-obsidian: #0b0914;
+      --btc-bg-panel: #141024;
+      --btc-bg-card: #1c1632;
+      --btc-plum-deep: #2d1b4e;
+      --btc-gold: #d4af37;
+      --btc-gold-bright: #f9d976;
+      --btc-emerald: #2ecc71;
+      --btc-danger: #e74c3c;
+      --btc-amber: #f39c12;
+      --btc-cyan: #00d2d3;
+      --btc-text: #f4f1ea;
+      --btc-muted: #9b8fb8;
+      --btc-border: 2px solid #3a2863;
+      --btc-border-gold: 2px solid #d4af37;
+      --btc-font-head: 'Cinzel', 'Playfair Display', Georgia, serif;
+      --btc-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --btc-font-body: 'Inter', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btc-wrapper {
+      background: var(--btc-bg-obsidian);
+      color: var(--btc-text);
+      font-family: var(--btc-font-body);
+      padding: 24px;
+      border: var(--btc-border-gold);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
+      max-width: 1400px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .btc-wrapper * {
+      box-sizing: border-box;
+      border-radius: 0px !important;
+    }
+
+    /* HEADER & APOTHECARY BAR */
+    .btc-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: var(--btc-border-gold);
+      margin-bottom: 24px;
+    }
+
+    .btc-title-block h2 {
+      font-family: var(--btc-font-head);
+      color: var(--btc-gold-bright);
+      margin: 0 0 4px 0;
+      font-size: 1.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .btc-title-block p {
+      margin: 0;
+      color: var(--btc-muted);
+      font-size: 0.9rem;
+    }
+
+    .btc-apothecary-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btc-supply-pill {
+      background: var(--btc-bg-card);
+      border: 1px solid var(--btc-gold);
+      padding: 8px 14px;
+      font-family: var(--btc-font-mono);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--btc-text);
+    }
+
+    .btc-supply-pill strong {
+      color: var(--btc-gold-bright);
+      font-size: 1rem;
+    }
+
+    .btc-sim-btn {
+      background: var(--btc-plum-deep);
+      color: var(--btc-gold-bright);
+      border: 1px solid var(--btc-gold);
+      padding: 8px 12px;
+      font-family: var(--btc-font-mono);
+      font-size: 0.78rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.15s ease;
+    }
+
+    .btc-sim-btn:hover {
+      background: var(--btc-gold);
+      color: var(--btc-bg-obsidian);
+      font-weight: 700;
+    }
+
+    /* CONSERVATORY PLANT BENCH (4 POTS) */
+    .btc-bench-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .btc-plant-card {
+      background: linear-gradient(180deg, #18122b 0%, #0d0918 100%);
+      border: var(--btc-border);
+      padding: 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    @keyframes plantPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 rgba(46, 204, 113, 0); }
+      50% { transform: scale(1.03); border-color: var(--btc-gold-bright); box-shadow: 0 0 28px rgba(46, 204, 113, 0.55); }
+      100% { transform: scale(1); box-shadow: 0 0 0 rgba(46, 204, 113, 0); }
+    }
+
+    .btc-plant-card.pulse-react {
+      animation: plantPulse 0.65s ease-out;
+    }
+
+    .btc-plant-card.needs-tlc {
+      border-color: var(--btc-amber);
+      box-shadow: inset 0 0 22px rgba(243, 156, 18, 0.22);
+    }
+
+    .btc-plant-card.has-gnats {
+      border-color: var(--btc-danger);
+      box-shadow: inset 0 0 26px rgba(231, 76, 60, 0.28);
+    }
+
+    .btc-plant-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 6px;
+    }
+
+    .btc-plant-name {
+      font-family: var(--btc-font-head);
+      font-size: 1.12rem;
+      color: var(--btc-gold-bright);
+      margin: 0;
+    }
+
+    .btc-plant-role {
+      font-size: 0.72rem;
+      color: var(--btc-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 2px;
+    }
+
+    .btc-stage-badge {
+      background: var(--btc-plum-deep);
+      border: 1px solid var(--btc-gold);
+      color: var(--btc-gold-bright);
+      font-family: var(--btc-font-mono);
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .btc-stage-badge:hover {
+      background: var(--btc-gold);
+      color: var(--btc-bg-obsidian);
+      font-weight: 700;
+    }
+
+    /* TALL GALLERY CONSERVATORY STAGE WITH HOVER MAGNIFICATION */
+    .btc-svg-stage {
+      height: 255px;
+      width: 100%;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(46, 204, 113, 0.18), transparent 68%),
+        radial-gradient(circle at 50% 15%, rgba(249, 217, 118, 0.1), transparent 55%),
+        linear-gradient(180deg, #130e24 0%, #0b0815 80%, #211638 80%, #110b1f 100%);
+      border: 1px solid rgba(212, 175, 55, 0.32);
+      margin: 8px 0 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .btc-svg-stage svg {
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .btc-svg-stage:hover svg {
+      transform: scale(1.22) translateY(-6px);
+    }
+
+    /* Ambient botanical breeze animation */
+    @keyframes gentleBreeze {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1.4deg); }
+    }
+
+    .btc-breeze {
+      transform-origin: 120px 158px;
+      animation: gentleBreeze 5.5s ease-in-out infinite;
+    }
+
+    .btc-status-banner {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: 6px;
+      background: rgba(11, 9, 20, 0.92);
+      border-left: 3px solid var(--btc-emerald);
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      font-family: var(--btc-font-mono);
+      display: flex;
+      justify-content: space-between;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .btc-status-banner.warn {
+      border-left-color: var(--btc-amber);
+      color: var(--btc-amber);
+    }
+
+    .btc-status-banner.danger {
+      border-left-color: var(--btc-danger);
+      color: #ff7675;
+    }
+
+    /* XP & MOISTURE METERS */
+    .btc-meters {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .btc-meter-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--btc-font-mono);
+      font-size: 0.74rem;
+    }
+
+    .btc-meter-label {
+      width: 78px;
+      color: var(--btc-muted);
+    }
+
+    .btc-meter-track {
+      flex: 1;
+      height: 10px;
+      background: #090710;
+      border: 1px solid #3a2863;
+      overflow: hidden;
+    }
+
+    .btc-meter-fill {
+      height: 100%;
+      transition: width 0.35s ease;
+    }
+
+    .btc-fill-xp {
+      background: linear-gradient(90deg, #196f3d, #2ecc71);
+    }
+
+    .btc-fill-water {
+      background: linear-gradient(90deg, #0984e3, #00d2d3);
+    }
+
+    /* PLANT CARE ACTION BUTTONS */
+    .btc-care-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .btc-care-btn {
+      background: var(--btc-bg-card);
+      border: 1px solid #3a2863;
+      color: var(--btc-text);
+      padding: 6px 4px;
+      font-size: 0.72rem;
+      font-family: var(--btc-font-mono);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .btc-care-btn:hover:not(:disabled) {
+      border-color: var(--btc-gold);
+      background: var(--btc-plum-deep);
+      color: var(--btc-gold-bright);
+    }
+
+    .btc-care-btn:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    /* QUICK-ADD TASK CREATOR */
+    .btc-creator-bar {
+      background: var(--btc-bg-panel);
+      border: var(--btc-border-gold);
+      padding: 16px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 2fr 1.2fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    @media (max-width: 820px) {
+      .btc-creator-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btc-input, .btc-select {
+      background: var(--btc-bg-obsidian);
+      border: 1px solid var(--btc-gold);
+      color: var(--btc-text);
+      padding: 12px 14px;
+      font-family: var(--btc-font-body);
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    .btc-input:focus, .btc-select:focus {
+      outline: 2px solid var(--btc-gold-bright);
+    }
+
+    .btc-add-btn {
+      background: var(--btc-gold);
+      color: var(--btc-bg-obsidian);
+      border: 2px solid var(--btc-gold-bright);
+      padding: 12px 24px;
+      font-family: var(--btc-font-head);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+
+    .btc-add-btn:hover {
+      background: var(--btc-gold-bright);
+    }
+
+    /* TASK COLUMNS */
+    .btc-columns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .btc-col {
+      background: var(--btc-bg-panel);
+      border: var(--btc-border);
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;
+    }
+
+    .btc-col-header {
+      padding: 12px 14px;
+      background: var(--btc-bg-card);
+      border-bottom: var(--btc-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btc-col-header h3 {
+      margin: 0;
+      font-family: var(--btc-font-head);
+      font-size: 0.98rem;
+      color: var(--btc-gold-bright);
+      letter-spacing: 0.8px;
+    }
+
+    .btc-col-sub {
+      font-size: 0.73rem;
+      color: var(--btc-muted);
+      padding: 6px 14px;
+      background: rgba(45, 27, 78, 0.35);
+      border-bottom: 1px solid #2a1d49;
+      font-family: var(--btc-font-mono);
+    }
+
+    .btc-task-list {
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @keyframes newTaskFlash {
+      0% { background: rgba(212, 175, 55, 0.35); transform: translateY(-4px); }
+      100% { background: var(--btc-bg-card); transform: translateY(0); }
+    }
+
+    .btc-task-item {
+      background: var(--btc-bg-card);
+      border: 1px solid #3a2863;
+      border-left: 4px solid var(--btc-gold);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      animation: newTaskFlash 0.4s ease-out;
+    }
+
+    .btc-task-item.overdue {
+      border-left-color: var(--btc-danger);
+      background: rgba(231, 76, 60, 0.08);
+    }
+
+    .btc-task-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .btc-task-text {
+      font-size: 0.92rem;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .btc-task-actions {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+
+    .btc-task-btn {
+      background: var(--btc-bg-obsidian);
+      border: 1px solid #4a357a;
+      color: var(--btc-text);
+      padding: 5px 9px;
+      font-size: 0.72rem;
+      font-family: var(--btc-font-mono);
+      cursor: pointer;
+    }
+
+    .btc-task-btn.complete:hover {
+      background: var(--btc-emerald);
+      color: var(--btc-bg-obsidian);
+      border-color: var(--btc-emerald);
+      font-weight: 700;
+    }
+
+    .btc-task-btn.split:hover {
+      background: var(--btc-cyan);
+      color: var(--btc-bg-obsidian);
+    }
+
+    .btc-task-btn.compost:hover {
+      background: var(--btc-amber);
+      color: var(--btc-bg-obsidian);
+    }
+
+    /* FOOTER SHELF */
+    .btc-footer-shelf {
+      background: var(--btc-bg-panel);
+      border: var(--btc-border-gold);
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btc-toast {
+      font-family: var(--btc-font-mono);
+      font-size: 0.85rem;
+      color: var(--btc-gold-bright);
+    }
+
+    @keyframes gnatBuzz {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(7px, -6px); }
+      50% { transform: translate(-6px, 4px); }
+      75% { transform: translate(5px, 6px); }
+      100% { transform: translate(0, 0); }
+    }
+    .gnat-dot {
+      animation: gnatBuzz 0.85s infinite ease-in-out;
+    }
+  </style>
+
+  <!-- TOP HEADER & APOTHECARY INVENTORY -->
+  <header class="btc-header">
+    <div class="btc-title-block">
+      <h2>🌿 Botanical Task Conservatory</h2>
+      <p>Hover any plant to zoom in • Click a Stage Badge (1–4) to inspect propagation & maturity</p>
+    </div>
+
+    <div class="btc-apothecary-bar">
+      <div class="btc-supply-pill" title="Earned from Low-Spoon Wins & Top 3">
+        💧 Water: <strong id="btc-inv-water">3</strong>
+      </div>
+      <div class="btc-supply-pill" title="Earned from Low-Spoon Wins & Composting">
+        🪱 Worm Castings: <strong id="btc-inv-castings">2</strong>
+      </div>
+      <div class="btc-supply-pill" title="Earned from High-Spark Quests - Unlocks Variegation!">
+        💎 Variegation Drops: <strong id="btc-inv-elixir">2</strong>
+      </div>
+      <div class="btc-supply-pill" title="Earned from Weekly Goals - Clears Overdue Gnats">
+        🧴 Neem Spray: <strong id="btc-inv-neem">1</strong>
+      </div>
+      <button type="button" class="btc-sim-btn" data-btc-action="simulate">
+        ⏳ Simulate 48h Neglect
+      </button>
+    </div>
+  </header>
+
+  <!-- 4-POT INTERACTIVE PLANT BENCH -->
+  <div class="btc-bench-grid" id="btc-plant-bench"></div>
+
+  <!-- QUICK-ADD TASK BAR -->
+  <div class="btc-creator-bar">
+    <input
+      type="text"
+      id="btc-task-input"
+      class="btc-input"
+      placeholder="Type a task & hit Enter or click + Plant Task..."
+    />
+    <select id="btc-task-category" class="btc-select">
+      <option value="top3">🏳️ Today's Rule of 3 (Feeds Peace Lily +💧)</option>
+      <option value="spark">🕳️ High-Spark Quest (Feeds Missy Monstera +💎)</option>
+      <option value="spoon">🍃 Low-Spoon Win (Grows Pothos Trio +💧🪱)</option>
+      <option value="weekly">🗡️ Weekly / Steady Goal (Feeds Snake Plant +🧴)</option>
+    </select>
+    <button type="button" id="btc-add-btn" class="btc-add-btn" data-btc-action="add-task">
+      + Plant Task
+    </button>
+  </div>
+
+  <!-- 4 TASK QUEST COLUMNS -->
+  <div class="btc-columns-grid" id="btc-task-columns"></div>
+
+  <!-- GREENHOUSE TROPHY SHELF & DATA CONTROLS -->
+  <footer class="btc-footer-shelf">
+    <div class="btc-toast" id="btc-toast-msg">
+      ✨ Conservatory ready, Queen! Hover over your plants to inspect the leaf veins, moss, and guttation drops!
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <span style="font-family:var(--btc-font-mono); font-size:0.8rem; color:var(--btc-muted);">
+        🏆 Greenhouse Harvests: <strong id="btc-harvest-count" style="color:var(--btc-gold-bright)">0</strong>
+      </span>
+      <button type="button" class="btc-sim-btn" data-btc-action="export">⬇ Export JSON</button>
+      <button type="button" class="btc-sim-btn" data-btc-action="reset">↺ Reset Demo</button>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'clarissa_botanical_conservatory_v4';
+
+      const categoryToPlant = {
+        top3: 'lily',
+        spark: 'monstera',
+        spoon: 'pothos',
+        weekly: 'snake'
+      };
+
+      const defaultState = {
+        inventory: { water: 3, castings: 2, elixir: 2, neem: 1 },
+        harvests: 0,
+        lastPulsedPlant: null,
+        plants: {
+          lily: {
+            id: 'lily',
+            name: 'Drama Queen Lily',
+            species: 'Peace Lily • Rule of 3',
+            xp: 88,
+            hydration: 88,
+            variegated: false,
+            gnats: false
+          },
+          monstera: {
+            id: 'monstera',
+            name: 'Missy the Monstera',
+            species: 'Deliciosa • High-Spark Quests',
+            xp: 90,
+            hydration: 85,
+            variegated: true,
+            gnats: false
+          },
+          pothos: {
+            id: 'pothos',
+            name: 'Peter, Priscilla & Penny',
+            species: 'Golden, Marble & NJoy • Low-Spoon',
+            xp: 88,
+            hydration: 92,
+            variegated: true,
+            gnats: false
+          },
+          snake: {
+            id: 'snake',
+            name: 'Gold-Edge Laurentii',
+            species: 'Snake Plant • Weekly Goals',
+            xp: 86,
+            hydration: 95,
+            variegated: false,
+            gnats: false
+          }
+        },
+        tasks: [
+          { id: 't1', text: 'Knock out #1 priority move for the day', category: 'top3', overdue: false },
+          { id: 't2', text: 'Review logistics & schedule updates', category: 'top3', overdue: false },
+          { id: 't3', text: 'Update portfolio / GitHub Pages styling tweak', category: 'spark', overdue: false },
+          { id: 't4', text: '5-minute desk reset & refill water cup', category: 'spoon', overdue: false },
+          { id: 't5', text: 'Check patio pond heater & top off water level', category: 'spoon', overdue: false },
+          { id: 't6', text: 'Log weekly hillside worm bin route', category: 'weekly', overdue: false }
+        ]
+      };
+
+      let state = loadState();
+
+      function loadState() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (parsed && parsed.plants && Array.isArray(parsed.tasks)) {
+              return parsed;
+            }
+          }
+        } catch (e) {}
+        return JSON.parse(JSON.stringify(defaultState));
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {}
+      }
+
+      function getStageInfo(xp) {
+        if (xp < 25) return { num: 1, label: 'Stage 1 • Water Prop 🫙' };
+        if (xp < 55) return { num: 2, label: 'Stage 2 • Terracotta 🪴' };
+        if (xp < 85) return { num: 3, label: 'Stage 3 • Lush Specimen 🌿' };
+        return { num: 4, label: 'Stage 4 • Showstopper ✨' };
+      }
+
+      // =========================================================================
+      // v4 BOTANICAL ART ENGINE: 3D HALF-LEAF SHADING, VEINS, MOSS & GUTTATION
+      // =========================================================================
+
+      function drawDetailedPot(stage, isHydrated) {
+        if (stage === 1) {
+          // Stage 1: Faceted Glass Apothecary Vessel + Cork Collar + LECA + Fuzzy Root System
+          return `
+            <g class="btc-pot-layer">
+              <!-- LECA Expanded Clay Pebbles at base -->
+              <g opacity="0.9">
+                <circle cx="98" cy="208" r="5.5" fill="#78281f" stroke="#4a1913" stroke-width="0.8"/>
+                <circle cx="109" cy="210" r="5" fill="#922b21" stroke="#4a1913" stroke-width="0.8"/>
+                <circle cx="120" cy="209" r="5.5" fill="#641e16" stroke="#4a1913" stroke-width="0.8"/>
+                <circle cx="131" cy="210" r="5" fill="#873600" stroke="#4a1913" stroke-width="0.8"/>
+                <circle cx="141" cy="207" r="5" fill="#78281f" stroke="#4a1913" stroke-width="0.8"/>
+                <circle cx="104" cy="201" r="4.8" fill="#a04000"/>
+                <circle cx="115" cy="202" r="4.5" fill="#78281f"/>
+                <circle cx="126" cy="201" r="5" fill="#922b21"/>
+                <circle cx="136" cy="200" r="4.5" fill="#6e2c00"/>
+              </g>
+
+              <!-- Nutrient-Rich Cyan/Emerald Water Column -->
+              <path d="M89 162 Q120 166 151 162 L147 212 Q120 217 93 212 Z" fill="rgba(0, 210, 211, 0.22)" />
+              <ellipse cx="120" cy="162" rx="31" ry="4" fill="rgba(129, 236, 236, 0.45)" stroke="#00d2d3" stroke-width="1"/>
+
+              <!-- Primary & Secondary Fibrous Water Roots -->
+              <g stroke="#fef9e7" fill="none" stroke-linecap="round">
+                <path d="M120 148 C114 162, 102 176, 99 204" stroke-width="2.4"/>
+                <path d="M113 166 L104 170 M108 176 L98 181 M103 188 L95 193" stroke-width="1" opacity="0.85"/>
+                <path d="M120 148 C126 164, 136 178, 139 205" stroke-width="2.2"/>
+                <path d="M127 168 L137 172 M132 180 L142 184 M135 191 L143 195" stroke-width="1" opacity="0.85"/>
+                <path d="M120 148 C118 168, 123 185, 118 207" stroke-width="1.8"/>
+                <path d="M119 175 L112 182 M121 188 L128 194" stroke-width="0.9" opacity="0.8"/>
+              </g>
+
+              <!-- Rising Oxygen Micro-Bubbles -->
+              <circle cx="106" cy="190" r="1.5" fill="#ffffff" opacity="0.75"/>
+              <circle cx="131" cy="172" r="2" fill="#ffffff" opacity="0.65"/>
+              <circle cx="117" cy="180" r="1.2" fill="#ffffff" opacity="0.85"/>
+              <circle cx="124" cy="167" r="1" fill="#ffffff" opacity="0.75"/>
+
+              <!-- Beveled Glass Apothecary Bottle & Specular Highlights -->
+              <path d="M102 140 L138 140 L136 149 L151 157 L147 212 Q120 217 93 212 L89 157 L104 149 Z"
+                    fill="rgba(255, 255, 255, 0.07)" stroke="rgba(255, 255, 255, 0.65)" stroke-width="1.8"/>
+              <ellipse cx="120" cy="140" rx="18" ry="3" fill="rgba(255,255,255,0.2)" stroke="url(#btc-brass-lux)" stroke-width="1.8"/>
+              <path d="M94 160 L97 207" stroke="rgba(255,255,255,0.5)" stroke-width="2.8" stroke-linecap="round"/>
+              <path d="M145 162 L143 205" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
+          `;
+        }
+
+        // Rich Top-Dressing: Chunky Bark, Perlite, Pillow Moss & Amethyst Crystal
+        const soilBed = `
+          <g class="btc-soil-ecosystem">
+            <!-- Dark Rich Compost & Bark Base -->
+            <ellipse cx="120" cy="147" rx="42" ry="6.5" fill="#1e110a"/>
+            <!-- Orchid Bark Chips -->
+            <polygon points="92,147 101,144 104,149 95,150" fill="#4a2311"/>
+            <polygon points="128,145 139,144 142,149 131,150" fill="#5c2d16"/>
+            <polygon points="110,148 121,146 124,151 112,152" fill="#3d1c0c"/>
+            <!-- Velvet Green Cushion Moss Mounds -->
+            <path d="M82 148 Q92 139 104 147 Z" fill="#1e8449"/>
+            <path d="M85 147 Q92 141 100 146 Z" fill="#2ecc71" opacity="0.7"/>
+            <path d="M136 148 Q147 138 158 147 Z" fill="#196f3d"/>
+            <path d="M139 147 Q147 140 154 146 Z" fill="#27ae60" opacity="0.75"/>
+            <!-- White Perlite Specks & Worm Castings -->
+            <circle cx="105" cy="147" r="1.8" fill="#ecf0f1"/>
+            <circle cx="115" cy="145" r="1.5" fill="#bdc3c7"/>
+            <circle cx="127" cy="148" r="1.9" fill="#ecf0f1"/>
+            <circle cx="134" cy="145" r="1.4" fill="#ecf0f1"/>
+            <circle cx="109" cy="149" r="1.6" fill="#d4af37" opacity="0.85"/>
+            <!-- Raw Amethyst Crystal Cluster in Stage 3 & 4 -->
+            ${
+              stage >= 3
+                ? `<polygon points="144,147 148,136 153,146" fill="#9b59b6" stroke="#e8daef" stroke-width="0.7"/>
+                   <polygon points="149,147 155,139 157,147" fill="#8e44ad" stroke="#d2b4de" stroke-width="0.6"/>`
+                : ''
+            }
+          </g>
+        `;
+
+        if (stage === 2) {
+          // Stage 2: Sculpted Artisan Terracotta Pot + Mineral Patina + Drainage Saucer
+          return `
+            <g class="btc-pot-layer">
+              <ellipse cx="120" cy="215" rx="39" ry="5.5" fill="#4a1a0a" stroke="#78281f" stroke-width="1"/>
+              <path d="M83 207 L157 207 L152 215 L88 215 Z" fill="url(#btc-pot-terracotta)"/>
+              <polygon points="80,152 160,152 147,209 93,209" fill="url(#btc-pot-terracotta)" stroke="#4a1a0a" stroke-width="1.2"/>
+              <!-- Subtle Terracotta Ribbing -->
+              <path d="M85 168 Q120 173 155 168" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" fill="none"/>
+              <path d="M88 184 Q120 189 152 184" stroke="rgba(0,0,0,0.22)" stroke-width="1.5" fill="none"/>
+              <!-- Rolled Terracotta Rim -->
+              <rect x="74" y="143" width="92" height="11" fill="url(#btc-pot-terracotta)" stroke="#4a1a0a" stroke-width="1.2"/>
+              ${soilBed}
+            </g>
+          `;
+        }
+
+        // Stage 3 & 4: Fluted Royal Obsidian & Amethyst Ceramic Planter on Brass Stand
+        return `
+          <g class="btc-pot-layer">
+            <!-- Custom Mid-Century Brushed Brass Stand -->
+            <path d="M84 192 L77 218 M156 192 L163 218 M120 202 L120 218" stroke="url(#btc-brass-lux)" stroke-width="4" stroke-linecap="square"/>
+            <line x1="81" y1="206" x2="159" y2="206" stroke="url(#btc-brass-lux)" stroke-width="2.8"/>
+
+            <!-- Royal Fluted Ceramic Vessel -->
+            <path d="M74 148 L166 148 L154 204 C138 211, 102 211, 86 204 Z" fill="url(#btc-pot-royal)" stroke="url(#btc-brass-lux)" stroke-width="2"/>
+
+            <!-- Art-Deco Gold Fluting & Geometric Inlay -->
+            <path d="M90 150 L96 205 M105 150 L108 207 M120 150 L120 208 M135 150 L132 207 M150 150 L144 205"
+                  stroke="rgba(249, 217, 118, 0.32)" stroke-width="1.3"/>
+            <path d="M79 168 Q120 176 161 168" stroke="url(#btc-brass-lux)" stroke-width="1.5" fill="none" opacity="0.8"/>
+
+            <!-- Brushed Brass Lip -->
+            <rect x="71" y="142" width="98" height="8" fill="url(#btc-brass-lux)" stroke="#4a3508" stroke-width="0.8"/>
+            ${soilBed}
+          </g>
+        `;
+      }
+
+      // =========================================================================
+      // DETAILED SPECIES FOLIAGE GENERATORS
+      // =========================================================================
+
+      // 1. ULTRA-DETAILED MONSTERA DELICIOSA LEAF (3D Half-Shading, Pinnae, Inner Fenestrations, Guttation Drop)
+      function drawMonsteraLeaf(x, y, scale, angle, isVar, hasSplits, hasGuttation) {
+        // Left & Right 3D Half-Leaf Paths with Deep Pinnae Cutouts
+        const leftHalf = hasSplits
+          ? `M 0,0
+             C -18,-10 -38,4 -42,22
+             L -14,25 L -43,31
+             C -45,42 -40,54 -35,62
+             L -11,56 L -31,68
+             C -24,80 -10,92 0,102 L 0,0 Z`
+          : `M 0,0 C -22,-8 -40,14 -36,44 C -32,72 -14,90 0,102 L 0,0 Z`;
+
+        const rightHalf = hasSplits
+          ? `M 0,0
+             C 18,-10 38,4 42,22
+             L 14,25 L 43,31
+             C 45,42 40,54 35,62
+             L 11,56 L 31,68
+             C 24,80 10,92 0,102 L 0,0 Z`
+          : `M 0,0 C 22,-8 40,14 36,44 C 32,72 14,90 0,102 L 0,0 Z`;
+
+        // Thai Constellation / Albo Sectored Chimera Variegation + Stardust Speckles
+        const variegationOverlay = isVar
+          ? `<path d="M 0,0 C 18,-10 38,4 42,22 L 14,25 L 43,31 C 44,38 41,46 38,52 L 11,48 L 0,32 Z"
+                   fill="url(#btc-thai-cream)" opacity="0.88"/>
+             <path d="M 0,56 L -11,56 L -31,68 C -24,80 -10,92 0,102 Z"
+                   fill="url(#btc-thai-cream)" opacity="0.82"/>
+             <!-- Thai Constellation Cream Speckles -->
+             <circle cx="-18" cy="16" r="2.2" fill="#fffdf5" opacity="0.9"/>
+             <circle cx="-24" cy="21" r="1.3" fill="#f9e79f" opacity="0.85"/>
+             <circle cx="-22" cy="44" r="2.6" fill="#fffdf5" opacity="0.85"/>
+             <circle cx="-15" cy="49" r="1.4" fill="#fffdf5" opacity="0.9"/>
+             <circle cx="18" cy="72" r="2.4" fill="#fffdf5" opacity="0.9"/>
+             <circle cx="12" cy="78" r="1.5" fill="#f9e79f" opacity="0.85"/>`
+          : '';
+
+        // Inner Oval Fenestrations (Secondary Holes) along the midrib
+        const innerFenestrations = hasSplits
+          ? `<ellipse cx="-9" cy="38" rx="3.4" ry="6.2" fill="#110c20" stroke="#092e17" stroke-width="0.8" transform="rotate(-18 -9 38)"/>
+             <ellipse cx="10" cy="39" rx="3.2" ry="5.8" fill="#110c20" stroke="#114b27" stroke-width="0.8" transform="rotate(18 10 39)"/>
+             <ellipse cx="-7" cy="68" rx="2.6" ry="4.5" fill="#110c20" transform="rotate(-14 -7 68)"/>
+             <ellipse cx="8" cy="67" rx="2.8" ry="4.8" fill="#110c20" transform="rotate(14 8 67)"/>
+             <circle cx="-5" cy="18" r="2" fill="#110c20"/>
+             <circle cx="6" cy="19" r="1.8" fill="#110c20"/>`
+          : '';
+
+        // Crystal Guttation Dewdrop hanging from the leaf apex
+        const guttationDrop = hasGuttation
+          ? `<path d="M 0,102 C -3,107 -3.5,112 0,114 C 3.5,112 3,107 0,102 Z" fill="#81ecec" stroke="#ffffff" stroke-width="0.6"/>
+             <circle cx="-1" cy="110" r="0.9" fill="#ffffff"/>`
+          : '';
+
+        return `
+          <g transform="translate(${x}, ${y}) rotate(${angle}) scale(${scale})" filter="url(#btc-shadow-deep)">
+            <!-- Left Shadowed Half-Blade -->
+            <path d="${leftHalf}" fill="url(#btc-emerald-left)" stroke="#072612" stroke-width="1.2"/>
+            <!-- Right Sunlit Half-Blade -->
+            <path d="${rightHalf}" fill="url(#btc-emerald-right)" stroke="#0b3b1e" stroke-width="1.2"/>
+            ${variegationOverlay}
+
+            <!-- Glossy Cuticle Specular Highlight -->
+            <path d="M 6,8 C 20,6 30,16 28,22" stroke="rgba(255,255,255,0.35)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+            <!-- Sculpted Primary Midrib & Quilted Lateral Veins -->
+            <path d="M 0,0 L -1.5,45 L 0,98 L 1.5,45 Z" fill="#82e0aa"/>
+            <g stroke="#82e0aa" stroke-width="1.3" fill="none" stroke-linecap="round" opacity="0.78">
+              <path d="M 0,16 Q -16,12 -32,16"/>
+              <path d="M 0,38 Q -18,34 -36,40"/>
+              <path d="M 0,60 Q -14,58 -24,66"/>
+              <path d="M 0,80 Q -8,78 -14,84"/>
+              <path d="M 0,16 Q 16,12 32,16"/>
+              <path d="M 0,38 Q 18,34 36,40"/>
+              <path d="M 0,60 Q 14,58 24,66"/>
+              <path d="M 0,80 Q 8,78 14,84"/>
+            </g>
+
+            ${innerFenestrations}
+            ${guttationDrop}
+          </g>
+        `;
+      }
+
+      // 2. ULTRA-DETAILED POTHOS LEAF (Supports 3 Distinct Cultivars: 0=Peter Golden, 1=Priscilla Marble Queen, 2=Penny N'Joy)
+      function drawPothosLeaf(x, y, scale, angle, cultivar, isVar, hasDew) {
+        let leftFill = 'url(#btc-emerald-left)';
+        let rightFill = 'url(#btc-emerald-right)';
+        let variegationLayer = '';
+
+        if (isVar) {
+          if (cultivar === 0) {
+            // PETER: Golden Pothos (Rich Emerald with Brushed Gold & Chartreuse Sectors)
+            variegationLayer = `
+              <path d="M 0,3 C 9,0 17,8 15,20 C 13,30 5,38 0,44 Z" fill="#f4d03f" opacity="0.55"/>
+              <path d="M -3,10 C -11,12 -14,22 -9,30 L 0,24 Z" fill="#f9e79f" opacity="0.7"/>
+              <circle cx="6" cy="14" r="2.5" fill="#fef9e7" opacity="0.8"/>
+              <circle cx="-6" cy="22" r="1.8" fill="#f4d03f" opacity="0.85"/>
+            `;
+          } else if (cultivar === 1) {
+            // PRISCILLA: Marble Queen (Creamy Ivory Base with Specked Mint & Forest Flecks)
+            leftFill = 'url(#btc-marble-queen)';
+            rightFill = 'url(#btc-thai-cream)';
+            variegationLayer = `
+              <path d="M 0,2 C -8,4 -14,14 -11,26 L 0,34 Z" fill="#1e8449" opacity="0.55"/>
+              <circle cx="7" cy="12" r="2.2" fill="#196f3d" opacity="0.75"/>
+              <circle cx="9" cy="20" r="1.4" fill="#27ae60" opacity="0.8"/>
+              <circle cx="5" cy="27" r="2" fill="#145a32" opacity="0.7"/>
+              <circle cx="-6" cy="14" r="1.8" fill="#ffffff" opacity="0.9"/>
+            `;
+          } else {
+            // PENNY: N'Joy Pothos (Snow-White Outer Margins with Crisp Jade Center Island)
+            leftFill = '#ffffff';
+            rightFill = '#f8f9f9';
+            variegationLayer = `
+              <path d="M 0,4 C -9,4 -12,16 -8,28 C -5,36 -2,41 0,45 C 2,41 6,35 9,26 C 12,15 8,4 0,4 Z"
+                    fill="url(#btc-emerald-right)"/>
+              <path d="M 0,6 C -5,6 -7,15 -5,24 L 0,36 Z" fill="#82e0aa" opacity="0.55"/>
+            `;
+          }
+        } else {
+          // Subtle Golden Pothos flecks even when un-mutated
+          variegationLayer = `<circle cx="-6" cy="18" r="2.2" fill="#f9e79f" opacity="0.45"/>`;
+        }
+
+        const dewDrop = hasDew
+          ? `<circle cx="0" cy="50" r="1.8" fill="#81ecec" stroke="#ffffff" stroke-width="0.5"/>`
+          : '';
+
+        return `
+          <g transform="translate(${x}, ${y}) rotate(${angle}) scale(${scale})" filter="url(#btc-shadow-soft)">
+            <!-- Cordate Heart-Shaped Pothos Blade -->
+            <path d="M 0,4 C -10,-6 -22,4 -20,19 C -18,33 -5,41 0,49 L 0,4 Z" fill="${leftFill}" stroke="#092e17" stroke-width="1.1"/>
+            <path d="M 0,4 C 10,-6 22,4 20,19 C 18,33 5,41 0,49 L 0,4 Z" fill="${rightFill}" stroke="#0b3b1e" stroke-width="1.1"/>
+            ${variegationLayer}
+            <!-- Midrib & Primary Veins -->
+            <path d="M 0,3 Q 1,24 0,47" stroke="#abebc6" stroke-width="1.4" fill="none" opacity="0.85"/>
+            <path d="M 0,14 Q -9,11 -15,15 M 0,25 Q -8,23 -13,28 M 0,14 Q 9,11 15,15 M 0,25 Q 8,23 13,28"
+                  stroke="#abebc6" stroke-width="0.9" fill="none" opacity="0.6"/>
+            <!-- Glossy Specular Arc -->
+            <path d="M 5,6 C 13,4 17,11 15,18" stroke="rgba(255,255,255,0.4)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            ${dewDrop}
+          </g>
+        `;
+      }
+
+      // 3. ULTRA-DETAILED PEACE LILY LANCE LEAF & HOODED SPATHE BLOOM
+      function drawLilyLeaf(x, y, scale, angle, isVar, isBackLayer) {
+        const leftGrad = isBackLayer ? 'url(#btc-leaf-back)' : 'url(#btc-emerald-left)';
+        const rightGrad = isBackLayer ? 'url(#btc-emerald-left)' : isVar ? 'url(#btc-marble-queen)' : 'url(#btc-emerald-right)';
+
+        // Domino Peace Lily white-vein streaks when variegated
+        const dominoStreaks = isVar
+          ? `<path d="M 0,-18 Q -10,-28 -14,-40 M 0,-36 Q 11,-46 14,-58 M 0,-52 Q -9,-62 -11,-70"
+                   stroke="#ffffff" stroke-width="2.2" fill="none" opacity="0.8" stroke-linecap="round"/>`
+          : '';
+
+        return `
+          <g transform="translate(${x}, ${y}) rotate(${angle}) scale(${scale})" filter="url(#btc-shadow-soft)">
+            <!-- Left & Right Quilted Lance Halves with Undulating Margins -->
+            <path d="M 0,0 C -8,-14 -19,-32 -18,-54 C -17,-72 -7,-88 0,-98 L 0,0 Z" fill="${leftGrad}" stroke="#061f0f" stroke-width="1.1"/>
+            <path d="M 0,0 C 8,-14 19,-32 18,-54 C 17,-72 7,-88 0,-98 L 0,0 Z" fill="${rightGrad}" stroke="#092e17" stroke-width="1.1"/>
+            ${dominoStreaks}
+            <!-- Deeply Ribbed Parallel-Curved Spathiphyllum Veins -->
+            <path d="M 0,0 L -1.2,-48 L 0,-95 L 1.2,-48 Z" fill="#82e0aa" opacity="0.9"/>
+            <g stroke="#82e0aa" stroke-width="1.1" fill="none" opacity="0.65">
+              <path d="M 0,-14 Q -10,-24 -15,-36"/>
+              <path d="M 0,-28 Q -12,-40 -16,-54"/>
+              <path d="M 0,-44 Q -11,-56 -14,-68"/>
+              <path d="M 0,-60 Q -8,-70 -9,-80"/>
+              <path d="M 0,-14 Q 10,-24 15,-36"/>
+              <path d="M 0,-28 Q 12,-40 16,-54"/>
+              <path d="M 0,-44 Q 11,-56 14,-68"/>
+              <path d="M 0,-60 Q 8,-70 9,-80"/>
+            </g>
+          </g>
+        `;
+      }
+
+      function drawLilyBloom(x, y, scale, angle) {
+        return `
+          <g transform="translate(${x}, ${y}) rotate(${angle}) scale(${scale})" filter="url(#btc-shadow-deep)">
+            <!-- Cupped Ivory Spathe Hood with Green Acuminate Tip -->
+            <path d="M 0,4 C -20,-10 -26,-42 -12,-64 C -5,-75 0,-82 0,-88 C 0,-82 5,-75 12,-64 C 26,-42 20,-10 0,4 Z"
+                  fill="url(#btc-spathe-ivory)" stroke="#b7950b" stroke-width="1"/>
+            <!-- Green Infusion at Tip & Central Rib -->
+            <path d="M 0,-70 C -4,-76 0,-84 0,-88 C 0,-84 4,-76 0,-70 Z" fill="#2ecc71" opacity="0.75"/>
+            <path d="M 0,2 L 0,-82" stroke="#d5f5e3" stroke-width="1.4"/>
+            <path d="M 0,-18 Q -12,-30 -16,-44 M 0,-36 Q -12,-48 -14,-58 M 0,-18 Q 12,-30 16,-44 M 0,-36 Q 12,-48 14,-58"
+                  stroke="#d5f5e3" stroke-width="0.9" fill="none"/>
+
+            <!-- 3D Textured Golden-Cream Spadix Spike with Pollen Dots -->
+            <rect x="-4" y="-52" width="8" height="36" rx="4" fill="url(#btc-spadix-gold)" stroke="#7d6608" stroke-width="0.9"/>
+            <g fill="#7d6608" opacity="0.75">
+              <circle cx="-1.5" cy="-46" r="1"/><circle cx="1.8" cy="-44" r="1"/>
+              <circle cx="-1.8" cy="-39" r="1"/><circle cx="1.5" cy="-37" r="1"/>
+              <circle cx="-1.5" cy="-32" r="1"/><circle cx="1.8" cy="-30" r="1"/>
+              <circle cx="-1.8" cy="-25" r="1"/><circle cx="1.5" cy="-23" r="1"/>
+            </g>
+          </g>
+        `;
+      }
+
+      // 4. ULTRA-DETAILED SANSEVIERIA SWORD BLADE (Laurentii Gold Edges + Zig-Zag Tiger Banding + 3D Groove)
+      function drawSnakeBlade(x, y, height, width, angle, isVar, isBack) {
+        const h = height;
+        const w = width;
+        const coreLeft = isBack ? 'url(#btc-leaf-back)' : 'url(#btc-emerald-left)';
+        const coreRight = isVar ? 'url(#btc-marble-queen)' : 'url(#btc-emerald-right)';
+
+        // Generate 6 mottled horizontal tiger-stripe bands along the sword height
+        let tigerBands = '';
+        for (let i = 1; i <= 6; i++) {
+          const by = -(h * (i * 0.13));
+          const bw = w * (1 - i * 0.08);
+          tigerBands += `
+            <path d="M -${bw},${by} L -${bw * 0.4},${by - 4} L 0,${by + 1} L ${bw * 0.4},${by - 4} L ${bw},${by}"
+                  stroke="#abebc6" stroke-width="2.6" fill="none" opacity="${isBack ? 0.3 : 0.58}" stroke-linecap="round"/>
+          `;
+        }
+
+        return `
+          <g transform="translate(${x}, ${y}) rotate(${angle})" filter="url(#btc-shadow-soft)">
+            <!-- Outer Golden Laurentii Margin -->
+            <path d="M -${w},0 C -${w * 1.28},-${h * 0.42} -${w * 0.72},-${h * 0.78} 0,-${h} C ${w * 0.72},-${h * 0.78} ${w * 1.28},-${h * 0.42} ${w},0 Z"
+                  fill="url(#btc-laurentii-edge)" stroke="#092e17" stroke-width="1"/>
+            <!-- Left & Right 3D Concave Inner Sword Core -->
+            <path d="M -${w * 0.68},0 C -${w * 0.9},-${h * 0.42} -${w * 0.46},-${h * 0.76} 0,-${h * 0.93} L 0,0 Z" fill="${coreLeft}"/>
+            <path d="M ${w * 0.68},0 C ${w * 0.9},-${h * 0.42} ${w * 0.46},-${h * 0.76} 0,-${h * 0.93} L 0,0 Z" fill="${coreRight}"/>
+            ${tigerBands}
+            <!-- Central Vertical 3D Channel Line & Reddish-Gold Apical Spine Tip -->
+            <line x1="0" y1="0" x2="0" y2="-${h * 0.93}" stroke="rgba(0,0,0,0.28)" stroke-width="1.2"/>
+            <circle cx="0" cy="-${h}" r="1.3" fill="#e67e22"/>
+          </g>
+        `;
+      }
+
+      // =========================================================================
+      // MASTER SCENE COMPOSITOR FOR EACH PLANT
+      // =========================================================================
+
+      function renderPlantSVG(plant) {
+        const stage = getStageInfo(plant.xp).num;
+        const isWilted = plant.hydration <= 30;
+        const breezeClass = !isWilted ? 'btc-breeze' : '';
+        let foliageSVG = '';
+
+        // 1. MISSY THE MONSTERA DELICIOSA
+        if (plant.id === 'monstera') {
+          const wilt = isWilted ? 'transform="rotate(22 120 148) translate(6, 10)"' : '';
+
+          // Braided Coco-Coir Moss Pole with Twine & Hugging Aerial Roots
+          const mossPole =
+            stage >= 3
+              ? `<g filter="url(#btc-shadow-soft)">
+                   <rect x="113" y="28" width="14" height="122" rx="6" fill="url(#btc-coir-pole)" stroke="#d4af37" stroke-width="1"/>
+                   <!-- Jute Twine Wraps -->
+                   <path d="M113 46 L127 52 M113 72 L127 78 M113 98 L127 104 M113 124 L127 130" stroke="#d4ac0d" stroke-width="1.8"/>
+                   <!-- Corky Aerial Roots with Glowing Root Tips -->
+                   <path d="M115 88 C98 102, 96 126, 102 148" stroke="#6e2c00" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                   <circle cx="102" cy="147" r="2" fill="#f9e79f"/>
+                   <path d="M125 76 C142 94, 144 122, 136 148" stroke="#6e2c00" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                   <circle cx="136" cy="147" r="2" fill="#f9e79f"/>
+                 </g>`
+              : '';
+
+          // Tightly Rolled Lime-Green Unfurling Leaf Spike
+          const unfurlingLeaf = `
+            <g transform="translate(122, ${stage >= 3 ? 68 : 112}) rotate(${stage >= 3 ? 12 : -8})">
+              <path d="M0,32 L0,0" stroke="#27ae60" stroke-width="2.5"/>
+              <path d="M0,4 C-6,-12 -5,-32 0,-46 C5,-32 6,-12 0,4 Z" fill="url(#btc-unfurl-lime)" stroke="#1e8449" stroke-width="1"/>
+              <ellipse cx="0" cy="-22" rx="1.5" ry="3.5" fill="#130e24"/>
+            </g>
+          `;
+
+          foliageSVG = `
+            <g class="${breezeClass}" ${wilt}>
+              ${mossPole}
+              <!-- Tapered Petioles with Cataphyll Sheaths at Base -->
+              <path d="M120 148 C98 122, 82 104, 62 88" stroke="#145a32" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              ${stage >= 2 ? `<path d="M120 148 C142 120, 158 100, 178 82" stroke="#196f3d" stroke-width="4.5" fill="none" stroke-linecap="round"/>` : ''}
+              ${stage >= 3 ? `<path d="M120 138 C90 96, 74 72, 56 48" stroke="#1e8449" stroke-width="4.8" fill="none" stroke-linecap="round"/>` : ''}
+              ${stage >= 3 ? `<path d="M120 134 C148 92, 166 68, 182 44" stroke="#1e8449" stroke-width="4.8" fill="none" stroke-linecap="round"/>` : ''}
+              ${stage === 4 ? `<path d="M120 125 L120 22" stroke="#27ae60" stroke-width="5" fill="none" stroke-linecap="round"/>` : ''}
+
+              ${unfurlingLeaf}
+
+              <!-- Back-to-Front Layered Monstera Leaves -->
+              ${drawMonsteraLeaf(62, 88, stage === 1 ? 0.48 : 0.56, 130, plant.variegated, stage >= 2, !isWilted)}
+              ${stage >= 2 ? drawMonsteraLeaf(178, 82, 0.58, -130, plant.variegated, stage >= 2, !isWilted) : ''}
+              ${stage >= 3 ? drawMonsteraLeaf(56, 48, 0.68, 148, plant.variegated, true, !isWilted) : ''}
+              ${stage >= 3 ? drawMonsteraLeaf(182, 44, 0.68, -148, plant.variegated, true, false) : ''}
+              ${stage === 4 ? drawMonsteraLeaf(120, 14, 0.82, 180, plant.variegated, true, !isWilted) : ''}
+            </g>
+          `;
+        }
+
+        // 2. DRAMA QUEEN PEACE LILY (MULTI-TIERED ROSETTE + CUPPED WHITE SPATHE BLOOMS)
+        else if (plant.id === 'lily') {
+          const droopL = isWilted ? -82 : -24;
+          const droopR = isWilted ? 82 : 24;
+          const droopFarL = isWilted ? -96 : -46;
+          const droopFarR = isWilted ? 96 : 46;
+
+          foliageSVG = `
+            <g class="${breezeClass}">
+              <!-- Deep Shadow Back Crown Leaves -->
+              ${stage >= 2 ? drawLilyLeaf(112, 146, 0.85, droopFarL - 12, plant.variegated, true) : ''}
+              ${stage >= 2 ? drawLilyLeaf(128, 146, 0.85, droopFarR + 12, plant.variegated, true) : ''}
+              ${stage >= 3 ? drawLilyLeaf(106, 148, 0.96, droopFarL - 22, plant.variegated, true) : ''}
+              ${stage >= 3 ? drawLilyLeaf(134, 148, 0.96, droopFarR + 22, plant.variegated, true) : ''}
+              ${stage >= 3 ? drawLilyLeaf(120, 144, 1.05, isWilted ? 65 : -4, plant.variegated, true) : ''}
+
+              <!-- Mid & Foreground Lush Ribbed Leaves -->
+              ${drawLilyLeaf(115, 148, stage === 1 ? 0.72 : 0.94, droopL, plant.variegated, false)}
+              ${drawLilyLeaf(125, 148, stage === 1 ? 0.72 : 0.94, droopR, plant.variegated, false)}
+              ${stage >= 2 ? drawLilyLeaf(110, 150, 0.88, droopFarL, plant.variegated, false) : ''}
+              ${stage >= 2 ? drawLilyLeaf(130, 150, 0.88, droopFarR, plant.variegated, false) : ''}
+              ${stage === 4 ? drawLilyLeaf(120, 148, 1.08, isWilted ? 52 : 6, plant.variegated, false) : ''}
+
+              <!-- Sculpted White Spathe Flowers (1 in Stage 3, 3 in Stage 4!) -->
+              ${
+                stage >= 3 && !isWilted
+                  ? `<path d="M118 146 Q104 98 94 74" stroke="#2ecc71" stroke-width="3" fill="none"/>
+                     ${drawLilyBloom(94, 78, 0.74, -16)}`
+                  : ''
+              }
+              ${
+                stage === 4 && !isWilted
+                  ? `<path d="M122 146 Q138 96 148 70" stroke="#2ecc71" stroke-width="3" fill="none"/>
+                     ${drawLilyBloom(148, 74, 0.78, 16)}
+                     <path d="M120 146 Q118 88 120 56" stroke="#58d68d" stroke-width="3.4" fill="none"/>
+                     ${drawLilyBloom(120, 60, 0.9, 0)}`
+                  : ''
+              }
+            </g>
+          `;
+        }
+
+        // 3. PETER, PRISCILLA & PENNY (3-CULTIVAR CASCADING POTHOS TRIO)
+        else if (plant.id === 'pothos') {
+          const wilt = isWilted ? 'transform="translate(0, 9)"' : '';
+          foliageSVG = `
+            <g class="${breezeClass}" ${wilt}>
+              <!-- Lush Bushy Top Mound (Mix of Peter=0, Priscilla=1, Penny=2) -->
+              ${drawPothosLeaf(96, 136, 0.78, 115, 1, plant.variegated, false)}
+              ${drawPothosLeaf(144, 136, 0.78, -115, 0, plant.variegated, false)}
+              ${drawPothosLeaf(108, 132, 0.86, 145, 0, plant.variegated, false)}
+              ${drawPothosLeaf(132, 132, 0.86, -145, 2, plant.variegated, false)}
+              ${stage >= 2 ? drawPothosLeaf(120, 124, 0.94, 180, 1, plant.variegated, false) : ''}
+              ${stage >= 3 ? drawPothosLeaf(84, 128, 0.84, 105, 2, plant.variegated, false) : ''}
+              ${stage >= 3 ? drawPothosLeaf(156, 128, 0.84, -105, 0, plant.variegated, false) : ''}
+              ${stage >= 3 ? drawPothosLeaf(120, 108, 0.88, 175, 2, plant.variegated, false) : ''}
+
+              <!-- VINE 1 (LEFT): PRISCILLA - MARBLE QUEEN CASCADE + AERIAL ROOT NUBS -->
+              ${
+                stage >= 2
+                  ? `<path d="M92 144 C72 154, 68 178, 56 212" stroke="#27ae60" stroke-width="3" fill="none"/>
+                     <!-- Brown Aerial Root Nubs at Nodes -->
+                     <circle cx="78" cy="158" r="2" fill="#6e2c00"/>
+                     <circle cx="68" cy="182" r="2" fill="#6e2c00"/>
+                     ${drawPothosLeaf(78, 152, 0.82, 42, 1, plant.variegated, false)}
+                     ${drawPothosLeaf(68, 176, 0.76, 28, 1, plant.variegated, false)}
+                     ${stage >= 3 ? drawPothosLeaf(58, 198, 0.68, 18, 1, plant.variegated, !isWilted) : ''}`
+                  : ''
+              }
+
+              <!-- VINE 2 (CENTER-FRONT): PENNY - N'JOY CASCADE OVER THE PLANTER FACE -->
+              ${
+                stage >= 3
+                  ? `<path d="M122 146 C132 166, 112 190, 124 222" stroke="#58d68d" stroke-width="3.2" fill="none"/>
+                     <circle cx="126" cy="164" r="2" fill="#6e2c00"/>
+                     <circle cx="118" cy="190" r="2" fill="#6e2c00"/>
+                     ${drawPothosLeaf(126, 154, 0.84, -16, 2, plant.variegated, false)}
+                     ${drawPothosLeaf(116, 180, 0.78, 18, 2, plant.variegated, false)}
+                     ${drawPothosLeaf(124, 204, 0.7, -12, 2, plant.variegated, !isWilted)}`
+                  : ''
+              }
+
+              <!-- VINE 3 (RIGHT): PETER - GOLDEN POTHOS CASCADE -->
+              ${
+                stage === 4
+                  ? `<path d="M150 144 C170 158, 174 186, 184 218" stroke="#1e8449" stroke-width="3" fill="none"/>
+                     <circle cx="164" cy="160" r="2" fill="#6e2c00"/>
+                     <circle cx="174" cy="186" r="2" fill="#6e2c00"/>
+                     ${drawPothosLeaf(162, 152, 0.84, -38, 0, plant.variegated, false)}
+                     ${drawPothosLeaf(172, 178, 0.76, -24, 0, plant.variegated, false)}
+                     ${drawPothosLeaf(182, 200, 0.68, -14, 0, plant.variegated, !isWilted)}`
+                  : ''
+              }
+            </g>
+          `;
+        }
+
+        // 4. GOLD-EDGE SNAKE PLANT (ROSETTE OF TIGER-BANDED SWORD BLADES + STAGE 4 FLOWER STALK)
+        else {
+          const wilt = isWilted ? 'transform="rotate(9 120 148)"' : '';
+          // Stage 4 Rare Fragrant Night-Blooming Sansevieria Flower Spike!
+          const snakeBloom =
+            stage === 4 && !isWilted
+              ? `<g filter="url(#btc-glow-gold)">
+                   <path d="M120 146 Q126 82 122 18" stroke="#82e0aa" stroke-width="2.5" fill="none"/>
+                   <circle cx="123" cy="58" r="2.5" fill="#fef9e7"/><path d="M123 58 L131 54 M123 58 L130 61" stroke="#ffffff" stroke-width="1.2"/>
+                   <circle cx="122" cy="44" r="2.5" fill="#fef9e7"/><path d="M122 44 L114 40 M122 44 L115 47" stroke="#ffffff" stroke-width="1.2"/>
+                   <circle cx="123" cy="30" r="2.5" fill="#fef9e7"/><path d="M123 30 L131 26 M123 30 L130 33" stroke="#ffffff" stroke-width="1.2"/>
+                   <circle cx="122" cy="18" r="3" fill="#f9e79f"/>
+                 </g>`
+              : '';
+
+          foliageSVG = `
+            <g class="${breezeClass}" ${wilt}>
+              <!-- Back Shadow Blades -->
+              ${stage >= 2 ? drawSnakeBlade(106, 148, 92, 11, -12, plant.variegated, true) : ''}
+              ${stage >= 2 ? drawSnakeBlade(134, 148, 94, 11, 12, plant.variegated, true) : ''}
+              ${stage >= 3 ? drawSnakeBlade(94, 148, 108, 12, -20, plant.variegated, true) : ''}
+              ${stage >= 3 ? drawSnakeBlade(146, 148, 104, 12, 20, plant.variegated, true) : ''}
+
+              <!-- Foreground Sunlit Architectural Blades -->
+              ${drawSnakeBlade(120, 150, stage === 1 ? 74 : 124, 14, 0, plant.variegated, false)}
+              ${stage >= 2 ? drawSnakeBlade(110, 150, 102, 13, -7, plant.variegated, false) : ''}
+              ${stage >= 2 ? drawSnakeBlade(130, 150, 106, 13, 8, plant.variegated, false) : ''}
+              ${stage === 4 ? drawSnakeBlade(90, 150, 84, 11, -26, plant.variegated, false) : ''}
+              ${stage === 4 ? drawSnakeBlade(150, 150, 86, 11, 26, plant.variegated, false) : ''}
+              ${snakeBloom}
+            </g>
+          `;
+        }
+
+        // Ambient Golden Conservatory Pollen Motes (when healthy)
+        const ambientSpores = !isWilted && !plant.gnats
+          ? `<g opacity="0.55">
+               <circle cx="52" cy="48" r="1.3" fill="#f9d976"/>
+               <circle cx="188" cy="62" r="1.5" fill="#f9d976"/>
+               <circle cx="72" cy="112" r="1" fill="#82e0aa"/>
+               <circle cx="168" cy="104" r="1.2" fill="#f9d976"/>
+             </g>`
+          : '';
+
+        // Procrastination Gnats Overlay (when overdue)
+        const gnatsSVG = plant.gnats
+          ? `<g class="gnat-dot">
+               <circle cx="75" cy="62" r="2.5" fill="#f9d976"/>
+               <ellipse cx="72" cy="60" rx="3.5" ry="1.4" fill="rgba(255,255,255,0.65)"/>
+               <circle cx="162" cy="68" r="2.5" fill="#f9d976"/>
+               <ellipse cx="165" cy="66" rx="3.5" ry="1.4" fill="rgba(255,255,255,0.65)"/>
+               <circle cx="122" cy="40" r="2.8" fill="#e74c3c"/>
+             </g>`
+          : '';
+
+        const potSVG = drawDetailedPot(stage, !isWilted);
+        // For trailing Pothos, render the pot BEFORE the vines so Penny, Priscilla & Peter drape right over the front!
+        const composedLayers =
+          plant.id === 'pothos' && stage >= 2
+            ? `${potSVG}${foliageSVG}`
+            : `${foliageSVG}${potSVG}`;
+
+        return `
+          <svg viewBox="0 0 240 230" width="100%" height="100%">
+            ${ambientSpores}
+            ${composedLayers}
+            ${gnatsSVG}
+          </svg>
+        `;
+      }
+
+      function renderBench() {
+        const bench = document.getElementById('btc-plant-bench');
+        if (!bench) return;
+        bench.innerHTML = '';
+
+        Object.values(state.plants).forEach((plant) => {
+          const stage = getStageInfo(plant.xp);
+          const isThirsty = plant.hydration <= 30;
+          const isPulsing = state.lastPulsedPlant === plant.id;
+          let statusClass = '';
+          let statusText = '✨ Thriving & Lush';
+
+          if (plant.gnats) {
+            statusClass = 'danger';
+            statusText = '🦟 Overdue Gnats! XP Locked';
+          } else if (isThirsty) {
+            statusClass = 'warn';
+            statusText = '🥀 Thirsty! Water Me';
+          } else if (plant.variegated) {
+            statusText = '💎 Collector Variegation';
+          }
+
+          const card = document.createElement('div');
+          card.className = [
+            'btc-plant-card',
+            isThirsty ? 'needs-tlc' : '',
+            plant.gnats ? 'has-gnats' : '',
+            isPulsing ? 'pulse-react' : ''
+          ]
+            .join(' ')
+            .trim();
+
+          card.innerHTML = `
+            <div>
+              <div class="btc-plant-top">
+                <div>
+                  <h4 class="btc-plant-name">${plant.name}</h4>
+                  <div class="btc-plant-role">${plant.species}</div>
+                </div>
+                <button type="button" class="btc-stage-badge" data-btc-action="cycle-stage" data-plant="${plant.id}" title="Click to cycle through Stages 1–4!">
+                  ${stage.label} ↻
+                </button>
+              </div>
+
+              <div class="btc-svg-stage" title="Hover to zoom in on leaf veins, moss & guttation drops!">
+                <div class="btc-status-banner ${statusClass}">
+                  <span>${statusText}</span>
+                  <span>${plant.xp}% XP</span>
+                </div>
+                ${renderPlantSVG(plant)}
+              </div>
+
+              <div class="btc-meters">
+                <div class="btc-meter-row">
+                  <span class="btc-meter-label">🌱 Growth</span>
+                  <div class="btc-meter-track">
+                    <div class="btc-meter-fill btc-fill-xp" style="width:${plant.xp}%"></div>
+                  </div>
+                </div>
+                <div class="btc-meter-row">
+                  <span class="btc-meter-label">💧 Moisture</span>
+                  <div class="btc-meter-track">
+                    <div class="btc-meter-fill btc-fill-water" style="width:${plant.hydration}%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btc-care-actions">
+              <button type="button" class="btc-care-btn" data-btc-action="use-item" data-plant="${plant.id}" data-item="water" ${state.inventory.water < 1 ? 'disabled' : ''}>
+                💧 Soak (-1)
+              </button>
+              <button type="button" class="btc-care-btn" data-btc-action="use-item" data-plant="${plant.id}" data-item="castings" ${state.inventory.castings < 1 ? 'disabled' : ''}>
+                🪱 Feed (-1)
+              </button>
+              ${
+                plant.gnats
+                  ? `<button type="button" class="btc-care-btn" data-btc-action="use-item" data-plant="${plant.id}" data-item="neem" ${state.inventory.neem < 1 ? 'disabled' : ''}>
+                       🧴 Neem (-1)
+                     </button>`
+                  : `<button type="button" class="btc-care-btn" data-btc-action="use-item" data-plant="${plant.id}" data-item="elixir" title="Toggle Rare Variegation">
+                       💎 ${plant.variegated ? 'Variegated' : 'Mutate (-1)'}
+                     </button>`
+              }
+            </div>
+          `;
+          bench.appendChild(card);
+        });
+      }
+
+      function renderColumns() {
+        const colDefs = [
+          {
+            key: 'top3',
+            title: "🏳️ Today's Rule of 3",
+            sub: 'Feeds Peace Lily • Complete = +18 XP & +1 💧'
+          },
+          {
+            key: 'spark',
+            title: '🕳️ High-Spark Quests',
+            sub: 'Feeds Missy Monstera • Complete = +25 XP & +1 💎'
+          },
+          {
+            key: 'spoon',
+            title: '🍃 Low-Spoon Wins',
+            sub: 'Grows Pothos Trio • Complete = +15 XP, +1 💧 & +1 🪱'
+          },
+          {
+            key: 'weekly',
+            title: '🗡️ Steady / Weekly Goals',
+            sub: 'Feeds Snake Plant • Complete = +20 XP & +1 🧴 Neem'
+          }
+        ];
+
+        const container = document.getElementById('btc-task-columns');
+        if (!container) return;
+        container.innerHTML = '';
+
+        colDefs.forEach((col) => {
+          const tasks = state.tasks.filter((t) => t.category === col.key);
+          const colEl = document.createElement('div');
+          colEl.className = 'btc-col';
+
+          const itemsHTML = tasks
+            .map(
+              (t) => `
+              <div class="btc-task-item ${t.overdue ? 'overdue' : ''}">
+                <div class="btc-task-top">
+                  <span class="btc-task-text">${t.overdue ? '🦟 [OVERDUE] ' : ''}${escapeHTML(t.text)}</span>
+                </div>
+                <div class="btc-task-actions">
+                  <button type="button" class="btc-task-btn complete" data-btc-action="complete" data-id="${t.id}">
+                    ✓ Complete
+                  </button>
+                  <button type="button" class="btc-task-btn split" title="Split into 2 smaller steps & clear gnats" data-btc-action="split" data-id="${t.id}">
+                    ✂ Split
+                  </button>
+                  <button type="button" class="btc-task-btn compost" title="No-Shame Compost into +1 Worm Castings" data-btc-action="compost" data-id="${t.id}">
+                    🪱 Compost
+                  </button>
+                </div>
+              </div>
+            `
+            )
+            .join('');
+
+          colEl.innerHTML = `
+            <div class="btc-col-header">
+              <h3>${col.title}</h3>
+              <span class="btc-stage-badge" style="cursor:default">${tasks.length}</span>
+            </div>
+            <div class="btc-col-sub">${col.sub}</div>
+            <div class="btc-task-list">
+              ${itemsHTML || '<div style="color:var(--btc-muted); font-size:0.82rem; font-style:italic; padding:8px;">All clear! Plant a task above.</div>'}
+            </div>
+          `;
+          container.appendChild(colEl);
+        });
+      }
+
+      function updateHUD(toastText, pulsePlantId) {
+        state.lastPulsedPlant = pulsePlantId || null;
+        const setEl = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = val;
+        };
+        setEl('btc-inv-water', state.inventory.water);
+        setEl('btc-inv-castings', state.inventory.castings);
+        setEl('btc-inv-elixir', state.inventory.elixir);
+        setEl('btc-inv-neem', state.inventory.neem);
+        setEl('btc-harvest-count', state.harvests);
+        if (toastText) setEl('btc-toast-msg', toastText);
+
+        saveState();
+        renderBench();
+        renderColumns();
+      }
+
+      function addPlantXP(plantKey, amount, hydrateBoost) {
+        const p = state.plants[plantKey];
+        p.hydration = Math.min(100, p.hydration + hydrateBoost);
+        if (p.gnats) {
+          return `🦟 ${p.name} has Procrastination Gnats! Spray Neem or Split an overdue task to unlock XP.`;
+        }
+        p.xp += amount;
+        if (p.xp >= 100) {
+          state.harvests += 1;
+          p.xp = 20;
+          return `🎉 ${p.name} reached Stage 4 Maturity & moved to your Greenhouse Shelf! New cutting started!`;
+        }
+        return null;
+      }
+
+      function escapeHTML(str) {
+        return String(str).replace(/[&<>"']/g, (m) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m]));
+      }
+
+      // ACTIONS
+      function handleAddTask() {
+        const input = document.getElementById('btc-task-input');
+        const catSelect = document.getElementById('btc-task-category');
+        if (!input || !catSelect) return;
+
+        const text = input.value.trim();
+        if (!text) {
+          input.focus();
+          updateHUD('⚠️ Type a task description in the box first, Queen!');
+          return;
+        }
+
+        const cat = catSelect.value || 'top3';
+        const targetPlantKey = categoryToPlant[cat] || 'lily';
+        const targetPlant = state.plants[targetPlantKey];
+
+        state.tasks.unshift({
+          id: 't_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+          text: text,
+          category: cat,
+          overdue: false
+        });
+
+        targetPlant.hydration = Math.min(100, targetPlant.hydration + 5);
+        if (!targetPlant.gnats && targetPlant.xp < 96) {
+          targetPlant.xp += 3;
+        }
+
+        input.value = '';
+        input.focus();
+        updateHUD(
+          `🌱 Planted "${text}"! ${targetPlant.name} got a fresh +3 XP & +5% Moisture misting!`,
+          targetPlantKey
+        );
+      }
+
+      function handleCycleStage(plantId) {
+        const p = state.plants[plantId];
+        if (!p) return;
+        const currentStage = getStageInfo(p.xp).num;
+        const nextXPMap = { 1: 42, 2: 72, 3: 92, 4: 16 };
+        p.xp = nextXPMap[currentStage] || 42;
+        const newStage = getStageInfo(p.xp);
+        updateHUD(`🔍 Inspecting ${p.name} at ${newStage.label}!`, plantId);
+      }
+
+      function handleCompleteTask(id) {
+        const idx = state.tasks.findIndex((t) => t.id === id);
+        if (idx === -1) return;
+        const task = state.tasks[idx];
+        state.tasks.splice(idx, 1);
+
+        const plantKey = categoryToPlant[task.category] || 'lily';
+        let msg = '';
+
+        if (task.category === 'top3') {
+          state.inventory.water += 1;
+          msg = addPlantXP('lily', 18, 35) || '🏳️ Peace Lily perked up! (+18 XP, +1 💧 Water)';
+        } else if (task.category === 'spark') {
+          state.inventory.elixir += 1;
+          msg = addPlantXP('monstera', 25, 20) || '🕳️ Missy unfurled a fenestrated leaf! (+25 XP, +1 💎 Variegation Drop)';
+        } else if (task.category === 'spoon') {
+          state.inventory.water += 1;
+          state.inventory.castings += 1;
+          msg = addPlantXP('pothos', 15, 25) || '🍃 Peter, Priscilla & Penny grew new vine leaves! (+15 XP, +1 💧, +1 🪱)';
+        } else {
+          state.inventory.neem += 1;
+          msg = addPlantXP('snake', 20, 20) || '🗡️ Snake Plant sword blade grew taller! (+20 XP, +1 🧴 Neem Spray)';
+        }
+        updateHUD(msg, plantKey);
+      }
+
+      function handleSplitTask(id) {
+        const idx = state.tasks.findIndex((t) => t.id === id);
+        if (idx === -1) return;
+        const orig = state.tasks[idx];
+        state.tasks.splice(
+          idx,
+          1,
+          { id: orig.id + '_a', text: orig.text + ' (Part 1: Quick 5-min start)', category: orig.category, overdue: false },
+          { id: orig.id + '_b', text: orig.text + ' (Part 2: Wrap up)', category: orig.category, overdue: false }
+        );
+        Object.values(state.plants).forEach((p) => (p.gnats = false));
+        updateHUD('✂ Task broken into 2 bite-sized steps & Procrastination Gnats cleared!', categoryToPlant[orig.category]);
+      }
+
+      function handleCompostTask(id) {
+        const task = state.tasks.find((t) => t.id === id);
+        state.tasks = state.tasks.filter((t) => t.id !== id);
+        state.inventory.castings += 1;
+        updateHUD(
+          '🪱 Task mulched in the No-Shame Compost Bin! (+1 Worm Castings earned)',
+          task ? categoryToPlant[task.category] : null
+        );
+      }
+
+      function handleUseItem(plantId, type) {
+        const p = state.plants[plantId];
+        if (!p) return;
+        if (type === 'water' && state.inventory.water > 0) {
+          state.inventory.water -= 1;
+          p.hydration = 100;
+          updateHUD(`💧 Bottom-watered ${p.name}! Leaves are perked right back up.`, plantId);
+        } else if (type === 'castings' && state.inventory.castings > 0) {
+          state.inventory.castings -= 1;
+          const harvestMsg = addPlantXP(plantId, 20, 10);
+          updateHUD(harvestMsg || `🪱 Top-dressed ${p.name} with Worm Castings! (+20 XP)`, plantId);
+        } else if (type === 'elixir') {
+          if (p.variegated) {
+            p.variegated = false;
+            updateHUD(`🌿 Switched ${p.name} back to classic deep emerald foliage.`, plantId);
+          } else if (state.inventory.elixir > 0) {
+            state.inventory.elixir -= 1;
+            p.variegated = true;
+            updateHUD(`💎 Mutated ${p.name} with Collector Variegation!`, plantId);
+          }
+        } else if (type === 'neem' && state.inventory.neem > 0) {
+          state.inventory.neem -= 1;
+          p.gnats = false;
+          state.tasks.forEach((t) => (t.overdue = false));
+          updateHUD(`🧴 Sprayed Neem Oil on ${p.name}! Gnats & overdue flags wiped clean.`, plantId);
+        }
+      }
+
+      function initConservatory() {
+        const root = document.getElementById('botanical-task-conservatory');
+        if (!root || root.dataset.btcInitialized === 'true') return;
+        root.dataset.btcInitialized = 'true';
+
+        root.addEventListener('click', function (e) {
+          const btn = e.target.closest('[data-btc-action]');
+          if (!btn) return;
+          e.preventDefault();
+
+          const action = btn.getAttribute('data-btc-action');
+          if (action === 'add-task') handleAddTask();
+          else if (action === 'cycle-stage') handleCycleStage(btn.getAttribute('data-plant'));
+          else if (action === 'complete') handleCompleteTask(btn.getAttribute('data-id'));
+          else if (action === 'split') handleSplitTask(btn.getAttribute('data-id'));
+          else if (action === 'compost') handleCompostTask(btn.getAttribute('data-id'));
+          else if (action === 'use-item') handleUseItem(btn.getAttribute('data-plant'), btn.getAttribute('data-item'));
+          else if (action === 'simulate') {
+            state.plants.lily.hydration = 15;
+            state.plants.monstera.hydration = 25;
+            state.plants.pothos.hydration = 28;
+            state.plants.lily.gnats = true;
+            state.plants.monstera.gnats = true;
+            if (state.tasks.length > 0) state.tasks[0].overdue = true;
+            updateHUD('⏳ Simulated 48h behind! Peace Lily fainted flat over the rim & Gnats spawned!');
+          } else if (action === 'export') {
+            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
+            const a = document.createElement('a');
+            a.setAttribute('href', dataStr);
+            a.setAttribute('download', 'clarissa-botanical-tasks.json');
+            a.click();
+          } else if (action === 'reset') {
+            state = JSON.parse(JSON.stringify(defaultState));
+            updateHUD('↺ Conservatory reset to Stage 4 showstopper specimens!');
+          }
+        });
+
+        const taskInput = document.getElementById('btc-task-input');
+        if (taskInput) {
+          taskInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleAddTask();
+            }
+          });
+        }
+
+        updateHUD();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initConservatory);
+      } else {
+        initConservatory();
+      }
+    })();
+  </script>
+</section>
+</body>
+</html>

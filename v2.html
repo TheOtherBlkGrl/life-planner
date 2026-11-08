@@ -328,7 +328,17 @@
           </div>
                 </section>
       </div>
-    </section>
+              <div class="card" id="conservatoryCard">
+        <div class="card-header">
+          <h2>🪴 Botanical Task Conservatory</h2>
+          <button id="conservatoryToggle" class="add-btn" style="width:auto;padding:0.45rem 1rem;min-height:0;" onclick="toggleConservatory()">Open Conservatory</button>
+        </div>
+        <p class="helper-text">Your task game: finish tasks to water, feed and grow the specimen bench, while overdue chores wilt leaves and spawn gnats. Tap to open the conservatory.</p>
+        <div id="conservatoryWrap" style="display:none">
+          <iframe id="conservatoryFrame" data-src="conservatory.html" style="width:100%;height:1600px;border:0;background:#0b0914;" loading="lazy" title="Botanical Task Conservatory"></iframe>
+        </div>
+      </div>
+</section>
 
     <section class="tab-panel" id="panel-week">
       <div class="card">
@@ -804,6 +814,19 @@
         wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
+      function toggleConservatory() {
+      var wrap = document.getElementById('conservatoryWrap');
+      var frame = document.getElementById('conservatoryFrame');
+      var btn = document.getElementById('conservatoryToggle');
+      if (!wrap || !btn) return;
+      var open = wrap.style.display !== 'none';
+      wrap.style.display = open ? 'none' : 'block';
+      btn.textContent = open ? 'Open Conservatory' : 'Hide Conservatory';
+      if (!open && frame && !frame.getAttribute('src')) {
+        frame.setAttribute('src', frame.getAttribute('data-src'));
+      }
+    }
+
 </script>
 </body>
 </html>
