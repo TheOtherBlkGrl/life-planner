@@ -1857,7 +1857,8 @@
               text: t.text,
               category: BTC_STORE_LANE[t.col],
               overdue: !!(t.due && t.due < btcToday()),
-              storeId: t.id
+              storeId: t.id,
+              billId: t.billId || undefined
             };
           });
         saveState();
