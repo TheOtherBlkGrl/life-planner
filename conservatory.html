@@ -1707,7 +1707,10 @@
           state.inventory.neem += 1;
           msg = addPlantXP('snake', 20, 20) || '🗡️ Snake Plant sword blade grew taller! (+20 XP, +1 🧴 Neem Spray)';
         }
-        if (billPaidName) msg = '💸 ' + billPaidName + ' marked paid in your Bills tab! ' + msg;
+        if (billPaidName) {
+          state.inventory.castings += 1;
+          msg = '💸 ' + billPaidName + ' marked paid in your Bills tab! +1 🪱 fertilizer. ' + msg;
+        }
         updateHUD(msg, plantKey);
       }
 
@@ -1918,10 +1921,12 @@
         }
         const pots = [['top3', '🏳️ Lily'], ['spark', '🕳️ Monstera'], ['spoon', '🍃 Pothos'], ['weekly', '🗡️ Snake']];
         const billRows = billsDue.map(function (b) {
-          const btns = pots.map(function (p) {
+          const billPots = [['weekly', '🗡️ Snake Plant'], ['top3', '🏳️ Lily'], ['spark', '🕳️ Monstera'], ['spoon', '🍃 Pothos']];
+          const btns = billPots.map(function (p, i) {
+            const def = i === 0;
             return '<button data-btc-action="pot-bill" data-bill="' + b.id + '" data-lane="' + p[0] + '" '
-              + 'style="background:var(--btc-bg-card); border:1px solid #3a2863; color:var(--btc-text); padding:5px 8px; '
-              + 'font-family:var(--btc-font-mono); font-size:0.72rem; cursor:pointer;">' + p[1] + '</button>';
+              + 'style="background:' + (def ? 'rgba(212,175,55,0.14)' : 'var(--btc-bg-card)') + '; border:1px solid ' + (def ? 'var(--btc-gold)' : '#3a2863') + '; color:' + (def ? 'var(--btc-gold-bright)' : 'var(--btc-muted)') + '; padding:5px 8px; '
+              + 'font-family:var(--btc-font-mono); font-size:0.72rem; cursor:pointer;">' + (def ? p[1] + ' ★' : p[1]) + '</button>';
           }).join('');
           const overdue = new Date(b.due + 'T12:00:00').getTime() < Date.now();
           return '<div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid #241a3f;">'
@@ -1947,7 +1952,7 @@
             + btns + '</div>';
         }).join('');
         const billBlock = billsDue.length
-          ? '<div style="margin:10px 0 2px; font-family:var(--btc-font-mono); font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:var(--btc-gold);">💸 Bills due soon · paying one marks it paid in the Bills tab</div>' + billRows.join('')
+          ? '<div style="margin:10px 0 2px; font-family:var(--btc-font-mono); font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:var(--btc-gold);">💸 Bills due soon · ★ pots them into the Snake Plant lane · paying one marks it paid + 🪱 fertilizer</div>' + billRows.join('')
           : '';
         const seedBlock = seedRows.length
           ? (billsDue.length ? '<div style="margin:10px 0 2px; font-family:var(--btc-font-mono); font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:var(--btc-gold);">🌱 Seeds</div>' : '') + seedRows.join('')
