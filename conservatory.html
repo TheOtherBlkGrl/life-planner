@@ -150,7 +150,7 @@
       padding: 24px;
       border: var(--btc-border-gold);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
-      max-width: 1400px;
+      max-width: 1720px;
       margin: 0 auto;
       box-sizing: border-box;
     }
@@ -232,7 +232,7 @@
     /* CONSERVATORY PLANT BENCH (4 POTS) */
     .btc-bench-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 18px;
       margin-bottom: 28px;
     }
@@ -270,10 +270,20 @@
 
     .btc-plant-top {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 8px;
-      gap: 6px;
+      gap: 6px 10px;
+    }
+
+    .btc-plant-top > div:first-child {
+      flex: 1 1 170px;
+      min-width: 0;
+    }
+
+    .btc-plant-top .btc-stage-badge {
+      flex-shrink: 0;
     }
 
     .btc-plant-name {
@@ -724,7 +734,7 @@
 
   <script>
     (function () {
-      const STORAGE_KEY = 'clarissa_botanical_conservatory_v4';
+      const STORAGE_KEY = 'clarissa_botanical_conservatory_v5';
 
       const categoryToPlant = {
         top3: 'lily',
@@ -734,7 +744,7 @@
       };
 
       const defaultState = {
-        inventory: { water: 3, castings: 2, elixir: 2, neem: 1 },
+        inventory: { water: 0, castings: 0, elixir: 0, neem: 0 },
         harvests: 0,
         lastPulsedPlant: null,
         plants: {
@@ -742,8 +752,8 @@
             id: 'lily',
             name: 'Drama Queen Lily',
             species: 'Peace Lily • Rule of 3',
-            xp: 88,
-            hydration: 88,
+            xp: 0,
+            hydration: 75,
             variegated: false,
             gnats: false
           },
@@ -751,26 +761,26 @@
             id: 'monstera',
             name: 'Missy the Monstera',
             species: 'Deliciosa • High-Spark Quests',
-            xp: 90,
-            hydration: 85,
-            variegated: true,
+            xp: 0,
+            hydration: 75,
+            variegated: false,
             gnats: false
           },
           pothos: {
             id: 'pothos',
             name: 'Peter, Priscilla & Penny',
             species: 'Golden, Marble & NJoy • Low-Spoon',
-            xp: 88,
-            hydration: 92,
-            variegated: true,
+            xp: 0,
+            hydration: 75,
+            variegated: false,
             gnats: false
           },
           snake: {
             id: 'snake',
             name: 'Gold-Edge Laurentii',
             species: 'Snake Plant • Weekly Goals',
-            xp: 86,
-            hydration: 95,
+            xp: 0,
+            hydration: 75,
             variegated: false,
             gnats: false
           }
@@ -1433,8 +1443,8 @@
                   <h4 class="btc-plant-name">${plant.name}</h4>
                   <div class="btc-plant-role">${plant.species}</div>
                 </div>
-                <button type="button" class="btc-stage-badge" data-btc-action="cycle-stage" data-plant="${plant.id}" title="Click to cycle through Stages 1–4!">
-                  ${stage.label} ↻
+                <button type="button" class="btc-stage-badge" data-btc-action="cycle-stage" data-plant="${plant.id}" title="Click to cycle through Stages 1–4! Currently: ${stage.label}">
+                  Stage ${stage.num} ↻
                 </button>
               </div>
 
@@ -1890,7 +1900,8 @@
             a.click();
           } else if (action === 'reset') {
             state = JSON.parse(JSON.stringify(defaultState));
-            updateHUD('↺ Conservatory reset to Stage 4 showstopper specimens!');
+            updateHUD('↺ Fresh start! Your plants begin as Stage 1 props.');
+            btcImportFromStore();
           }
         });
 
