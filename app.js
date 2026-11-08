@@ -284,7 +284,9 @@ function saveTasks() {
 // the Botanical Task Conservatory writes clarissa_tasks, then pings this to refresh every view
 function gameTasksChanged() {
   try { tasks = JSON.parse(localStorage.getItem("clarissa_tasks")) || []; } catch (e) {}
+  try { bills = JSON.parse(localStorage.getItem("ccc_bills")) || []; } catch (e) {}
   saveTasks();
+  if (typeof renderBills === "function") renderBills();
   if (typeof renderHourly === "function") renderHourly();
   if (typeof renderBlocks === "function") renderBlocks();
   if (typeof renderMonth === "function") renderMonth();

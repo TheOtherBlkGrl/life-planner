@@ -1677,6 +1677,20 @@
 
         const plantKey = categoryToPlant[task.category] || 'lily';
         let msg = '';
+        let billPaidName = '';
+
+        if (task.billId) {
+          const billsList = btcReadBills();
+          const bill = billsList.find(function (b) { return String(b.id) === String(task.billId); });
+          if (bill && !bill.paid) {
+            bill.paid = true;
+            bill.paidAt = Date.now();
+            const nd = btcNextRepeatDue(bill.due, bill.repeat);
+            if (nd) billsList.push({ id: Date.now() + 1, name: bill.name, amount: bill.amount, due: nd, paid: false, repeat: bill.repeat, link: bill.link || '' });
+            btcWriteBills(billsList);
+            billPaidName = bill.name || 'bill';
+          }
+        }
 
         if (task.category === 'top3') {
           state.inventory.water += 1;
@@ -1692,6 +1706,7 @@
           state.inventory.neem += 1;
           msg = addPlantXP('snake', 20, 20) || '🗡️ Snake Plant sword blade grew taller! (+20 XP, +1 🧴 Neem Spray)';
         }
+        if (billPaidName) msg = '💸 ' + billPaidName + ' marked paid in your Bills tab! ' + msg;
         updateHUD(msg, plantKey);
       }
 
@@ -1785,6 +1800,47 @@
         } catch (e) {}
       }
 
+      function btcReadBills() {
+        try { return JSON.parse(localStorage.getItem('ccc_bills')) || []; } catch (e) { return []; }
+      }
+
+      function btcWriteBills(list) {
+        try { localStorage.setItem('ccc_bills', JSON.stringify(list)); } catch (e) {}
+        try {
+          const w = window.parent;
+          if (w && w !== window && typeof w.gameTasksChanged === 'function') w.gameTasksChanged();
+        } catch (e) {}
+      }
+
+      function btcLocalDateStr(d) {
+        const p = function (n) { return String(n).padStart(2, '0'); };
+        return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+      }
+
+      function btcNextRepeatDue(due, repeat) {
+        if (!due || !repeat) return '';
+        const d = new Date(due + 'T12:00:00');
+        const step = function () {
+          if (repeat === 'daily') d.setDate(d.getDate() + 1);
+          else if (repeat === 'weekly') d.setDate(d.getDate() + 7);
+          else if (repeat === 'monthly') { const day = d.getDate(); d.setMonth(d.getMonth() + 1); if (d.getDate() < day) d.setDate(0); }
+          else if (repeat === 'quarterly') { const day = d.getDate(); d.setMonth(d.getMonth() + 3); if (d.getDate() < day) d.setDate(0); }
+          else if (repeat === 'yearly') { d.setFullYear(d.getFullYear() + 1); }
+          else return false;
+        };
+        if (!step()) return '';
+        while (d.getTime() <= Date.now()) step();
+        return btcLocalDateStr(d);
+      }
+
+      const BTC_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      function btcFmtDue(due) {
+        if (!due) return '';
+        const d = new Date(due + 'T12:00:00');
+        if (isNaN(d)) return due;
+        return BTC_MONTHS[d.getMonth()] + ' ' + d.getDate();
+      }
+
       function btcToday() {
         const d = new Date();
         return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -1842,12 +1898,38 @@
         const seeds = store.filter(function (t) {
           return t && !BTC_STORE_LANE[t.col] && !['done', 'graveyard'].includes(t.col);
         });
-        if (!seeds.length) {
+        const horizon = Date.now() + 31 * 24 * 3600 * 1000;
+        const openBillIds = {};
+        store.forEach(function (t) {
+          if (t && t.billId && !['done', 'graveyard'].includes(t.col)) openBillIds[String(t.billId)] = true;
+        });
+        const billsDue = btcReadBills().filter(function (b) {
+          if (!b || b.paid || !b.due) return false;
+          if (openBillIds[String(b.id)]) return false;
+          const dueMs = new Date(b.due + 'T12:00:00').getTime();
+          return !isNaN(dueMs) && dueMs <= horizon;
+        });
+        if (!seeds.length && !billsDue.length) {
           tray.innerHTML = '<p style="margin:0; color:var(--btc-muted); font-size:0.82rem; font-family:var(--btc-font-mono);">Tray empty. Everything potted 🌱</p>';
           return;
         }
         const pots = [['top3', '🏳️ Lily'], ['spark', '🕳️ Monstera'], ['spoon', '🍃 Pothos'], ['weekly', '🗡️ Snake']];
-        tray.innerHTML = seeds.map(function (t) {
+        const billRows = billsDue.map(function (b) {
+          const btns = pots.map(function (p) {
+            return '<button data-btc-action="pot-bill" data-bill="' + b.id + '" data-lane="' + p[0] + '" '
+              + 'style="background:var(--btc-bg-card); border:1px solid #3a2863; color:var(--btc-text); padding:5px 8px; '
+              + 'font-family:var(--btc-font-mono); font-size:0.72rem; cursor:pointer;">' + p[1] + '</button>';
+          }).join('');
+          const overdue = new Date(b.due + 'T12:00:00').getTime() < Date.now();
+          return '<div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid #241a3f;">'
+            + '<span style="flex:1 1 240px; font-size:0.85rem;">💸 Pay ' + escapeHTML(b.name || 'bill')
+            + (b.amount ? ' · $' + escapeHTML(String(b.amount)) : '')
+            + (b.due ? ' <span style="color:' + (overdue ? 'var(--btc-danger)' : 'var(--btc-muted)') + '; font-family:var(--btc-font-mono); font-size:0.72rem;">due ' + (overdue ? '⚠️ ' : '') + btcFmtDue(b.due) + '</span>' : '')
+            + '</span>'
+            + '<span style="font-size:0.72rem; color:var(--btc-muted); font-family:var(--btc-font-mono);">Bills tab</span>'
+            + btns + '</div>';
+        });
+        const seedRows = seeds.map(function (t) {
           const btns = pots.map(function (p) {
             return '<button data-btc-action="pot-seed" data-seed="' + t.id + '" data-lane="' + p[0] + '" '
               + 'style="background:var(--btc-bg-card); border:1px solid #3a2863; color:var(--btc-text); padding:5px 8px; '
@@ -1861,6 +1943,32 @@
             + '<span style="font-size:0.72rem; color:var(--btc-muted); font-family:var(--btc-font-mono);">' + srcLabel + '</span>'
             + btns + '</div>';
         }).join('');
+        const billBlock = billsDue.length
+          ? '<div style="margin:10px 0 2px; font-family:var(--btc-font-mono); font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:var(--btc-gold);">💸 Bills due soon · paying one marks it paid in the Bills tab</div>' + billRows.join('')
+          : '';
+        const seedBlock = seedRows.length
+          ? (billsDue.length ? '<div style="margin:10px 0 2px; font-family:var(--btc-font-mono); font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:var(--btc-gold);">🌱 Seeds</div>' : '') + seedRows.join('')
+          : '';
+        tray.innerHTML = billBlock + seedBlock;
+      }
+
+      function handlePotBill(billId, lane) {
+        const bill = btcReadBills().find(function (b) { return String(b.id) === String(billId); });
+        if (!bill) return;
+        const store = btcReadStore();
+        store.unshift({
+          id: Date.now(),
+          text: '💸 Pay ' + (bill.name || 'bill') + (bill.amount ? ' · $' + bill.amount : ''),
+          col: BTC_LANE_STORE[lane] || 'top3',
+          due: bill.due || '',
+          billId: bill.id
+        });
+        btcWriteStore(store);
+        btcImportFromStore();
+        const plantKey = { top3: 'lily', spark: 'monstera', spoon: 'pothos', weekly: 'snake' }[lane] || 'lily';
+        const p = state.plants[plantKey];
+        if (p) p.hydration = Math.min(100, p.hydration + 5);
+        updateHUD('💸 Potted the ' + (bill.name || 'bill') + ' bill onto the bench. Completing it marks it paid!', plantKey);
       }
 
       function initConservatory() {
@@ -1892,6 +2000,8 @@
             handleAddSeed();
           } else if (action === 'pot-seed') {
             handlePotSeed(btn.getAttribute('data-seed'), btn.getAttribute('data-lane'));
+          } else if (action === 'pot-bill') {
+            handlePotBill(btn.getAttribute('data-bill'), btn.getAttribute('data-lane'));
           } else if (action === 'export') {
             const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
             const a = document.createElement('a');
