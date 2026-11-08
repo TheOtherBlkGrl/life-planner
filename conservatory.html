@@ -1688,6 +1688,7 @@
             const nd = btcNextRepeatDue(bill.due, bill.repeat);
             if (nd) billsList.push({ id: Date.now() + 1, name: bill.name, amount: bill.amount, due: nd, paid: false, repeat: bill.repeat, link: bill.link || '' });
             btcWriteBills(billsList);
+            btcRenderSeeds();
             billPaidName = bill.name || 'bill';
           }
         }
@@ -1827,6 +1828,7 @@
           else if (repeat === 'quarterly') { const day = d.getDate(); d.setMonth(d.getMonth() + 3); if (d.getDate() < day) d.setDate(0); }
           else if (repeat === 'yearly') { d.setFullYear(d.getFullYear() + 1); }
           else return false;
+          return true;
         };
         if (!step()) return '';
         while (d.getTime() <= Date.now()) step();
