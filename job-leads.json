@@ -1,8 +1,26 @@
 {
- "updated": "2026-11-06T15:10:00-08:00",
- "updatedLocal": "Nov 6, 2026, 3:10 PM PT",
- "note": "Screened by Fo against Clarissa's filters. Leads wait for her Apply/Reject on the Job Hunt tab; decisions live in her browser. Sweeps 5:30am and 3pm PT daily.",
+ "updated": "2026-11-08T15:14:00-08:00",
+ "updatedLocal": "Nov 8, 2026, 3:14 PM PT",
+ "note": "Screened daily for Clarissa (logistics/dispatch + EA lanes); leads wait for her Apply/Reject on the Job Hunt tab",
  "leads": [
+  {
+   "id": "20261108-databricks-sr-executive-assistant-engineering",
+   "title": "Sr. Executive Assistant (Engineering)",
+   "company": "Databricks",
+   "location": "Mountain View, CA / San Francisco, CA",
+   "pay": "$141,100-$194,050",
+   "lane": "ea",
+   "fit": "Engineering leadership support: relationship management, calendaring, attention to detail; posted a step under the Nov 3 COO EA posting",
+   "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8487325002",
+   "source": "jobs.lsvp.com",
+   "posted": "recent",
+   "addedAt": "2026-11-08T15:14:00-08:00",
+   "details": {
+    "summary": "Supports Databricks' engineering leadership: relationship management, attention to detail, and calendaring across the AI/analytics org. Same Mountain View/SF footprint as the COO EA posting already on the planner.",
+    "salary": "$141,100-$194,050",
+    "loc": "Mountain View, CA / San Francisco, CA"
+   }
+  },
   {
    "id": "20261106-harvey-executive-assistant",
    "title": "Executive Assistant",
@@ -36,42 +54,6 @@
     "summary": "Joins the Office of the CEO working directly on Flexport's highest-priority problems alongside the CEO and President; you take a mode or region (ocean, air, trucking, customs), learn it from the inside by solving real problems like pricing or missed plans, then go run part of the business. Some move into a business unit as the number two to the leader who runs it.",
     "salary": "$160,000-$180,000",
     "loc": "San Francisco, CA, USA"
-   },
-   "addedAt": "2026-11-06T15:10:00-08:00"
-  },
-  {
-   "id": "20261106-figma-executive-assistant-growth-marketing",
-   "title": "Executive Assistant, Growth Marketing",
-   "company": "Figma",
-   "location": "San Francisco, CA",
-   "pay": "$127,000-$269,000",
-   "lane": "ea",
-   "fit": "EA to the VP of Growth Marketing and the Director of B2B Growth, Strategy & Ops; strategic partner plus calendar/inbox/travel/POs",
-   "url": "https://job-boards.greenhouse.io/figma/jobs/6199185004",
-   "source": "greenhouse:figma",
-   "posted": "2026-10-27",
-   "details": {
-    "summary": "Direct support to Figma's VP of Growth Marketing and Director, B2B - Growth, Strategy & Ops: leadership meetings, agendas and action items, heavy calendar and inbox management, all-hands and team comms, travel, and expense/PO sign-off as their delegate, plus team cohesion and planning work as a strategic partner.",
-    "salary": "$127,000-$269,000",
-    "loc": "San Francisco, CA, USA"
-   },
-   "addedAt": "2026-11-06T15:10:00-08:00"
-  },
-  {
-   "id": "20261106-figma-executive-assistant-people",
-   "title": "Executive Assistant, People",
-   "company": "Figma",
-   "location": "San Francisco, CA (US-based)",
-   "pay": "$127,000-$269,000",
-   "lane": "ea",
-   "fit": "EA to three senior leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations); calendar, travel, POs, decks and process work",
-   "url": "https://job-boards.greenhouse.io/figma/jobs/5969046004",
-   "source": "greenhouse:figma",
-   "posted": "2026-10-27",
-   "details": {
-    "summary": "Supports three senior People-team leaders (VP Workplace & Real Estate, VP Reward & Wellness, Director HR Operations) with calendar, travel, meetings, notes and email; also strategic-partner work on team cohesion and planning, expense/PO sign-off as a delegate, and building decks and key documents for the VPs.",
-    "salary": "$127,000-$269,000",
-    "loc": "San Francisco, CA, USA (posting lists US)"
    },
    "addedAt": "2026-11-06T15:10:00-08:00"
   },
@@ -211,7 +193,7 @@
    "posted": "2026-09-14",
    "addedAt": "2026-11-04T15:20:00-08:00",
    "details": {
-    "summary": "Risk is central to Stripe’s ability to grow safely: the team protects Stripe and our users while enabling durable, responsible growth. Millions of companies - from the world’s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
+    "summary": "Risk is central to Stripe\u2019s ability to grow safely: the team protects Stripe and our users while enabling durable, responsible growth. Millions of companies - from the world\u2019s largest enterprises to the most ambitious startups - use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
     "salary": "Not posted",
     "loc": "US-SF, US-SEA"
    },
@@ -334,19 +316,19 @@
    "posted": "2026-11-03",
    "addedAt": "2026-11-04T15:15:00-08:00",
    "details": {
-    "summary": "You will set the governance model and service standards, partner with executive stakeholders, and build a team that delivers consistently. Who we are Samsara (NYSE: IOT) is the pioneer of the Connected Operations™ Cloud, which is a platform that enables organizations that depend on physical operations to harness Internet of Things (IoT) d",
+    "summary": "You will set the governance model and service standards, partner with executive stakeholders, and build a team that delivers consistently. Who we are Samsara (NYSE: IOT) is the pioneer of the Connected Operations\u2122 Cloud, which is a platform that enables organizations that depend on physical operations to harness Internet of Things (IoT) d",
     "salary": "Not posted",
     "loc": "Remote - US"
    },
    "salary": "Not posted",
    "loc": "Remote - Toronto",
-   "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
+   "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing \u2014 and we are excited to help digitally transfo"
   },
   {
    "id": "20261104-figma-senior-order-management-analyst",
    "title": "Senior Order Management Analyst",
    "company": "Figma",
-   "location": "San Francisco, CA • New York, NY • United States",
+   "location": "San Francisco, CA \u2022 New York, NY \u2022 United States",
    "pay": "Not posted",
    "lane": "logistics",
    "fit": "Order management/fulfillment ops analyst (SF/NY); pay not posted",
@@ -357,10 +339,10 @@
    "details": {
     "summary": "As Figma grows, we're building the order-to-cash process for what comes next, and this role is a builder's seat: you'll take on our most complex orders while helping shape how orders get processed, reviewed, and automated as we scale. Figma is growing our team of passionate creatives and builders on a mission to make design accessible to ",
     "salary": "Not posted",
-    "loc": "San Francisco, CA • New York, NY • United States"
+    "loc": "San Francisco, CA \u2022 New York, NY \u2022 United States"
    },
    "salary": "Not posted",
-   "loc": "San Francisco, CA • New York, NY • United States",
+   "loc": "San Francisco, CA \u2022 New York, NY \u2022 United States",
    "summary": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all."
   },
   {
@@ -376,7 +358,7 @@
    "posted": "2026-10-29",
    "addedAt": "2026-11-04T15:15:00-08:00",
    "details": {
-    "summary": "Who we are About Stripe Stripe is a financial infrastructure platform for businesses. Millions of companies—from the world’s largest enterprises to the most ambitious startups—use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
+    "summary": "Who we are About Stripe Stripe is a financial infrastructure platform for businesses. Millions of companies\u2014from the world\u2019s largest enterprises to the most ambitious startups\u2014use Stripe to accept payments, grow their revenue, and accelerate new business opportunities.",
     "salary": "Not posted",
     "loc": "Seattle, San Francisco, New York, Chicago"
    },
@@ -549,7 +531,7 @@
    },
    "salary": "Not posted",
    "loc": "Remote - US",
-   "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing — and we are excited to help digitally transfo"
+   "summary": "Representing more than 40% of global GDP, these industries are the infrastructure of our planet, including agriculture, construction, field services, transportation, and manufacturing \u2014 and we are excited to help digitally transfo"
   },
   {
    "id": "20261103-waymo-market-operations-lead-sf",
@@ -855,7 +837,7 @@
    },
    "salary": "Not posted",
    "loc": "San Francisco, California, United States",
-   "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
+   "summary": "That\u2019s why it\u2019s our mission to make global commerce so easy there will be more of it."
   },
   {
    "id": "20261102-flexport-head-data-center-logistics",
@@ -876,7 +858,7 @@
    },
    "salary": "Not posted",
    "loc": "San Francisco, California, United States",
-   "summary": "That’s why it’s our mission to make global commerce so easy there will be more of it."
+   "summary": "That\u2019s why it\u2019s our mission to make global commerce so easy there will be more of it."
   },
   {
    "id": "20261102-instacart-chief-of-staff-grocery",
