@@ -1,54 +1,55 @@
 {
-  "updatedLocal": "Nov 7, 2026, 5:35 AM PT",
-  "headline": "Saturday, November 7 — quiet reset day",
+  "updatedLocal": "Nov 8, 2026, 5:35 AM PT",
+  "headline": "Sunday, November 8 — new moon, gentle reset",
   "sections": [
     {
       "h": "Weather",
-      "lead": "Warm and sunny, the last dry weekend for a while.",
+      "lead": "Sun beats the forecast today, then clouds settle in.",
       "items": [
-        "Today (Sat): partly sunny, 71/45, 0% rain, light wind 2-5 mph. Sunrise 6:39, sunset 5:01.",
-        "Hour by hour: 5am 52, 8am 54, 10am 60, noon 68, 2pm 71 (peak), 4pm 70, 5pm 67, 8pm 59, 10pm 57, evening turns partly cloudy.",
-        "The rest of the grid: Sun cloudy 70/51 with the new moon that night. Mon sunny 70/51. Tue sunny 68/47. Wed sunny 66/47. Thu partly sunny 65/50. Fri sunny 66/53 but gusty (SW gusts to 28 mph).",
-        "First rain in weeks shows up late next weekend: 75% Saturday night Nov 14, showers Sunday Nov 15."
+        "Today (Sun): the hourly feed reads mostly sunny even though the day forecast says cloudy, so call it sun breaking through: high near 70, low 51, 0% rain, light wind 2-5 mph. Sunrise 6:40, sunset 5:00.",
+        "Hour by hour: 5am 53, 8am 56, 10am 60, noon 67, 2pm 70, 3pm 70 (peak), 4pm 70, 5pm 67, 8pm 60, 10pm 59, evening clouds building.",
+        "The rest of the grid: Mon cloudy 72/51. Tue sunny 71/50. Wed sunny 67/50. Thu partly sunny 64/50. Fri mostly sunny 66/53.",
+        "Rain arrives next weekend: light rain Sat Nov 14 (55% that night) and Sun Nov 15 (59/49, gusty to 21 mph)."
       ]
     },
     {
       "h": "Your sky",
-      "lead": "Your monthly reset lands today.",
+      "lead": "The new moon lands this afternoon, in your identity corner.",
       "items": [
-        "Plain English: the transiting Moon sits exactly on your natal Moon this morning, which astrologers call a lunar return, your once-a-month personal new beginning. With loving Venus sitting on the same spot, today favors quiet self-care, a tidy restart, and gentle plans over big pushes.",
-        "How to use it: it's a perfect day to make one clean decision about the job search, like clearing your review queue, then rest. Momentum restarts Monday.",
-        "Specifics: Moon Libra 26.7 conj natal Moon 0.2 (lunar return); Venus (R) Libra 26.4 conj natal Moon 0.6; Mercury (R) Scorpio 8.0 square natal Sun 1.1; Sun opp natal Asc 1.2; Pluto sextile natal Moon 0.9; Saturn (R) Aries 11.9 trine natal Sun 2.7."
+        "Plain English: today's new moon is the monthly reset point, the moment astrologers use for planting intentions, and it happens in Scorpio, the sign of going deep rather than wide. Its one wrinkle: it sits square your natal Sun, so you may feel a tug between the drive to do and the body's request to rest.",
+        "How to use it: write one intention for the next four weeks around the job search, something like 'the right role finds me through a warm conversation', then actually rest. Monday's routine restarts the momentum.",
+        "Specifics: New Moon Scorpio 9.6 square natal Sun 0.5; Venus (R) Libra 26.1 conj natal Moon 0.9; Pluto sextile natal Moon 0.9; Mercury (R) Scorpio 7.6 square natal Sun 1.6; Sun opp natal Asc 2.2; Saturn (R) Aries 11.8 trine natal Sun 2.7."
       ]
     },
     {
       "h": "Leads to review",
-      "lead": "Nothing new this morning.",
+      "lead": "Still nothing new; five leads wait on you.",
       "items": [
-        "Zero new postings passed the filters overnight; the five added at yesterday's 3pm sweep are still waiting on your review on the Job Hunt tab: Harvey EA, Flexport Business Operations Manager (Office of the CEO), Figma EA x2, Stripe Administrative Business Partner.",
+        "Zero new postings passed the filters overnight. The three fresh raw candidates today (two Waymo technical-lead roles and a junior Figma people-ops job) didn't clear them.",
+        "Still waiting on your review on the Job Hunt tab: Harvey EA, Flexport Business Operations Manager (Office of the CEO), the two Figma EAs, and Stripe's Administrative Business Partner.",
         "Boards note: Uber Freight and Serve's feeds wouldn't load again; Lightspeed and NFX stay queued for the 3pm sweep."
       ]
     },
     {
       "h": "Local news",
-      "lead": "A good sports night and slow ballot math.",
+      "lead": "A courtroom verdict and a Saturday shooting in town.",
       "items": [
-        "Antioch High football rolled to its 11th straight win on Friday night.",
-        "The county posted a fresh ballot-count update Friday afternoon; Joy Motts still holds the early lead in Antioch District 1.",
-        "Oakland police are investigating what appear to be deliberate dog attacks on dogs and people."
+        "A 40-year-old Antioch man was convicted Nov 4 in the DUI hit-and-run death of bicyclist Linda Alize Wooldridge on Lone Tree Way in 2024; he faces up to 15 years.",
+        "An independent review cleared a Contra Costa DA inspector in last year's fatal crash that killed Phoenix Dunn on Highway 4.",
+        "A man was shot in the foot on Manzanita Way at 8:20pm Friday and is recovering; Antioch police are investigating (tips: 925-779-6926)."
       ]
     },
     {
       "h": "Interview watch",
-      "lead": "Nothing new since Thursday's noes.",
+      "lead": "Quiet: no new application mail in two days.",
       "items": [
-        "No new mail since yesterday's brief: the Mintive and Kenco declines stand, and no interview requests have arrived.",
+        "Nothing new since Thursday: the Mintive and Kenco declines stand, and no interview requests have arrived.",
         "Flexport and Rothy's remain quiet confirmations."
       ]
     },
     {
       "h": "Ease into the day",
-      "lead": "Empty calendar: a true day off.",
+      "lead": "Empty calendar, second quiet day in a row.",
       "items": [
         "Easy win: say the word and I'll draft the Granite thank-yous, with your paving-vs-dirt mix question folded in for Brian.",
         "Top 3: (1) Granite thank-yous, (2) review the five leads on the Job Hunt tab, (3) confirm the Parchment diploma mailing address (overdue).",
@@ -58,16 +59,16 @@
     },
     {
       "h": "Family day ahead",
-      "lead": "Quiet through the weekend.",
+      "lead": "Quiet through Monday.",
       "items": [
-        "Nothing on Tony's calendar through Sunday."
+        "Nothing on Tony's calendar through Monday."
       ]
     },
     {
       "h": "Sneak preview",
-      "lead": "New moon tomorrow night, rain the weekend after.",
+      "lead": "Gray Monday, then two bright days before the rain.",
       "items": [
-        "Sunday is cloudy but mild at 70/51 with the new moon; the first real rain of the season arrives the following weekend."
+        "Monday is cloudy but mild at 72/51; Tuesday and Wednesday turn sunny before next weekend's first rain."
       ]
     }
   ]
