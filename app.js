@@ -255,10 +255,10 @@ let tasks = JSON.parse(localStorage.getItem("clarissa_tasks")) || [
   { id: 2, text: "Review weekly route & logistics priorities 🚛", col: "top3" }
 ];
 
-const TASK_COLS = ["dump", "high", "low", "top3", "done", "graveyard"];
+const TASK_COLS = ["dump", "high", "low", "top3", "steady", "done", "graveyard"];
 const COL_LABELS = {
   dump: "🌪️ Brain Dump", high: "🔥 High-Spark", low: "🌿 Low-Spoon",
-  top3: "🎯 Rule of 3", done: "🏆 Trophy", graveyard: "🪦 Graveyard"
+  top3: "🎯 Rule of 3", steady: "🗡️ Steady/Weekly", done: "🏆 Trophy", graveyard: "🪦 Graveyard"
 };
 
 // extra task destinations: each tab's own category list
@@ -275,6 +275,16 @@ function saveTasks() {
   renderKanban();
   renderTabTasks();
   renderWins();
+}
+
+// the Botanical Task Conservatory writes clarissa_tasks, then pings this to refresh every view
+function gameTasksChanged() {
+  try { tasks = JSON.parse(localStorage.getItem("clarissa_tasks")) || []; } catch (e) {}
+  saveTasks();
+  if (typeof renderHourly === "function") renderHourly();
+  if (typeof renderBlocks === "function") renderBlocks();
+  if (typeof renderMonth === "function") renderMonth();
+  if (typeof renderWeek === "function") renderWeek();
 }
 
 const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -354,10 +364,11 @@ function deleteTask(id) {
 function renderKanban() {
   TASK_COLS.forEach(col => {
     const container = document.getElementById(`col-${col}`);
+    const badge = document.getElementById(`count-${col}`);
+    if (!container || !badge) return;
     container.innerHTML = "";
     const colTasks = tasks.filter(t => t.col === col);
 
-    const badge = document.getElementById(`count-${col}`);
     badge.textContent = col === "top3" ? `${colTasks.length}/3` : colTasks.length;
 
     colTasks.forEach(task => {
@@ -471,6 +482,12 @@ function switchTab(name) {
   // these views read live data, so re-render them when they open
   if (name === "week" && typeof renderWeek === "function") renderWeek();
   if (name === "tasks" && typeof renderKanban === "function") renderKanban();
+  if (name === "tasks") {
+    const conservatoryFrame = document.getElementById("conservatoryFrame");
+    if (conservatoryFrame && !conservatoryFrame.getAttribute("src")) {
+      conservatoryFrame.setAttribute("src", conservatoryFrame.getAttribute("data-src"));
+    }
+  }
   if (name === "today" && typeof renderWins === "function") renderWins();
   if (name === "jobs" && typeof loadJobLeads === "function") loadJobLeads();
   if (name === "jobs" && typeof loadSiteReport === "function") loadSiteReport();
@@ -778,7 +795,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Add new task
-  document.getElementById("taskForm").addEventListener("submit", e => {
+  const taskFormEl = document.getElementById("taskForm");
+  taskFormEl && taskFormEl.addEventListener("submit", e => {
     e.preventDefault();
     const input = document.getElementById("taskInput");
     const colSelect = document.getElementById("taskColumnSelect");

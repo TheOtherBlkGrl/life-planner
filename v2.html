@@ -220,122 +220,14 @@
           </section>
 
     <section class="tab-panel" id="panel-tasks">
-<div class="card task-quick-card">
-      <form id="taskForm" class="task-creator">
-        <input type="text" id="taskInput" placeholder="Dump a task or idea out of your head..." required />
-        <select id="taskColumnSelect">
-          <option value="dump">🌪️ Brain Dump Inbox</option>
-          <option value="high">🔥 High-Spark Quests</option>
-          <option value="low">🌿 Cozy Low-Spoon Wins</option>
-          <option value="top3">🎯 Today's Rule of 3</option>
-          <option value="selfcare">🛁 Self Care</option>
-          <option value="garden">🌱 Garden</option>
-          <option value="social">👯 Social</option>
-          <option value="marriage">💍 Marriage</option>
-          <option value="work">🧰 Work</option>
-          <option value="jobs">💼 Job Hunt</option>
-        </select>
-        <div class="task-meta">
-          <input type="date" id="taskDue" title="Due date (optional)" />
-          <input type="time" id="taskTime" title="Time (optional)" />
-          <select id="taskPri">
-            <option value="">Priority</option>
-            <option value="high">🔥 High</option>
-            <option value="med">⚡ Medium</option>
-            <option value="low">🌿 Low</option>
-          </select>
-          <select id="taskRepeat" title="Repeat (optional)" onchange="const pc=document.getElementById('taskCustomDays'); if(pc) pc.style.display = this.value==='custom' ? 'flex' : 'none';">
-            <option value="">Repeat</option>
-            <option value="daily">🔁 Daily</option>
-            <option value="weekdays">🔁 Weekdays</option>
-            <option value="weekly">🔁 Weekly</option>
-            <option value="monthly">🔁 Monthly</option>
-            <option value="custom">🗓️ Custom</option>
-          </select>
-        </div>
-        <div id="taskCustomDays" style="display:none;gap:.4rem;align-items:center;flex-wrap:wrap;margin-top:.35rem;">
-          <span style="font-size:.78rem;opacity:.7;">On:</span>
-          <button type="button" class="ccc-day-chip" data-day="1">M</button>
-          <button type="button" class="ccc-day-chip" data-day="2">T</button>
-          <button type="button" class="ccc-day-chip" data-day="3">W</button>
-          <button type="button" class="ccc-day-chip" data-day="4">T</button>
-          <button type="button" class="ccc-day-chip" data-day="5">F</button>
-          <button type="button" class="ccc-day-chip" data-day="6">S</button>
-          <button type="button" class="ccc-day-chip" data-day="0">S</button>
-        </div>
-        <button type="submit" class="add-btn">➕ Add to Board</button>
-      </form>
-      </div>
-
-      <div class="workspace-layout">
-
-        <section class="kanban-section">
-
-          <div class="kanban-grid">
-            <div class="kanban-col">
-              <div class="col-header">
-                <h3>🌪️ Brain Dump</h3>
-                <span class="count-badge" id="count-dump">0</span>
-              </div>
-              <p class="col-desc">Zero pressure. Get it out of your head now, sort it later.</p>
-              <div class="task-list" id="col-dump"></div>
-            </div>
-
-            <div class="kanban-col">
-              <div class="col-header">
-                <h3>🔥 High-Spark Quests</h3>
-                <span class="count-badge" id="count-high">0</span>
-              </div>
-              <p class="col-desc">For when the hyperfocus kicks in and your battery is full.</p>
-              <div class="task-list" id="col-high"></div>
-            </div>
-
-            <div class="kanban-col">
-              <div class="col-header">
-                <h3>🌿 Low-Spoon Wins</h3>
-                <span class="count-badge" id="count-low">0</span>
-              </div>
-              <p class="col-desc">5-minute, zero-stress tasks for low-energy moments.</p>
-              <div class="task-list" id="col-low"></div>
-            </div>
-
-            <div class="kanban-col highlight-col">
-              <div class="col-header">
-                <h3>🎯 Today's Rule of 3</h3>
-                <span class="count-badge gold-badge" id="count-top3">0/3</span>
-              </div>
-              <p class="col-desc">Hard limit of 3 cards max! No overwhelm allowed, Queen.</p>
-              <div class="task-list" id="col-top3"></div>
-            </div>
-
-            <div class="kanban-col trophy-col">
-              <div class="col-header">
-                <h3>🎉 Trophy Room</h3>
-                <span class="count-badge" id="count-done">0</span>
-              </div>
-              <p class="col-desc">Look at everything you've already crushed!</p>
-              <div class="task-list" id="col-done"></div>
-            </div>
-
-            <div class="kanban-col graveyard-col">
-              <div class="col-header">
-                <h3>🪦 No-Shame Graveyard</h3>
-                <span class="count-badge" id="count-graveyard">0</span>
-              </div>
-              <p class="col-desc">Lost interest or changed plans? Release it guilt-free.</p>
-              <div class="task-list" id="col-graveyard"></div>
-            </div>
-          </div>
-                </section>
-      </div>
-              <div class="card" id="conservatoryCard">
+          <div class="card" id="conservatoryCard">
         <div class="card-header">
           <h2>🪴 Botanical Task Conservatory</h2>
-          <button id="conservatoryToggle" class="add-btn" style="width:auto;padding:0.45rem 1rem;min-height:0;" onclick="toggleConservatory()">Open Conservatory</button>
+          <button id="conservatoryToggle" class="add-btn" style="width:auto;padding:0.45rem 1rem;min-height:0;" onclick="toggleConservatory()">Hide Conservatory</button>
         </div>
-        <p class="helper-text">Your task game: finish tasks to water, feed and grow the specimen bench, while overdue chores wilt leaves and spawn gnats. Tap to open the conservatory.</p>
-        <div id="conservatoryWrap" style="display:none">
-          <iframe id="conservatoryFrame" data-src="conservatory.html" style="width:100%;height:1600px;border:0;background:#0b0914;" loading="lazy" title="Botanical Task Conservatory"></iframe>
+        <p class="helper-text">Your task manager lives here now: plant tasks into the four lanes, complete them to water and feed the bench, compost what you're done carrying. Tasks land on the Gantt and everywhere else they used to. The Seed Tray below the bench holds Brain Dump and tab-garden tasks until you pot them into a lane.</p>
+        <div id="conservatoryWrap">
+          <iframe id="conservatoryFrame" data-src="conservatory.html" style="width:100%;height:2400px;border:0;background:#0b0914;" loading="lazy" title="Botanical Task Conservatory"></iframe>
         </div>
       </div>
 </section>
@@ -767,7 +659,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261106a"></script>
+  <script src="app.js?v=20261108a"></script>
   <script src="astro.js?v=20261106a"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="sync-config.js?v=20261105i"></script>

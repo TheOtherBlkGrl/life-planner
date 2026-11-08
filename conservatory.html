@@ -693,6 +693,21 @@
   <!-- 4 TASK QUEST COLUMNS -->
   <div class="btc-columns-grid" id="btc-task-columns"></div>
 
+  <!-- SEED TRAY: parked tasks (brain dump + tab gardens) -->
+  <div id="btc-seed-tray" style="margin-top:28px; border:1px solid var(--btc-gold); background:var(--btc-bg-panel); padding:16px 18px;">
+    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <h3 style="margin:0; font-family:var(--btc-font-head); color:var(--btc-gold-bright); font-size:1.05rem; letter-spacing:1px; text-transform:uppercase;">🌱 Seed Tray</h3>
+      <span style="color:var(--btc-muted); font-size:0.78rem; font-family:var(--btc-font-mono);">Brain-dump &amp; tab-garden tasks park here. Pot one into a lane to put it on the bench.</span>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+      <input id="btc-seed-input" type="text" placeholder="Quick-dump a seed without choosing a lane yet..." autocomplete="off"
+        style="flex:1 1 240px; background:var(--btc-bg-card); border:1px solid #3a2863; color:var(--btc-text); padding:10px 12px; font-family:var(--btc-font-mono); font-size:0.85rem; outline:none;" />
+      <button type="button" data-btc-action="add-seed"
+        style="background:var(--btc-plum-deep); color:var(--btc-gold-bright); border:1px solid var(--btc-gold); padding:10px 14px; font-family:var(--btc-font-mono); font-size:0.8rem; cursor:pointer; text-transform:uppercase;">+ Seed</button>
+    </div>
+    <div id="btc-seed-list"></div>
+  </div>
+
   <!-- GREENHOUSE TROPHY SHELF & DATA CONTROLS -->
   <footer class="btc-footer-shelf">
     <div class="btc-toast" id="btc-toast-msg">
@@ -760,14 +775,7 @@
             gnats: false
           }
         },
-        tasks: [
-          { id: 't1', text: 'Knock out #1 priority move for the day', category: 'top3', overdue: false },
-          { id: 't2', text: 'Review logistics & schedule updates', category: 'top3', overdue: false },
-          { id: 't3', text: 'Update portfolio / GitHub Pages styling tweak', category: 'spark', overdue: false },
-          { id: 't4', text: '5-minute desk reset & refill water cup', category: 'spoon', overdue: false },
-          { id: 't5', text: 'Check patio pond heater & top off water level', category: 'spoon', overdue: false },
-          { id: 't6', text: 'Log weekly hillside worm bin route', category: 'weekly', overdue: false }
-        ]
+        tasks: []
       };
 
       let state = loadState();
@@ -1606,12 +1614,22 @@
         const targetPlantKey = categoryToPlant[cat] || 'lily';
         const targetPlant = state.plants[targetPlantKey];
 
+        if (cat === 'top3' && state.tasks.filter(function (t) { return t.category === 'top3'; }).length >= 3) {
+          updateHUD('🎯 Rule of 3 is capped at 3, Queen! Finish or compost one first.', 'lily');
+          return;
+        }
+        const storeId = Date.now();
         state.tasks.unshift({
-          id: 't_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+          id: 's_' + storeId,
           text: text,
           category: cat,
-          overdue: false
+          overdue: false,
+          storeId: storeId
         });
+        const btcStore = btcReadStore();
+        btcStore.unshift({ id: storeId, text: text, col: BTC_LANE_STORE[cat] || 'top3' });
+        btcWriteStore(btcStore);
+        btcRenderSeeds();
 
         targetPlant.hydration = Math.min(100, targetPlant.hydration + 5);
         if (!targetPlant.gnats && targetPlant.xp < 96) {
@@ -1641,6 +1659,11 @@
         if (idx === -1) return;
         const task = state.tasks[idx];
         state.tasks.splice(idx, 1);
+        if (task.storeId) {
+          const btcStore = btcReadStore();
+          const btcSt = btcStore.find(function (t) { return t.id === task.storeId; });
+          if (btcSt) { btcSt.col = 'done'; btcSt.doneAt = Date.now(); btcWriteStore(btcStore); btcRenderSeeds(); }
+        }
 
         const plantKey = categoryToPlant[task.category] || 'lily';
         let msg = '';
@@ -1666,12 +1689,23 @@
         const idx = state.tasks.findIndex((t) => t.id === id);
         if (idx === -1) return;
         const orig = state.tasks[idx];
+        const btcSplitId = Date.now();
+        const btcLaneCol = BTC_LANE_STORE[orig.category] || 'top3';
         state.tasks.splice(
           idx,
           1,
-          { id: orig.id + '_a', text: orig.text + ' (Part 1: Quick 5-min start)', category: orig.category, overdue: false },
-          { id: orig.id + '_b', text: orig.text + ' (Part 2: Wrap up)', category: orig.category, overdue: false }
+          { id: orig.id + '_a', text: orig.text + ' (Part 1: Quick 5-min start)', category: orig.category, overdue: false, storeId: orig.storeId },
+          { id: 's_' + (btcSplitId + 1), text: orig.text + ' (Part 2: Wrap up)', category: orig.category, overdue: false, storeId: btcSplitId + 1 }
         );
+        if (orig.storeId) {
+          const btcStore = btcReadStore();
+          const btcSt = btcStore.find(function (t) { return t.id === orig.storeId; });
+          if (btcSt) { btcSt.id = btcSplitId; btcSt.text = orig.text + ' (Part 1: Quick 5-min start)'; }
+          else btcStore.unshift({ id: btcSplitId, text: orig.text + ' (Part 1: Quick 5-min start)', col: btcLaneCol });
+          btcStore.unshift({ id: btcSplitId + 1, text: orig.text + ' (Part 2: Wrap up)', col: btcLaneCol });
+          btcWriteStore(btcStore);
+          btcRenderSeeds();
+        }
         Object.values(state.plants).forEach((p) => (p.gnats = false));
         updateHUD('✂ Task broken into 2 bite-sized steps & Procrastination Gnats cleared!', categoryToPlant[orig.category]);
       }
@@ -1679,6 +1713,11 @@
       function handleCompostTask(id) {
         const task = state.tasks.find((t) => t.id === id);
         state.tasks = state.tasks.filter((t) => t.id !== id);
+        if (task && task.storeId) {
+          const btcStore = btcReadStore();
+          const btcSt = btcStore.find(function (t) { return t.id === task.storeId; });
+          if (btcSt) { btcSt.col = 'graveyard'; delete btcSt.doneAt; btcWriteStore(btcStore); btcRenderSeeds(); }
+        }
         state.inventory.castings += 1;
         updateHUD(
           '🪱 Task mulched in the No-Shame Compost Bin! (+1 Worm Castings earned)',
@@ -1714,6 +1753,106 @@
         }
       }
 
+
+      // ============================================
+      // PLANNER TASK BRIDGE: clarissa_tasks is the source of truth.
+      // The bench lanes (top3 / spark / spoon / weekly) map onto the
+      // planner columns (top3 / high / low / steady); completing,
+      // splitting and composting here write straight back to the store.
+      // ============================================
+      const BTC_LANE_STORE = { top3: 'top3', spark: 'high', spoon: 'low', weekly: 'steady' };
+      const BTC_STORE_LANE = { top3: 'top3', high: 'spark', low: 'spoon', steady: 'weekly' };
+
+      function btcReadStore() {
+        try { return JSON.parse(localStorage.getItem('clarissa_tasks')) || []; } catch (e) { return []; }
+      }
+
+      function btcWriteStore(list) {
+        try { localStorage.setItem('clarissa_tasks', JSON.stringify(list)); } catch (e) {}
+        try {
+          const w = window.parent;
+          if (w && w !== window && typeof w.gameTasksChanged === 'function') w.gameTasksChanged();
+        } catch (e) {}
+      }
+
+      function btcToday() {
+        const d = new Date();
+        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      }
+
+      function btcImportFromStore() {
+        if (!localStorage.getItem('clarissa_tasks')) return false;
+        const store = btcReadStore();
+        state.tasks = store
+          .filter(function (t) { return t && BTC_STORE_LANE[t.col]; })
+          .map(function (t) {
+            return {
+              id: 's_' + t.id,
+              text: t.text,
+              category: BTC_STORE_LANE[t.col],
+              overdue: !!(t.due && t.due < btcToday()),
+              storeId: t.id
+            };
+          });
+        saveState();
+        renderBench();
+        renderColumns();
+        btcRenderSeeds();
+        return true;
+      }
+
+      function handleAddSeed() {
+        const input = document.getElementById('btc-seed-input');
+        if (!input || !input.value.trim()) { if (input) input.focus(); return; }
+        const store = btcReadStore();
+        store.unshift({ id: Date.now(), text: input.value.trim(), col: 'dump' });
+        btcWriteStore(store);
+        input.value = '';
+        btcRenderSeeds();
+        updateHUD('🌱 Seed parked in the tray. Pot it onto the bench when it earns a lane.', null);
+      }
+
+      function handlePotSeed(seedId, lane) {
+        const store = btcReadStore();
+        const st = store.find(function (t) { return String(t.id) === String(seedId); });
+        if (!st) return;
+        st.col = BTC_LANE_STORE[lane] || 'top3';
+        btcWriteStore(store);
+        btcImportFromStore();
+        const plantKey = { top3: 'lily', spark: 'monstera', spoon: 'pothos', weekly: 'snake' }[lane] || 'lily';
+        const p = state.plants[plantKey];
+        if (p) p.hydration = Math.min(100, p.hydration + 5);
+        updateHUD('🌱 Potted "' + st.text + '" onto the bench! ' + (p ? p.name : '') + ' got a moisture mist.', plantKey);
+      }
+
+      function btcRenderSeeds() {
+        const tray = document.getElementById('btc-seed-list');
+        if (!tray) return;
+        const store = btcReadStore();
+        const seeds = store.filter(function (t) {
+          return t && !BTC_STORE_LANE[t.col] && !['done', 'graveyard'].includes(t.col);
+        });
+        if (!seeds.length) {
+          tray.innerHTML = '<p style="margin:0; color:var(--btc-muted); font-size:0.82rem; font-family:var(--btc-font-mono);">Tray empty. Everything potted 🌱</p>';
+          return;
+        }
+        const pots = [['top3', '🏳️ Lily'], ['spark', '🕳️ Monstera'], ['spoon', '🍃 Pothos'], ['weekly', '🗡️ Snake']];
+        tray.innerHTML = seeds.map(function (t) {
+          const btns = pots.map(function (p) {
+            return '<button data-btc-action="pot-seed" data-seed="' + t.id + '" data-lane="' + p[0] + '" '
+              + 'style="background:var(--btc-bg-card); border:1px solid #3a2863; color:var(--btc-text); padding:5px 8px; '
+              + 'font-family:var(--btc-font-mono); font-size:0.72rem; cursor:pointer;">' + p[1] + '</button>';
+          }).join('');
+          const srcLabel = t.col === 'dump' ? 'brain dump' : t.col;
+          return '<div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid #241a3f;">'
+            + '<span style="flex:1 1 240px; font-size:0.85rem;">' + escapeHTML(t.text)
+            + (t.due ? ' <span style="color:var(--btc-muted); font-family:var(--btc-font-mono); font-size:0.72rem;">📅 ' + escapeHTML(t.due) + '</span>' : '')
+            + '</span>'
+            + '<span style="font-size:0.72rem; color:var(--btc-muted); font-family:var(--btc-font-mono);">' + srcLabel + '</span>'
+            + btns + '</div>';
+        }).join('');
+      }
+
       function initConservatory() {
         const root = document.getElementById('botanical-task-conservatory');
         if (!root || root.dataset.btcInitialized === 'true') return;
@@ -1739,6 +1878,10 @@
             state.plants.monstera.gnats = true;
             if (state.tasks.length > 0) state.tasks[0].overdue = true;
             updateHUD('⏳ Simulated 48h behind! Peace Lily fainted flat over the rim & Gnats spawned!');
+          } else if (action === 'add-seed') {
+            handleAddSeed();
+          } else if (action === 'pot-seed') {
+            handlePotSeed(btn.getAttribute('data-seed'), btn.getAttribute('data-lane'));
           } else if (action === 'export') {
             const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
             const a = document.createElement('a');
@@ -1762,6 +1905,19 @@
         }
 
         updateHUD();
+        btcImportFromStore();
+        window.addEventListener('storage', function (e) {
+          if (e.key === 'clarissa_tasks') btcImportFromStore();
+        });
+        const seedInput = document.getElementById('btc-seed-input');
+        if (seedInput) {
+          seedInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleAddSeed();
+            }
+          });
+        }
       }
 
       if (document.readyState === 'loading') {
