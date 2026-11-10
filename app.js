@@ -1919,20 +1919,124 @@ function openBriefModal() {
   const body = document.getElementById("briefBody");
   const title = document.getElementById("briefTitle");
   if (!briefData) { body.innerHTML = '<p class="ev-loading">No brief loaded yet. It lands each morning at 5:30am.</p>'; title.textContent = "Daily Brief"; overlay.classList.remove("hidden"); return; }
-  title.textContent = "📰 " + (briefData.headline || "Daily Brief");
+  title.textContent = "\ud83d\udcf0 " + (briefData.headline || "Daily Brief");
   const parts = [];
   (briefData.sections || []).forEach(s => {
     let seg = '<h4 class="brief-h">' + esc(s.h) + '</h4>';
     if (s.lead) seg += '<p class="brief-lead">' + esc(s.lead) + '</p>';
     if (Array.isArray(s.items) && s.items.length) {
-      seg += '<ul class="brief-ul">' + s.items.map(it => '<li>' + esc(it) + '</li>').join("") + '</ul>';
+      seg += '<ul class="brief-ul">' + s.items.map(it => '<li>' + esc(it) +
+        '<button class="brief-add-task" type="button" data-task="' + esc(it) + '" title="Add this to your tasks">+ task</button>' +
+        '</li>').join("") + '</ul>';
     }
     if (s.body) seg += '<p class="brief-p">' + esc(s.body) + '</p>';
     parts.push(seg);
   });
-  body.innerHTML = parts.join("") +
-    '<p class="brief-stamp">' + esc(briefData.updatedLocal || "") + '</p>';
+  body.innerHTML = briefQuickAdd() + parts.join("") +
+    '<p class="brief-stamp">' + esc(briefData.updatedLocal || "") + '</p>' + briefNotesBox();
   overlay.classList.remove("hidden");
+  wireBriefTools();
+  flushPendingNotes();
+}
+
+// --- 26b. BRIEF POPUP: add action items + notes to Fo ---
+function briefQuickAdd() {
+  const opts = Object.keys(ALL_COL_LABELS).map(c =>
+    '<option value="' + c + '"' + (c === "dump" ? " selected" : "") + '>' + ALL_COL_LABELS[c] + '</option>').join("");
+  return '<div class="brief-quickadd">' +
+    '<input type="text" id="briefTaskInput" placeholder="Add an action item from the brief..." />' +
+    '<select id="briefTaskLane">' + opts + '</select>' +
+    '<button type="button" id="briefTaskAdd" class="mini-btn">Add</button>' +
+    '</div>';
+}
+function briefAddTask(text, col) {
+  text = (text || "").trim();
+  if (!text) return;
+  const target = MOVE_COLS.includes(col) ? col : "dump";
+  tasks.push({ id: Date.now() + Math.floor(Math.random() * 1000), text: text, col: target, due: "", time: "", pri: "", repeat: "", days: [] });
+  saveTasks();
+  flashMsg("Added to " + (ALL_COL_LABELS[target] || "your tasks") + " \u00b7 edit it on the Tasks tab");
+}
+function wireBriefTools() {
+  const addBtn = document.getElementById("briefTaskAdd");
+  const inputEl = document.getElementById("briefTaskInput");
+  const laneEl = document.getElementById("briefTaskLane");
+  const doAdd = () => {
+    if (!inputEl.value.trim()) { inputEl.focus(); return; }
+    briefAddTask(inputEl.value, laneEl ? laneEl.value : "dump");
+    inputEl.value = "";
+  };
+  addBtn && addBtn.addEventListener("click", doAdd);
+  inputEl && inputEl.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); doAdd(); } });
+  document.querySelectorAll("#briefBody .brief-add-task").forEach(btn => {
+    btn.addEventListener("click", () => briefAddTask(btn.dataset.task, "dump"));
+  });
+  renderBriefNotes();
+  const sendBtn = document.getElementById("briefNoteSend");
+  sendBtn && sendBtn.addEventListener("click", sendBriefNote);
+}
+
+const BRIDGE_NOTES_URL = "https://planner-apply-bridge.f29f354fcc68928eef80.workers.dev/api/notes";
+const FO_NOTES_KEY = "ccc_fo_notes_outbox";
+function briefNoteHistory() {
+  try { return JSON.parse(localStorage.getItem(FO_NOTES_KEY)) || []; } catch (e) { return []; }
+}
+function noteRow(n) {
+  return '<div class="brief-note-item"><span>' + esc(n.text) + '</span><em>' +
+    (n.sent ? "sent" : "sending\u2026") + " \u00b7 " + esc(n.when) + '</em></div>';
+}
+function briefNotesBox() {
+  return '<div class="brief-note-box">' +
+    '<h4 class="brief-h">Note to Fo</h4>' +
+    '<p class="brief-note-hint">Lands in tomorrow\u2019s 5:30am brief \u2014 ask for anything, or say how the brief should change.</p>' +
+    '<textarea id="briefNoteText" rows="3" placeholder="e.g. push the 3pm sweep to 4pm, remind me to call the dentist"></textarea>' +
+    '<button type="button" id="briefNoteSend" class="mini-btn">Send to Fo</button>' +
+    '<div class="brief-note-hist"></div>' +
+    '</div>';
+}
+function renderBriefNotes() {
+  const box = document.querySelector("#briefBody .brief-note-hist");
+  if (!box) return;
+  const hist = briefNoteHistory().slice(-5).reverse();
+  box.innerHTML = hist.map(noteRow).join("");
+}
+async function postNote(text, at) {
+  try {
+    const r = await fetch(BRIDGE_NOTES_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      body: JSON.stringify({ text: text, at: at || new Date().toISOString(), page: "daily-brief" })
+    });
+    return r.ok;
+  } catch (e) { return false; }
+}
+async function sendBriefNote() {
+  const ta = document.getElementById("briefNoteText");
+  const btn = document.getElementById("briefNoteSend");
+  const text = (ta && ta.value || "").trim();
+  if (!text) { ta && ta.focus(); return; }
+  if (btn) { btn.disabled = true; btn.textContent = "Sending\u2026"; }
+  const at = new Date().toISOString();
+  const sent = await postNote(text, at);
+  const when = new Date().toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  const hist = briefNoteHistory();
+  hist.push({ text: text, at: Date.now(), when: when, sent: sent });
+  localStorage.setItem(FO_NOTES_KEY, JSON.stringify(hist.slice(-25)));
+  if (ta) ta.value = "";
+  renderBriefNotes();
+  if (btn) { btn.disabled = false; btn.textContent = "Send to Fo"; }
+  flashMsg(sent ? "Note sent \u2014 Fo picks it up with the next brief" : "Not sent yet \u2014 saved here, it retries next time you open the brief");
+}
+async function flushPendingNotes() {
+  const hist = briefNoteHistory();
+  const pending = hist.filter(n => !n.sent);
+  if (!pending.length) return;
+  for (const n of pending) {
+    if (await postNote(n.text, new Date(n.at).toISOString())) n.sent = true;
+  }
+  localStorage.setItem(FO_NOTES_KEY, JSON.stringify(hist.slice(-25)));
+  renderBriefNotes();
 }
 
 // --- 25. JOB LEADS FROM FO (screened twice daily, review here) ---

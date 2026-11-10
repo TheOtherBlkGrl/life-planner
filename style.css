@@ -1112,3 +1112,16 @@ input[type="time"]:focus { outline: 2px solid var(--leo-gold); }
 .vault-row { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; }
 .vault-status { font-size: 0.85rem; opacity: 0.85; }
 .vault-card .helper-text { margin-bottom: 0.6rem; }
+
+/* --- 26b. brief popup: quick-add + notes to Fo --- */
+.brief-quickadd{display:flex;gap:.45rem;align-items:center;margin:0 0 .8rem;flex-wrap:wrap}
+.brief-quickadd input[type=text]{flex:2 1 12rem;min-width:9rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:.5rem .85rem;color:#f8f7ff;font-size:.85rem}
+.brief-quickadd select{flex:1 1 9rem;background:#1c1829;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:.5rem .6rem;color:#f8f7ff;font-size:.8rem}
+.brief-add-task{margin-left:.5rem;background:transparent;border:1px solid rgba(244,184,96,.45);color:#f4b860;border-radius:999px;padding:.08rem .55rem;font-size:.68rem;cursor:pointer;white-space:nowrap}
+.brief-add-task:hover{background:rgba(244,184,96,.16)}
+.brief-note-box{margin-top:1.2rem;border-top:1px solid rgba(244,184,96,.22);padding-top:.9rem}
+.brief-note-hint{font-size:.75rem;opacity:.7;margin:.1rem 0 .5rem}
+.brief-note-box textarea{width:100%;box-sizing:border-box;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:.75rem;padding:.6rem .75rem;color:#f8f7ff;font-size:.85rem;font-family:inherit;resize:vertical;margin-bottom:.5rem}
+.brief-note-hist{margin-top:.6rem;display:grid;gap:.35rem}
+.brief-note-item{display:flex;justify-content:space-between;gap:.6rem;font-size:.75rem;opacity:.85;background:rgba(255,255,255,.05);border-radius:.5rem;padding:.35rem .55rem}
+.brief-note-item em{font-style:normal;opacity:.6;white-space:nowrap}
