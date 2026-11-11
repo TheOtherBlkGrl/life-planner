@@ -685,15 +685,27 @@ const SELFCARE_DEFAULTS = [
   "💧 Drink water",
   "🌿 Step outside for fresh air",
   "🎹 Play or listen to music",
-  "😴 Phone down before midnight"
+  "😴 Phone down before midnight",
+  "🪴 Plant check: touch the soil, water who's thirsty",
+  "✨ Give the bench crew a little fuss (mist, rotate, prune)"
 ];
 
 let selfcare = JSON.parse(localStorage.getItem("ccc_selfcare")) || null;
 const todayStr = localDateStr();
 
+// v2: merge new defaults into an existing saved list exactly once,
+// so long-time users get new items without re-adding anything they deleted after this merge.
 if (!selfcare) {
   selfcare = SELFCARE_DEFAULTS.map(t => ({ text: t, done: false }));
   localStorage.setItem("ccc_selfcare", JSON.stringify(selfcare));
+  localStorage.setItem("ccc_selfcare_ver", "2");
+} else if (localStorage.getItem("ccc_selfcare_ver") !== "2") {
+  let merged = false;
+  SELFCARE_DEFAULTS.forEach(t => {
+    if (!selfcare.some(i => i.text === t)) { selfcare.push({ text: t, done: false }); merged = true; }
+  });
+  if (merged) localStorage.setItem("ccc_selfcare", JSON.stringify(selfcare));
+  localStorage.setItem("ccc_selfcare_ver", "2");
 }
 
 if (localStorage.getItem("ccc_selfcare_day") !== todayStr) {
