@@ -259,6 +259,26 @@ if (!localStorage.getItem("clarissa_tasks")) {
   try { localStorage.setItem("clarissa_tasks", JSON.stringify(tasks)); } catch (e) {}
 }
 
+// one-time: keep the iron-supplement medication on its Mon/Wed/Fri/Sun cadence
+if (!localStorage.getItem("ccc_mig_iron_med") && localStorage.getItem("clarissa_tasks")) {
+  try {
+    const iron = tasks.find(t => t && typeof t.text === "string" && t.text.toLowerCase().includes("iron supplement"));
+    if (iron) {
+      iron.repeat = "custom";
+      iron.days = [0, 1, 3, 5]; // Sun, Mon, Wed, Fri
+      if (!["done", "graveyard"].includes(iron.col)) {
+        const t0 = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 12);
+        while (![0, 1, 3, 5].includes(t0.getDay())) t0.setDate(t0.getDate() + 1);
+        const p = n => String(n).padStart(2, "0");
+        iron.due = t0.getFullYear() + "-" + p(t0.getMonth() + 1) + "-" + p(t0.getDate());
+        if (!iron.pri) iron.pri = "high";
+      }
+      localStorage.setItem("clarissa_tasks", JSON.stringify(tasks));
+    }
+    localStorage.setItem("ccc_mig_iron_med", "1");
+  } catch (e) {}
+}
+
 const TASK_COLS = ["dump", "high", "low", "top3", "steady", "done", "graveyard"];
 const COL_LABELS = {
   dump: "🌪️ Brain Dump", high: "🔥 High-Spark", low: "🌿 Low-Spoon",
