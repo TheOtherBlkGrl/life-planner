@@ -267,6 +267,30 @@ function v3ChoreCopy(id) {
 
 // =========================== MEDS ===========================
 const V3_DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// one-time seed: the 10 Kaiser prescriptions from the Nov 13 transfer sheet (2 Reglan rows merged)
+const V3_KAISER_SEED_KEY = "ccc_meds_seeded_kaiser";
+const V3_KAISER_MEDS = [
+  { name: "Protonix (pantoprazole ER) 20 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet 2x daily · auto refill on, next fill 12/7" },
+  { name: "Zoloft (sertraline) 50 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet daily · new Rx 11/13, filling now" },
+  { name: "Gallifrey (norethindrone/ethinyl estradiol) 5 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet daily · 1 refill left" },
+  { name: "Atarax (hydroxyzine) 25 mg", days: [], prn: true, note: "as needed" },
+  { name: "Roxicodone (oxycodone) 5 mg", days: [], prn: true, note: "pharmacy pickup only" },
+  { name: "Norco (hydrocodone/APAP) 5-325 mg", days: [], prn: true, note: "pharmacy pickup only" },
+  { name: "Reglan (metoclopramide) 5 mg", days: [], prn: true, note: "0 refills left, needs provider re-approval" },
+  { name: "Hydrocortisone 2.5% cream", days: [], prn: true, note: "topical · 1 refill left" },
+  { name: "Ferosul (ferrous sulfate) 325 mg", days: ["Sun","Mon","Wed","Fri"], note: "iron · OTC at any pharmacy · see label" }
+];
+function v3SeedKaiserMeds() {
+  try {
+    if (localStorage.getItem(V3_KAISER_SEED_KEY)) return;
+    const arr = v3Load("ccc_meds");
+    const have = new Set(arr.map(x => (x.name || "").trim().toLowerCase()));
+    V3_KAISER_MEDS.forEach((m, i) => { if (!have.has(m.name.toLowerCase())) arr.push({ id: Date.now() + i + 1, log: {}, ...m }); });
+    v3Save("ccc_meds", arr);
+    localStorage.setItem(V3_KAISER_SEED_KEY, "1");
+  } catch (e) {}
+}
+v3SeedKaiserMeds();
 function v3RenderMeds() {
   const list = document.getElementById("medsList");
   if (!list) return;
@@ -277,10 +301,19 @@ function v3RenderMeds() {
   list.innerHTML = meds.map(m => {
     const dueToday = (m.days || []).includes(dow);
     const doneToday = m.log && m.log[today];
+    const note = m.note ? '<br><small style="color:var(--text-muted)">' + esc(m.note) + '</small>' : '';
+    if (m.prn) {
+      const taken = doneToday ? '<small style="color:var(--taurus-emerald)">logged today ✓</small>' : '<button class="mini-btn" onclick="v3MedDone(' + m.id + ')">✅ Took one</button>';
+      return '<div class="line-item"><span class="li-text"><strong>' + esc(m.name) + '</strong> <small>as needed</small>' + note + '</span>' +
+        '<span class="li-actions">' + taken +
+        '<button class="mini-btn" onclick="v3MedEdit(' + m.id + ')">✏️</button>' +
+        '<button class="mini-btn" onclick="v3MedCopy(' + m.id + ')">📄</button>' +
+        '<button class="mini-btn" onclick="v3Confirm(\'Remove this med?\', () => { v3Save(\'ccc_meds\', v3Load(\'ccc_meds\').filter(x => x.id !== ' + m.id + ')); v3RenderMeds(); v3RenderSecTiles(); })">🗑️</button>' +
+        '</span></div>';
+    }
     const dots = V3_DOW.map(d => {
       const due = (m.days || []).includes(d);
       if (!due) return '<span class="med-dot"></span>';
-      // find most recent date on this weekday
       let dt = new Date(), hits = 0;
       for (let i = 0; i < 7; i++) { if (V3_DOW[dt.getDay()] === d) break; dt.setDate(dt.getDate() - 1); }
       const key = dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0");
@@ -288,7 +321,7 @@ function v3RenderMeds() {
       return '<span class="med-dot ' + (on ? "on" : (d === dow && !doneToday ? "due" : "")) + '" title="' + d + '"></span>';
     }).join("");
     return '<div class="line-item"><span class="li-text"><strong>' + esc(m.name) + '</strong>' +
-      ' <small>' + (m.days || []).join(" · ") + '</small><br><span class="med-dots">' + dots + '</span></span>' +
+      ' <small>' + (m.days || []).join(" · ") + '</small>' + note + '<br><span class="med-dots">' + dots + '</span></span>' +
       '<span class="li-actions">' +
       (dueToday && !doneToday ? '<button class="mini-btn" onclick="v3MedDone(' + m.id + ')">✅ Taken</button>' : (dueToday ? '<small style="color:var(--taurus-emerald)">done today ✓</small>' : '<small style="color:var(--text-muted)">not today</small>')) +
       '<button class="mini-btn" onclick="v3MedEdit(' + m.id + ')">✏️</button>' +
@@ -296,6 +329,7 @@ function v3RenderMeds() {
       '<button class="mini-btn" onclick="v3Confirm(\'Remove this med?\', () => { v3Save(\'ccc_meds\', v3Load(\'ccc_meds\').filter(x => x.id !== ' + m.id + ')); v3RenderMeds(); v3RenderSecTiles(); })">🗑️</button>' +
       '</span></div>';
   }).join("");
+
 }
 function v3MedDone(id) {
   const arr = v3Load("ccc_meds"); const m = arr.find(x => x.id === id); if (!m) return;
@@ -307,14 +341,14 @@ function v3MedEdit(id) {
   const arr = v3Load("ccc_meds"); const m = arr.find(x => x.id === id); if (!m || typeof openEditModal !== "function") return;
   openEditModal("Edit med", [
     { id: "name", label: "Name & dose", value: m.name },
-    { id: "daysTxt", label: "Days (comma list: Sun,Mon,Tue,Wed,Thu,Fri,Sat)", value: (m.days || []).join(",") }
+    { id: "daysTxt", label: "Days (comma list; leave empty for as-needed)", value: (m.days || []).join(",") },
+    { id: "note", label: "Note (directions, refills)", value: m.note || "" }
   ], v => {
     if (!v.name.trim()) { flashMsg("Name can't be empty"); return; }
     const want = v.daysTxt.split(/[\s,]+/).map(s => s.trim()).filter(s => V3_DOW.includes(s));
     const uniq = [...new Set(want)];
     if (uniq.length !== want.length) { flashMsg("A day appears twice"); return; }
-    if (!uniq.length) { flashMsg("Pick at least one day (Mon,Wed,Fri,Sun)"); return; }
-    Object.assign(m, { name: v.name.trim(), days: uniq });
+    Object.assign(m, { name: v.name.trim(), days: uniq, prn: !uniq.length, note: v.note.trim() });
     v3Save("ccc_meds", arr); v3RenderMeds(); v3RenderSecTiles();
   });
 }
