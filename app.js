@@ -39,9 +39,10 @@ function updateMoonPhase() {
   const frac = phase / synodicMonth;
   const p = PHASES.find(x => frac <= x.max) || PHASES[0];
 
-  document.getElementById("moonEmoji").textContent = p.emoji;
-  document.getElementById("moonPhaseName").textContent = p.name;
-  document.getElementById("moonAdvice").textContent = p.advice;
+  const _me = document.getElementById("moonEmoji"), _mn = document.getElementById("moonPhaseName"), _ma = document.getElementById("moonAdvice");
+  if (_me) _me.textContent = p.emoji;
+  if (_mn) _mn.textContent = p.name;
+  if (_ma) _ma.textContent = p.advice;
   const _hsTag = document.getElementById("hsMoonTag");
   if (_hsTag) _hsTag.textContent = (p.emoji + " " + p.name + " \u2022 " + p.advice).toUpperCase();
 }
