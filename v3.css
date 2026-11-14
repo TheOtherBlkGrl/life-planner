@@ -212,3 +212,13 @@ input, select, textarea { border-radius: 8px !important; border: 1px solid #2e26
 .v3-sub-btn { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.09em; font-weight: 700; }
 @media (max-width: 1120px) { .hs-dash-grid { grid-template-columns: 1fr; } .hs-rail { position: static; } }
 @media (max-width: 940px) { .hs-hero .kpi-strip { flex: 1 1 100%; grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+/* ===== v3.2.1: brand + header widgets folded into the hillside system ===== */
+.cosmic-header .brand h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-style: normal; text-transform: uppercase; letter-spacing: 0.03em; color: #fff; background: none; -webkit-text-fill-color: currentColor; }
+.cosmic-header .brand h1 .v3-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.5em; font-weight: 700; color: #f4b860; border: 1px solid rgba(244,184,96,0.6); background: rgba(244,184,96,0.08); border-radius: 6px; padding: 2px 9px; letter-spacing: 0.1em; }
+.aura-btn { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; font-size: 10px; font-weight: 700; letter-spacing: 0.09em; color: #c9c5e0 !important; background: #191430 !important; border: 1px solid #2e2647 !important; border-radius: 10px !important; padding: 7px 12px !important; box-shadow: none !important; transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease; }
+.aura-btn:hover { color: #fff !important; border-color: rgba(157,78,221,0.6) !important; box-shadow: 0 0 12px rgba(157,78,221,0.2) !important; }
+.aura-btn.active { color: #f4b860 !important; background: rgba(244,184,96,0.1) !important; border-color: rgba(244,184,96,0.65) !important; box-shadow: 0 0 14px rgba(244,184,96,0.15) !important; }
+.schumann-pill, .portal-btn { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; font-size: 10px; font-weight: 700; letter-spacing: 0.09em; color: #c9c5e0 !important; background: #191430 !important; border: 1px solid #2e2647 !important; border-radius: 10px !important; box-shadow: none !important; }
+.schumann-pill:hover, .portal-btn:hover { color: #fff !important; border-color: rgba(157,78,221,0.6) !important; box-shadow: 0 0 12px rgba(157,78,221,0.2) !important; }
+.schumann-pill.playing { color: #52b788 !important; border-color: rgba(82,183,136,0.65) !important; background: rgba(82,183,136,0.1) !important; }
