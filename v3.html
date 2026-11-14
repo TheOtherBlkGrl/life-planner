@@ -116,7 +116,15 @@
         </div>
       </div>
 
-      <div class="card vault-card">
+      <div class="card garden-summary-card">
+        <div class="card-header">
+          <h2>🌿 Task Garden</h2>
+          <button type="button" class="mini-btn" onclick="switchTab('tasks')">Open the garden</button>
+        </div>
+        <div id="gardenSummary"><p class="helper-text">Reading the garden…</p></div>
+      </div>
+
+            <div class="card vault-card">
         <div class="card-header">
           <h2>☁️ Cloud Vault</h2>
         </div>
@@ -166,12 +174,12 @@
     <section class="tab-panel" id="panel-tasks">
           <div class="card" id="conservatoryCard">
         <div class="card-header">
-          <h2>🪴 Botanical Task Conservatory</h2>
+          <h2>🪴 Task Garden</h2>
           <button id="conservatoryToggle" class="add-btn" style="width:auto;padding:0.45rem 1rem;min-height:0;" onclick="toggleConservatory()">Hide Conservatory</button>
         </div>
         <p class="helper-text">Your task manager lives here now: plant tasks into the four lanes, complete them to water and feed the bench, compost what you're done carrying. Tasks land on the Gantt and everywhere else they used to. The Seed Tray below the bench holds Brain Dump and tab-garden tasks until you pot them into a lane.</p>
         <div id="conservatoryWrap">
-          <iframe id="conservatoryFrame" data-src="conservatory.html?v=20261114q" style="width:100%;height:2400px;border:0;background:#110f1a;" loading="lazy" title="Botanical Task Conservatory"></iframe>
+          <iframe id="conservatoryFrame" data-src="conservatory.html?v=20261114r" style="width:100%;height:2400px;border:0;background:#110f1a;" loading="lazy" title="Task Garden"></iframe>
         </div>
       </div>
 </section>
@@ -771,7 +779,7 @@
   <script src="google-sync.js?v=20261114g"></script>
   <script src="month.js?v=20261105i"></script>
   <script src="v2.js?v=20261106b"></script>
-  <script src="v3.js?v=20261114q"></script>
+  <script src="v3.js?v=20261114r"></script>
   <script src="vault.js?v=20261114h"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
@@ -819,7 +827,7 @@
       if (!wrap || !btn) return;
       var open = wrap.style.display !== 'none';
       wrap.style.display = open ? 'none' : 'block';
-      btn.textContent = open ? 'Open Conservatory' : 'Hide Conservatory';
+      btn.textContent = open ? 'Open Garden' : 'Hide Garden';
       if (!open && frame && !frame.getAttribute('src')) {
         frame.setAttribute('src', frame.getAttribute('data-src'));
       }

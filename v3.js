@@ -66,6 +66,7 @@ function switchTab(name) {
   if (name === "tarot") v3RenderTarot();
   if (name === "chores") v3RenderChores();
   if (name === "meds") v3RenderMeds();
+  if (name === "today") v3RenderGardenSummary();
   if (name === "hair") v3RenderHair();
 }
 
@@ -345,6 +346,41 @@ function v3RenderMeds() {
   }).join("");
 
 }
+function v3RenderGardenSummary() {
+  const el = document.getElementById("gardenSummary");
+  if (!el) return;
+  let st = null;
+  try { st = JSON.parse(localStorage.getItem("clarissa_botanical_conservatory_v5") || "null"); } catch (e) {}
+  if (!st || !st.plants) { el.innerHTML = '<p class="helper-text">No garden yet \u2014 open 📋 Tasks and pot your first task.</p>'; return; }
+  const stage = xp => xp < 25 ? "Stage 1 \u00b7 Prop 🫙" : xp < 55 ? "Stage 2 \u00b7 Terracotta 🪴" : xp < 85 ? "Stage 3 \u00b7 Lush 🌿" : "Stage 4 \u00b7 Showstopper ✨";
+  const barColor = h => h < 30 ? "#e5989b" : h < 60 ? "var(--leo-gold)" : "var(--taurus-emerald)";
+  const rows = Object.values(st.plants).map(p =>
+    '<div style="display:flex;align-items:center;gap:.55rem;margin:.32rem 0;">' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-size:.85rem;font-weight:600;">' + esc(p.name) + (p.gnats ? ' <span style="color:#e5989b">🦟 gnats</span>' : '') + '</div>' +
+        '<div style="font-size:.72rem;opacity:.7;">' + stage(p.xp || 0) + '</div>' +
+        '<div style="height:6px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:.2rem;">' +
+          '<div style="height:100%;width:' + Math.max(2, Math.min(100, p.hydration || 0)) + '%;background:' + barColor(p.hydration || 0) + ';border-radius:999px;"></div>' +
+        '</div>' +
+      '</div>' +
+      '<span style="font-size:.78rem;opacity:.85;flex:none;">' + (p.hydration || 0) + '%</span>' +
+    '</div>').join("");
+  let feed = {};
+  try { feed = JSON.parse(localStorage.getItem("ccc_med_feed_log") || "{}"); } catch (e) {}
+  const doses = feed[v3TodayStr()] || 0;
+  const lanes = { top3: 0, waiting: 0, archive: 0 };
+  try { (JSON.parse(localStorage.getItem("clarissa_tasks") || "[]")).forEach(t => { if (lanes[t.col] !== undefined) lanes[t.col]++; }); } catch (e) {}
+  let overdue = 0;
+  try { (st.tasks || []).forEach(t => { if (t.overdue) overdue++; }); } catch (e) {}
+  el.innerHTML = rows +
+    '<div style="display:flex;gap:.8rem;flex-wrap:wrap;font-size:.78rem;opacity:.9;margin-top:.55rem;">' +
+      '<span>💊 ' + doses + (doses === 1 ? ' dose' : ' doses') + ' fed the garden today</span>' +
+      '<span>🎯 Focus ' + lanes.top3 + '</span>' +
+      '<span>⏳ Waiting ' + lanes.waiting + '</span>' +
+      '<span>🏆 ' + (st.harvests || 0) + ' harvests</span>' +
+      (overdue ? '<span style="color:#e5989b">🦟 ' + overdue + ' overdue</span>' : '') +
+    '</div>';
+}
 function v3MedDaysLeft(m) {
   if (typeof m.count !== "number" || m.prn || !(m.days || []).length) return null;
   const perDay = (m.perDose || 1) * (m.days.length / 7);
@@ -402,7 +438,12 @@ function v3MedDone(id) {
   m.log = m.log || {}; m.log[v3TodayStr()] = true;
   if (typeof m.count === "number") m.count = Math.max(0, m.count - (m.perDose || 1));
   v3Save("ccc_meds", arr); v3RenderMeds(); v3RenderSecTiles();
-  try { localStorage.setItem("ccc_med_garden_feed", JSON.stringify({ ts: Date.now(), med: m.name })); } catch (e) {}
+  try {
+    localStorage.setItem("ccc_med_garden_feed", JSON.stringify({ ts: Date.now(), med: m.name }));
+    const fl = JSON.parse(localStorage.getItem("ccc_med_feed_log") || "{}");
+    fl[v3TodayStr()] = (fl[v3TodayStr()] || 0) + 1;
+    localStorage.setItem("ccc_med_feed_log", JSON.stringify(fl));
+  } catch (e) {}
   if (typeof flashMsg === "function") flashMsg("Logged. Good. 💊");
 }
 function v3MedEdit(id) {
@@ -495,6 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
   try { view = JSON.parse(sessionStorage.getItem(V3_VIEW_KEY)); } catch (e) {}
   v3Go(view && V3_SECTIONS[view.s] ? view.s : "dash", view && view.t ? view.t : "today");
   v3RenderDash();
+  v3RenderGardenSummary();
   v3RenderOrisha();
   v3RenderTarot();
   v3RenderChores();

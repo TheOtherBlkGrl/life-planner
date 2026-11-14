@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Botanical Task Conservatory | Clare's Garden Planner</title>
+  <title>Task Garden | Clare's Garden Planner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -655,7 +655,8 @@
   <!-- TOP HEADER & APOTHECARY INVENTORY -->
   <header class="btc-header">
     <div class="btc-title-block">
-      <h2>🌿 Botanical Task Conservatory</h2>
+      <h2>🌿 Task Garden</h2>
+      <div id="btcMedFeed" style="font-size:.85rem;opacity:.85;margin:.25rem 0 0;"></div>
       <p>Hover any plant to zoom in • Click a Stage Badge (1–4) to inspect propagation & maturity</p>
     </div>
 
@@ -721,7 +722,7 @@
   <!-- GREENHOUSE TROPHY SHELF & DATA CONTROLS -->
   <footer class="btc-footer-shelf">
     <div class="btc-toast" id="btc-toast-msg">
-      ✨ Conservatory ready, Queen! Hover over your plants to inspect the leaf veins, moss, and guttation drops!
+      ✨ Task Garden ready, Queen! Hover over your plants to inspect the leaf veins, moss, and guttation drops!
     </div>
     <div style="display:flex; gap:10px; align-items:center;">
       <span style="font-family:var(--btc-font-mono); font-size:0.8rem; color:var(--btc-muted);">
@@ -1755,6 +1756,20 @@
       }
 
       // --- meds feed the bench: a med logged in the Meds panel gives every plant a drink ---
+      function updateMedFeedLine() {
+        const el = document.getElementById('btcMedFeed');
+        if (!el) return;
+        try {
+          const log = JSON.parse(localStorage.getItem('ccc_med_feed_log') || '{}');
+          const t = new Date();
+          const key = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+          const n = log[key] || 0;
+          const total = Object.values(log).reduce((a, b) => a + b, 0);
+          el.textContent = n ? ('\ud83d\udc8a ' + n + (n === 1 ? ' dose' : ' doses') + ' fed the garden today \u00b7 ' + total + ' all-time')
+                             : '\ud83d\udc8a Log a med and the whole garden gets a drink.';
+        } catch (e) { el.textContent = ''; }
+      }
+
       function applyMedFeed(sig) {
         Object.keys(state.plants).forEach(function (k) {
           const p = state.plants[k];
@@ -1763,7 +1778,8 @@
         state.lastMedFeedTs = sig.ts || Date.now();
         saveState();
         renderBench();
-        updateHUD('💊 Meds logged (' + (sig.med || 'dose') + ') — the whole bench got a drink.');
+        updateMedFeedLine();
+        updateHUD('💊 Meds logged (' + (sig.med || 'dose') + ') — the whole garden got a drink.');
       }
       function checkMedFeed() {
         try {
@@ -2053,6 +2069,7 @@
         updateHUD();
         btcImportFromStore();
         checkMedFeed();
+        updateMedFeedLine();
         window.addEventListener('storage', function (e) {
           if (e.key === 'clarissa_tasks') btcImportFromStore();
           else if (e.key === 'ccc_med_garden_feed') checkMedFeed();

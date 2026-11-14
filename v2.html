@@ -222,12 +222,12 @@
     <section class="tab-panel" id="panel-tasks">
           <div class="card" id="conservatoryCard">
         <div class="card-header">
-          <h2>🪴 Botanical Task Conservatory</h2>
+          <h2>🪴 Task Garden</h2>
           <button id="conservatoryToggle" class="add-btn" style="width:auto;padding:0.45rem 1rem;min-height:0;" onclick="toggleConservatory()">Hide Conservatory</button>
         </div>
         <p class="helper-text">Your task manager lives here now: plant tasks into the four lanes, complete them to water and feed the bench, compost what you're done carrying. Tasks land on the Gantt and everywhere else they used to. The Seed Tray below the bench holds Brain Dump and tab-garden tasks until you pot them into a lane.</p>
         <div id="conservatoryWrap">
-          <iframe id="conservatoryFrame" data-src="conservatory.html?v=20261108f" style="width:100%;height:2400px;border:0;background:#0b0914;" loading="lazy" title="Botanical Task Conservatory"></iframe>
+          <iframe id="conservatoryFrame" data-src="conservatory.html?v=20261114r" style="width:100%;height:2400px;border:0;background:#0b0914;" loading="lazy" title="Task Garden"></iframe>
         </div>
       </div>
 </section>
@@ -713,7 +713,7 @@
       if (!wrap || !btn) return;
       var open = wrap.style.display !== 'none';
       wrap.style.display = open ? 'none' : 'block';
-      btn.textContent = open ? 'Open Conservatory' : 'Hide Conservatory';
+      btn.textContent = open ? 'Open Garden' : 'Hide Garden';
       if (!open && frame && !frame.getAttribute('src')) {
         frame.setAttribute('src', frame.getAttribute('data-src'));
       }
