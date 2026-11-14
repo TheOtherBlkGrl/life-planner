@@ -8,10 +8,10 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Cinzel (Sharp Serif), Space Grotesk (UI), JetBrains Mono (Data Tickers) -->
+  <!-- Google Fonts: Space Grotesk (UI), JetBrains Mono (Data Tickers) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -20,11 +20,11 @@
         extend: {
           colors: {
             obsidian: {
-              950: '#090d0b',
-              900: '#0f1412',
-              800: '#161f1b',
-              700: '#1f2d27',
-              600: '#2b3e36'
+              950: '#0b0914',
+              900: '#110f1a',
+              800: '#1c1829',
+              700: '#241d33',
+              600: '#2e2647'
             },
             emerald: {
               950: '#0d261c',
@@ -62,7 +62,7 @@
             }
           },
           fontFamily: {
-            serif: ['Cinzel', 'serif'],
+            serif: ['Space Grotesk', 'sans-serif'],
             sans: ['Space Grotesk', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
           }
@@ -73,58 +73,55 @@
 
   <style>
     /* Strict 0px Sharp Architectural Borders across the entire module */
-    *, *::before, *::after {
-      border-radius: 0px !important;
-    }
-
+    
     body {
-      background-color: #0f1412;
-      color: #e6f0ec;
+      background-color: #110f1a;
+      color: #f5f3fa;
       font-family: 'Space Grotesk', sans-serif;
       background-image:
-        radial-gradient(circle at 15% 10%, rgba(90, 24, 154, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 85% 30%, rgba(27, 67, 50, 0.22) 0%, transparent 45%),
-        linear-gradient(to bottom, #090d0b 0%, #0f1412 50%, #121916 100%);
+        radial-gradient(circle at 15% 10%, rgba(157, 78, 221, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(244, 184, 96, 0.05) 0%, transparent 45%),
+        linear-gradient(to bottom, #0b0914 0%, #110f1a 50%, #13101f 100%);
       min-height: 100vh;
     }
 
     /* Architectural Corner Brackets & Double Borders */
     .sharp-panel {
-      background-color: #161f1b;
-      border: 1px solid #2b3e36;
-      box-shadow: 4px 4px 0px #090d0b;
+      background-color: #1c1829;
+      border: 1px solid #2e2647;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
       position: relative;
       transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
 
     .sharp-panel-gold {
-      background-color: #161f1b;
+      background-color: #1c1829;
       border: 1px solid #d4af37;
-      box-shadow: 4px 4px 0px rgba(212, 175, 55, 0.25);
+      box-shadow: 0 10px 30px rgba(212,175,55,0.12);
     }
 
     .sharp-panel-plum {
-      background-color: #161f1b;
+      background-color: #1c1829;
       border: 1px solid #9d4edd;
-      box-shadow: 4px 4px 0px rgba(157, 78, 221, 0.25);
+      box-shadow: 0 10px 30px rgba(157,78,221,0.18);
     }
 
     .bin-card {
-      background-color: #131b18;
-      border: 1px solid #2b3e36;
-      box-shadow: 4px 4px 0px #070a09;
+      background-color: #191430;
+      border: 1px solid #2e2647;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
       transition: all 0.15s ease;
     }
 
     .bin-card:hover {
       border-color: #52b788;
-      box-shadow: 6px 6px 0px #070a09;
+      box-shadow: 0 12px 32px rgba(82,183,136,0.20);
     }
 
     .bin-card.selected-bin {
       border: 2px solid #d4af37;
       background-color: #192420;
-      box-shadow: 5px 5px 0px rgba(212, 175, 55, 0.35);
+      box-shadow: 0 12px 32px rgba(212,175,55,0.18);
     }
 
     .bin-card.harvest-ready {
@@ -134,19 +131,19 @@
 
     /* Button Press Mechanics */
     .sharp-btn {
-      border: 1px solid #2b3e36;
-      box-shadow: 2px 2px 0px #070a09;
+      border: 1px solid #2e2647;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.30);
       transition: all 0.1s ease;
       cursor: pointer;
       user-select: none;
     }
     .sharp-btn:hover {
       transform: translate(-1px, -1px);
-      box-shadow: 3px 3px 0px #070a09;
+      box-shadow: 0 4px 12px rgba(157,78,221,0.28);
     }
     .sharp-btn:active {
       transform: translate(1px, 1px);
-      box-shadow: 0px 0px 0px #070a09;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.30);
     }
 
     /* Striped Progress Bar for Castings Fill */
@@ -167,11 +164,11 @@
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #0f1412;
-      border-left: 1px solid #1f2d27;
+      background: #110f1a;
+      border-left: 1px solid #241d33;
     }
     ::-webkit-scrollbar-thumb {
-      background: #2d6a4f;
+      background: #7b2cbf;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #d4af37;
@@ -183,7 +180,7 @@
       width: 20px;
       height: 20px;
       border: 2px solid #52b788;
-      background-color: #090d0b;
+      background-color: #0b0914;
       display: inline-grid;
       place-content: center;
       cursor: pointer;
@@ -211,6 +208,18 @@
     .pulse-badge {
       animation: borderPulse 2.2s infinite ease-in-out;
     }
+
+    /* cosmic theme alignment */
+    .sharp-panel, .sharp-panel-gold, .sharp-panel-plum, .bin-card { border-radius: 14px !important; }
+    .sharp-panel, .sharp-panel-gold, .sharp-panel-plum, .bin-card { box-shadow: 0 10px 30px rgba(0,0,0,0.35) !important; }
+    .bin-card:hover { box-shadow: 0 12px 32px rgba(82,183,136,0.20) !important; }
+    .bin-card.selected-bin, .bin-card.harvest-ready { box-shadow: 0 12px 32px rgba(212,175,55,0.18) !important; }
+    .sharp-btn { border-radius: 10px !important; box-shadow: 0 2px 8px rgba(0,0,0,0.30) !important; }
+    .sharp-btn:hover { box-shadow: 0 4px 12px rgba(157,78,221,0.28) !important; }
+    .sharp-btn:active { box-shadow: 0 1px 4px rgba(0,0,0,0.30) !important; }
+    .sharp-checkbox { border-radius: 6px !important; }
+    ::-webkit-scrollbar-track { background: #110f1a !important; border-left: 1px solid #241d33 !important; }
+    ::-webkit-scrollbar-thumb { background: #7b2cbf !important; }
   </style>
 </head>
 <body class="p-3 sm:p-6 lg:p-8 selection:bg-plum-800 selection:text-harvest-400">
