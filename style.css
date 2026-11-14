@@ -17,7 +17,7 @@
 body {
   background: radial-gradient(circle at top right, #241734, var(--bg-deep) 60%);
   color: var(--text-main);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   min-height: 100vh;
   padding: 1.5rem;
   line-height: 1.5;
@@ -106,7 +106,7 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
   padding: 0.5rem 0.7rem;
   border-radius: 999px;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: 0.72rem;
   white-space: nowrap;

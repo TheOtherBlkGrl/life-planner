@@ -6,10 +6,10 @@
   <title>PLANNER</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261106b" />
-  <link rel="stylesheet" href="v2.css?v=20261106c" />
-  <link rel="stylesheet" href="v3.css?v=20261114a" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261114c" />
+  <link rel="stylesheet" href="v2.css?v=20261114c" />
+  <link rel="stylesheet" href="v3.css?v=20261114c" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -156,31 +156,6 @@
         <div id="nowBanner" class="now-banner hidden"></div>
         <div id="blockThumbs" class="thumb-strip hidden"></div>
         <div id="hourlyGrid" class="hourly-grid"></div>
-      </div>
-      <div class="card roulette-card">
-        <div class="card-header">
-          <h2>🎲 Task Roulette</h2>
-          <button id="rouletteBtn" class="mini-btn" onclick="spinRoulette()">Tell me what to do</button>
-        </div>
-        <p class="helper-text">Can’t pick? Spin. It deals from what’s due today (plus anything overdue or undated), and won’t repeat a task until every card has come up.</p>
-        <div id="rouletteOut" class="roulette-out">Waiting for a spin…</div>
-        <button id="rouletteDoneBtn" class="mini-btn roulette-done hidden" onclick="rouletteDone()">✅ Did it!</button>
-      </div>
-
-            <div class="dash-sections" id="dashSections"></div>
-
-      </section>
-
-    <section class="tab-panel" id="panel-tasks">
-          <div class="card" id="conservatoryCard">
-        <div class="card-header">
-          <h2>🪴 Botanical Task Conservatory</h2>
-          <button id="conservatoryToggle" class="add-btn" style="width:auto;padding:0.45rem 1rem;min-height:0;" onclick="toggleConservatory()">Hide Conservatory</button>
-        </div>
-        <p class="helper-text">Your task manager lives here now: plant tasks into the four lanes, complete them to water and feed the bench, compost what you're done carrying. Tasks land on the Gantt and everywhere else they used to. The Seed Tray below the bench holds Brain Dump and tab-garden tasks until you pot them into a lane.</p>
-        <div id="conservatoryWrap">
-          <iframe id="conservatoryFrame" data-src="conservatory.html?v=20261108f" style="width:100%;height:2400px;border:0;background:#0b0914;" loading="lazy" title="Botanical Task Conservatory"></iframe>
-        </div>
       </div>
 </section>
 

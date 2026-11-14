@@ -86,7 +86,7 @@ html[data-aura="velvet-parchment"] {
   color: var(--text-muted);
   border: 2px solid var(--border-subtle);
   padding: 6px 10px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
@@ -113,7 +113,7 @@ html[data-aura="velvet-parchment"] {
   font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   transition: all 0.15s;
 }
 .schumann-pill:hover, .portal-btn:hover { color: var(--text-main); border-color: var(--leo-gold); }
@@ -139,7 +139,7 @@ html[data-aura="velvet-parchment"] {
   transition: border-color 0.15s;
 }
 .hub-card:hover { border-color: var(--leo-gold); }
-.hub-card h3 { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.4px; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; }
+.hub-card h3 { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.4px; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; }
 .hub-num { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 600; color: var(--leo-gold); margin: 6px 0 2px; }
 .hub-sub { font-size: 0.72rem; color: var(--text-muted); }
 
@@ -149,7 +149,7 @@ html[data-aura="velvet-parchment"] {
   text-align: left; padding: 8px 10px;
   font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.2px;
   color: var(--text-muted); border-bottom: 2px solid var(--border-subtle);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 .job-table td { padding: 9px 10px; border-bottom: 1px solid var(--border-subtle); color: var(--text-main); }
 .job-table tr.job-row { cursor: pointer; }
