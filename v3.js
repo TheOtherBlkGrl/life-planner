@@ -270,15 +270,13 @@ const V3_DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // one-time seed: the 10 Kaiser prescriptions from the Nov 13 transfer sheet (2 Reglan rows merged)
 const V3_KAISER_SEED_KEY = "ccc_meds_seeded_kaiser";
 const V3_KAISER_MEDS = [
-  { name: "Protonix (pantoprazole ER) 20 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet 2x daily · auto refill on, next fill 12/7" },
-  { name: "Zoloft (sertraline) 50 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet daily · new Rx 11/13, filling now" },
-  { name: "Gallifrey (norethindrone/ethinyl estradiol) 5 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet daily · 1 refill left" },
-  { name: "Atarax (hydroxyzine) 25 mg", days: [], prn: true, note: "as needed" },
-  { name: "Roxicodone (oxycodone) 5 mg", days: [], prn: true, note: "pharmacy pickup only" },
-  { name: "Norco (hydrocodone/APAP) 5-325 mg", days: [], prn: true, note: "pharmacy pickup only" },
-  { name: "Reglan (metoclopramide) 5 mg", days: [], prn: true, note: "0 refills left, needs provider re-approval" },
-  { name: "Hydrocortisone 2.5% cream", days: [], prn: true, note: "topical · 1 refill left" },
-  { name: "Ferosul (ferrous sulfate) 325 mg", days: ["Sun","Mon","Wed","Fri"], note: "iron · OTC at any pharmacy · see label" }
+  { name: "Protonix (pantoprazole ER) 20 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet 2x daily · auto refill on, next fill 12/7", purpose: "Acid reflux (GERD) — reduces stomach acid", rx: "225634128237", doctor: "Fang Lan, MD", nextFill: "2026-12-07", perDose: 2 },
+  { name: "Zoloft (sertraline) 50 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet daily · new Rx 11/13, filling now", purpose: "Depression and anxiety (SSRI)", rx: "257207492796", doctor: "Roya Noorishad, MD", perDose: 1 },
+  { name: "Gallifrey (norethindrone/ethinyl estradiol) 5 mg", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], note: "1 tablet daily · 1 refill left", purpose: "Birth control", rx: "257207379294", doctor: "S G Dolisca, MD", refillsLeft: 1, perDose: 1 },
+  { name: "Atarax (hydroxyzine) 25 mg", days: [], prn: true, note: "as needed", purpose: "Anxiety, itching and allergic reactions (antihistamine)", rx: "257207492798", perDose: 1 },
+  { name: "Reglan (metoclopramide) 5 mg", days: [], prn: true, note: "0 refills left, needs provider re-approval", purpose: "Nausea and stomach emptying (GI motility)", rx: "257206880712 · 257206722930 (two Rx)", doctor: "P W Ackerman, MD · B M Cullison, MD", refillsLeft: 0, perDose: 1 },
+  { name: "Hydrocortisone 2.5% cream", days: [], prn: true, note: "topical · 1 refill left", purpose: "Skin inflammation (topical steroid)", rx: "225646186802", doctor: "Fang Lan, MD", refillsLeft: 1, perDose: 1 },
+  { name: "Ferosul (ferrous sulfate) 325 mg", days: ["Sun","Mon","Wed","Fri"], note: "iron · OTC at any pharmacy · see label", purpose: "Iron supplement (anemia)", rx: "257107791660", doctor: "Jessame Ann Soriano, MD", perDose: 1 }
 ];
 function v3SeedKaiserMeds() {
   try {
@@ -291,6 +289,22 @@ function v3SeedKaiserMeds() {
   } catch (e) {}
 }
 v3SeedKaiserMeds();
+// one-time migration (Nov 14): Roxicodone + Norco retired per Clarissa; fill detail fields the seed now carries
+const V3_MEDS_MIGRATE_KEY = "ccc_meds_detail_migrate_1";
+(function v3MigrateMeds() {
+  try {
+    if (localStorage.getItem(V3_MEDS_MIGRATE_KEY)) return;
+    const arr = v3Load("ccc_meds");
+    const keep = arr.filter(x => !/roxicodone|norco/i.test(x.name || ""));
+    const byName = new Map(V3_KAISER_MEDS.map(x => [x.name, x]));
+    keep.forEach(m => {
+      const sd = byName.get(m.name);
+      if (sd) ["purpose", "rx", "doctor", "nextFill", "perDose", "refillsLeft"].forEach(f => { if (m[f] === undefined && sd[f] !== undefined) m[f] = sd[f]; });
+    });
+    v3Save("ccc_meds", keep);
+    localStorage.setItem(V3_MEDS_MIGRATE_KEY, "1");
+  } catch (e) {}
+})();
 function v3RenderMeds() {
   const list = document.getElementById("medsList");
   if (!list) return;
@@ -304,7 +318,7 @@ function v3RenderMeds() {
     const note = m.note ? '<br><small style="color:var(--text-muted)">' + esc(m.note) + '</small>' : '';
     if (m.prn) {
       const taken = doneToday ? '<small style="color:var(--taurus-emerald)">logged today ✓</small>' : '<button class="mini-btn" onclick="v3MedDone(' + m.id + ')">✅ Took one</button>';
-      return '<div class="line-item"><span class="li-text"><strong>' + esc(m.name) + '</strong> <small>as needed</small>' + note + '</span>' +
+      return '<div class="line-item"><span class="li-text"><strong><span class="med-name-link" title="Tap for details" onclick="v3MedInfo(' + m.id + ')">' + esc(m.name) + '</span></strong> <small>as needed</small>' + note + '</span>' +
         '<span class="li-actions">' + taken +
         '<button class="mini-btn" onclick="v3MedEdit(' + m.id + ')">✏️</button>' +
         '<button class="mini-btn" onclick="v3MedCopy(' + m.id + ')">📄</button>' +
@@ -320,8 +334,8 @@ function v3RenderMeds() {
       const on = m.log && m.log[key];
       return '<span class="med-dot ' + (on ? "on" : (d === dow && !doneToday ? "due" : "")) + '" title="' + d + '"></span>';
     }).join("");
-    return '<div class="line-item"><span class="li-text"><strong>' + esc(m.name) + '</strong>' +
-      ' <small>' + (m.days || []).join(" · ") + '</small>' + note + '<br><span class="med-dots">' + dots + '</span></span>' +
+    return '<div class="line-item"><span class="li-text"><strong><span class="med-name-link" title="Tap for details" onclick="v3MedInfo(' + m.id + ')">' + esc(m.name) + '</span></strong>' +
+      ' <small>' + (m.days || []).join(" · ") + '</small>' + note + '<br><span class="med-dots">' + dots + '</span>' + v3MedBadge(m) + '</span>' +
       '<span class="li-actions">' +
       (dueToday && !doneToday ? '<button class="mini-btn" onclick="v3MedDone(' + m.id + ')">✅ Taken</button>' : (dueToday ? '<small style="color:var(--taurus-emerald)">done today ✓</small>' : '<small style="color:var(--text-muted)">not today</small>')) +
       '<button class="mini-btn" onclick="v3MedEdit(' + m.id + ')">✏️</button>' +
@@ -331,25 +345,90 @@ function v3RenderMeds() {
   }).join("");
 
 }
+function v3MedDaysLeft(m) {
+  if (typeof m.count !== "number" || m.prn || !(m.days || []).length) return null;
+  const perDay = (m.perDose || 1) * (m.days.length / 7);
+  return Math.ceil(m.count / perDay);
+}
+function v3MedBadge(m) {
+  const dl = v3MedDaysLeft(m);
+  if (dl === null || dl > 10) return "";
+  return '<br><span style="color:var(--leo-gold);font-weight:700">⚠️ ' + (dl <= 0 ? "out of pills — refill now" : "~" + dl + " days of pills left") + '</span>';
+}
+function v3MedAdjust(id, delta) {
+  const arr = v3Load("ccc_meds"); const m = arr.find(x => x.id === id); if (!m) return;
+  m.count = Math.max(0, (typeof m.count === "number" ? m.count : 0) + delta);
+  v3Save("ccc_meds", arr); v3RenderMeds(); v3RenderSecTiles(); v3MedInfo(id);
+}
+function v3MedInfo(id) {
+  const m = v3Load("ccc_meds").find(x => x.id === id); if (!m) return;
+  let ov = document.getElementById("cccModal"); if (ov) ov.remove();
+  ov = document.createElement("div"); ov.id = "cccModal";
+  ov.style.cssText = "position:fixed;inset:0;background:rgba(10,6,18,.72);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;";
+  const row = (k, v) => '<div style="display:flex;gap:.6rem;font-size:.9rem;"><span style="opacity:.6;min-width:6.4rem;flex:none;">' + k + '</span><span>' + v + '</span></div>';
+  const dl = v3MedDaysLeft(m);
+  const countCell = typeof m.count === "number"
+    ? '<span style="font-weight:700;">' + m.count + ' left</span>' +
+      '<button class="mini-btn" onclick="v3MedAdjust(' + m.id + ', -1)">−1</button>' +
+      '<button class="mini-btn" onclick="v3MedAdjust(' + m.id + ', 1)">+1</button>'
+    : '<span style="opacity:.6;">not tracking yet</span> <button class="mini-btn" onclick="v3MedEdit(' + m.id + ')">Set starting count</button>';
+  const sched = m.prn ? "as needed" : (((m.days || []).join(", ") || "—") + ((m.perDose || 1) > 1 ? " · " + m.perDose + " per dose" : ""));
+  const dlLine = dl === null ? "" :
+    '<div style="margin-top:.45rem;font-size:.88rem;' + (dl <= 10 ? "color:var(--leo-gold);font-weight:700;" : "opacity:.75;") + '">≈ ' + (dl <= 0 ? "0" : dl) + ' days of pills left at this schedule' + (dl <= 10 ? " — time to refill" : "") + '</div>';
+  ov.innerHTML = '<div style="background:#1c1829;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.25rem;max-width:440px;width:100%;color:#f8f7ff;box-shadow:0 12px 48px rgba(0,0,0,.6);">' +
+    '<h3 style="margin:0 0 .3rem;font-size:1.02rem;color:#f4b860;">' + esc(m.name) + '</h3>' +
+    '<div style="display:flex;flex-direction:column;gap:.45rem;margin-top:.8rem;">' +
+      row("For", m.purpose ? esc(m.purpose) : "—") +
+      row("Schedule", esc(sched)) +
+      row("Rx #", m.rx ? esc(String(m.rx)) : "—") +
+      row("Prescriber", m.doctor ? esc(m.doctor) : "—") +
+      row("Last filled", m.lastFill ? esc(m.lastFill) : "—") +
+      row("Next fill", m.nextFill ? esc(m.nextFill) : "—") +
+      row("Refills left", typeof m.refillsLeft === "number" ? String(m.refillsLeft) : "—") +
+      row("Note", m.note ? esc(m.note) : "—") +
+    '</div>' +
+    '<div style="display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;margin-top:.7rem;">' + countCell + '</div>' +
+    dlLine +
+    '<div style="display:flex;gap:.6rem;margin-top:1.1rem;">' +
+      '<button class="mini-btn" onclick="v3MedEdit(' + m.id + ')">✏️ Edit details</button>' +
+      '<button class="mini-btn" onclick="document.getElementById(\'cccModal\').remove()">Close</button>' +
+    '</div>' +
+  '</div>';
+  document.body.appendChild(ov);
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+}
 function v3MedDone(id) {
   const arr = v3Load("ccc_meds"); const m = arr.find(x => x.id === id); if (!m) return;
   m.log = m.log || {}; m.log[v3TodayStr()] = true;
+  if (typeof m.count === "number") m.count = Math.max(0, m.count - (m.perDose || 1));
   v3Save("ccc_meds", arr); v3RenderMeds(); v3RenderSecTiles();
   try { localStorage.setItem("ccc_med_garden_feed", JSON.stringify({ ts: Date.now(), med: m.name })); } catch (e) {}
   if (typeof flashMsg === "function") flashMsg("Logged. Good. 💊");
 }
 function v3MedEdit(id) {
   const arr = v3Load("ccc_meds"); const m = arr.find(x => x.id === id); if (!m || typeof openEditModal !== "function") return;
+  const num = x => { const n = Number(x); return x === "" || isNaN(n) ? undefined : n; };
   openEditModal("Edit med", [
     { id: "name", label: "Name & dose", value: m.name },
     { id: "daysTxt", label: "Days (comma list; leave empty for as-needed)", value: (m.days || []).join(",") },
+    { id: "purpose", label: "Prescribed for", value: m.purpose || "" },
+    { id: "rx", label: "Rx number", value: m.rx || "" },
+    { id: "doctor", label: "Prescriber", value: m.doctor || "" },
+    { id: "lastFill", label: "Last filled (date)", type: "date", value: m.lastFill || "" },
+    { id: "nextFill", label: "Next fill due (date)", type: "date", value: m.nextFill || "" },
+    { id: "count", label: "Pills left (starting count)", type: "number", value: m.count == null ? "" : m.count },
+    { id: "perDose", label: "Pills per dose", type: "number", value: m.perDose == null ? 1 : m.perDose },
+    { id: "refillsLeft", label: "Refills left on this Rx", type: "number", value: m.refillsLeft == null ? "" : m.refillsLeft },
     { id: "note", label: "Note (directions, refills)", value: m.note || "" }
   ], v => {
     if (!v.name.trim()) { flashMsg("Name can't be empty"); return; }
     const want = v.daysTxt.split(/[\s,]+/).map(s => s.trim()).filter(s => V3_DOW.includes(s));
     const uniq = [...new Set(want)];
     if (uniq.length !== want.length) { flashMsg("A day appears twice"); return; }
-    Object.assign(m, { name: v.name.trim(), days: uniq, prn: !uniq.length, note: v.note.trim() });
+    Object.assign(m, { name: v.name.trim(), days: uniq, prn: !uniq.length, note: v.note.trim(),
+      purpose: v.purpose.trim(), rx: v.rx.trim(), doctor: v.doctor.trim(),
+      lastFill: v.lastFill || undefined, nextFill: v.nextFill || undefined,
+      count: num(v.count), perDose: num(v.perDose) || 1, refillsLeft: num(v.refillsLeft) });
     v3Save("ccc_meds", arr); v3RenderMeds(); v3RenderSecTiles();
   });
 }

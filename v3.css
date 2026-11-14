@@ -260,3 +260,6 @@ body { padding: 12px 20px 16px !important; }
 .ev-modal input, .ev-modal select, .ev-modal textarea { background: #221b38; border: 1px solid #2e2647; color: #e8e4f4; border-radius: 8px; }
 .clock-mode { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #8b87a5; background: #191430; border: 1px solid #2e2647; border-radius: 6px; padding: 2px 7px; cursor: pointer; margin-left: 8px; vertical-align: middle; }
 .clock-mode:hover { color: #f4b860; border-color: rgba(244,184,96,.5); }
+
+.med-name-link{cursor:pointer;transition:color .15s ease;}
+.med-name-link:hover{color:var(--leo-gold);}
