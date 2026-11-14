@@ -80,9 +80,10 @@ function v3RenderDash() {
     const word = h < 5 ? "Up late" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
     hello.innerHTML = word + ', <em>Clare</em>';
   }
-  if (dateEl) {
-    dateEl.textContent = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
-  }
+  const ds = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  if (dateEl) dateEl.textContent = ds;
+  const eb = document.getElementById("hsEyebrowDate");
+  if (eb) eb.textContent = ds.toUpperCase();
   v3RenderSecTiles();
 }
 

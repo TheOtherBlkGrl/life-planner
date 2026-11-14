@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261114d" />
   <link rel="stylesheet" href="v2.css?v=20261114d" />
-  <link rel="stylesheet" href="v3.css?v=20261114e" />
+  <link rel="stylesheet" href="v3.css?v=20261114f" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -42,21 +42,25 @@
       </div>
       <button class="schumann-pill" id="schumannBtn" title="Two soft tones, 7.83 Hz apart">✅ Schumann 7.83Hz</button>
       <button class="portal-btn" id="portalBtn" title="Portal moment">✨ 11:11</button>
-      <div class="clock-box">
-        <span class="clock-label"><span class="pulse-dot"></span>AMERICA/LOS_ANGELES • LIVE SECOND TICKER</span>
-        <span id="liveClock">00:00:00</span>
-        <span id="clockDate">&nbsp;</span>
-      </div>
     </div>
   </header>
 
 
   <main class="dashboard">
 
-    <div class="dash-hero">
-      <p class="dash-hello" id="dashHello">Hello, Clare</p>
-      <p class="dash-date" id="dashDate"></p>
+    <div class="hs-ticker">
+      <span class="hs-ticker-badge" id="hsMoonTag">🌙 MOON WATCH</span>
+      <span class="hs-ticker-line">✦ LIVE PLANNER NETWORK • 5 SECTIONS ONLINE • SOUTH BAY OPS HQ</span>
     </div>
+
+    <div class="card hs-hero">
+      <div class="hs-hero-text">
+        <div class="hs-eyebrow">☾ CLARE'S PLANNER // <span id="hsEyebrowDate">—</span></div>
+        <div class="dash-hero">
+          <p class="dash-hello" id="dashHello">Hello, Clare</p>
+          <p class="dash-date" id="dashDate"></p>
+        </div>
+      </div>
 
     <div class="kpi-strip" id="kpiStrip" title="Live counts from your planner">
       <div class="kpi-tile" onclick="switchTab('jobs')">
@@ -81,6 +85,11 @@
       </div>
     </div>
 
+    </div>
+
+    <div class="hs-dash-grid">
+    <div class="hs-main">
+
     <section class="tab-panel active" id="panel-today">
       <div class="card forecast-card">
         <div class="card-header">
@@ -88,13 +97,7 @@
           <button type="button" class="mini-btn" id="forecastRefreshBtn">↻ Refresh</button>
         </div>
         <div class="forecast-grid" id="forecastGrid"><p class="helper-text">Reading the Antioch sky…</p></div>
-        <div class="moon-badge" id="moonBadge">
-        <span id="moonEmoji">🌙</span>
-        <div>
-          <strong id="moonPhaseName">Calculating Moon...</strong>
-          <small id="moonAdvice">Syncing with the cosmos...</small>
-        </div>
-      </div>
+        
       </div>
 <div class="today-duo">
         <div class="card wins-tile">
@@ -157,8 +160,6 @@
         <div id="blockThumbs" class="thumb-strip hidden"></div>
         <div id="hourlyGrid" class="hourly-grid"></div>
       </div>
-
-            <div class="dash-sections" id="dashSections"></div>
 
       </section>
 
@@ -732,6 +733,34 @@
       </div>
     </section>
 
+    </div>
+
+      <aside class="hs-rail">
+        <div class="card hs-rail-card">
+          <div class="card-header"><h2>⏱ Mission Clock</h2></div>
+          <div class="clock-box">
+            <span class="clock-label"><span class="pulse-dot"></span>AMERICA/LOS_ANGELES • LIVE SECOND TICKER</span>
+            <span id="liveClock">00:00:00</span>
+            <span id="clockDate">&nbsp;</span>
+          </div>
+        </div>
+        <div class="card hs-rail-card hs-rail-moon">
+          <div class="card-header"><h2>🌙 Moon Watch</h2></div>
+          <div class="moon-badge" id="moonBadge">
+            <span id="moonEmoji">🌙</span>
+            <div>
+              <strong id="moonPhaseName">Calculating Moon...</strong>
+              <small id="moonAdvice">Syncing with the cosmos...</small>
+            </div>
+          </div>
+        </div>
+        <div class="card hs-rail-card">
+          <div class="card-header"><h2>🧭 Jump To</h2></div>
+          <div class="dash-sections" id="dashSections"></div>
+        </div>
+      </aside>
+    </div>
+
   </main>
 
   <div id="cosmicToast" class="cosmic-toast hidden">
@@ -752,7 +781,7 @@
   <script src="google-sync.js?v=20261106b"></script>
   <script src="month.js?v=20261105i"></script>
   <script src="v2.js?v=20261106b"></script>
-  <script src="v3.js?v=20261114b"></script>
+  <script src="v3.js?v=20261114f"></script>
   <script src="vault.js?v=20261105i"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">

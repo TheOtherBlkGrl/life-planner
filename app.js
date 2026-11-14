@@ -42,6 +42,8 @@ function updateMoonPhase() {
   document.getElementById("moonEmoji").textContent = p.emoji;
   document.getElementById("moonPhaseName").textContent = p.name;
   document.getElementById("moonAdvice").textContent = p.advice;
+  const _hsTag = document.getElementById("hsMoonTag");
+  if (_hsTag) _hsTag.textContent = (p.emoji + " " + p.name + " \u2022 " + p.advice).toUpperCase();
 }
 
 // --- 3. LIVE CLOCK & 11:11 / 2:22 PORTAL WATCHER ---
