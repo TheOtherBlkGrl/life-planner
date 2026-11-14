@@ -1754,6 +1754,23 @@
         );
       }
 
+      // --- meds feed the bench: a med logged in the Meds panel gives every plant a drink ---
+      function applyMedFeed(sig) {
+        Object.keys(state.plants).forEach(function (k) {
+          const p = state.plants[k];
+          p.hydration = Math.min(100, (p.hydration || 0) + 4);
+        });
+        state.lastMedFeedTs = sig.ts || Date.now();
+        saveState();
+        renderBench();
+        updateHUD('💊 Meds logged (' + (sig.med || 'dose') + ') — the whole bench got a drink.');
+      }
+      function checkMedFeed() {
+        try {
+          const sig = JSON.parse(localStorage.getItem('ccc_med_garden_feed') || 'null');
+          if (sig && sig.ts && sig.ts > (state.lastMedFeedTs || 0)) applyMedFeed(sig);
+        } catch (err) {}
+      }
       function handleUseItem(plantId, type) {
         const p = state.plants[plantId];
         if (!p) return;
@@ -2035,8 +2052,10 @@
 
         updateHUD();
         btcImportFromStore();
+        checkMedFeed();
         window.addEventListener('storage', function (e) {
           if (e.key === 'clarissa_tasks') btcImportFromStore();
+          else if (e.key === 'ccc_med_garden_feed') checkMedFeed();
         });
         const seedInput = document.getElementById('btc-seed-input');
         if (seedInput) {

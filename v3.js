@@ -335,6 +335,7 @@ function v3MedDone(id) {
   const arr = v3Load("ccc_meds"); const m = arr.find(x => x.id === id); if (!m) return;
   m.log = m.log || {}; m.log[v3TodayStr()] = true;
   v3Save("ccc_meds", arr); v3RenderMeds(); v3RenderSecTiles();
+  try { localStorage.setItem("ccc_med_garden_feed", JSON.stringify({ ts: Date.now(), med: m.name })); } catch (e) {}
   if (typeof flashMsg === "function") flashMsg("Logged. Good. 💊");
 }
 function v3MedEdit(id) {
