@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261114d" />
   <link rel="stylesheet" href="v2.css?v=20261114d" />
-  <link rel="stylesheet" href="v3.css?v=20261114k" />
+  <link rel="stylesheet" href="v3.css?v=20261114l" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -247,7 +247,7 @@
         <div id="taskCol-selfcare" class="line-list tab-task-list" style="display:none"></div>
         <form id="selfcareForm" class="row-form solo-form">
           <input type="text" id="selfcareInput" placeholder="Add a ritual of your own..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
       </div>
           <div class="card cal-events-card">
@@ -310,7 +310,7 @@
         <p class="helper-text">Planting blocks, waterings, orders and yard dreams, all in one bed.</p>
         <form id="gardenForm" class="row-form solo-form">
           <input type="text" id="gardenInput" placeholder="Add a garden task or note..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <div id="gardenList" class="line-list"></div>
         <div id="taskCol-garden" class="line-list tab-task-list" style="display:none"></div>
@@ -358,7 +358,7 @@
             <option value="biweekly">🔁 Every 2 weeks</option>
             <option value="monthly">🗓️ Monthly</option>
           </select>
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <div id="choresList" class="line-list"></div>
       </div>
@@ -372,7 +372,7 @@
         <p class="helper-text">Meds and supplements on their real rhythm. Tap Taken on a due day; the dots show the last week.</p>
         <form id="medForm" class="row-form solo-form">
           <input type="text" id="medInput" placeholder="Add a med (Iron 65mg)..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <div class="cadence-row" id="medDays">
           <span class="helper-text" style="margin:0">Days:</span>
@@ -413,7 +413,7 @@
             <option value="style">💅 Styled</option>
             <option value="note">📝 Note</option>
           </select>
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <div id="hairList" class="line-list"></div>
       </div>
@@ -427,7 +427,7 @@
         <p class="helper-text">People you love and the plans brewing. Add who and when, so nobody goes quiet on you.</p>
         <form id="socialForm" class="row-form solo-form">
           <input type="text" id="socialInput" placeholder="Who + the plan (Dana - brunch Sunday)..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <div id="socialList" class="line-list"></div>
         <div id="taskCol-social" class="line-list tab-task-list" style="display:none"></div>
@@ -441,7 +441,7 @@
         <div id="taskCol-marriage" class="line-list tab-task-list" style="display:none"></div>
         <form id="marriageForm" class="row-form solo-form">
           <input type="text" id="marriageInput" placeholder="Add something for the two of you..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <p class="helper-text" style="margin-top: 0.8rem;">Calendar events you tag as 💍 Marriage show up below.</p>
         <div id="calEvents-marriage" class="cal-events-list"></div>
@@ -465,7 +465,7 @@
         <div id="taskCol-work" class="line-list tab-task-list" style="display:none"></div>
         <form id="workForm" class="row-form solo-form">
           <input type="text" id="workInput" placeholder="Add a work item..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
       </div>
       <div class="card cal-events-card">
@@ -485,7 +485,7 @@
         <p class="helper-text">Anything private (applications, offers, salary notes) still lives in the encrypted vault on your dashboard. Keep public-facing notes and targets here.</p>
         <form id="jobsForm" class="row-form solo-form">
           <input type="text" id="jobsInput" placeholder="Add a target, lead or public note..." required />
-          <button type="submit" class="add-btn">➕</button>
+          <button type="submit" class="add-btn">+</button>
         </form>
         <div id="jobsList" class="line-list"></div>
         <div id="taskCol-jobs" class="line-list tab-task-list" style="display:none"></div>
@@ -740,7 +740,7 @@
           <div class="card-header"><h2>⏱ Mission Clock</h2></div>
           <div class="clock-box">
             <span class="clock-label"><span class="pulse-dot"></span>AMERICA/LOS_ANGELES • LIVE SECOND TICKER</span>
-            <span id="liveClock">00:00:00</span>
+            <span id="liveClock">00:00:00</span><button id="clockMode" class="clock-mode" title="Toggle 12/24-hour clock">12H</button>
             <span id="clockDate">&nbsp;</span>
           </div>
         </div>
@@ -764,7 +764,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261114g"></script>
+  <script src="app.js?v=20261114h"></script>
   <script src="astro.js?v=20261106a"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="sync-config.js?v=20261105i"></script>
@@ -772,7 +772,7 @@
   <script src="month.js?v=20261105i"></script>
   <script src="v2.js?v=20261106b"></script>
   <script src="v3.js?v=20261114f"></script>
-  <script src="vault.js?v=20261114g"></script>
+  <script src="vault.js?v=20261114h"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">
       <button class="ev-close" id="briefCloseBtn">✕</button>

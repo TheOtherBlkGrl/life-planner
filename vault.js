@@ -222,12 +222,12 @@ function vaultModal(title, bodyHtml, onSave, saveLabel) {
   ov = document.createElement("div");
   ov.id = "vaultModal";
   ov.style.cssText = "position:fixed;inset:0;background:rgba(10,6,18,.78);backdrop-filter:blur(4px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:1rem;";
-  ov.innerHTML = `<div style="background:#1c1829;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.25rem;max-width:400px;width:100%;color:#f8f7ff;box-shadow:0 12px 48px rgba(0,0,0,.6);">
+  ov.innerHTML = `<div style="background:#191430;border:1px solid #2e2647;border-radius:12px;padding:1.25rem;max-width:400px;width:100%;color:#e8e4f4;box-shadow:0 12px 48px rgba(0,0,0,.6),0 0 24px rgba(157,78,221,.08);">
     <h3 style="margin:0 0 1rem;font-size:1.02rem;color:#f4b860;">${title}</h3>
     <div id="vaultModalBody" style="display:flex;flex-direction:column;gap:.65rem;">${bodyHtml}</div>
     <div style="display:flex;gap:.6rem;margin-top:1.1rem;">
-      <button id="vaultModalSave" style="flex:1;background:#9d4edd;color:#fff;border:none;border-radius:999px;padding:.6rem;cursor:pointer;font-weight:600;">${saveLabel || "Save"}</button>
-      <button id="vaultModalCancel" style="background:transparent;color:#f8f7ff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.6rem 1rem;cursor:pointer;">Cancel</button>
+      <button id="vaultModalSave" style="flex:1;background:#2e2647;color:#fff;border:none;border-radius:10px;padding:.6rem;cursor:pointer;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;">${saveLabel || "Save"}</button>
+      <button id="vaultModalCancel" style="background:transparent;color:#c9c5e0;border:1px solid #2e2647;border-radius:10px;padding:.6rem 1rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;">Cancel</button>
     </div>
     <div id="vaultModalErr" style="color:#e5989b;font-size:.82rem;min-height:1.2em;margin-top:.4rem;"></div>
   </div>`;

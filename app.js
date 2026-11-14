@@ -58,7 +58,8 @@ function updateClock() {
   const mins = String(now.getMinutes()).padStart(2, "0");
   const ampm = hours24 >= 12 ? "PM" : "AM";
   const secs = String(now.getSeconds()).padStart(2, "0");
-  document.getElementById("liveClock").textContent = `${hours12}:${mins}:${secs} ${ampm}`;
+  const clock24 = localStorage.getItem("ccc_clock24") === "1";
+  document.getElementById("liveClock").textContent = clock24 ? `${String(hours24).padStart(2, "0")}:${mins}:${secs}` : `${hours12}:${mins}:${secs} ${ampm}`;
   const clockDate = document.getElementById("clockDate");
   if (clockDate) clockDate.textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
 
@@ -559,7 +560,7 @@ function renderWeek() {
       ${weekTaskChips(i)}
       <form class="week-form" data-day="${i}">
         <input placeholder="Add..." />
-        <button type="submit" class="mini-btn">➕</button>
+        <button type="submit" class="mini-btn">+</button>
       </form>
     `;
     grid.appendChild(box);
@@ -2277,3 +2278,17 @@ function rouletteDone() {
   if (doneBtn) doneBtn.classList.add("hidden");
   if (out) out.textContent = "Waiting for a spin\u2026";
 }
+
+
+// --- clock 12/24 toggle (chip next to the live ticker) ---
+(function () {
+  const btn = document.getElementById("clockMode");
+  if (!btn) return;
+  const sync = () => { btn.textContent = localStorage.getItem("ccc_clock24") === "1" ? "24H" : "12H"; };
+  sync();
+  btn.addEventListener("click", () => {
+    localStorage.setItem("ccc_clock24", localStorage.getItem("ccc_clock24") === "1" ? "0" : "1");
+    sync();
+    if (typeof updateClock === "function") updateClock();
+  });
+})();
