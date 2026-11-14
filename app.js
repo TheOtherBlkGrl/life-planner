@@ -58,7 +58,7 @@ function updateClock() {
   const mins = String(now.getMinutes()).padStart(2, "0");
   const ampm = hours24 >= 12 ? "PM" : "AM";
   const secs = String(now.getSeconds()).padStart(2, "0");
-  const clock24 = localStorage.getItem("ccc_clock24") === "1";
+  const clock24 = localStorage.getItem("ccc_clock24") !== "12"; // 24h is the default
   document.getElementById("liveClock").textContent = clock24 ? `${String(hours24).padStart(2, "0")}:${mins}:${secs}` : `${hours12}:${mins}:${secs} ${ampm}`;
   const clockDate = document.getElementById("clockDate");
   if (clockDate) clockDate.textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
@@ -2284,10 +2284,10 @@ function rouletteDone() {
 (function () {
   const btn = document.getElementById("clockMode");
   if (!btn) return;
-  const sync = () => { btn.textContent = localStorage.getItem("ccc_clock24") === "1" ? "24H" : "12H"; };
+  const sync = () => { btn.textContent = localStorage.getItem("ccc_clock24") !== "12" ? "24H" : "12H"; };
   sync();
   btn.addEventListener("click", () => {
-    localStorage.setItem("ccc_clock24", localStorage.getItem("ccc_clock24") === "1" ? "0" : "1");
+    localStorage.setItem("ccc_clock24", localStorage.getItem("ccc_clock24") !== "12" ? "12" : "24");
     sync();
     if (typeof updateClock === "function") updateClock();
   });
