@@ -152,44 +152,17 @@ function startAutoSync() {
   if (GCAL.timer) clearInterval(GCAL.timer);
   GCAL.timer = setInterval(() => {
     if (GCAL.token) { fetchAllCalendars(); return; }
-    // token died (Google access tokens expire ~1h): re-auth silently, no popup
-    if (GCAL.calendars.length && gcalCfg()) silentReauth();
+    // token died (Google access tokens expire ~1h): never auto-open a Google
+    // popup; pause and wait for an explicit Force Sync click
+    setSyncStatus("Auto-sync paused: sign-in expired, tap Force Sync to reconnect.");
   }, 15 * 60 * 1000); // every 15 minutes
 
   // catch the sleep/laptop-closed case: the moment she returns to the tab, refresh
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
     if (GCAL.token) fetchAllCalendars();
-    else if (GCAL.calendars.length && gcalCfg()) silentReauth();
+    else if (GCAL.calendars.length && gcalCfg()) setSyncStatus("Auto-sync paused: sign-in expired, tap Force Sync to reconnect.");
   });
-}
-
-// silently mint a fresh token for an already-authorized session (prompt:"").
-// if Google still demands a click, error_callback just updates the status text.
-function silentReauth() {
-  if (GCAL.reauthing) return;
-  GCAL.reauthing = true;
-  try {
-    const client = google.accounts.oauth2.initTokenClient({
-      client_id: gcalCfg(),
-      scope: "https://www.googleapis.com/auth/calendar.readonly",
-      callback: (resp) => {
-        GCAL.reauthing = false;
-        if (resp.access_token) {
-          GCAL.token = resp.access_token;
-          sessionStorage.setItem("ccc_gcal_token", resp.access_token);
-          fetchAllCalendars();
-        }
-      },
-      error_callback: () => {
-        GCAL.reauthing = false;
-        setSyncStatus("Auto-sync paused: calendar sign-in expired, tap Force Sync.");
-      }
-    });
-    client.requestAccessToken({ prompt: "" });
-  } catch (e) {
-    GCAL.reauthing = false;
-  }
 }
 
 // --- helpers for the rest of the planner ---

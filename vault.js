@@ -70,6 +70,9 @@ function vaultEnsureToken(interactive) {
   return new Promise(resolve => {
     const saved = sessionStorage.getItem("ccc_vault_token");
     if (saved) return resolve(saved);
+    // no saved token: only an explicit user click (interactive) may open the
+    // Google popup; background saves/checks must never surprise her with one
+    if (!interactive) return resolve(null);
     if (!window.google || !google.accounts) return resolve(null);
     const client = google.accounts.oauth2.initTokenClient({
       client_id: (window.PLANNER_CAL_CFG || {}).clientId || "",
@@ -300,7 +303,13 @@ async function vaultSetupWithPin(pin) {
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("vaultBtn");
   if (btn) btn.onclick = () => {
-    if (vaultUnlocked()) { setVaultStatus("Syncing…"); vaultPullAndApply().catch(e => setVaultStatus(`Sync paused: ${e.message}`)); }
+    if (vaultUnlocked()) {
+      setVaultStatus("Syncing…");
+      vaultEnsureToken(true).then(token => {
+        if (!token) { setVaultStatus("Need your Google OK: tap Sync now when ready"); return; }
+        vaultPullAndApply().catch(e => setVaultStatus(`Sync paused: ${e.message}`));
+      });
+    }
     else promptPinModal(localStorage.getItem(VAULT_STORE_KEY) ? "unlock" : "setup", null);
   };
   setVaultStatus("");
