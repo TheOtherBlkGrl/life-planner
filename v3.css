@@ -106,3 +106,6 @@
   .header-widgets { gap: 6px; }
   .aura-tuner { display: none; }
 }
+
+/* v3: every control follows the site type system */
+button, input, select, textarea { font-family: inherit; }
