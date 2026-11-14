@@ -239,3 +239,6 @@ body { padding: 12px 20px 16px !important; }
 .v3-nav-main { padding: 0 !important; gap: 6px; }
 .v3-subnav { padding: 5px 2px 1px !important; }
 .header-widgets { gap: 8px !important; }
+
+/* ===== v3.2.5: brand title sized up to outrank the greeting ===== */
+.cosmic-header .brand h1 { font-size: clamp(2rem, 3.4vw, 2.7rem) !important; line-height: 1.05; }
