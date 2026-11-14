@@ -50,7 +50,7 @@ function switchTab(name) {
   document.querySelectorAll(".v3-sub-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
   document.querySelectorAll(".tab-panel").forEach(p =>
     p.classList.toggle("active", p.id === "panel-" + name));
-  if (sec === "dash" || sec === "self") { /* subnav already current */ } else { v3BuildSubnav(); }
+  v3BuildSubnav();
   try { sessionStorage.setItem(V3_VIEW_KEY, JSON.stringify({ s: sec, t: name })); } catch (e) {}
   // live-data views re-render when opened
   if (name === "week" && typeof renderWeek === "function") renderWeek();
@@ -400,12 +400,12 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const n = document.getElementById("medInput").value.trim();
     if (!n) return;
-    const days = Array.from(document.querySelectorAll("#medForm .ccc-day-chip.on")).map(b => b.dataset.day);
+    const days = Array.from(document.querySelectorAll("#medDays .ccc-day-chip.on")).map(b => b.dataset.day);
     const arr = v3Load("ccc_meds");
     arr.push({ id: Date.now(), name: n, days: days.length ? days : V3_DOW.slice(), log: {} });
     v3Save("ccc_meds", arr); document.getElementById("medInput").value = ""; v3RenderMeds(); v3RenderSecTiles();
   });
-  document.querySelectorAll("#medForm .ccc-day-chip").forEach(b =>
+  document.querySelectorAll("#medDays .ccc-day-chip").forEach(b =>
     b.addEventListener("click", () => b.classList.toggle("on")));
   const hairForm = document.getElementById("hairForm");
   if (hairForm) hairForm.addEventListener("submit", e => {
