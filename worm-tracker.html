@@ -552,6 +552,7 @@
     function getDefaultState() {
       return {
         simulatedDate: toISODate(new Date()),
+        simulatedOffset: 0,
         selectedBins: [],
         selectedMenuTags: ['🥬 Veggie Peels', '☕ Coffee Grounds', '📦 Wet Cardboard'],
         treeStats: {
@@ -695,7 +696,11 @@
         if (!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
         if (!parsed.bins || parsed.bins.length !== 8) return getDefaultState();
-        if (parsed.simulatedDate === BASE_INSTALL_DATE) parsed.simulatedDate = toISODate(new Date());
+        // planner date = real today + any manual shift; stale saved dates snap forward
+        parsed.simulatedOffset = Number(parsed.simulatedOffset) || 0;
+        const loaded = new Date();
+        loaded.setDate(loaded.getDate() + parsed.simulatedOffset);
+        parsed.simulatedDate = toISODate(loaded);
         return parsed;
       } catch (err) {
         console.warn('Could not load saved state, using defaults:', err);
@@ -779,15 +784,17 @@
     }
 
     function shiftSimulatedDate(deltaDays) {
-      const current = parseISODate(state.simulatedDate);
-      current.setDate(current.getDate() + deltaDays);
-      state.simulatedDate = toISODate(current);
+      state.simulatedOffset = (Number(state.simulatedOffset) || 0) + deltaDays;
+      const shifted = new Date();
+      shifted.setDate(shifted.getDate() + state.simulatedOffset);
+      state.simulatedDate = toISODate(shifted);
       saveState();
       renderAll();
       showToast(`📅 Planner date shifted to ${formatShortDate(state.simulatedDate)}`);
     }
 
     function resetSimulatedDate() {
+      state.simulatedOffset = 0;
       state.simulatedDate = toISODate(new Date());
       saveState();
       renderAll();

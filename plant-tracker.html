@@ -564,6 +564,7 @@
     function getDefaultState() {
       return {
         simulatedDate: BASE_DATE,
+        simulatedOffset: 0,
         selectedPlants: [],
         selectedCareTags: ['💧 Deep Hose Soak', '🪣 Worm Castings Top-Dress'],
         observations: [
@@ -827,6 +828,11 @@
         if (!raw) return getDefaultState();
         const parsed = JSON.parse(raw);
         if (!parsed.plants || !Array.isArray(parsed.plants)) return getDefaultState();
+        // planner date = real today + any manual shift; stale saved dates snap forward
+        parsed.simulatedOffset = Number(parsed.simulatedOffset) || 0;
+        const loaded = new Date();
+        loaded.setDate(loaded.getDate() + parsed.simulatedOffset);
+        parsed.simulatedDate = toISODate(loaded);
         return parsed;
       } catch (e) {
         return getDefaultState();
@@ -896,19 +902,21 @@
     }
 
     function shiftSimulatedDate(deltaDays) {
-      const current = parseISODate(state.simulatedDate);
-      current.setDate(current.getDate() + deltaDays);
-      state.simulatedDate = toISODate(current);
+      state.simulatedOffset = (Number(state.simulatedOffset) || 0) + deltaDays;
+      const shifted = new Date();
+      shifted.setDate(shifted.getDate() + state.simulatedOffset);
+      state.simulatedDate = toISODate(shifted);
       saveState();
       renderAll();
       showToast(`📅 Planner date shifted to ${formatShortDate(state.simulatedDate)}`);
     }
 
     function resetSimulatedDate() {
-      state.simulatedDate = BASE_DATE;
+      state.simulatedOffset = 0;
+      state.simulatedDate = toISODate(new Date());
       saveState();
       renderAll();
-      showToast(`📅 Planner date reset to Nov 7, 2026`);
+      showToast(`📅 Planner date reset to ${formatShortDate(state.simulatedDate)}`);
     }
 
     // =========================================================================
