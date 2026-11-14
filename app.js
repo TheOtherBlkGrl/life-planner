@@ -151,7 +151,7 @@ function copyEventAsTask(ev) {
   flashMsg(p.time ? "Copied to Brain Dump with its time ✨" : "Copied to Brain Dump ✨");
 }
 
-function top3Full() { return tasks.filter(x => x.col === "top3").length >= 3; }
+function top3Full() { return false; } // Rule of 3 retired in v3: Focus lane takes unlimited
 
 function editTask(id) {
   const t = tasks.find(x => x.id === id); if (!t) return;
@@ -282,7 +282,7 @@ if (!localStorage.getItem("ccc_mig_iron_med") && localStorage.getItem("clarissa_
 const TASK_COLS = ["dump", "high", "low", "top3", "steady", "done", "graveyard"];
 const COL_LABELS = {
   dump: "🌪️ Brain Dump", high: "🔥 High-Spark", low: "🌿 Low-Spoon",
-  top3: "🎯 Rule of 3", steady: "🗡️ Steady/Weekly", done: "🏆 Trophy", graveyard: "🪦 Graveyard"
+  top3: "🎯 Focus", steady: "🗡️ Steady/Weekly", done: "🏆 Trophy", graveyard: "🪦 Graveyard"
 };
 
 // extra task destinations: each tab's own category list

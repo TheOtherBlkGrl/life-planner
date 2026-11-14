@@ -690,7 +690,7 @@
       placeholder="Type a task & hit Enter or click + Plant Task..."
     />
     <select id="btc-task-category" class="btc-select">
-      <option value="top3">🏳️ Today's Rule of 3 (Feeds Peace Lily +💧)</option>
+      <option value="top3">🏳️ Today's Focus (Feeds Peace Lily +💧)</option>
       <option value="spark">🕳️ High-Spark Quest (Feeds Missy Monstera +💎)</option>
       <option value="spoon">🍃 Low-Spoon Win (Grows Pothos Trio +💧🪱)</option>
       <option value="weekly">🗡️ Weekly / Steady Goal (Feeds Snake Plant +🧴)</option>
@@ -751,7 +751,7 @@
           lily: {
             id: 'lily',
             name: 'Drama Queen Lily',
-            species: 'Peace Lily • Rule of 3',
+            species: 'Peace Lily • Today's Focus',
             xp: 0,
             hydration: 75,
             variegated: false,
@@ -1498,7 +1498,7 @@
         const colDefs = [
           {
             key: 'top3',
-            title: "🏳️ Today's Rule of 3",
+            title: "🏳️ Today's Focus",
             sub: 'Feeds Peace Lily • Complete = +18 XP & +1 💧'
           },
           {
@@ -1624,8 +1624,8 @@
         const targetPlantKey = categoryToPlant[cat] || 'lily';
         const targetPlant = state.plants[targetPlantKey];
 
-        if (cat === 'top3' && state.tasks.filter(function (t) { return t.category === 'top3'; }).length >= 3) {
-          updateHUD('🎯 Rule of 3 is capped at 3, Queen! Finish or compost one first.', 'lily');
+        if (false) { // Rule of 3 retired in v3: Focus lane takes unlimited
+          updateHUD('🎯 Focus lane: pot as many as you like, Queen.', 'lily');
           return;
         }
         const storeId = Date.now();
