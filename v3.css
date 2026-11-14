@@ -230,3 +230,12 @@ input, select, textarea { border-radius: 8px !important; border: 1px solid #2e26
 
 /* ===== v3.2.3: v3 badge shrunk to a quiet version mark ===== */
 .cosmic-header .brand h1 .v3-tag { font-size: 0.32em !important; font-weight: 600 !important; color: rgba(244,184,96,0.75) !important; border: 1px solid rgba(244,184,96,0.35) !important; background: rgba(244,184,96,0.05) !important; border-radius: 5px !important; padding: 1px 6px !important; margin-left: 7px !important; letter-spacing: 0.08em !important; vertical-align: super; }
+
+/* ===== v3.2.4: header dead space tightened ===== */
+body { padding: 12px 20px 16px !important; }
+.cosmic-header { padding: 2px 20px 4px !important; margin: 0 0 8px !important; gap: 10px !important; }
+.brand h1 { line-height: 1.05; margin: 0; }
+.v3-nav { padding: 0 10px !important; }
+.v3-nav-main { padding: 0 !important; gap: 6px; }
+.v3-subnav { padding: 5px 2px 1px !important; }
+.header-widgets { gap: 8px !important; }
