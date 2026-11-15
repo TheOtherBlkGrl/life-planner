@@ -437,6 +437,91 @@ function renderHoroscopes() {
 }
 
 // --- TODAY'S DEEP-DIVE NATAL READING (Today tab; every line from live transits) ---
+// Voice layer: flowing horoscope prose, plain-English first, tech details small and secondary.
+const DEEP_VERB = { conj: "is teaming up with", conjunction: "is teaming up with", sextile: "is offering a lane to", trine: "is flowing with", square: "is rubbing against", opposition: "is pulling across from" };
+const DEEP_ELEM = {
+  fire: "Fire runs high in the sky: lead with the energy, guard the fuse.",
+  earth: "Earth is underfoot: steady hands win, and slow, thorough work pays.",
+  air: "The air is chatty: ideas, messages and errands all move fast.",
+  water: "The water runs deep: softer edges, sharper instincts."
+};
+const DEEP_READ = {
+  Sun: {
+    conj: { flow: "the spotlight finds you without you chasing it. Put your name on the visible thing and let yourself be seen.", tag: "a spotlight on you" },
+    soft: { flow: "your warmth and your credibility land together, so people take you at your word. Make the call you've been circling.", tag: "extra charm" },
+    hard: { flow: "someone small tests your standing today. Hold your ground without performing for anyone.", tag: "a test of your standing" }
+  },
+  Moon: {
+    conj: { flow: "feelings are loud today, and they're pointing at something real. Name yours in one line, then act on it.", tag: "loud, useful feelings" },
+    soft: { flow: "honest conversation comes easier than usual. Have the talk you've been putting off; it'll land kindly.", tag: "an easy, honest mood" },
+    hard: { flow: "small things hit bigger than they should. Keep a reset handy (walk, water, music) and decide nothing heavy on an empty stomach.", tag: "a tender edge" }
+  },
+  Mercury: {
+    conj: { flow: "your mind is sharp and your words land exactly as you mean them. Write, plan or negotiate the thing that matters most.", tag: "a sharp mind" },
+    soft: { flow: "conversations are opening doors. Reach out to the person you keep meaning to.", tag: "door-opening talks" },
+    hard: { flow: "words come out sideways today. Reread before you send, and confirm times twice.", tag: "crossed wires" }
+  },
+  Venus: {
+    conj: { flow: "charm and money luck arrive together. Make the graceful ask while it's flowing.", tag: "a magnetic streak" },
+    soft: { flow: "pleasure and pay mix nicely. Negotiate the rate, then order the good coffee.", tag: "sweet deals" },
+    hard: { flow: "money and relationships both pull at you, and the swipe finger itches. Check the bill list before any impulse buy.", tag: "an impulse itch" }
+  },
+  Mars: {
+    conj: { flow: "the engine is full. Take the hardest block first, while the tank is full.", tag: "full-tank energy" },
+    soft: { flow: "momentum without burnout: the thing you keep circling finally feels startable. Start it.", tag: "steady momentum" },
+    hard: { flow: "patience is a finite resource today. Budget it, and burn the extra with your body, not your words.", tag: "a short fuse" }
+  },
+  Jupiter: {
+    conj: { flow: "doors are swinging open. Say yes to the bigger room, then double-check the details.", tag: "doors opening" },
+    soft: { flow: "luck is compounding quietly. Apply for the stretch role; ask for the extra ten percent.", tag: "quiet luck" },
+    hard: { flow: "enthusiasm is writing checks today. Verify the details before committing to anything big.", tag: "a big yes" }
+  },
+  Saturn: {
+    conj: { flow: "structure suits you today, and people defer to you. Make the call you're best qualified to make.", tag: "quiet authority" },
+    soft: { flow: "slow and exact beats fast and loose today. Do it once, do it right.", tag: "a steady hand" },
+    hard: { flow: "a limit is showing itself, and it's informational, not personal. Work inside it today; renegotiate it tomorrow.", tag: "a reality check" }
+  },
+  Uranus: {
+    conj: { flow: "plot-twist weather. Leave slack in the schedule and let it breathe.", tag: "plot-twist weather" },
+    soft: { flow: "small surprises are breaking your way. Let one plan change and see what it opens.", tag: "small good surprises" },
+    hard: { flow: "the plan will bend today. Don't panic-pivot; bend it back on your terms.", tag: "a bending plan" }
+  },
+  Neptune: {
+    conj: { flow: "the vision is clearer than usual. Script it while it's vivid.", tag: "a vivid vision" },
+    soft: { flow: "intuition is running high, and it isn't wrong. Trust the first instinct; rest well tonight.", tag: "strong instincts" },
+    hard: { flow: "there's fog on the fine print today. Read it, and sleep on anything big.", tag: "some fog" }
+  },
+  Pluto: {
+    conj: { flow: "you can see to the bottom of a thing today. Pick one hard problem and go all the way down.", tag: "deep focus" },
+    soft: { flow: "your follow-through impresses exactly the right people. Make the one call that moves the whole board.", tag: "quiet power" },
+    hard: { flow: "someone wants a tug-of-war. Don't wrestle what you can walk away from.", tag: "a tug-of-war" }
+  }
+};
+function deepPick(h) {
+  const lib = DEEP_READ[h.planet] || DEEP_READ.Sun;
+  return lib[h.cls] || lib.soft;
+}
+function deepPlain(h) {
+  const pick = deepPick(h);
+  const target = h.natal === "Sun" ? "Sun" : (h.natal === "Moon" ? "Moon" : "Rising");
+  const verb = DEEP_VERB[h.aspect] || "is touching";
+  const cap = h.planet === "Moon" ? "The Moon" : h.planet;
+  const link = h.cls === "hard" ? ", so" : (h.cls === "conj" || h.cls === "conjunction" ? ", and" : ", which means");
+  return `${cap} ${verb} your ${target}${link} ${pick.flow}`;
+}
+function deepTech(h) {
+  const ret = h.retro ? gly(" \u211E") : "";
+  return `<span class="horo-aspect ${h.cls}">${gly(PLANET_GLYPH[h.planet])} ${h.planet}${ret} ${gly(ASPECT_GLYPH[h.aspect])} ${h.aspect} ${NATAL_LABEL[h.natal]}</span> \u00b7 orb ${h.orb.toFixed(1)}\u00B0, ${strengthWord(h.orb)}`;
+}
+function deepNutshell(arr) {
+  if (!arr.length) return "";
+  const hasHard = arr.some(h => h.cls === "hard");
+  const hasSoft = arr.some(h => h.cls !== "hard");
+  const tone = hasHard && hasSoft ? "a mixed sky" : (hasHard ? "a scratchy sky" : "a smooth sky");
+  const tags = arr.map(h => deepPick(h).tag);
+  const list = tags.length === 1 ? tags[0] : tags.slice(0, -1).join(", ") + " and " + tags[tags.length - 1];
+  return `In a nutshell, it's ${tone}: ${list}.`;
+}
 function deepDiveHtml() {
   const ms = noonLocalMs(0);
   const sky = allPositions(ms);
@@ -446,29 +531,35 @@ function deepDiveHtml() {
   const groups = { Sun: [], Moon: [], Asc: [] };
   hits.forEach(h => { if (groups[h.natal]) groups[h.natal].push(h); });
   const dateKey = new Date(ms).getDate() + new Date(ms).getMonth();
-  const elemLine = HORO_ELEM_LINE[HORO_ELEM[moonSign]][dateKey % HORO_ELEM_LINE[HORO_ELEM[moonSign]].length];
+  const elem = HORO_ELEM[moonSign];
   const closers = hits.some(h => h.cls === "hard") ? HARD_CLOSERS : EASY_CLOSERS;
   const closer = closers[dateKey % closers.length];
   const top = hits[0];
   const powerMove = top
     ? (TRANSIT_READ[top.planet] || TRANSIT_READ.Sun)[top.cls][0].move
     : "A quiet sky: the day is yours to steer. Pick the thing that matters most and give it a clean hour.";
+  const shortNatal = n => NATAL_LABEL[n].replace("your ", "");
   const summary = `
     <span class="horo-power-label">\u{1F3AF} Today's Power Move</span>
     <div class="horo-power-move">${powerMove}</div>
-    <div class="horo-power-meta">${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign} \u00b7 ${hits.length ? hits.length + " live transit" + (hits.length === 1 ? "" : "s") + " on your chart, tightest: " + hits[0].planet + " " + hits[0].aspect + " " + NATAL_LABEL[hits[0].natal].replace("your ", "") + " at " + hits[0].orb.toFixed(1) + "\u00B0 orb" : "no transits within orb right now"}</div>`;
+    <div class="horo-power-meta">${pe} <strong>${pn}</strong> \u00b7 Moon in ${moonSign} \u00b7 ${hits.length ? "the sharpest transit is " + top.planet + " " + top.aspect + " your " + shortNatal(top.natal) + ", " + top.orb.toFixed(1) + "\u00B0 from exact" : "no transits in play"}</div>`;
   const sec = (cls, title, arr, fallback) => `
     <div class="horo-section ${cls}">
       <span class="horo-section-title">${title}</span>
-      ${arr.length ? `<p class="astro-summary">\u{1F9ED} In a nutshell: ${arr.map(h => shortGloss(h)).join(" ")}</p>` + arr.map(h => `<p><span class="horo-plain">\u{1F9ED} ${plainGloss(h)}</span><br><span class="astro-tech"><span class="horo-aspect ${h.cls}">${aspectLine(h).head}</span> \u00b7 ${transitDetail(h, 0, null)}</span></p>`).join("") : `<p>${fallback}</p>`}
+      ${arr.length ? `<p class="astro-summary">\u{1F9ED} ${deepNutshell(arr)}</p>` + arr.map(h => `<p><span class="horo-plain">\u{1F9ED} ${deepPlain(h)}</span><br><span class="astro-tech">${deepTech(h)}</span></p>`).join("") : `<p>${fallback}</p>`}
     </div>`;
+  const counts = { Sun: groups.Sun.length, Moon: groups.Moon.length, Asc: groups.Asc.length };
+  const dominant = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+  const skyLine = hits.length
+    ? `${hits.length} transit${hits.length === 1 ? " is" : "s are"} touching your chart today${hits.length > 1 ? ", most of them through your " + shortNatal(dominant) : ""}.`
+    : "No planet is angled close to your chart today, which makes this a rare, free day: mostly yours to steer.";
   const body = `
     <div class="horo-section"><span class="horo-section-title">\u{1F30C} The Sky Today</span>
-      <p>${pe} <strong>${pn}</strong>, Moon in ${signStr(sky.Moon.lon)}: ${elemLine}. ${hits.length ? hits.length + " transit" + (hits.length === 1 ? "" : "s") + " sit within orb of your natal chart, checked against your natal " + signStr(NATAL.Sun) + " Sun, " + signStr(NATAL.Moon) + " Moon and " + signStr(NATAL.Asc) + " Rising." : "No planet is within orb of your chart today: the day is mostly yours to steer."}</p>
+      <p>${pe} <strong>${pn}</strong>, Moon in ${signStr(sky.Moon.lon)}. ${DEEP_ELEM[elem]} ${skyLine}</p>
     </div>
-    ${sec("leo-sec", "\u2600\uFE0F Leo Sun \u00b7 confidence & being seen", groups.Sun, "Nothing is aspecting your Leo Sun today: it runs on its own light. Use the quiet to set the tone rather than react to one.")}
-    ${sec("libra-sec", "\u2696\uFE0F Libra Moon \u00b7 mood & comfort", groups.Moon, "No transit touches your Libra Moon today. " + MOON_SIGN_ADVICE[moonSign])}
-    ${sec("taurus-sec", "\uD83D\uDC02 Taurus Rising \u00b7 body & pace", groups.Asc, "Nothing hits your Taurus Rising today: your body and pace set their own tempo. Feed it well and it carries the day.")}
+    ${sec("leo-sec", "\u2600\uFE0F Leo Sun \u00b7 confidence \u0026 being seen", groups.Sun, "Nothing is touching your Leo Sun today, so it runs on its own light. Use the quiet to set the tone instead of reacting to one.")}
+    ${sec("libra-sec", "\u2696\uFE0F Libra Moon \u00b7 mood \u0026 comfort", groups.Moon, "Nothing is stirring your Libra Moon today, so your mood is your own weather. " + MOON_SIGN_ADVICE[moonSign])}
+    ${sec("taurus-sec", "\uD83D\uDC02 Taurus Rising \u00b7 body \u0026 pace", groups.Asc, "Nothing is hitting your Taurus Rising today: your body and pace set their own tempo. Feed it well and it carries the day.")}
     <div class="horo-power-box">${closer}</div>`;
   return { summary, body };
 }
