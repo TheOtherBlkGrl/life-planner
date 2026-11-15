@@ -16,9 +16,9 @@
    "h": "Weather",
    "lead": "Dry most of the day, then real rain moves in by late afternoon: rain 77% today, high 64, low 51.",
    "items": [
-    "Hour by hour: 8am 56, 10am 61, noon 63, 2pm 63 (44% rain), 4pm 59 light rain likely, 6pm 57 light rain, 8pm 57, 10pm 57",
-    "Morning errands are dry; rain is a good bet from 4pm on",
-    "Week: Mon partly sunny 59/44 (surgery day), Tue mostly cloudy 59/44, Wed rain 75% 50/45, Thu heavy rain 85% 50/46, Fri rain 65% 52/43, Sat partly sunny 57/41"
+    "Hour by hour: 5am 53 mostly cloudy, 8am 56, 10am 61, noon 63, 2pm 63 (44% rain), 4pm 59 light rain likely, 6pm 57 light rain, 8pm 57, 10pm 57",
+    "Morning errands are dry; rain is a good bet from 4pm on, S wind 8 mph all day",
+    "Week with wind: Mon partly sunny 59/44 WSW 7, Tue mostly cloudy 59/44 WSW 5, Wed rain 75% 50/45 SSE 13, Thu heavy rain 85% 50/46 SSE 10 gusts 28, Fri rain 65% 52/43 NNW 7, Sat partly sunny 57/41 S 6"
    ]
   },
   {
@@ -51,10 +51,12 @@
   },
   {
    "h": "Local news",
-   "lead": "News is thin on a storm Sunday; one local item.",
+   "lead": "A second pass through ABC7's East Bay feeds filled the day out: four items.",
    "items": [
-    "Antioch High football fell 28-21 to the Houston Mustangs in the postseason Friday night, despite 290 yards on the ground",
-    "The atmospheric river keeps moving through the Bay Area today"
+    "ABC7's storm live blog (Saturday): a PG&E outage centered in Richmond hit about 5,000 East Bay customers Friday morning, down to about 2,000 by mid-morning",
+    "Storm traffic: SFO grounded all inbound flights from Southern California and Las Vegas for a stretch Friday morning",
+    "The Level 2 storm is expected to end fire season and dropped more than a foot of Sierra snow; dangerous surf closed in on the coast at Pacifica",
+    "Antioch High football fell 28-21 to the Houston Mustangs in the postseason Friday night, despite 290 yards on the ground"
    ]
   },
   {
