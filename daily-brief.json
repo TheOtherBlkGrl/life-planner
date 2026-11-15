@@ -33,10 +33,10 @@
   },
   {
    "h": "Leads to review",
-   "lead": "One board read cleanly, the other two were walled this morning.",
+   "lead": "All three routes checked: nothing new.",
    "items": [
     "LinkedIn board read live this morning: the same three cards (Vulcan Napa, Aubry Hayward, Cemex French Camp), nothing new",
-    "Indeed and ZipRecruiter shut me out this morning (login/verification walls), so those two boards are unread today",
+    "Indeed and ZipRecruiter shut me out this morning (login/verification walls), so a search-index fallback ran instead: nothing new surfaced, and their own pay index puts typical California construction-dispatch pay at $16-$28/hr, far under the $90K floor",
     "Zero new leads passed: the Job Hunt tab stands as-is"
    ]
   },
