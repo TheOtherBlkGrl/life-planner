@@ -68,6 +68,7 @@ function switchTab(name) {
   if (name === "meds") v3RenderMeds();
   if (name === "today") v3RenderGardenSummary();
   if (name === "hair") v3RenderHair();
+  if (name === "garden") v3RenderSoil();
 }
 
 function v3Go(sec, tab) { switchTab(tab || V3_SECTIONS[sec][0].id); }
@@ -583,3 +584,47 @@ document.addEventListener("DOMContentLoaded", () => {
   // dashboard tiles refresh on any data change we can see
   setInterval(v3RenderSecTiles, 60000);
 });
+
+// --- garden: soil updates, the 5-day sky translated into watering duty ---
+async function v3RenderSoil() {
+  const grid = document.getElementById("soilGrid");
+  if (!grid) return;
+  const btn = document.getElementById("soilRefreshBtn");
+  if (btn) btn.addEventListener("click", v3RenderSoil);
+  grid.innerHTML = '<p class="helper-text">Reading the sky over the beds\u2026</p>';
+  try {
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=37.99&longitude=-121.81&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&timezone=America%2FLos_Angeles&forecast_days=5");
+    if (!r.ok) throw new Error("sky feed " + r.status);
+    const d = await r.json();
+    const days = d.daily, names = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    let html = "", rainDays = 0;
+    for (let i = 0; i < 5; i++) {
+      const dt = new Date(days.time[i] + "T12:00:00");
+      const label = i === 0 ? "Today" : names[dt.getDay()];
+      const code = days.weather_code[i];
+      const c = V2_FC_CODES[code] || ["\u2014", "\uD83C\uDF21\uFE0F"];
+      const maxF = Math.round(days.temperature_2m_max[i] * 9 / 5 + 32);
+      const minF = Math.round(days.temperature_2m_min[i] * 9 / 5 + 32);
+      const mm = days.precipitation_sum ? (days.precipitation_sum[i] || 0) : 0;
+      const prob = days.precipitation_probability_max ? days.precipitation_probability_max[i] : null;
+      const wet = (code >= 51 && code <= 67) || (code >= 80 && code <= 82) || (code >= 95 && code <= 99) || mm >= 2 || (prob != null && prob >= 50);
+      if (wet) rainDays++;
+      const badge = wet
+        ? '<span class="soil-duty soil-rain">\uD83C\uDF02 Mother Nature waters</span>'
+        : '<span class="soil-duty soil-dry">\uD83D\uDC8C hose duty</span>';
+      const rainLine = prob != null ? ' \u00B7 ' + prob + '% rain' : (mm ? ' \u00B7 ' + Math.round(mm) + 'mm' : '');
+      html += '<div class="fc-tile soil-tile' + (wet ? ' soil-wet' : '') + '">'
+        + '<span class="fc-day">' + esc(label) + '</span>'
+        + '<span class="fc-emoji">' + c[1] + '</span>'
+        + '<span class="fc-temp">' + maxF + '\u00B0<small> / ' + minF + '\u00B0</small></span>'
+        + '<span class="fc-cond">' + esc(c[0]) + rainLine + '</span>'
+        + badge + '</div>';
+    }
+    const lead = rainDays === 0
+      ? "No rain in the 5-day window: the watering rhythm is all yours this week."
+      : rainDays + " rain day" + (rainDays === 1 ? "" : "s") + " ahead \u2014 Mother Nature handles the hose" + (rainDays === 1 ? " that day" : " those days") + ".";
+    grid.innerHTML = '<p class="soil-lead">' + esc(lead) + '</p>' + html;
+  } catch (e) {
+    grid.innerHTML = '<p class="helper-text">Sky feed didn\u2019t load. Tap \u21BB Refresh to try again.</p>';
+  }
+}
