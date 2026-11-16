@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261114d" />
   <link rel="stylesheet" href="v2.css?v=20261114d" />
-  <link rel="stylesheet" href="v3.css?v=20261116a" />
+  <link rel="stylesheet" href="v3.css?v=20261116b" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -318,6 +318,28 @@
         </div>
         <p class="helper-text">The Antioch sky over the hillside, translated for the beds: rain days are Mother Nature handling the watering, dry days are yours. No hose needed when she's on duty.</p>
         <div class="forecast-grid" id="soilGrid"><p class="helper-text">Reading the sky over the beds&hellip;</p></div>
+      </div>
+      <div class="card" id="soilDeepCard">
+        <div class="card-header">
+          <h2>🪨 Soil &amp; Sky</h2>
+          <button type="button" class="mini-btn" id="soilDeepRefreshBtn">&crarr; Refresh</button>
+        </div>
+        <p class="helper-text">The dirt beneath the forecast, from the Open-Meteo soil model: moisture by depth, clay crack risk, Mother Nature&rsquo;s rain ledger, and the calm soak windows. Model estimate, not a probe &mdash; trust your finger test first.</p>
+        <div id="soilMoisture"><p class="helper-text">Sounding the soil&hellip;</p></div>
+        <div id="crackMeter"></div>
+        <div id="rainLedger"></div>
+        <div id="waterWindows"></div>
+      </div>
+      <div class="card" id="soilLogCard">
+        <div class="card-header">
+          <h2>📓 Soil Log</h2>
+        </div>
+        <p class="helper-text">Field notes for the hillside: clay cracking, gypsum spreads, fog condensation, what the rain actually did. Dates itself.</p>
+        <form id="soilLogForm" class="row-form solo-form">
+          <input type="text" id="soilLogInput" placeholder="Log a soil note..." required />
+          <button type="submit" class="add-btn">+</button>
+        </form>
+        <div id="soilLogList" class="line-list"></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -787,7 +809,7 @@
   <script src="google-sync.js?v=20261114g"></script>
   <script src="month.js?v=20261105i"></script>
   <script src="v2.js?v=20261106b"></script>
-  <script src="v3.js?v=20261116a"></script>
+  <script src="v3.js?v=20261116b"></script>
   <script src="vault.js?v=20261114h"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">

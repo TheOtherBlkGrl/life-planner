@@ -272,3 +272,26 @@ body { padding: 12px 20px 16px !important; }
 .soil-rain { background: rgba(82,183,136,0.18); color: #7fd6a8; border: 1px solid rgba(82,183,136,0.45); }
 .soil-dry { background: rgba(244,184,96,0.12); color: var(--leo-gold, #f4b860); border: 1px solid rgba(244,184,96,0.35); }
 .soil-wet { border-color: rgba(82,183,136,0.5) !important; }
+
+/* --- soil & sky (garden tab) --- */
+.soil-sec { font-size: 0.85rem; font-weight: 700; color: var(--leo-gold, #f4b860); margin: 14px 16px 8px; }
+.soil-row { display: grid; grid-template-columns: 9.5em 1fr auto; gap: 10px; align-items: center; margin: 0 16px 7px; }
+.soil-label { font-size: 0.8rem; opacity: 0.85; }
+.soil-bar { display: block; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+.soil-fill { display: block; height: 100%; border-radius: 999px; }
+.soil-good { background: linear-gradient(90deg, #3f8f66, #7fd6a8); }
+.soil-dry { background: linear-gradient(90deg, #b3801f, #f4b860); }
+.soil-soggy { background: linear-gradient(90deg, #4a6fa8, #8fb7e8); }
+.soil-warn { background: linear-gradient(90deg, #b3641f, #e8975f); }
+.soil-bad { background: linear-gradient(90deg, #a83f3f, #e88f8f); }
+.soil-val { font-size: 0.78rem; opacity: 0.85; white-space: nowrap; }
+.soil-note { font-size: 0.8rem; opacity: 0.8; margin: 6px 16px 0; }
+.crack-meter { display: block; height: 12px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; margin: 0 16px; }
+.crack-meter .soil-fill { height: 100%; }
+.ledger-chips, .win-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 16px; }
+.soil-chip { font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(196,138,40,0.4); color: var(--leo-gold, #f4b860); background: rgba(196,138,40,0.08); display: inline-block; }
+.soil-chip.win { border-color: rgba(94,63,168,0.55); color: #c9b3f2; background: rgba(94,63,168,0.12); }
+@media (max-width: 560px) {
+  .soil-row { grid-template-columns: 7.5em 1fr auto; }
+  .soil-label { font-size: 0.72rem; }
+}

@@ -68,7 +68,7 @@ function switchTab(name) {
   if (name === "meds") v3RenderMeds();
   if (name === "today") v3RenderGardenSummary();
   if (name === "hair") v3RenderHair();
-  if (name === "garden") v3RenderSoil();
+  if (name === "garden") { v3RenderSoil(); v3RenderSoilDeep(); renderSoilLog(); }
 }
 
 function v3Go(sec, tab) { switchTab(tab || V3_SECTIONS[sec][0].id); }
@@ -628,3 +628,184 @@ async function v3RenderSoil() {
     grid.innerHTML = '<p class="helper-text">Sky feed didn\u2019t load. Tap \u21BB Refresh to try again.</p>';
   }
 }
+
+// --- garden: Soil & Sky, real dirt data from Open-Meteo (moisture by depth, clay crack risk, rain ledger, soak windows) ---
+async function v3RenderSoilDeep() {
+  const mo = document.getElementById("soilMoisture");
+  if (!mo) return;
+  const btn = document.getElementById("soilDeepRefreshBtn");
+  if (btn) btn.addEventListener("click", v3RenderSoilDeep);
+  mo.innerHTML = '<p class="helper-text">Sounding the soil…</p>';
+  const cm = document.getElementById("crackMeter");
+  const rl = document.getElementById("rainLedger");
+  const ww = document.getElementById("waterWindows");
+  if (cm) cm.innerHTML = "";
+  if (rl) rl.innerHTML = "";
+  if (ww) ww.innerHTML = "";
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=37.99&longitude=-121.81"
+      + "&hourly=soil_moisture_0_to_1cm,soil_moisture_3_to_9cm,soil_moisture_9_to_27cm,soil_moisture_27_to_81cm,soil_temperature_0_to_7cm,et0_fao_evapotranspiration,precipitation,temperature_2m,wind_speed_10m"
+      + "&daily=precipitation_sum,et0_fao_evapotranspiration_sum"
+      + "&past_days=7&forecast_days=5&timezone=America%2FLos_Angeles";
+    const r = await fetch(url);
+    if (!r.ok) throw new Error("soil feed " + r.status);
+    const d = await r.json();
+    const h = d.hourly, days = d.daily;
+    const nowMs = Date.now();
+    let nowIdx = 0;
+    for (let i = 0; i < h.time.length; i++) {
+      if (new Date(h.time[i]).getTime() <= nowMs) nowIdx = i;
+    }
+    const WKNAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const todayKey = h.time[nowIdx].slice(0, 10);
+    const todayIdx = Math.max(days.time.indexOf(todayKey), 0);
+
+    // moisture by depth, current hour
+    const rows = [
+      ["Surface crust, 0\u20131cm", h.soil_moisture_0_to_1cm[nowIdx]],
+      ["Root zone, 3\u20139cm", h.soil_moisture_3_to_9cm[nowIdx]],
+      ["Feeder roots, 9\u201327cm", h.soil_moisture_9_to_27cm[nowIdx]],
+      ["Deep reserve, 27\u201381cm", h.soil_moisture_27_to_81cm[nowIdx]]
+    ];
+    let mHtml = '<div class="soil-sec">💧 Moisture by depth, right now</div>';
+    for (const row of rows) {
+      const v = row[1];
+      const pct = v == null ? null : Math.round(v * 100);
+      const cls = pct == null ? "soil-dry" : (pct < 20 ? "soil-dry" : (pct <= 32 ? "soil-good" : "soil-soggy"));
+      const st = pct == null ? "" : (pct < 20 ? " · dry" : (pct <= 32 ? " · good soak" : " · soggy"));
+      const w = pct == null ? 0 : Math.min(100, Math.round(pct * 2.5));
+      mHtml += '<div class="soil-row"><span class="soil-label">' + esc(row[0]) + '</span>'
+        + '<span class="soil-bar"><span class="soil-fill ' + cls + '" style="width:' + w + '%"></span></span>'
+        + '<span class="soil-val">' + (pct == null ? "—" : pct + "%" + st) + '</span></div>';
+    }
+    const stF = h.soil_temperature_0_to_7cm[nowIdx] == null ? null : Math.round(h.soil_temperature_0_to_7cm[nowIdx] * 9 / 5 + 32);
+    if (stF != null) {
+      const wormNote = stF >= 55 && stF <= 77 ? "worm-friendly" : (stF > 77 ? "hot for the worms" : "chilly for the worms");
+      mHtml += '<p class="soil-note">Soil temp ' + stF + "°F · " + wormNote + '. Under 20% is dry clay, over 32% is saturated.</p>';
+    }
+    mo.innerHTML = mHtml;
+
+    // clay crack risk: days since last real rain + ET burn since then
+    let lastRain = -1;
+    for (let i = 0; i <= todayIdx; i++) {
+      if ((days.precipitation_sum[i] || 0) >= 2) lastRain = i;
+    }
+    const daysSince = lastRain >= 0 ? todayIdx - lastRain : 8;
+    let cumET = 0;
+    for (let i = (lastRain >= 0 ? lastRain + 1 : 0); i <= todayIdx; i++) {
+      cumET += ((days.et0_fao_evapotranspiration_sum ? days.et0_fao_evapotranspiration_sum[i] : 0) || 0);
+    }
+    const risk = Math.min(100, Math.round(daysSince * 9 + cumET * 7));
+    const rLabel = risk < 25 ? "Soft & workable" : (risk < 50 ? "Drying out" : (risk < 75 ? "Cracking watch" : "Hardpan watch"));
+    const rCls = risk < 25 ? "soil-good" : (risk < 50 ? "soil-dry" : (risk < 75 ? "soil-warn" : "soil-bad"));
+    let cHtml = '<div class="soil-sec">🧱 Clay crack risk</div>'
+      + '<div class="crack-meter"><span class="soil-fill ' + rCls + '" style="width:' + risk + '%"></span></div>'
+      + '<p class="soil-note"><strong>' + risk + "/100 · " + esc(rLabel) + '</strong>'
+      + (lastRain >= 0 ? " · last real rain " + (daysSince === 0 ? "today" : daysSince + (daysSince === 1 ? " day ago" : " days ago")) : " · no real rain in the past week")
+      + " · " + cumET.toFixed(1) + "mm of sky-dry since then.</p>";
+    for (let i = todayIdx + 1; i < days.time.length; i++) {
+      if ((days.precipitation_sum[i] || 0) >= 2) {
+        const nm = WKNAMES[new Date(days.time[i] + "T12:00:00").getDay()];
+        cHtml += '<p class="soil-note">⛅ Mother Nature resets the clock ' + nm + " (about " + ((days.precipitation_sum[i] || 0) * 0.0394).toFixed(1) + "in).</p>";
+        break;
+      }
+    }
+    if (risk >= 50) cHtml += '<p class="soil-note">Gypsum season: spread before the next rain so it washes down into the clay.</p>';
+    if (cm) cm.innerHTML = cHtml;
+
+    // rain ledger
+    let pastRain = 0, nextRain = 0;
+    for (let i = 0; i <= todayIdx; i++) pastRain += (days.precipitation_sum[i] || 0);
+    for (let i = todayIdx + 1; i < days.time.length; i++) nextRain += (days.precipitation_sum[i] || 0);
+    if (rl) rl.innerHTML = '<div class="soil-sec">🌧️ Mother Nature’s ledger</div>'
+      + '<div class="ledger-chips"><span class="soil-chip">past 7 days: ' + (pastRain * 0.0394).toFixed(2) + ' in</span>'
+      + '<span class="soil-chip">5-day delivery: ' + (nextRain * 0.0394).toFixed(2) + ' in</span></div>';
+
+    // soak windows: calm, cool, dry mornings in the next 48h
+    const cand = [];
+    for (let i = nowIdx + 1; i < Math.min(h.time.length, nowIdx + 49); i++) {
+      const hr = new Date(h.time[i]).getHours();
+      if (hr < 5 || hr > 10) continue;
+      if ((h.precipitation[i] || 0) > 0) continue;
+      if (h.wind_speed_10m[i] > 20) continue;
+      const tF = Math.round(h.temperature_2m[i] * 9 / 5 + 32);
+      const wM = Math.round(h.wind_speed_10m[i] * 0.621);
+      const score = Math.max(0, tF - 60) * 1.5 + wM * 1.2 + ((h.et0_fao_evapotranspiration[i] || 0) * 30);
+      cand.push({ i, hr, tF, wM, score });
+    }
+    cand.sort((a, b) => a.score - b.score);
+    const picks = [];
+    for (const c of cand) {
+      if (picks.some(p => Math.abs(p.i - c.i) <= 2)) continue;
+      picks.push(c);
+      if (picks.length === 2) break;
+    }
+    let wHtml = '<div class="soil-sec">💦 Soak windows, next 48h</div>';
+    if (!picks.length) {
+      wHtml += '<p class="soil-note">No calm morning window in the next 48h — evening soak, or let the rain do it.</p>';
+    } else {
+      wHtml += '<div class="win-chips">' + picks.map(p => {
+        const dt = new Date(h.time[p.i]);
+        const dayL = dt.toDateString() === new Date().toDateString() ? "Today"
+          : (dt.toDateString() === new Date(nowMs + 864e5).toDateString() ? "Tomorrow" : WKNAMES[dt.getDay()]);
+        const loH = Math.max(5, p.hr - 1), hiH = Math.min(10, p.hr + 1);
+        const l12 = loH % 12 === 0 ? 12 : loH % 12, h12v = hiH % 12 === 0 ? 12 : hiH % 12;
+        return '<span class="soil-chip win">' + dayL + " " + l12 + "–" + h12v + " AM · " + p.tF + "°F · " + p.wM + " mph</span>";
+      }).join("") + '</div>'
+      + '<p class="soil-note">Windows matter most in Antioch summer heat; in cool months nearly any calm morning works.</p>';
+    }
+    if (ww) ww.innerHTML = wHtml;
+  } catch (e) {
+    mo.innerHTML = '<p class="helper-text">Soil feed didn’t load. Tap ↻ Refresh to try again.</p>';
+  }
+}
+
+// --- garden: soil log, field notes that date themselves ---
+function v3SaveSoilLog(arr) { v3Save("ccc_soil_log", arr); }
+function renderSoilLog() {
+  const list = document.getElementById("soilLogList");
+  if (!list) return;
+  const log = v3Load("ccc_soil_log").slice().sort((a, b) => b.d.localeCompare(a.d) || b.id - a.id);
+  if (!log.length) { list.innerHTML = '<p class="helper-text">Empty for now. First crack, first fog, first rain — log it.</p>'; return; }
+  list.innerHTML = log.map(n => {
+    const dTxt = n.d.slice(5).replace("-", "/");
+    return '<div class="line-item"><span class="li-text"><small>' + dTxt + '</small> ' + esc(n.t) + '</span>'
+      + '<span class="li-actions">'
+      + '<button class="mini-btn" onclick="soilLogEdit(' + n.id + ')">✏️</button>'
+      + '<button class="mini-btn" onclick="soilLogCopy(' + n.id + ')">📄</button>'
+      + '<button class="mini-btn" onclick="v3Confirm(\'Delete this soil note?\', () => { v3SaveSoilLog(v3Load(\'ccc_soil_log\').filter(x => x.id !== ' + n.id + ')); renderSoilLog(); })">🗑️</button>'
+      + '</span></div>';
+  }).join("");
+}
+function soilLogAdd(e) {
+  e.preventDefault();
+  const input = document.getElementById("soilLogInput");
+  const t = (input.value || "").trim();
+  if (!t) return;
+  const d = new Date();
+  const iso = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const arr = v3Load("ccc_soil_log");
+  const id = arr.length ? Math.max.apply(null, arr.map(x => x.id || 0)) + 1 : 1;
+  arr.push({ id, d: iso, t });
+  v3SaveSoilLog(arr); input.value = ""; renderSoilLog();
+  if (typeof flashMsg === "function") flashMsg("Soil note logged 🌱");
+}
+function soilLogEdit(id) {
+  const arr = v3Load("ccc_soil_log"); const n = arr.find(x => x.id === id);
+  if (!n || typeof openEditModal !== "function") return;
+  openEditModal("Edit soil note", [{ id: "text", label: "Note", value: n.t }], v => {
+    if (!v.text.trim()) { flashMsg("Note can’t be empty"); return; }
+    n.t = v.text.trim(); v3SaveSoilLog(arr); renderSoilLog();
+  });
+}
+function soilLogCopy(id) {
+  const arr = v3Load("ccc_soil_log"); const n = arr.find(x => x.id === id); if (!n) return;
+  const d = new Date();
+  const iso = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  arr.push({ id: Math.max.apply(null, arr.map(x => x.id || 0)) + 1, d: iso, t: n.t });
+  v3SaveSoilLog(arr); renderSoilLog();
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const f = document.getElementById("soilLogForm");
+  if (f) f.addEventListener("submit", soilLogAdd);
+});
