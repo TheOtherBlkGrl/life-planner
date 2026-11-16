@@ -1,81 +1,82 @@
 {
- "updatedLocal": "Sun Nov 15, 2026, 5:30 AM PT",
- "headline": "Sunday, November 15 \u2014 surgery eve, rain moves in by afternoon, iron day",
- "sections": [
-  {
-   "h": "Tomorrow matters first",
-   "lead": "Your Kaiser surgery is tomorrow: arrive 11:30 AM Monday at the Sand Creek Building, 2nd floor, Antioch Medical Center (4501 Sand Creek Rd) with Dr. Geraldine Shirzai.",
-   "items": [
-    "The surgeon's office replied: arrive Monday, Nov 16, 11:30 AM (they open earlier), need a driver",
-    "Plan ahead: stop food 8 hours before arrival, so nothing to eat after about 3:30 AM Monday; take your usual meds with small sips of water",
-    "Also Monday: Josiah has his 2:00 PM appointment with Timothy Wong (psychiatry) at Delta Fair Medical Offices, 3454 Hillcrest Ave, Antioch \u2014 a Kaiser reminder arrived Saturday night",
-    "Both land on the same day, so it's worth knowing who is on the driver run and who takes him"
-   ]
-  },
-  {
-   "h": "Weather",
-   "lead": "Dry most of the day, then real rain moves in by late afternoon: rain 77% today, high 64, low 51.",
-   "items": [
-    "Hour by hour: 5am 53 mostly cloudy, 8am 56, 10am 61, noon 63, 2pm 63 (44% rain), 4pm 59 light rain likely, 6pm 57 light rain, 8pm 57, 10pm 57",
-    "Morning errands are dry; rain is a good bet from 4pm on, S wind 8 mph all day",
-    "Week with wind: Mon partly sunny 59/44 WSW 7, Tue mostly cloudy 59/44 WSW 5, Wed rain 75% 50/45 SSE 13, Thu heavy rain 85% 50/46 SSE 10 gusts 28, Fri rain 65% 52/43 NNW 7, Sat partly sunny 57/41 S 6"
-   ]
-  },
-  {
-   "h": "Your sky",
-   "lead": "Nerves are normal today and the sky backs it: a restless Aquarius Moon sits opposite your Leo Sun, so the mind spins while the rest of you wants quiet.",
-   "items": [
-    "Plain read: one more prep day. Doing the checklist (meds laid out, driver plan, clothes ready) is the single best thing you can do for the nerves",
-    "A soft Neptune touch on your Venus makes the evening genuinely restful if you let it: warm light, quiet, early night",
-    "How to use it: finish prep this morning, rest tonight, and let tomorrow take care of itself",
-    "Details: Moon Aquarius 7.3 deg, waxing crescent (Sun-Moon 73.1); Moon opposite natal Sun (orb 1.9); Neptune R trine natal Venus (orb 0.7); Pluto sextile natal Moon (orb 1.0); Venus conjunct natal Moon (orb 2.0); Sun trine natal Mercury (orb 2.0); Mercury R square natal Sun (orb 2.0); Saturn R trine natal Sun (orb 2.3)"
-   ]
-  },
-  {
-   "h": "Leads to review",
-   "lead": "All three routes checked: nothing new.",
-   "items": [
-    "LinkedIn board read live this morning: the same three cards (Vulcan Napa, Aubry Hayward, Cemex French Camp), nothing new",
-    "Indeed and ZipRecruiter shut me out this morning (login/verification walls), so a search-index fallback ran instead: nothing new surfaced, and their own pay index puts typical California construction-dispatch pay at $16-$28/hr, far under the $90K floor",
-    "Zero new leads passed: the Job Hunt tab stands as-is"
-   ]
-  },
-  {
-   "h": "Overnight mail",
-   "lead": "Four opened overnight; one looks stale, one is a no, one is Monday's reminder.",
-   "items": [
-    "Pre-Employ (Friday 2:19 PM) sent another 'attention needed' nudge for the Granite background check, with a form link \u2014 but it arrived before your Friday wrap-up, and Briana in Granite HR cleared you after, so it looks handled; if you never filled their form, the link is in the mail and worth 10 minutes today",
-    "Cardinal Health passed on your Transportation Manager, 3PL Services application (we are pursuing other applicants)",
-    "Josiah's appointment reminder (Monday 2 PM, Timothy Wong, psychiatry, Hillcrest Ave) \u2014 details above",
-    "No interview requests"
-   ]
-  },
-  {
-   "h": "Local news",
-   "lead": "A second pass through ABC7's East Bay feeds filled the day out: four items.",
-   "items": [
-    "ABC7's storm live blog (Saturday): a PG&E outage centered in Richmond hit about 5,000 East Bay customers Friday morning, down to about 2,000 by mid-morning",
-    "Storm traffic: SFO grounded all inbound flights from Southern California and Las Vegas for a stretch Friday morning",
-    "The Level 2 storm is expected to end fire season and dropped more than a foot of Sierra snow; dangerous surf closed in on the coast at Pacifica",
-    "Antioch High football fell 28-21 to the Houston Mustangs in the postseason Friday night, despite 290 yards on the ground"
-   ]
-  },
-  {
-   "h": "Ease into the day",
-   "lead": "Iron day (Sunday), and it is prep-then-rest.",
-   "items": [
-    "Easy win: lay out tomorrow's meds (Gallifrey, Protonix, Zoloft) and clothes tonight so morning-of is brainless",
-    "Take iron with breakfast, as usual for a Sunday",
-    "The 10am/7pm apply runs, 3pm sweep and 5pm site check all continue on their own",
-    "Ride: after the rain starts at 4pm, keep any drive short"
-   ]
-  },
-  {
-   "h": "Family day ahead",
-   "lead": "Tony's and the Family calendars are clear for Sunday.",
-   "items": [
-    "Nothing on either calendar"
-   ]
-  }
- ]
+  "updatedLocal": "Mon Nov 16, 2026, 5:36 AM PT",
+  "headline": "Monday, November 16 \u2014 surgery day: arrive 11:30 AM, rain exits by mid-morning",
+  "sections": [
+    {
+      "h": "Surgery day first",
+      "items": [
+        "Arrive 11:30 AM: Sand Creek Building 2nd floor, Antioch Medical Center (4501 Sand Creek Rd), Dr. Geraldine Shirzai",
+        "No food since ~3:30 AM; take Gallifrey, Protonix and Zoloft with small sips of water",
+        "You need an adult driver, with their ID for the med pickup",
+        "Josiah: 2:00 PM with Timothy Wong at Delta Fair Medical Offices, 3454 Hillcrest Ave \u2014 decide who does the driver run"
+      ],
+      "body": "Rain is done by the time you head out: 45% at 6am falls to 7% by 11am."
+    },
+    {
+      "h": "Weather",
+      "items": [
+        "Today: light rain early then clearing, 59/44, SSW 7 mph",
+        "Hourly: 5am 53\u00b0 light rain \u00b7 8am 53\u00b0 mostly cloudy \u00b7 11am 57\u00b0 mostly sunny \u00b7 1pm 59\u00b0 \u00b7 3pm 58\u00b0 \u00b7 5pm 55\u00b0 sunny \u00b7 8pm 52\u00b0 clear",
+        "Tue Nov 17: partly sunny 59/44, W 5 mph \u2014 the only dry day, use it",
+        "Wed Nov 18: heavy rain 85% 50/46, SSE 15 gusting 31 mph",
+        "Thu Nov 19: rain 75% 52/43, NW 10 mph",
+        "Fri Nov 20: sunny 55/41, NNE 3 mph",
+        "Sat Nov 21: cloudy 52/39, 55% rain, SSE 9 mph"
+      ]
+    },
+    {
+      "h": "Your sky",
+      "items": [
+        "Plain read: you're walking into today with the sky's luck planet sitting right on your Sun \u2014 the classic blessing transit, and it lands on surgery day",
+        "How to use it: accept the help people offer, walk in expecting things to go well, and let that carry the nerves",
+        "Restless Aquarius Moon (waxing crescent, 41%) keeps the mind busy \u2014 the checklist is the antidote"
+      ],
+      "body": "Details: Jupiter Leo 10.1\u00b0 conjunct natal Sun Leo 8.7\u00b0, orb 1.4\u00b0; Moon Aquarius 13.9\u00b0 waxing crescent. Summary: one clean, protective transit on the one day you want it."
+    },
+    {
+      "h": "Overnight mail",
+      "items": [
+        "JDP (Granite's background-check vendor) couldn't reach an old employer for check #1011-21585299 and wants employment proof \u2014 most recent paystub \u2014 uploaded to their secure portal, marked time-sensitive",
+        "My Wednesday offer stands: say the word and I'll pull your newest Sherwin paystub and stage the upload for your click",
+        "Also: NovaMane order #NM1167381 confirmed ($95.99, paid via Afterpay); Google wants a review of Madilynn's account activity"
+      ]
+    },
+    {
+      "h": "Leads to review",
+      "items": [
+        "Zero new construction-dispatch postings \u2014 all three boards checked, nothing new"
+      ]
+    },
+    {
+      "h": "Interview watch",
+      "items": [
+        "No interview requests in overnight mail (checked application portals: nothing)"
+      ]
+    },
+    {
+      "h": "Local news",
+      "items": [
+        "Steady light rain lingers through the Monday commute, mostly done by 10am; the main storm hits Wednesday with strong winds (SFGate)",
+        "Level 1 storm brought dangerous surf and sneaker waves; advisory runs to 4am Tuesday (ABC7)",
+        "Marin flooding: Highway 101 in Larkspur and Corte Madera Creek neighborhoods flooded at high tide",
+        "Port of San Francisco installed temporary flood barriers ahead of storm season (KRON4)"
+      ]
+    },
+    {
+      "h": "Ease into the day",
+      "items": [
+        "Iron day (Monday)",
+        "Easy win: the JDP paystub \u2014 one word from you and it's handled",
+        "Then: pack the bag and lay out meds, confirm the driver plan, leave with cushion for wet roads",
+        "Running on their own: 10am apply run, 3pm sweep, 5pm site check"
+      ]
+    },
+    {
+      "h": "Family day ahead",
+      "items": [
+        "Tony's and Family calendars are clear today \u2014 Josiah's 2:00 PM sits on your own calendar",
+        "Heads-up: expense report reminder lands tomorrow (Tue Nov 17)"
+      ]
+    }
+  ]
 }
