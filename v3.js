@@ -815,6 +815,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ===== Social: The Friend Wall (v3) ===== */
 let __socOrder = [];
+let __socCalLoose = [];
 function __socSplit(text) {
   const m = String(text || "").match(/^(.+?)\s+(?:-{1,2}|\u2013|\u2014|:)\s+(.+)$/);
   return m ? { who: m[1].trim(), rest: m[2].trim() } : null;
@@ -873,6 +874,11 @@ function __socCards() {
     if (!c.name) c.name = String(it.who).trim();
     c.plans.push({ ...it, i, src: "social" });
   });
+  Object.keys(people).forEach(k => {
+    if (!people[k] || !people[k].name) return;
+    const c = ensure(k);
+    if (!c.name) c.name = people[k].name;
+  });
   Object.values(cards).forEach(c => {
     const m = people[c.key] || {};
     if (c.isTony) { c.name = m.name || "Tony"; c.emoji = m.emoji || "💍"; }
@@ -890,6 +896,8 @@ function __socCards() {
     c.nextDate = up.length ? up[0].date : "";
   });
   const calloose = [];
+  let evPeople = {};
+  try { evPeople = JSON.parse(localStorage.getItem("ccc_ev_person")) || {}; } catch (e) {}
   (typeof GCAL !== "undefined" && GCAL.events || [])
     .filter(ev => evCat(ev) === "social" || evCat(ev) === "marriage")
     .filter(ev => ev.start.slice(0, 10) >= today)
@@ -898,7 +906,9 @@ function __socCards() {
       const cat = evCat(ev);
       const title = String(ev.title || "").toLowerCase();
       let target = null;
-      if (cat === "marriage") target = cards.tony;
+      const assigned = evPeople[evCatKey(ev.calId, ev.id)];
+      if (assigned && cards[assigned]) target = cards[assigned];
+      else if (cat === "marriage") target = cards.tony;
       else for (const k of Object.keys(cards)) {
         const c = cards[k];
         if (title.includes(k) || (c.name && title.includes(c.name.toLowerCase()))) { target = c; break; }
@@ -912,7 +922,7 @@ function __socCardHtml(c, isNext) {
   const acts = p => `<span class="fc-acts"><button title="Edit" onclick="__fcEdit(${src(p)},${p.i})">\u270F\uFE0F</button><button title="Copy" onclick="__fcCopy(${src(p)},${p.i})">\u29C9</button><button title="Delete" onclick="__fcDel(${src(p)},${p.i})">\uD83D\uDDD1\uFE0F</button></span>`;
   const plan = (p, up) => `<div class="fc-plan${up ? " up" : ""}"><span>${esc(p.t)}</span>${p.date ? `<span class="fc-when">${__socFmtDate(p.date)}</span>` : ""}${acts(p)}</div>`;
   const calChips = c.cal.map(ev => `<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span></div>`).join("");
-  const nudge = c.up.length ? "" : `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>`;
+  const nudge = c.up.length ? "" : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`);
   const mem = c.past.length ? `<div class="fc-mem">\u2728 Last: ${esc(c.past[0].t)}${c.past[0].date ? " \u00B7 " + __socFmtDate(c.past[0].date) : ""}</div>` : "";
   const favs = c.favs ? `<div class="fc-meta">\uD83D\uDC9B ${esc(c.favs)}</div>` : "";
   return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}">
@@ -928,15 +938,18 @@ function v3RenderSocial() {
   const wall = document.getElementById("friendWall");
   if (!wall) return;
   const { cards, loose, calloose } = __socCards();
+  Object.values(cards).forEach(c => { c.empty = !c.plans.length && !c.cal.length; });
   const order = Object.values(cards).sort((a, b) => {
     if (a.isTony) return -1;
     if (b.isTony) return 1;
+    if (a.empty !== b.empty) return (a.empty ? 1 : -1);
     if (a.nextDate && b.nextDate) return (a.nextDate < b.nextDate ? -1 : 1);
     if (a.nextDate) return -1;
     if (b.nextDate) return 1;
     return String(a.name).localeCompare(String(b.name));
   });
   __socOrder = order;
+  __socCalLoose = calloose;
   order.forEach((c, i) => { c.idx = i; });
   const nearest = order.find(c => c.up.length);
   wall.innerHTML = order.map(c => __socCardHtml(c, nearest && c.key === nearest.key)).join("")
@@ -949,8 +962,8 @@ function v3RenderSocial() {
     : "";
   const cl = document.getElementById("calLoose");
   if (cl) cl.innerHTML = calloose.length
-    ? `<div class="fc-strip-title">\uD83D\uDCC5 From your calendar</div>` + calloose.map(ev =>
-        `<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span></div>`).join("")
+    ? `<div class="fc-strip-title">\uD83D\uDCC5 From your calendar</div>` + calloose.map((ev, i) =>
+        `<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span><span class="fc-acts"><button title="Give to someone" onclick="__fcAssign(${i})">\uD83D\uDC64</button></span></div>`).join("")
     : "";
 }
 function __fcSavePlan(isMarriage, idx, patch) {
@@ -1045,5 +1058,44 @@ document.addEventListener("DOMContentLoaded", () => {
     v3RenderSocial();
     flashMsg("Added to the wall \u2728");
   });
+  const fab = document.getElementById("friendAddBtn");
+  if (fab) fab.addEventListener("click", () => {
+    openEditModal("Add someone to the wall", [
+      { id: "name", label: "Name", value: "" },
+      { id: "emoji", label: "Avatar emoji (optional)", value: "" },
+      { id: "bday", label: "Birthday (MM-DD or YYYY-MM-DD, optional)", value: "" },
+      { id: "favs", label: "Favorites (one line, optional)", value: "" }
+    ], v => {
+      const name = String(v.name).trim();
+      if (!name) { flashMsg("Need a name"); return; }
+      const key = __socKey(name);
+      const people = __socPeople();
+      if (people[key]) { flashMsg("Already on the wall"); return; }
+      people[key] = { name, emoji: String(v.emoji || "").trim(), bday: String(v.bday || "").trim(), favs: String(v.favs || "").trim() };
+      localStorage.setItem("ccc_social_people", JSON.stringify(people));
+      v3RenderSocial();
+      flashMsg(name + " is on the wall \u2728");
+    });
+  });
   v3RenderSocial();
 });
+window.__fcAssign = i => {
+  const ev = __socCalLoose[i];
+  if (!ev) return;
+  const { cards } = __socCards();
+  const opts = Object.values(cards).sort((a, b) => {
+    if (a.isTony) return -1;
+    if (b.isTony) return 1;
+    return String(a.name).localeCompare(String(b.name));
+  }).map(c => ({ v: c.key, t: c.name }));
+  openEditModal("Give this event to someone", [
+    { id: "who", label: "Person", type: "select", options: opts, value: opts.length ? opts[0].v : "" }
+  ], v => {
+    let store = {};
+    try { store = JSON.parse(localStorage.getItem("ccc_ev_person")) || {}; } catch (e) {}
+    store[evCatKey(ev.calId, ev.id)] = v.who;
+    localStorage.setItem("ccc_ev_person", JSON.stringify(store));
+    v3RenderSocial();
+    flashMsg("Assigned \u2728");
+  });
+};
