@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261114d" />
   <link rel="stylesheet" href="v2.css?v=20261117a" />
-  <link rel="stylesheet" href="v3.css?v=20261116h" />
+  <link rel="stylesheet" href="v3.css?v=20261117b" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -466,15 +466,16 @@
     <section class="tab-panel" id="panel-social">
       <div class="card">
         <div class="card-header">
-          <h2>🎉 The Friend Wall</h2>
+          <h2>🌻 The Friend Hillside</h2>
         </div>
-        <p class="helper-text">People you love and the plans brewing — one card per person. "Dana - brunch Sunday" lands on Dana's card. Tony keeps his own 💍 card.</p>
+        <p class="helper-text">Your people as plantings on the hillside, one card each. Moisture drops as days pass since a real touch; tap 💧 to water someone with a call or a visit. "Dana - brunch Sunday" lands on Dana's card. Tony keeps his 💍 card on the top tier.</p>
         <form id="socialFormV3" class="row-form solo-form">
           <input type="text" id="socialInputV3" placeholder="Add a plan... (Dana - brunch Sunday)" required />
           <button type="submit" class="add-btn">+</button>
         </form>
         <button type="button" class="mini-btn" id="friendAddBtn">+ Add someone</button>
-        <div id="friendWall" class="friend-wall"></div>
+        <div id="fwStats" class="hs-ticker"></div>
+        <div id="friendWall" class="fw-tiers"></div>
         <div id="loosePlans" class="fc-strip"></div>
         <div id="calLoose" class="fc-strip"></div>
       </div>
@@ -806,7 +807,7 @@
   <script src="google-sync.js?v=20261114g"></script>
   <script src="month.js?v=20261105i"></script>
   <script src="v2.js?v=20261117b"></script>
-  <script src="v3.js?v=20261116h"></script>
+  <script src="v3.js?v=20261117c"></script>
   <script src="vault.js?v=20261114h"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">

@@ -854,7 +854,39 @@ function __socBday(b) {
   if (d < todayMid) d = new Date(y + 1, mo - 1, dd);
   const days = Math.round((d - todayMid) / 864e5);
   const when = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  return `<div class="fc-bday">🎂 ${days <= 30 ? "in " + days + (days === 1 ? " day" : " days") : when}</div>`;
+  return `<div class="fc-bday">🌸 ${days <= 30 ? "blooms in " + days + (days === 1 ? " day" : " days") : "next bloom " + when}</div>`;
+}
+function __socBdayDays(b) {
+  if (!b) return null;
+  let y, mo, dd, m = b.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m) { y = +m[1]; mo = +m[2]; dd = +m[3]; }
+  else { m = b.match(/^(\d{1,2})[\/-](\d{1,2})$/); if (!m) return null; y = new Date().getFullYear(); mo = +m[1]; dd = +m[2]; }
+  const now = new Date();
+  let d = new Date(y, mo - 1, dd);
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  if (d < todayMid) d = new Date(y + 1, mo - 1, dd);
+  return Math.round((d - todayMid) / 864e5);
+}
+const SOC_TIERS = [
+  { id: "inner", n: "01", label: "Inner Circle", emoji: "\uD83C\uDF3B" },
+  { id: "close", n: "02", label: "Close", emoji: "\uD83C\uDF3F" },
+  { id: "kindred", n: "03", label: "Kindred", emoji: "\uD83C\uDF31" },
+  { id: "new", n: "04", label: "Nursery", emoji: "\uD83C\uDF30" }
+];
+function __socTierOf(c) {
+  const id = c.tier || (c.isTony ? "inner" : "kindred");
+  return SOC_TIERS.find(t => t.id === id) || SOC_TIERS[2];
+}
+function __socTouchDate(c) {
+  let best = c.lastTouch || "";
+  (c.past || []).forEach(p => { if (p.date && p.date > best) best = p.date; });
+  return best;
+}
+function __socMoist(c) {
+  const t = __socTouchDate(c);
+  if (!t) return { pct: 0, days: null, touch: "" };
+  const days = Math.max(0, Math.round((new Date(localDateStr() + "T12:00:00") - new Date(t + "T12:00:00")) / 864e5));
+  return { pct: Math.max(0, 100 - Math.round(days * 100 / 21)), days, touch: t };
 }
 function __socCards() {
   const today = localDateStr();
@@ -862,7 +894,7 @@ function __socCards() {
   const cards = {};
   const loose = [];
   const ensure = k => {
-    if (!cards[k]) cards[k] = { key: k, name: "", emoji: "", bday: "", favs: "", plans: [], cal: [], isTony: k === "tony" };
+    if (!cards[k]) cards[k] = { key: k, name: "", emoji: "", bday: "", favs: "", tier: "", lastTouch: "", plans: [], cal: [], isTony: k === "tony" };
     return cards[k];
   };
   const tony = ensure("tony");
@@ -884,6 +916,7 @@ function __socCards() {
     if (c.isTony) { c.name = m.name || "Tony"; c.emoji = m.emoji || "💍"; }
     else { c.name = m.name || c.name || c.key; c.emoji = m.emoji || ""; }
     c.bday = m.bday || ""; c.favs = m.favs || "";
+    c.tier = m.tier || (c.isTony ? "inner" : ""); c.lastTouch = m.lastTouch || "";
     const up = [], undated = [], past = [];
     c.plans.forEach(p => {
       if (p.date && p.date >= today) up.push(p);
@@ -929,13 +962,18 @@ function __socCardHtml(c, isNext, compact, flat) {
   const shown = items.slice(0, limit).join("");
   const extra = items.length - limit;
   const more = compact && extra > 0 ? `<button class="fc-more" onclick="${stop}v3OpenFriend(${c.idx})">+${extra} more</button>` : "";
-  const nudge = c.up.length ? "" : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`);
+  const mo = __socMoist(c);
+  const moistHtml = `<div class="fw-moist"><div class="fw-moist-track"><i class="${mo.pct >= 55 ? "wet" : mo.pct >= 30 ? "mid" : "dry"}" style="width:${mo.pct}%"></i></div><span class="fw-moist-val">${mo.pct}%${mo.days === null ? " \u00B7 never watered" : " \u00B7 " + (mo.days === 0 ? "watered today" : mo.days + (mo.days === 1 ? " day ago" : " days ago"))}</span></div>`;
+  const tier = __socTierOf(c);
+  const nudge = c.up.length ? "" : (mo.pct <= 29 ? `<div class="fc-nudge">Soil's dry \u2014 reach out soon \uD83D\uDCA7</div>` : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`));
   const mem = c.past.length ? `<div class="fc-mem">\u2728 Last: ${esc(c.past[0].t)}${c.past[0].date ? " \u00B7 " + __socFmtDate(c.past[0].date) : ""}</div>` : "";
   const favs = c.favs ? `<div class="fc-meta">\uD83D\uDC9B ${esc(c.favs)}</div>` : "";
-  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}${flat ? " flat" : ""}"${flat ? "" : ` onclick="v3OpenFriend(${c.idx})"`}>
+  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}${flat ? " flat" : ""}${mo.pct <= 29 ? " dry" : ""}"${flat ? "" : ` onclick="v3OpenFriend(${c.idx})"`}>
     <button class="fc-card-edit" title="Card details" onclick="${stop}__fcCardEdit(${c.idx})">\u270F\uFE0F</button>
+    <button class="fc-water" title="Log a touch \u2014 waters this one" onclick="${stop}__fcWater(${c.idx})">\uD83D\uDCA7</button>
     <div class="fc-head"><div class="fc-avatar">${c.emoji ? esc(c.emoji) : __socInitials(c.name)}</div>
-      <div><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div>${__socBday(c.bday)}</div></div>
+      <div><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div><span class="fw-tier-chip">${tier.emoji} ${tier.label}</span>${__socBday(c.bday)}</div></div>
+    ${moistHtml}
     <div class="fc-body">${shown}${more}${nudge}${favs}${mem}</div>
   </div>`;
 }
@@ -975,8 +1013,21 @@ function v3RenderSocial() {
   __socCalLoose = calloose;
   order.forEach((c, i) => { c.idx = i; });
   const nearest = order.find(c => c.up.length);
-  wall.innerHTML = order.map(c => __socCardHtml(c, nearest && c.key === nearest.key, true)).join("")
-    || `<p class="helper-text">The wall is empty. Add your first plan above ("Dana - brunch Sunday") and Dana gets a card.</p>`;
+  let dry = 0, blooms = 0;
+  order.forEach(c => {
+    c.moist = __socMoist(c);
+    if (c.moist.pct <= 29) dry++;
+    const bd = __socBdayDays(c.bday);
+    if (bd !== null && bd <= 30) blooms++;
+  });
+  const st = document.getElementById("fwStats");
+  if (st) st.innerHTML = `<span class="hs-ticker-badge">FRIEND HILLSIDE</span><span class="hs-ticker-line">${order.length} ON THE SLOPE \u00B7 ${dry} NEED WATER \u00B7 ${blooms} BLOOM${blooms === 1 ? "" : "S"} WITHIN 30 DAYS</span>`;
+  const groups = SOC_TIERS.map(t => ({ t, in: order.filter(c => __socTierOf(c).id === t.id) })).filter(g => g.in.length);
+  wall.innerHTML = groups.map(g =>
+    `<div class="fw-tier"><div class="fw-tier-head"><span class="fw-tier-badge">TIER ${g.t.n}</span><strong>${g.t.emoji} ${g.t.label}</strong><span class="fw-tier-count">${g.in.length} ON THIS SLOPE</span></div><div class="friend-wall">` +
+    g.in.map(c => __socCardHtml(c, nearest && c.key === nearest.key, true)).join("") +
+    `</div></div>`
+  ).join("") || `<p class="helper-text">The hillside is empty. Add your first plan above ("Dana - brunch Sunday") and Dana gets a card.</p>`;
   const lp = document.getElementById("loosePlans");
   if (lp) lp.innerHTML = loose.length
     ? `<div class="fc-strip-title">\u2728 Loose plans</div>` + loose.map(p =>
@@ -1040,14 +1091,16 @@ window.__fcCardEdit = idx => {
   const pk = c.key;
   const people = __socPeople();
   const m = people[pk] || {};
+  const tierOpts = SOC_TIERS.map(t => ({ v: t.id, t: t.emoji + " " + t.label }));
   openEditModal("Card details", [
     { id: "name", label: "Name", value: c.name },
     { id: "emoji", label: "Avatar emoji (optional, e.g. \uD83C\uDF38)", value: m.emoji || "" },
     { id: "bday", label: "Birthday (MM-DD or YYYY-MM-DD)", value: m.bday || "" },
-    { id: "favs", label: "Favorites (one line)", value: m.favs || "" }
+    { id: "favs", label: "Favorites (one line)", value: m.favs || "" },
+    { id: "tier", label: "Hillside tier", type: "select", options: tierOpts, value: c.tier || (c.isTony ? "inner" : "kindred") }
   ], v => {
     const name = String(v.name).trim() || c.name;
-    people[pk] = { name, emoji: String(v.emoji || "").trim(), bday: String(v.bday || "").trim(), favs: String(v.favs || "").trim() };
+    people[pk] = { ...m, name, emoji: String(v.emoji || "").trim(), bday: String(v.bday || "").trim(), favs: String(v.favs || "").trim(), tier: String(v.tier || "kindred") };
     if (pk !== "tony") {
       const arr = __socLoad("ccc_social");
       let changed = false;
@@ -1087,14 +1140,15 @@ document.addEventListener("DOMContentLoaded", () => {
       { id: "name", label: "Name", value: "" },
       { id: "emoji", label: "Avatar emoji (optional)", value: "" },
       { id: "bday", label: "Birthday (MM-DD or YYYY-MM-DD, optional)", value: "" },
-      { id: "favs", label: "Favorites (one line, optional)", value: "" }
+      { id: "favs", label: "Favorites (one line, optional)", value: "" },
+      { id: "tier", label: "Hillside tier", type: "select", options: SOC_TIERS.map(t => ({ v: t.id, t: t.emoji + " " + t.label })), value: "kindred" }
     ], v => {
       const name = String(v.name).trim();
       if (!name) { flashMsg("Need a name"); return; }
       const key = __socKey(name);
       const people = __socPeople();
       if (people[key]) { flashMsg("Already on the wall"); return; }
-      people[key] = { name, emoji: String(v.emoji || "").trim(), bday: String(v.bday || "").trim(), favs: String(v.favs || "").trim() };
+      people[key] = { name, emoji: String(v.emoji || "").trim(), bday: String(v.bday || "").trim(), favs: String(v.favs || "").trim(), tier: String(v.tier || "kindred"), lastTouch: "" };
       localStorage.setItem("ccc_social_people", JSON.stringify(people));
       v3RenderSocial();
       flashMsg(name + " is on the wall \u2728");
@@ -1121,4 +1175,13 @@ window.__fcAssign = i => {
     v3RenderSocial();
     flashMsg("Assigned \u2728");
   });
+};
+window.__fcWater = idx => {
+  const c = __socOrder[idx];
+  if (!c) return;
+  const people = __socPeople();
+  people[c.key] = { ...(people[c.key] || { name: c.name }), lastTouch: localDateStr() };
+  localStorage.setItem("ccc_social_people", JSON.stringify(people));
+  v3RenderSocial();
+  flashMsg("Watered \uD83D\uDCA7");
 };
