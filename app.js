@@ -315,6 +315,7 @@ function gameTasksChanged() {
   if (typeof renderBlocks === "function") renderBlocks();
   if (typeof renderMonth === "function") renderMonth();
   if (typeof renderWeek === "function") renderWeek();
+  if (typeof v3RenderSocial === "function") v3RenderSocial();
 }
 
 const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -964,6 +965,7 @@ function setEvCat(calId, id, cat) {
   localStorage.setItem("ccc_ev_cats", JSON.stringify(evCats));
   renderHourly();
   renderWeek();
+  if (typeof v3RenderSocial === "function") v3RenderSocial();
   if (typeof renderMonth === "function") renderMonth();
   if (typeof renderCalEventPanels === "function") renderCalEventPanels();
 }

@@ -70,6 +70,7 @@ function switchTab(name) {
   if (name === "hair") v3RenderHair();
   if (name === "garden") { v3RenderSoil(); v3RenderSoilDeep(); renderSoilLog(); }
   if (name === "month" && typeof renderMonth === "function") renderMonth();
+  if (name === "social") v3RenderSocial();
 }
 
 function v3Go(sec, tab) { switchTab(tab || V3_SECTIONS[sec][0].id); }
@@ -809,4 +810,240 @@ function soilLogCopy(id) {
 document.addEventListener("DOMContentLoaded", () => {
   const f = document.getElementById("soilLogForm");
   if (f) f.addEventListener("submit", soilLogAdd);
+});
+
+
+/* ===== Social: The Friend Wall (v3) ===== */
+let __socOrder = [];
+function __socSplit(text) {
+  const m = String(text || "").match(/^(.+?)\s+(?:-{1,2}|\u2013|\u2014|:)\s+(.+)$/);
+  return m ? { who: m[1].trim(), rest: m[2].trim() } : null;
+}
+function __socKey(who) { return String(who || "").trim().toLowerCase(); }
+function __socLoad(key) {
+  let arr;
+  try { arr = JSON.parse(localStorage.getItem(key)) || []; } catch (e) { arr = []; }
+  if (arr.length && typeof arr[0] === "string") {
+    arr = arr.map(s => { const p = __socSplit(s); return p ? { t: p.rest, who: p.who } : { t: s }; });
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+  return arr.filter(x => x && typeof x === "object" && x.t);
+}
+function __socPeople() {
+  try { return JSON.parse(localStorage.getItem("ccc_social_people")) || {}; } catch (e) { return {}; }
+}
+function __socInitials(name) {
+  const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return "?";
+  return (parts[0][0] + (parts[1] ? parts[1][0] : "")).toUpperCase();
+}
+function __socFmtDate(d) {
+  if (!d) return "";
+  try { return new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }); }
+  catch (e) { return d; }
+}
+function __socBday(b) {
+  if (!b) return "";
+  let y, mo, dd, m = b.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m) { y = +m[1]; mo = +m[2]; dd = +m[3]; }
+  else { m = b.match(/^(\d{1,2})[\/-](\d{1,2})$/); if (!m) return ""; y = new Date().getFullYear(); mo = +m[1]; dd = +m[2]; }
+  const now = new Date();
+  let d = new Date(y, mo - 1, dd);
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  if (d < todayMid) d = new Date(y + 1, mo - 1, dd);
+  const days = Math.round((d - todayMid) / 864e5);
+  const when = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return `<div class="fc-bday">🎂 ${days <= 30 ? "in " + days + (days === 1 ? " day" : " days") : when}</div>`;
+}
+function __socCards() {
+  const today = localDateStr();
+  const people = __socPeople();
+  const cards = {};
+  const loose = [];
+  const ensure = k => {
+    if (!cards[k]) cards[k] = { key: k, name: "", emoji: "", bday: "", favs: "", plans: [], cal: [], isTony: k === "tony" };
+    return cards[k];
+  };
+  const tony = ensure("tony");
+  tony.plans = __socLoad("ccc_marriage").map((it, i) => ({ ...it, i, src: "marriage" }));
+  __socLoad("ccc_social").forEach((it, i) => {
+    const k = __socKey(it.who);
+    if (!k) { loose.push({ ...it, i }); return; }
+    const c = ensure(k);
+    if (!c.name) c.name = String(it.who).trim();
+    c.plans.push({ ...it, i, src: "social" });
+  });
+  Object.values(cards).forEach(c => {
+    const m = people[c.key] || {};
+    if (c.isTony) { c.name = m.name || "Tony"; c.emoji = m.emoji || "💍"; }
+    else { c.name = m.name || c.name || c.key; c.emoji = m.emoji || ""; }
+    c.bday = m.bday || ""; c.favs = m.favs || "";
+    const up = [], undated = [], past = [];
+    c.plans.forEach(p => {
+      if (p.date && p.date >= today) up.push(p);
+      else if (p.date) past.push(p);
+      else undated.push(p);
+    });
+    up.sort((a, b) => (a.date < b.date ? -1 : 1));
+    past.sort((a, b) => (a.date > b.date ? -1 : 1));
+    c.up = up; c.undated = undated; c.past = past;
+    c.nextDate = up.length ? up[0].date : "";
+  });
+  const calloose = [];
+  (typeof GCAL !== "undefined" && GCAL.events || [])
+    .filter(ev => evCat(ev) === "social" || evCat(ev) === "marriage")
+    .filter(ev => ev.start.slice(0, 10) >= today)
+    .sort((a, b) => new Date(a.start) - new Date(b.start))
+    .forEach(ev => {
+      const cat = evCat(ev);
+      const title = String(ev.title || "").toLowerCase();
+      let target = null;
+      if (cat === "marriage") target = cards.tony;
+      else for (const k of Object.keys(cards)) {
+        const c = cards[k];
+        if (title.includes(k) || (c.name && title.includes(c.name.toLowerCase()))) { target = c; break; }
+      }
+      if (target) target.cal.push(ev); else calloose.push(ev);
+    });
+  return { cards, loose, calloose };
+}
+function __socCardHtml(c, isNext) {
+  const src = p => (p.src === "marriage" ? 1 : 0);
+  const acts = p => `<span class="fc-acts"><button title="Edit" onclick="__fcEdit(${src(p)},${p.i})">\u270F\uFE0F</button><button title="Copy" onclick="__fcCopy(${src(p)},${p.i})">\u29C9</button><button title="Delete" onclick="__fcDel(${src(p)},${p.i})">\uD83D\uDDD1\uFE0F</button></span>`;
+  const plan = (p, up) => `<div class="fc-plan${up ? " up" : ""}"><span>${esc(p.t)}</span>${p.date ? `<span class="fc-when">${__socFmtDate(p.date)}</span>` : ""}${acts(p)}</div>`;
+  const calChips = c.cal.map(ev => `<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span></div>`).join("");
+  const nudge = c.up.length ? "" : `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>`;
+  const mem = c.past.length ? `<div class="fc-mem">\u2728 Last: ${esc(c.past[0].t)}${c.past[0].date ? " \u00B7 " + __socFmtDate(c.past[0].date) : ""}</div>` : "";
+  const favs = c.favs ? `<div class="fc-meta">\uD83D\uDC9B ${esc(c.favs)}</div>` : "";
+  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}">
+    <button class="fc-card-edit" title="Card details" onclick="__fcCardEdit(${c.idx})">\u270F\uFE0F</button>
+    <div class="fc-head"><div class="fc-avatar">${c.emoji ? esc(c.emoji) : __socInitials(c.name)}</div>
+      <div><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div>${__socBday(c.bday)}</div></div>
+    ${c.up.map(p => plan(p, true)).join("")}
+    ${c.undated.map(p => plan(p, false)).join("")}
+    ${calChips}${nudge}${favs}${mem}
+  </div>`;
+}
+function v3RenderSocial() {
+  const wall = document.getElementById("friendWall");
+  if (!wall) return;
+  const { cards, loose, calloose } = __socCards();
+  const order = Object.values(cards).sort((a, b) => {
+    if (a.isTony) return -1;
+    if (b.isTony) return 1;
+    if (a.nextDate && b.nextDate) return (a.nextDate < b.nextDate ? -1 : 1);
+    if (a.nextDate) return -1;
+    if (b.nextDate) return 1;
+    return String(a.name).localeCompare(String(b.name));
+  });
+  __socOrder = order;
+  order.forEach((c, i) => { c.idx = i; });
+  const nearest = order.find(c => c.up.length);
+  wall.innerHTML = order.map(c => __socCardHtml(c, nearest && c.key === nearest.key)).join("")
+    || `<p class="helper-text">The wall is empty. Add your first plan above ("Dana - brunch Sunday") and Dana gets a card.</p>`;
+  const lp = document.getElementById("loosePlans");
+  if (lp) lp.innerHTML = loose.length
+    ? `<div class="fc-strip-title">\u2728 Loose plans</div>` + loose.map(p =>
+        `<div class="fc-plan"><span>${esc(p.t)}</span><span class="fc-acts"><button title="Edit" onclick="__fcEdit(0,${p.i})">\u270F\uFE0F</button><button title="Copy" onclick="__fcCopy(0,${p.i})">\u29C9</button><button title="Delete" onclick="__fcDel(0,${p.i})">\uD83D\uDDD1\uFE0F</button></span></div>`).join("")
+      + `<p class="helper-text">Edit one and give it a person, and it gets a card.</p>`
+    : "";
+  const cl = document.getElementById("calLoose");
+  if (cl) cl.innerHTML = calloose.length
+    ? `<div class="fc-strip-title">\uD83D\uDCC5 From your calendar</div>` + calloose.map(ev =>
+        `<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span></div>`).join("")
+    : "";
+}
+function __fcSavePlan(isMarriage, idx, patch) {
+  const key = isMarriage ? "ccc_marriage" : "ccc_social";
+  const arr = __socLoad(key);
+  if (!arr[idx]) return;
+  Object.assign(arr[idx], patch);
+  localStorage.setItem(key, JSON.stringify(arr));
+  v3RenderSocial();
+}
+window.__fcEdit = (isMarriage, idx) => {
+  const arr = __socLoad(isMarriage ? "ccc_marriage" : "ccc_social");
+  const it = arr[idx];
+  if (!it) return;
+  const fields = [
+    { id: "t", label: "Plan", value: it.t },
+    { id: "date", label: "Date (YYYY-MM-DD, blank = no date)", value: it.date || "" }
+  ];
+  if (!isMarriage && !__socKey(it.who)) fields.splice(1, 0, { id: "who", label: "Person (gives it a card)", value: "" });
+  openEditModal("Edit plan", fields, v => {
+    const patch = { t: String(v.t).trim() };
+    if (!patch.t) { flashMsg("Can't be empty"); return; }
+    const date = String(v.date || "").trim();
+    if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) { flashMsg("Date needs YYYY-MM-DD"); return; }
+    patch.date = date || "";
+    if (fields.some(f => f.id === "who")) patch.who = String(v.who || "").trim();
+    __fcSavePlan(isMarriage, idx, patch);
+    flashMsg("Updated \u2728");
+  });
+};
+window.__fcCopy = (isMarriage, idx) => {
+  const key = isMarriage ? "ccc_marriage" : "ccc_social";
+  const arr = __socLoad(key);
+  if (!arr[idx]) return;
+  arr.splice(idx + 1, 0, { ...arr[idx], t: arr[idx].t + " (copy)" });
+  localStorage.setItem(key, JSON.stringify(arr));
+  v3RenderSocial();
+  flashMsg("Copy added \u2728");
+};
+window.__fcDel = (isMarriage, idx) => {
+  const key = isMarriage ? "ccc_marriage" : "ccc_social";
+  const arr = __socLoad(key);
+  if (!arr[idx]) return;
+  arr.splice(idx, 1);
+  localStorage.setItem(key, JSON.stringify(arr));
+  v3RenderSocial();
+};
+window.__fcCardEdit = idx => {
+  const c = __socOrder[idx];
+  if (!c) return;
+  const pk = c.key;
+  const people = __socPeople();
+  const m = people[pk] || {};
+  openEditModal("Card details", [
+    { id: "name", label: "Name", value: c.name },
+    { id: "emoji", label: "Avatar emoji (optional, e.g. \uD83C\uDF38)", value: m.emoji || "" },
+    { id: "bday", label: "Birthday (MM-DD or YYYY-MM-DD)", value: m.bday || "" },
+    { id: "favs", label: "Favorites (one line)", value: m.favs || "" }
+  ], v => {
+    const name = String(v.name).trim() || c.name;
+    people[pk] = { name, emoji: String(v.emoji || "").trim(), bday: String(v.bday || "").trim(), favs: String(v.favs || "").trim() };
+    if (pk !== "tony") {
+      const arr = __socLoad("ccc_social");
+      let changed = false;
+      arr.forEach(it => { if (__socKey(it.who) === pk && it.who !== name) { it.who = name; changed = true; } });
+      if (changed) localStorage.setItem("ccc_social", JSON.stringify(arr));
+    }
+    localStorage.setItem("ccc_social_people", JSON.stringify(people));
+    v3RenderSocial();
+    flashMsg("Card updated \u2728");
+  });
+};
+document.addEventListener("DOMContentLoaded", () => {
+  const f = document.getElementById("socialFormV3");
+  if (f) f.addEventListener("submit", e => {
+    e.preventDefault();
+    const input = document.getElementById("socialInputV3");
+    const val = input.value.trim();
+    if (!val) return;
+    const p = __socSplit(val);
+    if (!p) { flashMsg("Try: Dana - brunch Sunday"); return; }
+    if (__socKey(p.who) === "tony") {
+      const arr = __socLoad("ccc_marriage");
+      arr.push({ t: p.rest });
+      localStorage.setItem("ccc_marriage", JSON.stringify(arr));
+    } else {
+      const arr = __socLoad("ccc_social");
+      arr.push({ t: p.rest, who: p.who });
+      localStorage.setItem("ccc_social", JSON.stringify(arr));
+    }
+    input.value = "";
+    v3RenderSocial();
+    flashMsg("Added to the wall \u2728");
+  });
+  v3RenderSocial();
 });

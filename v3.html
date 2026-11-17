@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261114d" />
   <link rel="stylesheet" href="v2.css?v=20261114d" />
-  <link rel="stylesheet" href="v3.css?v=20261116b" />
+  <link rel="stylesheet" href="v3.css?v=20261116d" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -460,36 +460,26 @@
     <section class="tab-panel" id="panel-social">
       <div class="card">
         <div class="card-header">
-          <h2>👯 Social Life</h2>
+          <h2>🎉 The Friend Wall</h2>
         </div>
-        <p class="helper-text">People you love and the plans brewing. Add who and when, so nobody goes quiet on you.</p>
-        <form id="socialForm" class="row-form solo-form">
-          <input type="text" id="socialInput" placeholder="Who + the plan (Dana - brunch Sunday)..." required />
+        <p class="helper-text">People you love and the plans brewing — one card per person. "Dana - brunch Sunday" lands on Dana's card. Tony keeps his own 💍 card.</p>
+        <form id="socialFormV3" class="row-form solo-form">
+          <input type="text" id="socialInputV3" placeholder="Add a plan... (Dana - brunch Sunday)" required />
           <button type="submit" class="add-btn">+</button>
         </form>
+        <div id="friendWall" class="friend-wall"></div>
+        <div id="loosePlans" class="fc-strip"></div>
+        <div id="calLoose" class="fc-strip"></div>
+      </div>
+      <div style="display:none">
+        <form id="socialForm" class="row-form solo-form"><input type="text" id="socialInput" /><button type="submit">+</button></form>
         <div id="socialList" class="line-list"></div>
-        <div id="taskCol-social" class="line-list tab-task-list" style="display:none"></div>
-      </div>
-                <div class="card">
-        <div class="card-header">
-          <h2>💍 Marriage</h2>
-        </div>
-        <p class="helper-text">Date nights, little things, us stuff.</p>
+        <form id="marriageForm" class="row-form solo-form"><input type="text" id="marriageInput" /><button type="submit">+</button></form>
         <div id="marriageList" class="line-list"></div>
-        <div id="taskCol-marriage" class="line-list tab-task-list" style="display:none"></div>
-        <form id="marriageForm" class="row-form solo-form">
-          <input type="text" id="marriageInput" placeholder="Add something for the two of you..." required />
-          <button type="submit" class="add-btn">+</button>
-        </form>
-        <p class="helper-text" style="margin-top: 0.8rem;">Calendar events you tag as 💍 Marriage show up below.</p>
-        <div id="calEvents-marriage" class="cal-events-list"></div>
-      </div>
-    <div class="card cal-events-card">
-        <div class="card-header">
-          <h2>📅 From your calendar</h2>
-        </div>
-        <p class="helper-text">Calendar events you tag as social show up here.</p>
         <div id="calEvents-social" class="cal-events-list"></div>
+        <div id="calEvents-marriage" class="cal-events-list"></div>
+        <div id="taskCol-social" class="line-list tab-task-list"></div>
+        <div id="taskCol-marriage" class="line-list tab-task-list"></div>
       </div>
     </section>
 
@@ -809,7 +799,7 @@
   <script src="google-sync.js?v=20261114g"></script>
   <script src="month.js?v=20261105i"></script>
   <script src="v2.js?v=20261106b"></script>
-  <script src="v3.js?v=20261116c"></script>
+  <script src="v3.js?v=20261116d"></script>
   <script src="vault.js?v=20261114h"></script>
   <div class="ev-overlay hidden" id="briefOverlay">
     <div class="ev-modal brief-modal">

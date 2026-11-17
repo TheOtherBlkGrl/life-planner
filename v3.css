@@ -295,3 +295,29 @@ body { padding: 12px 20px 16px !important; }
   .soil-row { grid-template-columns: 7.5em 1fr auto; }
   .soil-label { font-size: 0.72rem; }
 }
+
+/* ===== Social: The Friend Wall ===== */
+.friend-wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: .8rem; }
+.friend-card { position: relative; background: linear-gradient(160deg, rgba(157, 78, 221, .12), rgba(28, 24, 41, .9)), #1c1829; border: 1px solid rgba(157, 78, 221, .35); border-radius: 16px; padding: .9rem .95rem; overflow: hidden; }
+.friend-card::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(244, 184, 96, .16) 1.5px, transparent 1.6px), radial-gradient(rgba(229, 152, 155, .14) 1.5px, transparent 1.6px); background-size: 28px 28px, 36px 36px; background-position: 0 0, 14px 18px; pointer-events: none; }
+.friend-card.next { border: 1.5px solid transparent; background: linear-gradient(160deg, rgba(157, 78, 221, .12), rgba(28, 24, 41, .9)), #1c1829 padding-box, linear-gradient(120deg, #f4b860, #e5989b, #9d4edd) border-box; box-shadow: 0 0 18px rgba(244, 184, 96, .2); }
+.friend-card.tony { border-color: rgba(244, 184, 96, .5); }
+.fc-card-edit { position: absolute; top: .5rem; right: .6rem; z-index: 2; background: none; border: none; cursor: pointer; font-size: .85rem; opacity: .55; }
+.fc-card-edit:hover { opacity: 1; }
+.fc-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .55rem; }
+.fc-avatar { width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: #fff; background: linear-gradient(135deg, #9d4edd, #e5989b); flex: 0 0 auto; box-shadow: 0 0 12px rgba(157, 78, 221, .35); }
+.friend-card.tony .fc-avatar { background: linear-gradient(135deg, #f4b860, #e5989b); }
+.fc-name { font-weight: 600; font-size: 1.02rem; color: #f8f7ff; }
+.fc-bday { font-size: .74rem; color: #f4b860; }
+.fc-plan { position: relative; background: rgba(157, 78, 221, .12); border: 1px solid rgba(157, 78, 221, .28); border-radius: 10px; padding: .45rem .6rem; margin: .35rem 0; font-size: .88rem; display: flex; justify-content: space-between; gap: .5rem; align-items: center; }
+.fc-plan.up { border-color: rgba(244, 184, 96, .55); background: rgba(244, 184, 96, .09); box-shadow: 0 0 10px rgba(244, 184, 96, .2); }
+.fc-cal { background: rgba(255, 143, 163, .08); border-color: rgba(255, 143, 163, .3); }
+.fc-when { font-size: .72rem; color: #f4b860; white-space: nowrap; }
+.fc-acts { display: flex; gap: .2rem; }
+.fc-acts button { background: none; border: none; cursor: pointer; font-size: .8rem; padding: 0 .12rem; opacity: .65; }
+.fc-acts button:hover { opacity: 1; }
+.fc-nudge { font-size: .8rem; color: #e5989b; font-style: italic; margin-top: .45rem; }
+.fc-meta { font-size: .78rem; color: rgba(248, 247, 255, .78); margin-top: .4rem; }
+.fc-mem { font-size: .74rem; color: rgba(248, 247, 255, .55); margin-top: .4rem; }
+.fc-strip { margin-top: 1rem; }
+.fc-strip-title { font-size: .85rem; font-weight: 600; color: #f4b860; margin: .8rem 0 .3rem; }
