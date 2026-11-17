@@ -58,7 +58,7 @@ function v2ToggleSchumann() {
     setTimeout(() => { try { schCtx.close(); } catch (e) {} }, 500);
     schCtx = null; schGain = null;
     btn.classList.remove("playing");
-    btn.textContent = "\u2705 Schumann 7.83Hz";
+    btn.textContent = "\u25B6 Schumann 7.83Hz";
     return;
   }
   schCtx = new (window.AudioContext || window.webkitAudioContext)();
