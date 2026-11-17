@@ -297,7 +297,7 @@ body { padding: 12px 20px 16px !important; }
 }
 
 /* ===== Social: The Friend Wall ===== */
-.friend-wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: .8rem; }
+.friend-wall { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1rem; margin-top: .8rem; }
 .friend-card { position: relative; background: linear-gradient(160deg, rgba(157, 78, 221, .12), rgba(28, 24, 41, .9)), #1c1829; border: 1px solid rgba(157, 78, 221, .35); border-radius: 16px; padding: .9rem .95rem; overflow: hidden; }
 .friend-card::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(244, 184, 96, .16) 1.5px, transparent 1.6px), radial-gradient(rgba(229, 152, 155, .14) 1.5px, transparent 1.6px); background-size: 28px 28px, 36px 36px; background-position: 0 0, 14px 18px; pointer-events: none; }
 .friend-card.next { border: 1.5px solid transparent; background: linear-gradient(160deg, rgba(157, 78, 221, .12), rgba(28, 24, 41, .9)), #1c1829 padding-box, linear-gradient(120deg, #f4b860, #e5989b, #9d4edd) border-box; box-shadow: 0 0 18px rgba(244, 184, 96, .2); }
