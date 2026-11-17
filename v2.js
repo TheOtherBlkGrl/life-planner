@@ -49,23 +49,42 @@ function v2SaveMix() {
   v2ApplyMix(mix);
 }
 
-// --- Schumann binaural drone: 136.1 Hz + 143.93 Hz, 7.83 Hz beat ---
-let schCtx = null, schGain = null;
-function v2ToggleSchumann() {
-  const btn = document.getElementById("schumannBtn");
-  if (schCtx) {
-    try { schGain.gain.linearRampToValueAtTime(0.0001, schCtx.currentTime + 0.4); } catch (e) {}
-    setTimeout(() => { try { schCtx.close(); } catch (e) {} }, 500);
-    schCtx = null; schGain = null;
-    btn.classList.remove("playing");
-    btn.textContent = "\u25B6 Schumann 7.83Hz";
-    return;
-  }
+// --- Mood drones: two soft sines, the beat between them sets the mood ---
+const SCH_PRESETS = [
+  { label: "\uD83C\uDF0D Ground 7.83", freqs: [136.1, 143.93] },
+  { label: "\uD83C\uDFAF Focus 16", freqs: [200, 216] },
+  { label: "\uD83C\uDF19 Relax 10", freqs: [180, 190] },
+  { label: "\u2600\uFE0F Lift 40", freqs: [200, 240] },
+  { label: "\uD83D\uDE34 Sleep 2.5", freqs: [100, 102.5] }
+];
+let schCtx = null, schGain = null, schActive = null;
+function schPaint(active) {
+  document.querySelectorAll(".schumann-pill[data-sch]").forEach(b => {
+    const i = +b.dataset.sch;
+    const on = i === active;
+    b.classList.toggle("playing", on);
+    b.textContent = (on ? "\u23F8 " : "\u25B6 ") + SCH_PRESETS[i].label;
+  });
+}
+function schStop() {
+  if (!schCtx) return;
+  try { schGain.gain.linearRampToValueAtTime(0.0001, schCtx.currentTime + 0.4); } catch (e) {}
+  const ctx = schCtx;
+  setTimeout(() => { try { ctx.close(); } catch (e) {} }, 500);
+  schCtx = null; schGain = null;
+  const prev = schActive; schActive = null;
+  schPaint(prev);
+}
+function v2Schumann(idx) {
+  if (schActive === idx) { schStop(); return; }
+  schStop();
+  schActive = idx;
+  const p = SCH_PRESETS[idx];
   schCtx = new (window.AudioContext || window.webkitAudioContext)();
   schGain = schCtx.createGain();
   schGain.gain.value = 0.0001;
   schGain.connect(schCtx.destination);
-  [136.1, 143.93].forEach(freq => {
+  p.freqs.forEach(freq => {
     const osc = schCtx.createOscillator();
     osc.type = "sine";
     osc.frequency.value = freq;
@@ -73,8 +92,7 @@ function v2ToggleSchumann() {
     osc.start();
   });
   schGain.gain.linearRampToValueAtTime(0.05, schCtx.currentTime + 1.5);
-  btn.classList.add("playing");
-  btn.textContent = "\u23F8 Schumann playing";
+  schPaint(idx);
 }
 
 // --- vault hub: real counts, real pipeline, real telemetry, real backup ---
@@ -205,7 +223,8 @@ document.addEventListener("DOMContentLoaded", () => {
     b.addEventListener("click", () => v2ApplyAura(b.dataset.aura)));
   document.getElementById("mixApply").addEventListener("click", v2SaveMix);
   ["mixDeep", "mixCard", "mixGold"].forEach(id => document.getElementById(id).addEventListener("input", v2SaveMix));
-  document.getElementById("schumannBtn").addEventListener("click", v2ToggleSchumann);
+  document.querySelectorAll(".schumann-pill[data-sch]").forEach(b =>
+    b.addEventListener("click", () => v2Schumann(+b.dataset.sch)));
   document.getElementById("portalBtn").addEventListener("click", () => {
     if (typeof showCosmicToast === "function") showCosmicToast();
   });

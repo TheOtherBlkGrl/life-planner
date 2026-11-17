@@ -105,6 +105,7 @@ html[data-aura="velvet-parchment"] {
 .mixer input[type="color"] { width: 28px; height: 22px; border: 1px solid var(--border-subtle); background: none; padding: 0; cursor: pointer; }
 .mixer.hidden { display: none; }
 
+.schumann-row { display: flex; flex-wrap: wrap; gap: .4rem; }
 .schumann-pill, .portal-btn {
   background: var(--bg-card);
   color: var(--text-muted);
