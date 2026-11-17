@@ -968,7 +968,7 @@ function __socCardHtml(c, isNext, compact, flat) {
   const nudge = c.up.length ? "" : (mo.pct <= 29 ? `<div class="fc-nudge">Soil's dry \u2014 reach out soon \uD83D\uDCA7</div>` : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`));
   const mem = c.past.length ? `<div class="fc-mem">\u2728 Last: ${esc(c.past[0].t)}${c.past[0].date ? " \u00B7 " + __socFmtDate(c.past[0].date) : ""}</div>` : "";
   const favs = c.favs ? `<div class="fc-meta">\uD83D\uDC9B ${esc(c.favs)}</div>` : "";
-  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}${flat ? " flat" : ""}${mo.pct <= 29 ? " dry" : ""}"${flat ? "" : ` onclick="v3OpenFriend(${c.idx})"`}>
+  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}${flat ? " flat" : ""}${mo.pct <= 29 ? " dry" : ""} tc-${tier.id}"${flat ? "" : ` onclick="v3OpenFriend(${c.idx})"`}>
     <button class="fc-card-edit" title="Card details" onclick="${stop}__fcCardEdit(${c.idx})">\u270F\uFE0F</button>
     <button class="fc-water" title="Log a touch \u2014 waters this one" onclick="${stop}__fcWater(${c.idx})">\uD83D\uDCA7</button>
     <div class="fc-head"><div class="fc-avatar">${c.emoji ? esc(c.emoji) : __socInitials(c.name)}</div>
@@ -1021,7 +1021,7 @@ function v3RenderSocial() {
     if (bd !== null && bd <= 30) blooms++;
   });
   const st = document.getElementById("fwStats");
-  if (st) st.innerHTML = `<span class="hs-ticker-badge">FRIEND HILLSIDE</span><span class="hs-ticker-line">${order.length} ON THE SLOPE \u00B7 ${dry} NEED WATER \u00B7 ${blooms} BLOOM${blooms === 1 ? "" : "S"} WITHIN 30 DAYS</span>`;
+  if (st) st.innerHTML = `<div class="fw-stat" style="border-top:3px solid #52b788"><div class="fw-stat-num" style="color:#52b788">${order.length}</div><div class="fw-stat-sub">On the slope</div></div><div class="fw-stat" style="border-top:3px solid #e07a5f"><div class="fw-stat-num" style="color:#e07a5f">${dry}</div><div class="fw-stat-sub">Need water</div></div><div class="fw-stat" style="border-top:3px solid #d4af37"><div class="fw-stat-num" style="color:#e9c46a">${blooms}</div><div class="fw-stat-sub">Blooms within 30 days</div></div>`;
   const groups = SOC_TIERS.map(t => ({ t, in: order.filter(c => __socTierOf(c).id === t.id) })).filter(g => g.in.length);
   wall.innerHTML = groups.map(g =>
     `<div class="fw-tier"><div class="fw-tier-head"><span class="fw-tier-badge">TIER ${g.t.n}</span><strong>${g.t.emoji} ${g.t.label}</strong><span class="fw-tier-count">${g.in.length} ON THIS SLOPE</span></div><div class="friend-wall">` +
