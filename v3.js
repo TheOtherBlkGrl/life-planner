@@ -973,8 +973,11 @@ function __socCardHtml(c, isNext, compact, flat) {
   const mword = mo.pct >= 55 ? "Hydrated / Ideal" : (mo.pct >= 30 ? "Drying out" : "Needs water");
   const touchLab = "Last touch" + (mo.days === null ? " (never)" : (mo.days === 0 ? " (today)" : " (" + mo.days + "d ago)"));
   const touchVal = mo.touch ? __socFmtDate(mo.touch) : "\u2014";
-  let nextVal = "\u2014";
-  if (c.nextDate) nextVal = __socFmtDate(c.nextDate);
+  const calNext = c.cal.length ? c.cal[0].start.slice(0, 10) : "";
+  let nextVal = "\u2014", nextReal = "";
+  if (c.nextDate && calNext) { nextReal = (c.nextDate < calNext ? c.nextDate : calNext); }
+  else if (c.nextDate || calNext) { nextReal = c.nextDate || calNext; }
+  if (nextReal) nextVal = __socFmtDate(nextReal);
   else { const bd = __socBdayDays(c.bday); if (bd !== null) { const d = new Date(); d.setDate(d.getDate() + bd); nextVal = d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); } }
   const bloom = __socBdayText(c.bday);
   const nudge = c.up.length ? "" : (mo.pct <= 29 ? `<div class="fc-nudge">Soil's dry \u2014 reach out soon \uD83D\uDCA7</div>` : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`));
@@ -984,7 +987,7 @@ function __socCardHtml(c, isNext, compact, flat) {
       <div class="fc-who"><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div>${c.favs ? `<div class="fc-sub">${esc(c.favs)}</div>` : ""}</div>
       <span class="fc-pill ${status.cls}">${status.txt}</span></div>
     <div class="fc-chips">${bloom ? `<span class="fc-chip-gold">${bloom}</span>` : ""}<span class="fc-chip-plum">${tier.emoji} ${tier.label}</span></div>
-    <div class="fc-tiles"><div class="fc-tile"><div class="fc-tile-label">${touchLab}</div><div class="fc-tile-val">${touchVal}</div></div><div class="fc-tile"><div class="fc-tile-label">Next plan</div><div class="fc-tile-val${c.nextDate ? " green" : ""}">${nextVal}</div></div></div>
+    <div class="fc-tiles"><div class="fc-tile"><div class="fc-tile-label">${touchLab}</div><div class="fc-tile-val">${touchVal}</div></div><div class="fc-tile"><div class="fc-tile-label">Next plan</div><div class="fc-tile-val${nextReal ? " green" : ""}">${nextVal}</div></div></div>
     <div class="fc-meter-row"><span class="fc-meter-label">\uD83D\uDFE9 Connection meter:</span><span class="fc-meter-val ${mo.pct >= 55 ? "wet" : (mo.pct >= 30 ? "mid" : "dry")}">${mval} / 10 (${mword})</span></div>
     <div class="fw-moist-track"><i class="${mo.pct >= 55 ? "wet" : (mo.pct >= 30 ? "mid" : "dry")}" style="width:${mo.pct}%"></i></div>
     <div class="fc-body">${shown}${more}${nudge}${mem}</div>
