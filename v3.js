@@ -917,23 +917,47 @@ function __socCards() {
     });
   return { cards, loose, calloose };
 }
-function __socCardHtml(c, isNext) {
+function __socCardHtml(c, isNext, compact, flat) {
   const src = p => (p.src === "marriage" ? 1 : 0);
-  const acts = p => `<span class="fc-acts"><button title="Edit" onclick="__fcEdit(${src(p)},${p.i})">\u270F\uFE0F</button><button title="Copy" onclick="__fcCopy(${src(p)},${p.i})">\u29C9</button><button title="Delete" onclick="__fcDel(${src(p)},${p.i})">\uD83D\uDDD1\uFE0F</button></span>`;
+  const stop = "event.stopPropagation();";
+  const acts = p => `<span class="fc-acts"><button title="Edit" onclick="${stop}__fcEdit(${src(p)},${p.i})">\u270F\uFE0F</button><button title="Copy" onclick="${stop}__fcCopy(${src(p)},${p.i})">\u29C9</button><button title="Delete" onclick="${stop}__fcDel(${src(p)},${p.i})">\uD83D\uDDD1\uFE0F</button></span>`;
   const plan = (p, up) => `<div class="fc-plan${up ? " up" : ""}"><span>${esc(p.t)}</span>${p.date ? `<span class="fc-when">${__socFmtDate(p.date)}</span>` : ""}${acts(p)}</div>`;
-  const calChips = c.cal.map(ev => `<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span></div>`).join("");
+  const items = [];
+  c.up.forEach(p => items.push(plan(p, true)));
+  c.undated.forEach(p => items.push(plan(p, false)));
+  c.cal.forEach(ev => items.push(`<div class="fc-plan fc-cal"><span>\uD83D\uDCC3 ${esc(ev.title)}</span><span class="fc-when">${__socFmtDate(ev.start.slice(0, 10))}</span></div>`));
+  const limit = compact ? 4 : items.length;
+  const shown = items.slice(0, limit).join("");
+  const extra = items.length - limit;
+  const more = compact && extra > 0 ? `<button class="fc-more" onclick="${stop}v3OpenFriend(${c.idx})">+${extra} more</button>` : "";
   const nudge = c.up.length ? "" : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`);
   const mem = c.past.length ? `<div class="fc-mem">\u2728 Last: ${esc(c.past[0].t)}${c.past[0].date ? " \u00B7 " + __socFmtDate(c.past[0].date) : ""}</div>` : "";
   const favs = c.favs ? `<div class="fc-meta">\uD83D\uDC9B ${esc(c.favs)}</div>` : "";
-  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}">
-    <button class="fc-card-edit" title="Card details" onclick="__fcCardEdit(${c.idx})">\u270F\uFE0F</button>
+  return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}${flat ? " flat" : ""}"${flat ? "" : ` onclick="v3OpenFriend(${c.idx})"`}>
+    <button class="fc-card-edit" title="Card details" onclick="${stop}__fcCardEdit(${c.idx})">\u270F\uFE0F</button>
     <div class="fc-head"><div class="fc-avatar">${c.emoji ? esc(c.emoji) : __socInitials(c.name)}</div>
       <div><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div>${__socBday(c.bday)}</div></div>
-    ${c.up.map(p => plan(p, true)).join("")}
-    ${c.undated.map(p => plan(p, false)).join("")}
-    ${calChips}${nudge}${favs}${mem}
+    <div class="fc-body">${shown}${more}${nudge}${favs}${mem}</div>
   </div>`;
 }
+function v3OpenFriend(idx) {
+  const c = __socOrder[idx];
+  if (!c) return;
+  let ov = document.getElementById("fcOverlay");
+  if (ov) ov.remove();
+  ov = document.createElement("div");
+  ov.id = "fcOverlay";
+  ov.className = "fc-overlay";
+  ov.innerHTML = `<div class="fc-overlay-panel">
+    <button class="fc-close" title="Close" onclick="document.getElementById('fcOverlay').remove()">\u2715</button>
+    <div class="fc-overlay-inner">${__socCardHtml(c, false, false, true)}</div>
+  </div>`;
+  ov.addEventListener("click", e => { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov);
+}
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") { const o = document.getElementById("fcOverlay"); if (o) o.remove(); }
+});
 function v3RenderSocial() {
   const wall = document.getElementById("friendWall");
   if (!wall) return;
@@ -952,7 +976,7 @@ function v3RenderSocial() {
   __socCalLoose = calloose;
   order.forEach((c, i) => { c.idx = i; });
   const nearest = order.find(c => c.up.length);
-  wall.innerHTML = order.map(c => __socCardHtml(c, nearest && c.key === nearest.key)).join("")
+  wall.innerHTML = order.map(c => __socCardHtml(c, nearest && c.key === nearest.key, true)).join("")
     || `<p class="helper-text">The wall is empty. Add your first plan above ("Dana - brunch Sunday") and Dana gets a card.</p>`;
   const lp = document.getElementById("loosePlans");
   if (lp) lp.innerHTML = loose.length
