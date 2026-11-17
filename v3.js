@@ -908,7 +908,6 @@ function __socCards() {
       let target = null;
       const assigned = evPeople[evCatKey(ev.calId, ev.id)];
       if (assigned && cards[assigned]) target = cards[assigned];
-      else if (cat === "marriage") target = cards.tony;
       else for (const k of Object.keys(cards)) {
         const c = cards[k];
         if (title.includes(k) || (c.name && title.includes(c.name.toLowerCase()))) { target = c; break; }
