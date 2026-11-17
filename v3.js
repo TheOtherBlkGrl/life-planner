@@ -843,7 +843,7 @@ function __socFmtDate(d) {
   try { return new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }); }
   catch (e) { return d; }
 }
-function __socBday(b) {
+function __socBdayText(b) {
   if (!b) return "";
   let y, mo, dd, m = b.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
   if (m) { y = +m[1]; mo = +m[2]; dd = +m[3]; }
@@ -854,7 +854,11 @@ function __socBday(b) {
   if (d < todayMid) d = new Date(y + 1, mo - 1, dd);
   const days = Math.round((d - todayMid) / 864e5);
   const when = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  return `<div class="fc-bday">🌸 ${days <= 30 ? "blooms in " + days + (days === 1 ? " day" : " days") : "next bloom " + when}</div>`;
+  return "\uD83C\uDF38 " + (days <= 30 ? "blooms in " + days + (days === 1 ? " day" : " days") : "next bloom " + when);
+}
+function __socBday(b) {
+  const t = __socBdayText(b);
+  return t ? `<div class="fc-bday">${t}</div>` : "";
 }
 function __socBdayDays(b) {
   if (!b) return null;
@@ -963,18 +967,28 @@ function __socCardHtml(c, isNext, compact, flat) {
   const extra = items.length - limit;
   const more = compact && extra > 0 ? `<button class="fc-more" onclick="${stop}v3OpenFriend(${c.idx})">+${extra} more</button>` : "";
   const mo = __socMoist(c);
-  const moistHtml = `<div class="fw-moist"><div class="fw-moist-track"><i class="${mo.pct >= 55 ? "wet" : mo.pct >= 30 ? "mid" : "dry"}" style="width:${mo.pct}%"></i></div><span class="fw-moist-val">${mo.pct}%${mo.days === null ? " \u00B7 never watered" : " \u00B7 " + (mo.days === 0 ? "watered today" : mo.days + (mo.days === 1 ? " day ago" : " days ago"))}</span></div>`;
   const tier = __socTierOf(c);
+  const status = mo.pct >= 55 ? { cls: "st-ok", txt: "\uD83D\uDCA7 Hydrated" } : (mo.pct >= 30 ? { cls: "st-mid", txt: "\uD83D\uDFE1 Drying" } : { cls: "st-dry", txt: "\uD83C\uDF35 Thirsty" });
+  const mval = Math.round(mo.pct / 10);
+  const mword = mo.pct >= 55 ? "Hydrated / Ideal" : (mo.pct >= 30 ? "Drying out" : "Needs water");
+  const touchLab = "Last touch" + (mo.days === null ? " (never)" : (mo.days === 0 ? " (today)" : " (" + mo.days + "d ago)"));
+  const touchVal = mo.touch ? __socFmtDate(mo.touch) : "\u2014";
+  let nextVal = "\u2014";
+  if (c.nextDate) nextVal = __socFmtDate(c.nextDate);
+  else { const bd = __socBdayDays(c.bday); if (bd !== null) { const d = new Date(); d.setDate(d.getDate() + bd); nextVal = d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); } }
+  const bloom = __socBdayText(c.bday);
   const nudge = c.up.length ? "" : (mo.pct <= 29 ? `<div class="fc-nudge">Soil's dry \u2014 reach out soon \uD83D\uDCA7</div>` : ((c.plans.length || c.cal.length) ? `<div class="fc-nudge">It's been a minute \u2014 plan something? \u2728</div>` : `<div class="fc-nudge">Nothing on the books yet \u2014 add a plan? \u2728</div>`));
   const mem = c.past.length ? `<div class="fc-mem">\u2728 Last: ${esc(c.past[0].t)}${c.past[0].date ? " \u00B7 " + __socFmtDate(c.past[0].date) : ""}</div>` : "";
-  const favs = c.favs ? `<div class="fc-meta">\uD83D\uDC9B ${esc(c.favs)}</div>` : "";
   return `<div class="friend-card${c.isTony ? " tony" : ""}${isNext ? " next" : ""}${flat ? " flat" : ""}${mo.pct <= 29 ? " dry" : ""} tc-${tier.id}"${flat ? "" : ` onclick="v3OpenFriend(${c.idx})"`}>
-    <button class="fc-card-edit" title="Card details" onclick="${stop}__fcCardEdit(${c.idx})">\u270F\uFE0F</button>
-    <button class="fc-water" title="Log a touch \u2014 waters this one" onclick="${stop}__fcWater(${c.idx})">\uD83D\uDCA7</button>
-    <div class="fc-head"><div class="fc-avatar">${c.emoji ? esc(c.emoji) : __socInitials(c.name)}</div>
-      <div><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div><span class="fw-tier-chip">${tier.emoji} ${tier.label}</span>${__socBday(c.bday)}</div></div>
-    ${moistHtml}
-    <div class="fc-body">${shown}${more}${nudge}${favs}${mem}</div>
+    <div class="fc-top"><div class="fc-box">${c.emoji ? esc(c.emoji) : __socInitials(c.name)}</div>
+      <div class="fc-who"><div class="fc-name">${esc(c.name)}${c.isTony ? " \uD83D\uDC8D" : ""}</div>${c.favs ? `<div class="fc-sub">${esc(c.favs)}</div>` : ""}</div>
+      <span class="fc-pill ${status.cls}">${status.txt}</span></div>
+    <div class="fc-chips">${bloom ? `<span class="fc-chip-gold">${bloom}</span>` : ""}<span class="fc-chip-plum">${tier.emoji} ${tier.label}</span></div>
+    <div class="fc-tiles"><div class="fc-tile"><div class="fc-tile-label">${touchLab}</div><div class="fc-tile-val">${touchVal}</div></div><div class="fc-tile"><div class="fc-tile-label">Next plan</div><div class="fc-tile-val${c.nextDate ? " green" : ""}">${nextVal}</div></div></div>
+    <div class="fc-meter-row"><span class="fc-meter-label">\uD83D\uDFE9 Connection meter:</span><span class="fc-meter-val ${mo.pct >= 55 ? "wet" : (mo.pct >= 30 ? "mid" : "dry")}">${mval} / 10 (${mword})</span></div>
+    <div class="fw-moist-track"><i class="${mo.pct >= 55 ? "wet" : (mo.pct >= 30 ? "mid" : "dry")}" style="width:${mo.pct}%"></i></div>
+    <div class="fc-body">${shown}${more}${nudge}${mem}</div>
+    <div class="fc-actions"><button class="fc-btn fc-btn-green" onclick="${stop}__fcWater(${c.idx})">\uD83D\uDCA7 Water</button><button class="fc-btn fc-btn-gold" onclick="${stop}__fcCardEdit(${c.idx})">\u270E Details</button></div>
   </div>`;
 }
 function v3OpenFriend(idx) {
@@ -1013,15 +1027,6 @@ function v3RenderSocial() {
   __socCalLoose = calloose;
   order.forEach((c, i) => { c.idx = i; });
   const nearest = order.find(c => c.up.length);
-  let dry = 0, blooms = 0;
-  order.forEach(c => {
-    c.moist = __socMoist(c);
-    if (c.moist.pct <= 29) dry++;
-    const bd = __socBdayDays(c.bday);
-    if (bd !== null && bd <= 30) blooms++;
-  });
-  const st = document.getElementById("fwStats");
-  if (st) st.innerHTML = `<div class="fw-stat" style="border-top:3px solid #52b788"><div class="fw-stat-num" style="color:#52b788">${order.length}</div><div class="fw-stat-sub">On the slope</div></div><div class="fw-stat" style="border-top:3px solid #e07a5f"><div class="fw-stat-num" style="color:#e07a5f">${dry}</div><div class="fw-stat-sub">Need water</div></div><div class="fw-stat" style="border-top:3px solid #d4af37"><div class="fw-stat-num" style="color:#e9c46a">${blooms}</div><div class="fw-stat-sub">Blooms within 30 days</div></div>`;
   const groups = SOC_TIERS.map(t => ({ t, in: order.filter(c => __socTierOf(c).id === t.id) })).filter(g => g.in.length);
   wall.innerHTML = groups.map(g =>
     `<div class="fw-tier"><div class="fw-tier-head"><span class="fw-tier-badge">TIER ${g.t.n}</span><strong>${g.t.emoji} ${g.t.label}</strong><span class="fw-tier-count">${g.in.length} ON THIS SLOPE</span></div><div class="friend-wall">` +
