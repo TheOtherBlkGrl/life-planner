@@ -69,6 +69,7 @@ function switchTab(name) {
   if (name === "today") v3RenderGardenSummary();
   if (name === "hair") v3RenderHair();
   if (name === "garden") { v3RenderSoil(); v3RenderSoilDeep(); renderSoilLog(); }
+  if (name === "month" && typeof renderMonth === "function") renderMonth();
 }
 
 function v3Go(sec, tab) { switchTab(tab || V3_SECTIONS[sec][0].id); }
