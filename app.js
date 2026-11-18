@@ -2142,7 +2142,15 @@ function renderJobLeads() {
   }
   const decided = jobLeadDecisions();
   const open = jobLeadsData.leads.filter(l => !decided[l.id]);
-  const done = jobLeadsData.leads.filter(l => decided[l.id]).slice().reverse();
+  // Passed entries drop off after 24h (the 6pm purge then deletes the lead itself);
+  // applied entries stay visible.
+  const DAY_MS = 86400000;
+  const done = jobLeadsData.leads.filter(l => {
+    const dec = decided[l.id];
+    if (!dec) return false;
+    if (dec.d === "reject" && (Date.now() - (dec.at || 0) > DAY_MS)) return false;
+    return true;
+  }).slice().reverse();
   const when = jobLeadsData.updatedLocal || jobLeadsData.updated || "";
   if (metaEl) metaEl.textContent = (when ? "Updated " + when + " \u00b7 " : "") +
     (open.length ? open.length + " waiting for your call \u00b7 sweeps 5:30am & 3pm" : "Nothing waiting \u00b7 next sweep 5:30am & 3pm daily");
