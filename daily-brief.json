@@ -1,83 +1,90 @@
 {
-  "updatedLocal": "Tue Nov 17, 2026, 5:30 AM PT",
-  "headline": "Tuesday, November 17 \u2014 the dry day: rain and gusts return tonight, heavy storm Wednesday.",
-  "sections": [
-    {
-      "h": "Weather",
-      "lead": "Dry all day, then rain and gusts move back in tonight.",
-      "items": [
-        "Tue Nov 17: partly sunny, 58/42, dry all day; rain returns tonight, 75% overnight with gusts to 39 mph",
-        "Wed Nov 18: heavy rain 85%, 48/42, gusts to 31 mph, about 2.3 inches",
-        "Thu Nov 19: rain 75%, 54/43 \u00b7 Fri Nov 20: sunny, 55/41",
-        "Sat Nov 21: light rain 40%, 52/40 \u00b7 Sun Nov 22: mostly cloudy, 35%, 54/45",
-        "Today hourly: 5am 42\u00b0 clear \u00b7 8am 43\u00b0 \u00b7 11am 52\u00b0 \u00b7 1pm 55\u00b0 \u00b7 3pm 56\u00b0 \u00b7 6pm 51\u00b0 \u00b7 10pm 48\u00b0, under 1% rain all day"
-      ],
-      "body": "Use the dry window: nothing wet on the roads again until late tonight, and Wednesday is the storm day."
-    },
-    {
-      "h": "Your sky",
-      "lead": "A steady-strength day with one comms snag: double-check anything you send.",
-      "items": [
-        "Plain read: discipline and warmth are your strong arms today, while messages misfire around noon \u2014 the fix is cheap: reread before you send and confirm times twice",
-        "The first-quarter Aquarius Moon says experiment: perfect fuel for the planner's new friend cards and social layout work",
-        "How to use it: do the build work, not the argument work; nothing today rewards a quick sharp reply",
-        "Specifics: Moon Aquarius 26\u00b0 first quarter 51%; Venus Libra 25\u00b0 conj natal Moon orb 1.9; Sun Scorpio 25.7\u00b0 trine natal Mercury orb 3.5; Saturn Aries 11.4\u00b0 R trine natal Sun orb 2.7; Mercury Scorpio 7.7\u00b0 square natal Sun orb 1.0; Neptune Aries 2.1\u00b0 R trine natal Venus orb 1.0"
-      ],
-      "body": "Layman's summary: strong back, warm heart, loose mouth \u2014 lean on the first two."
-    },
-    {
-      "h": "Leads to review",
-      "lead": "Zero new construction-dispatch postings.",
-      "items": [
-        "LinkedIn: same cards (Vulcan Asphalt Dispatcher Napa, Cemex Dispatcher French Camp, Gill's Electric Oakland) \u2014 nothing new",
-        "ZipRecruiter blocked again today; full read Monday found 27 Bay Area results, none passing the filters",
-        "Indeed login-walled again this morning",
-        "Tracker stays at 49 leads; the Job Hunt tab has nothing new to review"
-      ]
-    },
-    {
-      "h": "Overnight mail",
-      "lead": "One rejection to log, nothing needing action.",
-      "items": [
-        "Symbotic passed on Manager, Logistics \u2014 Distribution Planning & Execution (req R7533), arrived 12:15am PT",
-        "No other application mail overnight"
-      ]
-    },
-    {
-      "h": "Interview watch",
-      "lead": "No interview requests.",
-      "items": [
-        "Checked recruiter-system mail for the last two days: no interview invitations"
-      ]
-    },
-    {
-      "h": "Local news",
-      "lead": "Antioch housing fight and storm prep lead the local feeds.",
-      "items": [
-        "Developer Zeka Group wants 724 homes near Black Diamond Mines in Antioch; critics want the land protected (SF Chronicle)",
-        "Super El Ni\u00f1o winter possibility for the Bay Area and what last one taught (CBS Bay Area)",
-        "East Bay Times: Acalanes stuns Pittsburg 70-0, ends Pirates' five-year NCS reign",
-        "Two dead after SUV crashes off Highway 24 Friday night",
-        "Antioch High boys basketball escaped with a win Monday, next game 7:30pm (MaxPreps)"
-      ]
-    },
-    {
-      "h": "Ease into the day",
-      "lead": "Recovery day: the to-do is small on purpose.",
-      "items": [
-        "Day 1 post-surgery: meds on schedule, rest, and let the house run itself today",
-        "Easy win: pick the Tuesday dry window to water or check the garden before tonight's rain",
-        "Your calendar shows only the recurring Expense Report Due reminder today",
-        "Runs today: 10am apply run, 3pm lead sweep, 5pm site check \u2014 all automatic",
-        "Ahead: As I Lay Dying at Cornerstone Thursday; Thanksgiving prep reminder Thursday morning"
-      ]
-    },
-    {
-      "h": "Family day ahead",
-      "lead": "Quiet across the board.",
-      "items": [
-        "Tony's calendar and the Family calendar both clear today and tomorrow"
-      ]
-    }
-  ]
+ "updatedLocal": "Wed Nov 18, 2026, 5:30 AM PT",
+ "headline": "Wednesday, November 18 \u2014 the storm itself: heavy rain all day, leave early for Kaiser at 9.",
+ "sections": [
+  {
+   "h": "Kaiser session first",
+   "items": [
+    "Adult IOP group session today 9:00 AM-12:00 PM at Delta Fair Medical Offices, Antioch.",
+    "The storm peaks midday: 8 AM is 87% rain with 32 mph gusts, 11 AM to 2 PM near 100%. Leave by 8:15.",
+    "It eases by evening: 5 PM down to 55%, 8 PM around 30%. Day 2 of recovery - meds on schedule first."
+   ]
+  },
+  {
+   "h": "Weather",
+   "lead": "Heavy rain all day, 49/49, southeast winds gusting 35 mph. ABC7 upgraded it to a Level 3 storm.",
+   "items": [
+    "Wed 11/18: 49/49, heavy rain all day, gusts 35 mph. Heaviest 11 AM-2 PM.",
+    "Thu 11/19: 50/44, showers tapering, 75%.",
+    "Fri 11/20: 55/40, sunny, light north wind. The clear day.",
+    "Sat 11/21: 52/40, cloudy, 20%.",
+    "Sun 11/22: 53/42, mostly cloudy, light rain at night.",
+    "Mon 11/23: 53/42, light rain chances return, 45%.",
+    "Today hourly: 5 AM 48/47% - 8 AM 48/87% - 11 AM 51/97% - 2 PM 51/98% - 5 PM 50/55% - 8 PM 50/32% - 10 PM 48/45%."
+   ]
+  },
+  {
+   "h": "Your sky",
+   "lead": "Quiet focus, careful words, soft company.",
+   "items": [
+    "Mercury squares your Sun almost dead-on today, so double-check any appointment details or texts you send.",
+    "Saturn still steadies your Sun: follow-through and discipline are the strong tools.",
+    "Venus sits right on your Moon for a third day: lean into the people who feel good, and the IOP room fits that.",
+    "Moon moves into Pisces, 61% waxing: a dreamier, lower-energy day. Rest is the point, not a failure.",
+    "Summary: do the quiet work, reread before sending, accept the softness. Use it: keep the IOP session, skip anything demanding wordsmithing."
+   ]
+  },
+  {
+   "h": "Leads to review",
+   "items": [
+    "Zero new construction-dispatch postings. Same three on LinkedIn: Vulcan asphalt dispatcher (Napa), Cemex (French Camp), Gill's Electric (Oakland).",
+    "ZipRecruiter hit a security wall and Indeed login-walled again; the full 27-result Bay Area read from Monday still stands.",
+    "Tracker holds at 49."
+   ]
+  },
+  {
+   "h": "Overnight mail",
+   "items": [
+    "GM passed on the AV Operations Coordinator application (arrived ~9:13 PM Tuesday). Talent community note is boilerplate.",
+    "No other application mail."
+   ]
+  },
+  {
+   "h": "Interview watch",
+   "items": [
+    "No interview requests. Two Workday notes checked: GM rejection above, Symbotic already logged Tuesday."
+   ]
+  },
+  {
+   "h": "Local news",
+   "items": [
+    "Storm went Level 3: waterspouts were spotted near Candlestick Point, and a High Wind Warning covers the East Bay hills to 70 mph gusts around Altamont Pass (ABC7).",
+    "Antioch police arrested a 19-year-old in Tuesday night's fatal shooting of a 54-year-old man near D and West 19th (KRON4).",
+    "Weekend ICE arrests across the Tri-Cities area are rattling East Bay residents (East Bay Times).",
+    "The Zeka Group Blue Oaks Ridge plan (724 homes near Black Diamond Mines) continues to draw pushback (SF Chronicle)."
+   ]
+  },
+  {
+   "h": "Your notes",
+   "items": [
+    "Nothing new on the planner notes."
+   ]
+  },
+  {
+   "h": "Ease into the day",
+   "items": [
+    "Easy win: iron day - take it after the session.",
+    "8:05 AM: my EDD redial fires to try filing the SDI claim by phone (attempt 3).",
+    "9:00 AM-12:00 PM: Kaiser IOP at Delta Fair. Leave by 8:15.",
+    "10 AM apply run, 3 PM sweep, 5 PM site check, 6 PM purge all run themselves.",
+    "Tomorrow: As I Lay Dying at Cornerstone, ~7:30 PM Thursday."
+   ]
+  },
+  {
+   "h": "Family day ahead",
+   "items": [
+    "Tony's and Family calendars are clear today and tomorrow."
+   ]
+  }
+ ]
 }
