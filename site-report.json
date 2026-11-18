@@ -1,19 +1,16 @@
 {
-  "updatedLocal": "Nov 2, 2026, 9:20 PM PT",
+  "updatedLocal": "Nov 17, 2026, 5:36 PM PT",
   "last24h": {
-    "visits": 1,
-    "uniqueVisitors": 1,
-    "pageViews": 2,
-    "topSource": "direct traffic",
-    "resumeOpens": { "total": 0 },
-    "printClicks": 0
+    "visits": 4,
+    "uniqueVisitors": 4,
+    "pageViews": 28
   },
   "sinceLaunch": {
-    "startDate": "Oct 16",
-    "visits": 150,
-    "pageViews": 310,
-    "resumeOpens": 30,
-    "topSource": "direct",
-    "note": "Last-30-days window; site launched Oct 16 so this equals since-launch. Resume opens: /Clarissa-Ward-Resume.html 20, /resume-dispatch.html 10. Print clicks 30d: 0."
+    "startDate": "Oct 18",
+    "visits": 200,
+    "pageViews": 560,
+    "resumeOpens": { "total": 100, "detail": "/Clarissa-Ward-Resume.html" },
+    "printClicks": 10,
+    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 17 ~5:30pm PT. The dashboard's max window is last 30 days (Oct 18 17:29 - Nov 17 17:29 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone: www (resume site) 270 + planner.clarissadward.com 290 page views, because zone auto-injection now tracks the planner pages too. Resume opens = page views of /Clarissa-Ward-Resume.html; print clicks = page views of /resume-print-click; top source = None (direct) 180 of 200 visits, google 20."
   }
 }

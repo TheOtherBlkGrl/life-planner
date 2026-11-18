@@ -2191,13 +2191,16 @@ function renderSiteReport() {
     body.innerHTML = '<p class="helper-text">First report lands at the next sweep (5:30am & 3pm).</p>';
     return;
   }
-  if (meta) meta.textContent = "Traffic on clarissadward.com \u00b7 updated " + (d.updatedLocal || d.updated || "");
-  const L = d.last24h || {}, S = d.sinceLaunch || {}, ro = L.resumeOpens || {};
+  if (meta) meta.textContent = "Traffic on clarissadward.com + planner \u00b7 updated " + (d.updatedLocal || d.updated || "");
+  const L = d.last24h || {}, S = d.sinceLaunch || {};
+  const ro = L.resumeOpens || {};
+  const sro = (S.resumeOpens && typeof S.resumeOpens === "object") ? S.resumeOpens : (S.resumeOpens != null ? { total: S.resumeOpens } : {});
   const row = (k, v) => `<div class="site-report-row"><span class="k">${k}</span><span>${v}</span></div>`;
   let html = "";
   html += row("Last 24 hours", `${L.visits != null ? L.visits : "\u2014"} visits \u00b7 ${L.uniqueVisitors != null ? L.uniqueVisitors : "\u2014"} unique${L.topSource ? " \u00b7 mostly " + esc(L.topSource) : ""}`);
-  if (ro.total != null || ro.detail) html += row("Resume opens", `${ro.total != null ? ro.total : 0}${ro.detail ? " \u00b7 " + esc(ro.detail) : ""}`);
-  html += row("Save-as-PDF clicks", `${L.printClicks != null ? L.printClicks : 0}`);
+  if (ro.total != null || ro.detail || sro.total != null || sro.detail) html += row("Resume opens", `${ro.total != null ? ro.total : (sro.total != null ? sro.total : 0)}${(ro.detail || sro.detail) ? " \u00b7 " + esc(ro.detail || sro.detail) : ""}`);
+  const pc = L.printClicks != null ? L.printClicks : S.printClicks;
+  if (pc != null) html += row("Save-as-PDF clicks", `${pc}`);
   if (S.visits != null) html += row("Since launch" + (S.startDate ? " (" + esc(S.startDate) + ")" : ""), `${S.visits} visits \u00b7 ${S.pageViews != null ? S.pageViews : "\u2014"} page views`);
   body.innerHTML = html;
 }
