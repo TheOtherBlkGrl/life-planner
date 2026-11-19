@@ -279,11 +279,11 @@ body { padding: 12px 20px 16px !important; }
 .soil-label { font-size: 0.8rem; opacity: 0.85; }
 .soil-bar { display: block; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
 .soil-fill { display: block; height: 100%; border-radius: 999px; }
-.soil-good { background: linear-gradient(90deg, #3f8f66, #7fd6a8); }
-.soil-dry { background: linear-gradient(90deg, #b3801f, #f4b860); }
-.soil-soggy { background: linear-gradient(90deg, #4a6fa8, #8fb7e8); }
-.soil-warn { background: linear-gradient(90deg, #b3641f, #e8975f); }
-.soil-bad { background: linear-gradient(90deg, #a83f3f, #e88f8f); }
+.soil-fill.soil-good { background: linear-gradient(90deg, #3f8f66, #7fd6a8); }
+.soil-fill.soil-dry { background: linear-gradient(90deg, #b3801f, #f4b860); }
+.soil-fill.soil-soggy { background: linear-gradient(90deg, #4a6fa8, #8fb7e8); }
+.soil-fill.soil-warn { background: linear-gradient(90deg, #b3641f, #e8975f); }
+.soil-fill.soil-bad { background: linear-gradient(90deg, #a83f3f, #e88f8f); }
 .soil-val { font-size: 0.78rem; opacity: 0.85; white-space: nowrap; }
 .soil-note { font-size: 0.8rem; opacity: 0.8; margin: 6px 16px 0; }
 .crack-meter { display: block; height: 12px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; margin: 0 16px; }
