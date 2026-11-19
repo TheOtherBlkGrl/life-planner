@@ -1,16 +1,16 @@
 {
-  "updatedLocal": "Nov 17, 2026, 5:36 PM PT",
+  "updatedLocal": "Nov 18, 2026, 5:16 PM PT",
   "last24h": {
-    "visits": 4,
-    "uniqueVisitors": 4,
-    "pageViews": 28
+    "visits": 0,
+    "uniqueVisitors": 0,
+    "pageViews": 0
   },
   "sinceLaunch": {
     "startDate": "Oct 18",
-    "visits": 200,
-    "pageViews": 560,
-    "resumeOpens": { "total": 100, "detail": "/Clarissa-Ward-Resume.html" },
+    "visits": 150,
+    "pageViews": 260,
+    "resumeOpens": { "total": 110, "detail": "/Clarissa-Ward-Resume.html" },
     "printClicks": 10,
-    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 17 ~5:30pm PT. The dashboard's max window is last 30 days (Oct 18 17:29 - Nov 17 17:29 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone: www (resume site) 270 + planner.clarissadward.com 290 page views, because zone auto-injection now tracks the planner pages too. Resume opens = page views of /Clarissa-Ward-Resume.html; print clicks = page views of /resume-print-click; top source = None (direct) 180 of 200 visits, google 20."
+    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 18 ~5:15pm PT. The dashboard's max window is last 30 days (Oct 18 17:29 - Nov 18 17:29 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h read 0 visits / 0 page views with 'No data' across panels on first read, reload, and re-read: the same Cloudflare lag pattern as Nov 13 and Nov 16, not a quiet site (the 30-day window still has data flowing). Resume opens = page views of /Clarissa-Ward-Resume.html (100) + /resume-dispatch.html (10); print clicks = page views of /resume-print-click. Top source = None (direct) 130 of 150 visits, google 20. Hosts panel showed only www.clarissadward.com 260 page views, no planner.clarissadward.com traffic in this window."
   }
 }
