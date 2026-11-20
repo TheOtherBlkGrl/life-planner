@@ -1,5 +1,5 @@
 {
-  "updatedLocal": "Nov 18, 2026, 5:16 PM PT",
+  "updatedLocal": "Nov 19, 2026, 5:24 PM PT",
   "last24h": {
     "visits": 0,
     "uniqueVisitors": 0,
@@ -7,10 +7,10 @@
   },
   "sinceLaunch": {
     "startDate": "Oct 18",
-    "visits": 150,
-    "pageViews": 260,
-    "resumeOpens": { "total": 110, "detail": "/Clarissa-Ward-Resume.html" },
+    "visits": 130,
+    "pageViews": 240,
+    "resumeOpens": { "total": 100, "detail": "/Clarissa-Ward-Resume.html" },
     "printClicks": 10,
-    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 18 ~5:15pm PT. The dashboard's max window is last 30 days (Oct 18 17:29 - Nov 18 17:29 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h read 0 visits / 0 page views with 'No data' across panels on first read, reload, and re-read: the same Cloudflare lag pattern as Nov 13 and Nov 16, not a quiet site (the 30-day window still has data flowing). Resume opens = page views of /Clarissa-Ward-Resume.html (100) + /resume-dispatch.html (10); print clicks = page views of /resume-print-click. Top source = None (direct) 130 of 150 visits, google 20. Hosts panel showed only www.clarissadward.com 260 page views, no planner.clarissadward.com traffic in this window."
+    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 19 ~5:22pm PT. The dashboard's max window is last 30 days (Oct 19 17:22 - Nov 19 17:22 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h read 0 visits / 0 page views with 'No data' across panels on first read, reload, and re-read: the same Cloudflare lag pattern as Nov 13, 16, and 18, not a quiet site (the 30-day window still has data flowing). The 30-day totals read lower than yesterday's read (150 visits / 260 page views then) - dashboard totals flapping with lag, not a real drop. Resume opens = page views of /Clarissa-Ward-Resume.html (90) + /resume-dispatch.html (10); print clicks = page views of /resume-print-click. Top referer tied: www.clarissadward.com 110 and None (direct) 110, google 20. Hosts panel showed only www.clarissadward.com 240 page views, no planner.clarissadward.com traffic in this window."
   }
 }
