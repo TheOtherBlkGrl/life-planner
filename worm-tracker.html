@@ -366,7 +366,7 @@
 
         <!-- Live Feedback Banner -->
         <div id="action-toast" class="font-mono text-xs px-3 py-2 bg-obsidian-950 border border-emerald-800 text-emerald-300 flex items-center gap-2">
-          <span>✦ Ready: Nov 7 install of Bin #6 (Young Tree) &amp; 8-bin feeding logged!</span>
+          <span>✦ Ready: Nov 19 — all 8 hillside bins fed!</span>
         </div>
       </div>
     </section>
@@ -506,7 +506,7 @@
     // =========================================================================
     // 1. DEFAULT STATE & HILLSIDE DIRECTORY ARCHITECTURE
     // =========================================================================
-    const STORAGE_KEY = 'hillside_worm_tracker_v6';
+    const STORAGE_KEY = 'hillside_worm_tracker_v7';
     const BASE_INSTALL_DATE = '2026-11-07';
 
     const SCRAP_MENU_OPTIONS = [
@@ -573,6 +573,13 @@
         ],
         logs: [
           {
+            id: 'log-feed-nov19',
+            date: '2026-11-19',
+            stamp: '🪱 Fed Worms',
+            target: 'All 8 Hillside Bins (#1–#8)',
+            details: 'Fed all 8 buried stations across the hillside.'
+          },
+          {
             id: 'log-init-1',
             date: '2026-11-07',
             stamp: '🏠 New Install',
@@ -593,7 +600,7 @@
             tier: 4,
             name: 'Bin #1: Oleander Crown 🌸',
             host: 'Between the Oleanders',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '🥬 Veggie Peels, 📦 Wet Cardboard',
             moisture: 'Just Right',
             fillLevel: 50,
@@ -605,7 +612,7 @@
             tier: 3,
             name: 'Bin #2: Lavender (Bottom) 💜',
             host: 'Slope Lavender Patch (Bottom)',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '☕ Coffee Grounds, 📦 Wet Cardboard',
             moisture: 'Just Right',
             fillLevel: 75,
@@ -617,7 +624,7 @@
             tier: 3,
             name: 'Bin #3: Lavender (Top) 💜',
             host: 'Slope Lavender Patch (Top)',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '🥬 Veggie Peels, 📦 Wet Cardboard',
             moisture: 'Dry',
             fillLevel: 50,
@@ -629,7 +636,7 @@
             tier: 2,
             name: 'Bin #4: Castor Station A (Corner) 🪴',
             host: 'Castor Plants (Corner)',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '🍎 Fruit Scraps, ☕ Coffee Grounds',
             moisture: 'Juicy',
             fillLevel: 75,
@@ -641,7 +648,7 @@
             tier: 2,
             name: 'Bin #5: Castor Station B 🪴',
             host: 'Castor Plants',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '🥬 Veggie Peels, 🥚 Crushed Eggshells',
             moisture: 'Just Right',
             fillLevel: 75,
@@ -653,7 +660,7 @@
             tier: 2,
             name: 'Bin #6: Young Tree Root Zone 🌳',
             host: 'Young Tree (Newbie!)',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '🥬 Veggie Peels, 🍂 Dry Leaves / Bedding',
             moisture: 'Just Right',
             fillLevel: 25,
@@ -665,7 +672,7 @@
             tier: 1,
             name: 'Bin #7: Bay Laurel A (Left) 🍃',
             host: 'Sweet Bay Laurels (Left)',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '☕ Coffee Grounds, 🥬 Veggie Peels',
             moisture: 'Juicy',
             fillLevel: 75,
@@ -677,7 +684,7 @@
             tier: 1,
             name: 'Bin #8: Bay Laurel B (Right) 🍃',
             host: 'Sweet Bay Laurels (Right)',
-            lastFed: '2026-11-07',
+            lastFed: '2026-11-19',
             lastMenu: '🍎 Fruit Scraps, ☕ Coffee Grounds',
             moisture: 'Just Right',
             fillLevel: 50,
@@ -750,7 +757,7 @@
         return {
           code: 'NEW',
           label: '🆕 SETTLING IN',
-          subtext: daysSinceFed === 0 ? 'Installed Today' : `${daysSinceFed}d since install`,
+          subtext: daysSinceFed === 0 ? 'Fed today' : `${daysSinceFed}d since install`,
           badgeClass: 'bg-plum-950 text-plum-300 border-plum-400',
           daysSinceFed
         };
