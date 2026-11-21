@@ -1,9 +1,10 @@
 {
-  "updatedLocal": "Nov 19, 2026, 5:24 PM PT",
+  "updatedLocal": "Nov 20, 2026, 5:04 PM PT",
   "last24h": {
-    "visits": 0,
-    "uniqueVisitors": 0,
-    "pageViews": 0
+    "visits": 3,
+    "uniqueVisitors": 3,
+    "pageViews": 3,
+    "topSource": "google (2 of 3), direct 1"
   },
   "sinceLaunch": {
     "startDate": "Oct 18",
@@ -11,6 +12,6 @@
     "pageViews": 240,
     "resumeOpens": { "total": 100, "detail": "/Clarissa-Ward-Resume.html" },
     "printClicks": 10,
-    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 19 ~5:22pm PT. The dashboard's max window is last 30 days (Oct 19 17:22 - Nov 19 17:22 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h read 0 visits / 0 page views with 'No data' across panels on first read, reload, and re-read: the same Cloudflare lag pattern as Nov 13, 16, and 18, not a quiet site (the 30-day window still has data flowing). The 30-day totals read lower than yesterday's read (150 visits / 260 page views then) - dashboard totals flapping with lag, not a real drop. Resume opens = page views of /Clarissa-Ward-Resume.html (90) + /resume-dispatch.html (10); print clicks = page views of /resume-print-click. Top referer tied: www.clarissadward.com 110 and None (direct) 110, google 20. Hosts panel showed only www.clarissadward.com 240 page views, no planner.clarissadward.com traffic in this window."
+    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 20 ~5:03pm PT. The dashboard's max window is last 30 days (Nov 19 17:03 - Nov 20 17:03 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h: 3 visits, 3 page views, load 579ms, all US, all Desktop, all Navigate; 2 of the 3 views hit /resume-executive-assistant.html (first EA-resume traffic logged) and 1 hit /, 2 came from www.google.com, 1 direct. 30d window: 240 page views (US 230, Korea South 10), 130 visits, load 762ms. Resume opens 30d = /Clarissa-Ward-Resume.html 90 + /resume-dispatch.html 10 = 100; print clicks (/resume-print-click) 10. The EA path did not appear in the 30d top-paths list (only four rows shown: / 130, general 90, dispatch 10, print-click 10), consistent with it sitting below the list cutoff. Top referer tied: www.clarissadward.com 110 and None (direct) 110, google 20. Hosts: www.clarissadward.com 240, planner.clarissadward.com 0. 30d totals match yesterday's read despite the window sliding a day; totals flapping with lag, not a real drop."
   }
 }
