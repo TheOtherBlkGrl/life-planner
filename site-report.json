@@ -1,10 +1,10 @@
 {
-  "updatedLocal": "Nov 20, 2026, 5:04 PM PT",
+  "updatedLocal": "Nov 21, 2026, 5:07 PM PT",
   "last24h": {
-    "visits": 3,
-    "uniqueVisitors": 3,
-    "pageViews": 3,
-    "topSource": "google (2 of 3), direct 1"
+    "visits": 0,
+    "uniqueVisitors": 0,
+    "pageViews": 0,
+    "topSource": "none (24h panel showed No data; lag pattern like Nov 13/16/18/19)"
   },
   "sinceLaunch": {
     "startDate": "Oct 18",
@@ -12,6 +12,6 @@
     "pageViews": 240,
     "resumeOpens": { "total": 100, "detail": "/Clarissa-Ward-Resume.html" },
     "printClicks": 10,
-    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 20 ~5:03pm PT. The dashboard's max window is last 30 days (Nov 19 17:03 - Nov 20 17:03 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h: 3 visits, 3 page views, load 579ms, all US, all Desktop, all Navigate; 2 of the 3 views hit /resume-executive-assistant.html (first EA-resume traffic logged) and 1 hit /, 2 came from www.google.com, 1 direct. 30d window: 240 page views (US 230, Korea South 10), 130 visits, load 762ms. Resume opens 30d = /Clarissa-Ward-Resume.html 90 + /resume-dispatch.html 10 = 100; print clicks (/resume-print-click) 10. The EA path did not appear in the 30d top-paths list (only four rows shown: / 130, general 90, dispatch 10, print-click 10), consistent with it sitting below the list cutoff. Top referer tied: www.clarissadward.com 110 and None (direct) 110, google 20. Hosts: www.clarissadward.com 240, planner.clarissadward.com 0. 30d totals match yesterday's read despite the window sliding a day; totals flapping with lag, not a real drop."
+    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 21 ~5:07pm PT. The dashboard's max window is last 30 days (Nov 20 17:05 - Nov 21 17:05 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h: 0 visits, 0 page views, 'No data' on every panel after reload and re-read (cloudflare lag, fifth day this week; yesterday's window had 3 visits / 3 page views, 2 on /resume-executive-assistant.html from google). 30d window: 240 page views (US 230, Korea South 10), 130 visits, load 762ms. Resume opens 30d = /Clarissa-Ward-Resume.html 90 + /resume-dispatch.html 10 = 100; print clicks (/resume-print-click) 10. Top referer tied: www.clarissadward.com 110 and None (direct) 110, google 20. Hosts: www.clarissadward.com 240, planner.clarissadward.com 0. 30d totals match yesterday's read despite the window sliding a day; totals flapping with lag, not a real drop."
   }
 }
