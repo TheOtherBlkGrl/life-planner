@@ -1,61 +1,78 @@
 {
- "updatedLocal": "Sun Nov 22, 2026, 5:30 AM PT",
- "headline": "Sunday, November 22 \u2014 gray but dry, and the envelope goes out today.",
- "sections": [
-  {
-   "h": "Weather",
-   "items": [
-    "Today dry despite the gray: 49-51\u00b0 all day, rain 0-4%, wind 2-4 mph",
-    "Mon partly sunny 52/42, full moon that night",
-    "Tue storm: 55% day, 75% night, ~0.8\" total, 54/45",
-    "Wed 59/49; Thanksgiving Thu mostly dry 61/48 \u2014 forecast softened since Friday"
-   ]
-  },
-  {
-   "h": "Your sky",
-   "items": [
-    "Moon crossed into Taurus (your rising sign), 95% waxing, one day from full",
-    "Plain version: a settle-and-finish day, the calmest this week; close things today before Monday's full moon",
-    "Mercury opposite your Ascendant: one-on-one talks and errands run smoothly today",
-    "Sun just entered Sagittarius: the mood lightens from here",
-    "Details: Sun Sag 0.9; Moon Taurus 5.0 waxing 95%; Mercury Scorpio 11.3 opp natal Asc orb 0.6; Venus Libra 25.8 conj natal Moon orb 1.1; Sun trine natal Venus orb 1.9; Saturn R trine natal Sun orb 2.1"
-   ]
-  },
-  {
-   "h": "Job leads",
-   "items": [
-    "Zero new (14th construction-only run); tracker stays 49 awaiting your Apply / Not-for-me",
-    "Boards repeating: Graniterock Concrete Dispatcher Watsonville (out on the 100-mile drive, no pay posted), Aubry + Express Flooring coordinator roles, ZipRecruiter low-pay logistics, Indeed Pacific States $75K repeat"
-   ]
-  },
-  {
-   "h": "The one that matters today",
-   "items": [
-    "The DE 2501's 49-day window closes TOMORROW \u2014 today is the mail day",
-    "Finish page 4 (A39 payment method, A40 signature), tear off Part B pages 5-7 at the perforation, keep the signed HIPAA page 1, in the box today"
-   ]
-  },
-  {
-   "h": "Ease into the day",
-   "items": [
-    "Easy win: the DE 2501 above \u2014 and it's an iron day, take it with breakfast",
-    "Autopilots: 10am apply run, 3pm sweep, 5pm site check, 6pm purge, 7pm apply run",
-    "Last dry weekend day before Tuesday's storm: the grocery-run window for Thanksgiving"
-   ]
-  },
-  {
-   "h": "Family day ahead",
-   "items": [
-    "Tony's calendar and the Family calendar are both quiet today"
-   ]
-  },
-  {
-   "h": "Local news",
-   "items": [
-    "City council to appoint Gabriel Gonzales interim city manager at Tuesday's 7pm meeting, 200 H St, after months without one; $25,720/month (Contra Costa News)",
-    "Police ask for tips on missing person Artega Rocio, last seen near Deer Valley Road; non-emergency line 925-778-2441 (Hoodline)",
-    "ABC7 published a Bay Area sandbag-location list ahead of the wet El Ni\u00f1o winter"
-   ]
-  }
- ]
+  "updatedLocal": "Mon Nov 23, 2026, 5:30 AM PT",
+  "headline": "Mail day: the DE 2501 window closes today",
+  "sections": [
+    {
+      "h": "The big one",
+      "lead": "The EDD 49-day window shuts today, Mon Nov 23.",
+      "items": [
+        "Mail the signed DE 2501 today: Part A filled, Part B with Dr. Baitoo, Kaiser envelope.",
+        "Do it this morning so it beats the counter rush.",
+        "Sedgwick's estimated return date is today too; if that's not happening, a quick claim update keeps your file clean."
+      ]
+    },
+    {
+      "h": "Weather",
+      "items": [
+        "Dry all day, cloudy: 41\u00b0F early, high 53, 0% rain until evening.",
+        "Light east wind, 2-6 mph. Good drive-to-the-post-office weather.",
+        "Week: rain holds off until Tue night (~0.2\"), then Thanksgiving Thu turns partly dry near 60.",
+        "Full moon tonight rises right at sunset (3:53 PM, sun sets 4:50)."
+      ]
+    },
+    {
+      "h": "Your sky",
+      "lead": "Full moon night in your rising sign, and Venus lands right on your natal Moon.",
+      "items": [
+        "Plain read: a soft, warm day for people and comfort, and a sky that rewards steady follow-through. Your words get read closely today, so keep them simple and double-check what you sign.",
+        "Steady hands: Saturn trines your natal Sun (orb 2.0\u00b0). Paperwork energy. This is the transit for finishing the DE 2501 and sending it.",
+        "Gentle warmth: Venus conj natal Moon (0.9\u00b0) and Sun trine natal Venus (0.9\u00b0). Good for small kindnesses, a good meal, easy wins with people.",
+        "Watch your words: Mercury opposite your Ascendant (0.3\u00b0). Anything you send today gets parsed. Draft, check, then send.",
+        "Summary: steady hands, soft heart, careful pen. How to use it: mail the form, keep messages clean, and if the clouds part, catch the full moon rising at sunset.",
+        "Details: Moon Taurus 18.6, Sun Sag 1.9, full at 99% (elong 167\u00b0); Venus Libra 26.1; Mercury Scorpio 12.2; Saturn R Aries 11.1."
+      ]
+    },
+    {
+      "h": "Job leads",
+      "items": [
+        "0 new construction-dispatch leads. 15th construction-only run.",
+        "LinkedIn never loaded this morning; ZipRecruiter and Indeed showed repeats only.",
+        "Tracker holds 49 leads awaiting your Apply / Not-for-me."
+      ]
+    },
+    {
+      "h": "Notes",
+      "items": [
+        "Your popup notes were empty. Nothing to act on."
+      ]
+    },
+    {
+      "h": "Local news",
+      "items": [
+        "Antioch council voted 4-0 to turn the city water park into a winter warming center: four-week emergency, $50K.",
+        "King tides this week could set record highs around the Bay: coastal flood spots through the week.",
+        "Two women were injured and hospitalized during an apparent ICE arrest in East Oakland Sunday."
+      ]
+    },
+    {
+      "h": "Interview watch",
+      "items": [
+        "Nothing new in the application mailbox."
+      ]
+    },
+    {
+      "h": "Ease into the day",
+      "items": [
+        "Easy win: iron day (Mon) - your 9 AM reminder has it.",
+        "Top: 1) mail the DE 2501 today, the window closes today. 2) take the iron. 3) quick Sedgwick update if the return date is slipping.",
+        "Rest: nothing on your calendar. The 10am/3pm/5pm/6pm/7pm runs handle themselves."
+      ]
+    },
+    {
+      "h": "Family day",
+      "items": [
+        "Tony's and family calendars are both quiet today. Easy Monday."
+      ]
+    }
+  ]
 }
