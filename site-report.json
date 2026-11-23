@@ -1,17 +1,30 @@
 {
-  "updatedLocal": "Nov 21, 2026, 5:07 PM PT",
+  "updatedLocal": "Nov 22, 2026, 5:16 PM PT",
   "last24h": {
     "visits": 0,
-    "uniqueVisitors": 0,
     "pageViews": 0,
-    "topSource": "none (24h panel showed No data; lag pattern like Nov 13/16/18/19)"
+    "note": "No data all panels after reload and re-read; cloudflare lag"
   },
-  "sinceLaunch": {
-    "startDate": "Oct 18",
-    "visits": 130,
-    "pageViews": 240,
-    "resumeOpens": { "total": 100, "detail": "/Clarissa-Ward-Resume.html" },
-    "printClicks": 10,
-    "note": "Read live from the Cloudflare Web Analytics dashboard Nov 21 ~5:07pm PT. The dashboard's max window is last 30 days (Nov 20 17:05 - Nov 21 17:05 PST), so 'since launch' is really the trailing 30 days. 'All sites' = the whole clarissadward.com zone. Last 24h: 0 visits, 0 page views, 'No data' on every panel after reload and re-read (cloudflare lag, fifth day this week; yesterday's window had 3 visits / 3 page views, 2 on /resume-executive-assistant.html from google). 30d window: 240 page views (US 230, Korea South 10), 130 visits, load 762ms. Resume opens 30d = /Clarissa-Ward-Resume.html 90 + /resume-dispatch.html 10 = 100; print clicks (/resume-print-click) 10. Top referer tied: www.clarissadward.com 110 and None (direct) 110, google 20. Hosts: www.clarissadward.com 240, planner.clarissadward.com 0. 30d totals match yesterday's read despite the window sliding a day; totals flapping with lag, not a real drop."
+  "last30d": {
+    "visits": 100,
+    "pageViews": 180,
+    "resumeOpens": {
+      "general": 70,
+      "dispatch": 10,
+      "executiveAssistant": 0,
+      "logistics": 0,
+      "total": 80
+    },
+    "pdfClicks": 10,
+    "referers": {
+      "www.clarissadward.com": 80,
+      "None (direct)": 80,
+      "www.google.com": 20
+    },
+    "topReferer": "tie: www.clarissadward.com and direct, 80 each",
+    "countries": {
+      "United States": 170,
+      "Korea, South": 10
+    }
   }
 }
