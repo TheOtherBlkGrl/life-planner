@@ -1,29 +1,30 @@
 {
-  "updatedLocal": "Nov 24, 2026, 5:17 PM PT",
+  "updatedLocal": "Nov 25, 2026, 5:09 PM PT",
   "last24h": {
-    "visits": 0,
-    "pageViews": 0,
-    "note": "No data all panels; cloudflare lag again"
+    "visits": 4,
+    "pageViews": 4,
+    "topSource": "None (direct), 4",
+    "note": "First data in days: 4 page views, all on / from China, mobile/WebKit, no resume opens"
   },
   "last30d": {
     "visits": 100,
-    "pageViews": 180,
+    "pageViews": 170,
     "resumeOpens": {
-      "general": 70,
+      "general": 60,
       "dispatch": 10,
       "executiveAssistant": 0,
       "logistics": 0,
-      "total": 80
+      "total": 70
     },
     "pdfClicks": 10,
     "referers": {
-      "www.clarissadward.com": 80,
       "None (direct)": 80,
+      "www.clarissadward.com": 70,
       "www.google.com": 20
     },
-    "topReferer": "tie: www.clarissadward.com and direct, 80 each",
+    "topReferer": "None (direct), 80",
     "countries": {
-      "United States": 170,
+      "United States": 160,
       "Korea, South": 10
     }
   }
